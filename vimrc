@@ -20,50 +20,73 @@ set ai             " Sets autoindent
 set cursorline
 set vb			   " Turn off terminal bell
 set colorcolumn=80 " Turn on the colored column at column 80
+set spelllang=en_us
+
+set list
+set listchars=tab:▸\ ,eol:¬
 
 let mapleader="-"
 
+" ====================
 " Some mappings
+" ====================
 nnoremap <space> zt
 
 " Map colon to semicolon and the reverse
 nnoremap ; :
 nnoremap : ;
 
-nmap <leader>t ;r!date<cr>
+nnoremap <leader>t :r !date<cr>
+nnoremap <leader>l :setlocal list!<cr>
+nnoremap <leader>s :setlocal spell!<cr>
 
 " Edit vimrc 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr> 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr> 
 
+" ====================
+" Some autocommands
+" ====================
 runtime! ftplugin/man.vim
 
 " ====================
 " Color Scheme
 " ====================
-highlight CursorLine cterm=NONE ctermbg=blue ctermfg=NONE guibg=blue guifg=white
-highlight LineNr ctermfg=grey ctermbg=blue
-highlight StatusLine  ctermfg=white  guifg=#ffffff ctermbg=blue guibg=#4e4e4e cterm=bold gui=bold
-highlight ColorColumn cterm=NONE ctermbg=green
+colorscheme badwolf
+"highlight ColorColumn cterm=NONE ctermbg=green
 
 " ====================
 " Abbreviations
 " ====================
 iabbrev teh the
 iabbrev Teh The
+iabbrev THe the
+
 iabbrev yuo you
 iabbrev Yuo You
+
+iabbrev taht that
+iabbrev Taht That
+
 iabbrev waht what
+iabbrev Waht What
+
 iabbrev tehn then
+iabbrev Tehn Then
 
 " ====================
 " Plugins stuff
 " ====================
+" Plugin list
+" NERDTREE
+" Airline
+" Syntastic
+" Bufferline
+" Fugitive
 
 " NERDTree
-" ; instead of : due to the colon remap above
-nmap <C-n> ;NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 
 " Bufferline
 let g:bufferline_echo = 0
