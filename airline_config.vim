@@ -9,7 +9,12 @@ let g:airline_loaded = 1
 set noshowmode   " Gets rid of the original showing of modes in vim
 set laststatus=2 " Shows the status bar even if there is only one file
 
-let g:airline_theme= 'badwolf'
+" badwolf
+" dark
+" durant
+" sky
+" wombat
+let g:airline_theme= 'wombat'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -26,6 +31,3 @@ let g:airline_symbols.branch = ''
 
 let g:airline_section_warning = '[syntastic, whitespace]'
 let g:airline#extensions#whitespace#checks = 'long'
-
-" Close vim if nerdtree is the only window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
