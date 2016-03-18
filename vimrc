@@ -216,7 +216,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " durant
 " sky
 " wombat
-let g:airline_theme= 'wombat'
+let g:airline_theme= 'dark'
 
 let g:airline#extensions#bufferline#enabled = 1
 
