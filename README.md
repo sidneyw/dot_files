@@ -8,7 +8,6 @@ Includes the basic settings such as line wraps, tab width, search highlighting, 
 Organized by filetype
 
 ### Plugins
-+ Plugin list
 + NERDTREE
 + Airline
 + Syntastic
