@@ -48,11 +48,11 @@ nnoremap : ;
 nnoremap <leader>df vf{%d
 
 " Change the window size more easily
-nnoremap <leader>a <C-w>10<
-nnoremap <leader>d <C-w>10>
+nnoremap <silent> <leader>a <C-w>10<
+nnoremap <silent> <leader>d <C-w>10>
 
 " Run the notes command on the current file
-nnoremap <leader>n :!notes -c <C-r>% -o<cr>
+nnoremap <leader>n :!notes -c % -o<cr>
 
 " Move across windows holding control
 nnoremap <C-h> <C-w>h
@@ -106,7 +106,7 @@ nnoremap <leader>g :vsplit ~/Desktop/todo.txt<cr>
 augroup text
 	autocmd!
 
-	autocmd FileType text :setlocal wrap spell foldmethod=indent
+	autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
 augroup END
 
 augroup python
@@ -180,19 +180,23 @@ cnoreabbr kcaf !killall caffeinate
 " ===================
 " Plugin list
 " NERDTREE
-" Airline
-" Syntastic
 " Bufferline
+" Airline
+" Tmuxline
+" Syntastic
 " Fugitive
+" CtrlP
 
 " NERDTree {{{
 " ======================
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " ignore .o files - see help NERDTreeIgnore
 let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]']
 
 " Close vim if nerdtree is the only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+set winfixwidth
 
 " }}}
 
@@ -231,7 +235,8 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_symbols.branch = ''
 
-let g:airline_section_warning = '[syntastic, whitespace]'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline_section_warning = '[syntastic]'
 let g:airline#extensions#whitespace#checks = 'long'
 
 " }}}
@@ -240,9 +245,23 @@ let g:airline#extensions#whitespace#checks = 'long'
 
 " }}}
 
+" Syntastic {{{
+" ======================
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_mode_map = {'mode': 'active',
+	\ 'active_filetypes': [],
+	\ 'passive_filetypes': ['html'] }
+
+" }}}
+
 " Ctrl P {{{
 " ======================
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
 " }}}
 
 " }}}

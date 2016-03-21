@@ -15,8 +15,7 @@ export LS_COLORS
 
 # Aliases go here: 
 alias ls='ls -GFh'
-
-# alias tmux="TERM=screen-256color-bce tmux"
+alias ll='ls -la'
 
 # python
 alias 3='python3'
@@ -31,20 +30,23 @@ alias prompt='. prompt'
 # sql server
 alias sql='sudo /usr/local/mysql/bin/mysql -u root'
 
-alias pi='ssh pi@192.168.1.61'
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
-alias dalipi='ssh pi@129.170.212.157'
 
 # code helpers
-alias server="python -m SimpleHTTPServer"
-alias server9="python -m SimpleHTTPServer 9000"
+alias server="python -m SimpleHTTPServer 9000"
 alias mygcc="gcc -Wall -pedantic -std=c11"
-alias site="atom .;python -m SimpleHTTPServer" 
 
-# Other
+# GTD helpers
+alias today="cat ~/Desktop/daily.txt"
+
+# open vim with all my todos in splits
+alias todo="vim ~/Desktop/daily.txt ~/Desktop/weekly.txt ~/Desktop/monthly.txt -O"
+
+# create a single todo list
+alias gtd="cat ~/Desktop/daily.txt ~/Desktop/weekly.txt ~/Desktop/monthly.txt > ~/Desktop/todo.txt"
+
+# other
 alias c="clear"
-alias todo="vim ~/Desktop/todo.txt"
-alias gtd="vim ~/Desktop/todo.txt"
 
 # autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
