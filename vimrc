@@ -26,6 +26,7 @@ set colorcolumn=80      " Turn on the colored column at column 80
 set textwidth=90
 set spelllang=en_us
 set nowrap              " Turn off line wraps
+set t_ut=               " Fixes colors in tmux
 
 set shell=bash\ --login " make the sh command source the bash_profile
 
@@ -52,7 +53,7 @@ nnoremap <silent> <leader>a <C-w>10<
 nnoremap <silent> <leader>d <C-w>10>
 
 " Run the notes command on the current file
-nnoremap <leader>n :!notes -c % -o<cr>
+nnoremap <leader>n :vs ~/Desktop/notes<cr>
 
 " Move across windows holding control
 nnoremap <C-h> <C-w>h
@@ -65,6 +66,8 @@ nnoremap <leader>l :setlocal list!<cr>
 nnoremap <leader>s :setlocal spell!<cr>
 nnoremap <leader>w :setlocal wrap!<cr>
 
+" SyntasticToggle
+nnoremap <leader>z :SyntasticToggleMode<cr>
 " Reformat the current buffer
 nnoremap <leader>r mzgqG`z
 
@@ -135,8 +138,11 @@ augroup END
 
 " Color Scheme {{{
 " ====================
-" colorscheme badwolf
-colorscheme sky
+" set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+set t_Co=256
+colorscheme badwolf
+" colorscheme sky
+" colorscheme lanox
 " colorscheme brogrammer
 " highlight ColorColumn cterm=NONE ctermbg=green
 
@@ -164,6 +170,8 @@ iabbrev tehn then
 iabbrev Tehn Then
 
 iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
+iabbrev xbash #!/bin/bash<cr>
+iabbrev xpython #!/usr/bin/python<cr>
 
 " Turn sleep on and off
 cnoreabbr caf !caffeinate -d&
@@ -239,6 +247,8 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:airline_section_warning = '[syntastic]'
 let g:airline#extensions#whitespace#checks = 'long'
 
+let g:airline#extensions#tmuxline#enabled = 1
+
 " }}}
 
 " Tmux line {{{
@@ -254,6 +264,14 @@ let g:airline#extensions#whitespace#checks = 'long'
 
 let g:tmuxline_preset = 'full'
 
+" crosshair
+" full
+" minimal
+" nightly_fox
+" powerline
+" righteous
+" tmux
+" let g:tmuxline_preset = 'powerline'
 " }}}
 
 " Syntastic {{{
@@ -262,6 +280,10 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" Python Config
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args='--ignore=E501,W191'
 
 let g:syntastic_mode_map = {'mode': 'active',
 	\ 'active_filetypes': [],
@@ -272,6 +294,7 @@ let g:syntastic_mode_map = {'mode': 'active',
 " Ctrl P {{{
 " ======================
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_working_path_mode='a'
 
 " }}}
 
