@@ -242,6 +242,17 @@ let g:airline#extensions#whitespace#checks = 'long'
 " }}}
 
 " Tmux line {{{
+" ======================
+
+" crosshair
+" full
+" minimal
+" nightly_fox
+" powerline
+" righteous
+" tmux
+
+let g:tmuxline_preset = 'full'
 
 " }}}
 
