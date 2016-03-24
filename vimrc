@@ -66,6 +66,8 @@ nnoremap <leader>l :setlocal list!<cr>
 nnoremap <leader>s :setlocal spell!<cr>
 nnoremap <leader>w :setlocal wrap!<cr>
 
+" SyntasticToggle
+nnoremap <leader>z :SyntasticToggleMode<cr>
 " Reformat the current buffer
 nnoremap <leader>r mzgqG`z
 
@@ -140,6 +142,7 @@ augroup END
 set t_Co=256
 colorscheme badwolf
 " colorscheme sky
+" colorscheme lanox
 " colorscheme brogrammer
 " highlight ColorColumn cterm=NONE ctermbg=green
 
@@ -168,6 +171,7 @@ iabbrev Tehn Then
 
 iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
 iabbrev xbash #!/bin/bash<cr>
+iabbrev xpython #!/usr/bin/python<cr>
 
 " Turn sleep on and off
 cnoreabbr caf !caffeinate -d&
@@ -224,7 +228,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " durant
 " sky
 " wombat
-let g:airline_theme= 'wombat'
+let g:airline_theme= 'dark'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -268,7 +272,7 @@ let g:syntastic_check_on_wq = 0
 
 " Python Config
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501'
+let g:syntastic_python_flake8_args='--ignore=E501,W191'
 
 let g:syntastic_mode_map = {'mode': 'active',
 	\ 'active_filetypes': [],
@@ -279,6 +283,7 @@ let g:syntastic_mode_map = {'mode': 'active',
 " Ctrl P {{{
 " ======================
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_working_path_mode='a'
 
 " }}}
 
