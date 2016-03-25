@@ -177,6 +177,8 @@ iabbrev xpython #!/usr/bin/python<cr>
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
 
+cnoreabbr xwhite %s/    /\t/g
+
 " }}}
 
 " Functions {{{
@@ -205,6 +207,7 @@ let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 set winfixwidth
+set winfixheight
 
 " }}}
 
@@ -272,7 +275,7 @@ let g:syntastic_check_on_wq = 0
 
 " Python Config
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501,W191'
+let g:syntastic_python_flake8_args='--ignore=E501,W191,E128'
 
 let g:syntastic_mode_map = {'mode': 'active',
 	\ 'active_filetypes': [],
