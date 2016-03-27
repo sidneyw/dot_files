@@ -26,7 +26,6 @@ set colorcolumn=80      " Turn on the colored column at column 80
 set textwidth=90
 set spelllang=en_us
 set nowrap              " Turn off line wraps
-set t_ut=               " Fixes colors in tmux
 
 set shell=bash\ --login " make the sh command source the bash_profile
 
@@ -52,7 +51,7 @@ nnoremap <leader>df vf{%d
 nnoremap <silent> <leader>a <C-w>10<
 nnoremap <silent> <leader>d <C-w>10>
 
-" Run the notes command on the current file
+" Open notes
 nnoremap <leader>n :vs ~/Desktop/notes<cr>
 
 " Move across windows holding control
@@ -61,25 +60,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Some common toggles
-nnoremap <leader>l :setlocal list!<cr>
-nnoremap <leader>s :setlocal spell!<cr>
-nnoremap <leader>w :setlocal wrap!<cr>
-
 " SyntasticToggle
-nnoremap <leader>z :SyntasticToggleMode<cr>
-" Reformat the current buffer
-nnoremap <leader>r mzgqG`z
+nnoremap cz :SyntasticToggleMode<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
 
-" Eval till = char
-nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
-
 " Calling external commands
 nnoremap <leader>i :r !idea -v<cr>"zy$dd:e <C-r>z<cr>
-nnoremap <leader>c :!class 
 
 " Edit Bash Profile
 nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
@@ -134,11 +122,19 @@ augroup vim
 	autocmd!
 	autocmd FileType vim :setlocal foldmethod=marker
 augroup END
+
+augroup C
+	autocmd!
+	autocmd FileType c :iabbrev <buffer> print printf("")<esc>F"i
+	autocmd FileType c :iabbrev <buffer> { {<esc>o}<esc>O 
+	" } Fixes syntax highlights in this file
+augroup END
 " }}}
 
 " Color Scheme {{{
 " ====================
 " set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+set t_ut=               " Fixes colors in tmux
 set t_Co=256
 colorscheme badwolf
 " colorscheme sky
