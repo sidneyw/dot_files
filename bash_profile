@@ -66,6 +66,7 @@ PATH="/usr/local/bin:${PATH}"
 PATH="$HOME/android-sdk-linux/platform-tools:${PATH}"
 
 PATH="$HOME/.ovid/current:${PATH}"
+PATH="$HOME/dev/stuff:${PATH}"
 export PATH
 
 export USE_CCACHE=1

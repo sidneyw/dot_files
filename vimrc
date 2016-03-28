@@ -60,6 +60,12 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" reload the all files in the arg list
+nnoremap <leader>r :argdo e!<cr>
+
+" Use vimgrep to search for the previous search in the current file
+nnoremap <leader>v :vimgrep /<C-r>// %<cr>
+
 " SyntasticToggle
 nnoremap cz :SyntasticToggleMode<cr>
 
