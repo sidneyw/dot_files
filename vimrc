@@ -61,8 +61,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Reformat the current buffer
-nnoremap <leader>r mzgqG`z
+" reload the all files in the arg list
+nnoremap <leader>r :argdo e!<cr>
+
+" Use vimgrep to search for the previous search in the current file
+nnoremap <leader>v :vimgrep /<C-r>// %<cr>
+
+" SyntasticToggle
+nnoremap cz :SyntasticToggleMode<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
