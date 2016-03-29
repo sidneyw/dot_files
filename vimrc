@@ -26,6 +26,7 @@ set colorcolumn=80      " Turn on the colored column at column 80
 set textwidth=90
 set spelllang=en_us
 set nowrap              " Turn off line wraps
+set t_ut=
 
 set shell=bash\ --login " make the sh command source the bash_profile
 
@@ -51,8 +52,8 @@ nnoremap <leader>df vf{%d
 nnoremap <silent> <leader>a <C-w>10<
 nnoremap <silent> <leader>d <C-w>10>
 
-" Open notes
-nnoremap <leader>n :vs ~/Desktop/notes<cr>
+" Run the notes command on the current file
+nnoremap <leader>n :!notes -c % -o<cr>
 
 " Move across windows holding control
 nnoremap <C-h> <C-w>h
@@ -60,11 +61,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" SyntasticToggle
-nnoremap cz :SyntasticToggleMode<cr>
+" Reformat the current buffer
+nnoremap <leader>r mzgqG`z
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
+
+" Eval till = char
+nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
 " Calling external commands
 nnoremap <leader>i :r !idea -v<cr>"zy$dd:e <C-r>z<cr>
@@ -76,7 +80,7 @@ nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
 " Edit vimrc 
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit ~/.vim/vimrc<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -118,27 +122,21 @@ augroup html
 	autocmd FileType html :setlocal nowrap
 augroup END
 
+augroup C
+	autocmd!
+	autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki	<bs>
+augroup END
+
 augroup vim
 	autocmd!
 	autocmd FileType vim :setlocal foldmethod=marker
-augroup END
-
-augroup C
-	autocmd!
-	autocmd FileType c :iabbrev <buffer> print printf("")<esc>F"i
-	autocmd FileType c :iabbrev <buffer> { {<esc>o}<esc>O 
-	" } Fixes syntax highlights in this file
 augroup END
 " }}}
 
 " Color Scheme {{{
 " ====================
-" set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
-set t_ut=               " Fixes colors in tmux
-set t_Co=256
 colorscheme badwolf
 " colorscheme sky
-" colorscheme lanox
 " colorscheme brogrammer
 " highlight ColorColumn cterm=NONE ctermbg=green
 
@@ -166,14 +164,10 @@ iabbrev tehn then
 iabbrev Tehn Then
 
 iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
-iabbrev xbash #!/bin/bash<cr>
-iabbrev xpython #!/usr/bin/python<cr>
 
 " Turn sleep on and off
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
-
-cnoreabbr xwhite %s/    /\t/g
 
 " }}}
 
@@ -203,7 +197,6 @@ let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 set winfixwidth
-set winfixheight
 
 " }}}
 
@@ -225,9 +218,10 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " badwolf
 " dark
 " durant
+" luna
 " sky
 " wombat
-let g:airline_theme= 'dark'
+let g:airline_theme= 'durant'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -246,8 +240,6 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:airline_section_warning = '[syntastic]'
 let g:airline#extensions#whitespace#checks = 'long'
 
-let g:airline#extensions#tmuxline#enabled = 1
-
 " }}}
 
 " Tmux line {{{
@@ -261,16 +253,8 @@ let g:airline#extensions#tmuxline#enabled = 1
 " righteous
 " tmux
 
-let g:tmuxline_preset = 'full'
+let g:tmuxline_preset = 'powerline'
 
-" crosshair
-" full
-" minimal
-" nightly_fox
-" powerline
-" righteous
-" tmux
-" let g:tmuxline_preset = 'powerline'
 " }}}
 
 " Syntastic {{{
@@ -280,20 +264,19 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" Python Config
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501,W191,E128'
-
 let g:syntastic_mode_map = {'mode': 'active',
 	\ 'active_filetypes': [],
 	\ 'passive_filetypes': ['html'] }
 
+
+let g:syntastic_javascript_checkers = ['jshint']
 " }}}
 
 " Ctrl P {{{
 " ======================
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_working_path_mode='a'
+nnoremap <C-q> :CtrlPBuffer<cr>
+nnoremap <C-w> :CtrlPMRU<cr>
 
 " }}}
 
