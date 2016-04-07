@@ -78,6 +78,7 @@ nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
 " Calling external commands
 nnoremap <leader>i :r !idea -v<cr>"zy$dd:e <C-r>z<cr>
+nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 
 " Edit Bash Profile
 nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
@@ -170,10 +171,12 @@ iabbrev tehn then
 iabbrev Tehn Then
 
 iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
+iabbrev xbash #!/bin/bash
 
 " Turn sleep on and off
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
+cnoreabbr makec make clean; make
 
 " }}}
 
