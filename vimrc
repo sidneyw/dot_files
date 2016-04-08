@@ -68,7 +68,7 @@ nnoremap <leader>r :argdo e!<cr>
 nnoremap <leader>v :vimgrep /<C-r>// %<cr>
 
 " SyntasticToggle
-nnoremap cz :SyntasticToggleMode<cr>
+nnoremap coz :SyntasticToggleMode<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
@@ -172,10 +172,12 @@ iabbrev Tehn Then
 
 iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
 iabbrev xbash #!/bin/bash
+iabbrev xpython #!/usr/bin/python
 
 " Turn sleep on and off
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
+
 cnoreabbr makec make clean; make
 
 " }}}
