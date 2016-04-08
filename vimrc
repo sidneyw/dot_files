@@ -78,6 +78,7 @@ nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
 " Calling external commands
 nnoremap <silent> <leader>i :call Idea()<cr>
+nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 
 " Edit Bash Profile
 nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
@@ -170,10 +171,12 @@ iabbrev tehn then
 iabbrev Tehn Then
 
 iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
+iabbrev xbash #!/bin/bash
 
 " Turn sleep on and off
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
+cnoreabbr makec make clean; make
 
 " }}}
 
@@ -232,7 +235,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " luna
 " sky
 " wombat
-let g:airline_theme= 'durant'
+let g:airline_theme= 'badwolf'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -264,7 +267,17 @@ let g:airline#extensions#whitespace#checks = 'long'
 " righteous
 " tmux
 
-let g:tmuxline_preset = 'powerline'
+" let g:tmuxline_preset = 'powerline'
+let g:tmuxline_preset = {
+	\'a'       : '#S:#I',
+	\'b disabled'       : '',
+	\'c disabled'       : '',
+	\'win'     : ['#I', '#W'],
+	\'cwin'    : ['#I', '#W'],
+	\'x disabled'       : '',
+	\'y'       : ['%a', '%m-%d-%Y', '%l:%M%p'],
+	\'z'       : ['#(whoami)', '#h'],
+	\'options' : {'status-justify': 'left'}}
 
 " }}}
 
@@ -280,14 +293,14 @@ let g:syntastic_mode_map = {'mode': 'active',
 	\ 'passive_filetypes': ['html'] }
 
 
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191'
 let g:syntastic_javascript_checkers = ['jshint']
 " }}}
 
 " Ctrl P {{{
 " ======================
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-nnoremap <C-u> :CtrlPMRU<cr>
-
 " }}}
 
 " }}}
