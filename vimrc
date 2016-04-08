@@ -67,8 +67,8 @@ nnoremap <leader>r :argdo e!<cr>
 " Use vimgrep to search for the previous search in the current file
 nnoremap <leader>v :vimgrep /<C-r>// %<cr>
 
-" SyntasticToggle
-nnoremap cz :SyntasticToggleMode<cr>
+" SyntasticToggle - following vim unimpaired style
+nnoremap coz :SyntasticToggleMode<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
@@ -77,7 +77,7 @@ nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
 nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
 " Calling external commands
-nnoremap <leader>i :r !idea -v<cr>"zy$dd:e <C-r>z<cr>
+nnoremap <silent> <leader>i :call Idea()<cr>
 
 " Edit Bash Profile
 nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
@@ -179,6 +179,11 @@ cnoreabbr kcaf !killall caffeinate
 
 " Functions {{{
 " ===================
+function! Idea()
+	let filename = expand(system("~/bin/idea"))
+	echom filename
+	execute "edit" filename
+endfunction
 
 " }}}
 
@@ -281,8 +286,7 @@ let g:syntastic_javascript_checkers = ['jshint']
 " Ctrl P {{{
 " ======================
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-nnoremap <C-q> :CtrlPBuffer<cr>
-nnoremap <C-w> :CtrlPMRU<cr>
+nnoremap <C-u> :CtrlPMRU<cr>
 
 " }}}
 
