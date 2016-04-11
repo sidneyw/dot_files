@@ -65,9 +65,9 @@ nnoremap <C-l> <C-w>l
 nnoremap <leader>r :argdo e!<cr>
 
 " Use vimgrep to search for the previous search in the current file
-nnoremap <leader>v :vimgrep /<C-r>// %<cr>
+nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
 
-" SyntasticToggle
+" SyntasticToggle - following vim unimpaired style
 nnoremap coz :SyntasticToggleMode<cr>
 
 " Change CWD for the window to the dir of the current file
@@ -77,7 +77,7 @@ nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
 nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
 " Calling external commands
-nnoremap <leader>i :r !idea -v<cr>"zy$dd:e <C-r>z<cr>
+nnoremap <silent> <leader>i :call Idea()<cr>
 nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 
 " Edit Bash Profile
@@ -114,13 +114,12 @@ augroup END
 augroup python
 	autocmd!
 	autocmd FileType python :nnoremap <buffer> <leader>t :!python <C-r>%<cr>
+	autocmd FileType python :setlocal list foldmethod=indent
 augroup END
 
 augroup javascript
 	autocmd!
-	autocmd FileType javascript :iabbrev <buffer> clog console.log()<esc>i
-	autocmd FileType javascript :iabbrev <buffer> { {<esc>o}<esc>O 
-	" } Fixes syntax highlights in this file
+	autocmd FileType javascript :iabbrev <buffer> clog console.log()<esc>i<bs>
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
 augroup END
 
@@ -184,6 +183,11 @@ cnoreabbr makec make clean; make
 
 " Functions {{{
 " ===================
+function! Idea()
+	let filename = expand(system("~/bin/idea"))
+	echom filename
+	execute "edit" filename
+endfunction
 
 " }}}
 
@@ -232,7 +236,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " luna
 " sky
 " wombat
-let g:airline_theme= 'badwolf'
+let g:airline_theme= 'dark'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -297,8 +301,11 @@ let g:syntastic_javascript_checkers = ['jshint']
 
 " Ctrl P {{{
 " ======================
+
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-nnoremap <C-q> :CtrlPBuffer<cr>
+nnoremap <leader>m :CtrlPMRUFiles<cr>
+nnoremap <leader>b :CtrlPBuffer<cr>
+
 " }}}
 
 " }}}
