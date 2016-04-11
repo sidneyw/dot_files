@@ -113,8 +113,8 @@ augroup END
 
 augroup python
 	autocmd!
-	autocmd FileType python :nnoremap <buffer> <leader>t :!python <C-r>%<cr>
 	autocmd FileType python :setlocal list foldmethod=indent
+	autocmd FileType python :nnoremap <buffer> <leader>t :!python <C-r>%<cr>
 augroup END
 
 augroup javascript
@@ -130,6 +130,7 @@ augroup END
 
 augroup C
 	autocmd!
+	autocmd FileType c :setlocal list foldmethod=syntax
 	autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki	<bs>
 augroup END
 
@@ -269,17 +270,17 @@ let g:airline#extensions#whitespace#checks = 'long'
 " tmux
 
 " let g:tmuxline_preset = 'powerline'
-let g:tmuxline_preset = {
-	\'a'       : '#S:#I',
-	\'b disabled'       : '',
-	\'c disabled'       : '',
-	\'win'     : ['#I', '#W'],
-	\'cwin'    : ['#I', '#W'],
-	\'x disabled'       : '',
-	\'y'       : ['%a', '%m-%d-%Y', '%l:%M%p'],
-	\'z'       : ['#(whoami)', '#h'],
-	\'options' : {'status-justify': 'left'}}
-
+" let g:tmuxline_preset = {
+" 	\'a'       : '#S:#I',
+" 	\'b disabled'       : '',
+" 	\'c disabled'       : '',
+" 	\'win'     : ['#I', '#W'],
+" 	\'cwin'    : ['#I', '#W'],
+" 	\'x disabled'       : '',
+" 	\'y'       : ['%a', '%m-%d-%Y', '%l:%M%p'],
+" 	\'z'       : ['#(whoami)', '#h'],
+" 	\'options' : {'status-justify': 'left'}}
+" 
 " }}}
 
 " Syntastic {{{
