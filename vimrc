@@ -64,11 +64,18 @@ nnoremap <C-l> <C-w>l
 " reload the all files in the arg list
 nnoremap <leader>r :argdo e!<cr>
 
-" Use vimgrep to search for the previous search in the current file
+" Use vimgrep to search for the previous search in the arg list
 nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
 
 " SyntasticToggle - following vim unimpaired style
 nnoremap coz :SyntasticToggleMode<cr>
+nnoremap <leader>z :Tmuxline airline_insert<cr>
+
+nnoremap <leader>p :echo expand("%")<cr>
+
+" Open and close the quickfix list
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cc :cclose<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
@@ -178,7 +185,8 @@ iabbrev xpython #!/usr/bin/python
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
 
-cnoreabbr makec make clean; make
+cnoreabbr makec make clean; make -j
+cnoreabbr xwhite %s/    /\t/g
 
 " }}}
 
@@ -237,7 +245,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " luna
 " sky
 " wombat
-let g:airline_theme= 'dark'
+let g:airline_theme= 'wombat'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -308,5 +316,17 @@ nnoremap <leader>m :CtrlPMRUFiles<cr>
 nnoremap <leader>b :CtrlPBuffer<cr>
 
 " }}}
+
+" Fugitive {{{
+" ======================
+
+nnoremap $b :Gblame<cr>
+nnoremap $c :Gcommit<cr>
+nnoremap $d :Gdiff<cr>
+nnoremap $s :Gstatus<cr>
+nnoremap $w :Gwrite<cr>
+
+" }}} 
+
 
 " }}}
