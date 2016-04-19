@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	PS1=$OPS1
+
+elif [ "$1" == "-g" ]
+then 
+	PS1=$GPS1
+
+elif [ "$1" == "-i" ]
+then
+	PS1=$IPS1
+
+elif [ "$1" == "-s" ]
+then
+	PS1=$Old_PS1
+
+else
+	echo "Invalid paramaters"
+	echo "prompt [-g | -i | -s]"
+	exit 1
+fi
