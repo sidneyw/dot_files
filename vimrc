@@ -52,14 +52,14 @@ nnoremap <leader>df vf{%d
 nnoremap <silent> <leader>a <C-w>10<
 nnoremap <silent> <leader>d <C-w>10>
 
-" Run the notes command on the current file
-nnoremap <leader>n :!notes -c % -o<cr>
-
 " Move across windows holding control
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Run the notes command on the current file
+nnoremap <leader>n :!notes -c % -o<cr>
 
 " reload the all files in the arg list
 nnoremap <leader>r :argdo e!<cr>
@@ -69,9 +69,12 @@ nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
 
 " SyntasticToggle - following vim unimpaired style
 nnoremap coz :SyntasticToggleMode<cr>
+
+" Change Tmux Line color scheme
 nnoremap <leader>z :Tmuxline airline_insert<cr>
 
-nnoremap <leader>p :echo expand("%")<cr>
+" See the full file path 
+nnoremap <leader>p :echo expand("%:p")<cr>
 
 " Open and close the quickfix list
 nnoremap <leader>co :copen<cr>
@@ -83,30 +86,34 @@ nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
 " Eval till = char
 nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
-" Calling external commands
 nnoremap <silent> <leader>i :call Idea()<cr>
+
+" Calling external commands
 nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 
+" Run the current line as a command and read in the output
+nnoremap <leader>q !!sh<cr>
+
 " Edit Bash Profile
-nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
+nnoremap <leader>eb :split ~/.bash_profile<cr>
 
 " Source Bash Profile
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
 " Edit vimrc 
-nnoremap <leader>ev :vsplit ~/.vim/vimrc<cr>
+nnoremap <leader>ev :split ~/.vim/vimrc<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Edit tmux config
-nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
+nnoremap <leader>et :split ~/.tmux.conf<cr>
 
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
 
 " Edit my GTD todo list
-nnoremap <leader>g :vsplit ~/Desktop/todo.txt<cr>
+nnoremap <leader>g :split ~/Desktop/todo.txt<cr>
 
 " }}}
 
@@ -181,12 +188,15 @@ iabbrev xdate <c-r>=strftime("%m/%d/%y %H:%M:%S")<cr><esc>@o2jo
 iabbrev xbash #!/bin/bash
 iabbrev xpython #!/usr/bin/python
 
-" Turn sleep on and off
+" Turn sleep on and off (OSX)
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
 
-cnoreabbr makec make clean; make -j
+" Todo: use retab instead
 cnoreabbr xwhite %s/    /\t/g
+
+cnoreabbr makec make! clean; make -j
+cnoreabbr makel make! load_elf -j
 
 " }}}
 
@@ -214,7 +224,7 @@ endfunction
 " NERDTree {{{
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-" ignore .o files - see help NERDTreeIgnore
+" ignore .o files - see :h NERDTreeIgnore
 let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]']
 
 " Close vim if nerdtree is the only window open
@@ -245,7 +255,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " luna
 " sky
 " wombat
-let g:airline_theme= 'dark'
+let g:airline_theme= 'durant'
 
 let g:airline#extensions#bufferline#enabled = 1
 

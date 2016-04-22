@@ -28,11 +28,10 @@ alias 2='python'
 
 # tmux
 alias tmux="tmux -2"
+alias ta="tmux attach"
 TERM=xterm-256color
 
-# scripts that need to run in current shell
-alias dt='. dt'
-alias class='. class'
+# scripts that need to run in current shell alias dt='. dt' alias class='. class'
 alias idea='. idea'
 alias prompt='. prompt'
 
