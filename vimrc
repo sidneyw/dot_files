@@ -58,8 +58,8 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Run the notes command on the current file
-nnoremap <leader>n :!notes -c % -o<cr>
+" Make with all cores
+nnoremap <leader>n :make! -j<cr>
 
 " reload the all files in the arg list
 nnoremap <leader>r :argdo e!<cr>
@@ -121,7 +121,6 @@ nnoremap <leader>g :split ~/Desktop/todo.txt<cr>
 " ====================
 augroup text
 	autocmd!
-
 	autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
 augroup END
 
@@ -135,6 +134,11 @@ augroup javascript
 	autocmd!
 	autocmd FileType javascript :iabbrev <buffer> clog console.log()<esc>i<bs>
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+augroup END
+
+augroup sh
+	autocmd!
+	autocmd FileType sh :nnoremap <buffer> <leader>t :!./%<cr>
 augroup END
 
 augroup html
@@ -156,10 +160,10 @@ augroup END
 
 " Color Scheme {{{
 " ====================
+hi clear
 colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
-" highlight ColorColumn cterm=NONE ctermbg=green
 
 " }}}
 
@@ -198,6 +202,8 @@ cnoreabbr xwhite %s/    /\t/g
 cnoreabbr makec make! clean; make -j
 cnoreabbr makel make! load_elf -j
 
+cnoreabbr count %s///gn
+
 " }}}
 
 " Functions {{{
@@ -206,6 +212,14 @@ function! Idea()
 	let filename = expand(system("~/bin/idea"))
 	echom filename
 	execute "edit" filename
+endfunction
+
+function! MlTab()
+	let &l:tabstop = 2
+	let &l:shiftwidth = 2
+	let &l:softtabstop = 2
+	let &l:expandtab = 1
+	echo "Tabs Set to 2"
 endfunction
 
 " }}}
@@ -255,7 +269,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " luna
 " sky
 " wombat
-let g:airline_theme= 'durant'
+let g:airline_theme= 'dark'
 
 let g:airline#extensions#bufferline#enabled = 1
 

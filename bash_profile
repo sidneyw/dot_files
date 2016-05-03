@@ -49,7 +49,7 @@ alias todo="vim ~/Desktop/todo.txt"
 
 # other
 alias c="clear"
-alias makec="make clean; make"
+alias makec="make clean; make -j"
 
 # autojump
 . /usr/share/autojump/autojump.sh
