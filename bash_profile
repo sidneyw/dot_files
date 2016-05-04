@@ -17,6 +17,11 @@ export CLICOLOR=1
 LS_COLORS='di=0;35'
 export LS_COLORS
 
+# vi commandline mode
+set -o vi
+
+# C-x C-e to open vim and edit a command there
+EDITOR="vim"
 
 # Aliases go here: 
 alias ls='ls -GFh'

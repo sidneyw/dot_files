@@ -219,7 +219,13 @@ function! MlTab()
 	let &l:shiftwidth = 2
 	let &l:softtabstop = 2
 	let &l:expandtab = 1
+	exe "retab"
 	echo "Tabs Set to 2"
+endfunction
+
+function! ArgExp()
+	argdo exe "normal! zR"
+	syntax on
 endfunction
 
 " }}}
