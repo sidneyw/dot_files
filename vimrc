@@ -137,6 +137,17 @@ augroup javascript
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
 augroup END
 
+augroup bash
+	autocmd!
+	autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
+augroup END
+
+augroup processing
+	autocmd!
+	autocmd BufReadPost,BufNewFile *.pde :call ProcessTab()
+	autocmd BufReadPost *.pde :nnoremap <buffer> <leader>t :!prun %<cr>
+augroup END
+
 augroup html
 	autocmd!
 	autocmd FileType html :setlocal nowrap
@@ -204,8 +215,15 @@ cnoreabbr makel make! load_elf -j
 " ===================
 function! Idea()
 	let filename = expand(system("~/bin/idea"))
-	echom filename
 	execute "edit" filename
+endfunction
+
+function! ProcessTab()
+	let &l:tabstop=2
+	let &l:softtabstop=2
+	let &l:shiftwidth=2
+	let &l:expandtab=1
+	execute "retab"
 endfunction
 
 " }}}
