@@ -58,8 +58,8 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Run the notes command on the current file
-nnoremap <leader>n :!notes -c % -o<cr>
+" Make with all cores
+nnoremap <leader>n :make! -j<cr>
 
 " reload the all files in the arg list
 nnoremap <leader>r :argdo e!<cr>
@@ -121,7 +121,6 @@ nnoremap <leader>g :split ~/Desktop/todo.txt<cr>
 " ====================
 augroup text
 	autocmd!
-
 	autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
 augroup END
 
@@ -167,10 +166,10 @@ augroup END
 
 " Color Scheme {{{
 " ====================
+hi clear
 colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
-" highlight ColorColumn cterm=NONE ctermbg=green
 
 " }}}
 
@@ -209,6 +208,8 @@ cnoreabbr xwhite %s/    /\t/g
 cnoreabbr makec make! clean; make -j
 cnoreabbr makel make! load_elf -j
 
+cnoreabbr count %s///gn
+
 " }}}
 
 " Functions {{{
@@ -218,12 +219,18 @@ function! Idea()
 	execute "edit" filename
 endfunction
 
-function! ProcessTab()
-	let &l:tabstop=2
-	let &l:softtabstop=2
-	let &l:shiftwidth=2
-	let &l:expandtab=1
-	execute "retab"
+function! MlTab()
+	let &l:tabstop = 2
+	let &l:shiftwidth = 2
+	let &l:softtabstop = 2
+	let &l:expandtab = 1
+	exe "retab"
+	echo "Tabs Set to 2"
+endfunction
+
+function! ArgExp()
+	argdo exe "normal! zR"
+	syntax on
 endfunction
 
 " }}}
@@ -273,7 +280,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " luna
 " sky
 " wombat
-let g:airline_theme= 'durant'
+let g:airline_theme= 'dark'
 
 let g:airline#extensions#bufferline#enabled = 1
 
