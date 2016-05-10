@@ -136,9 +136,15 @@ augroup javascript
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
 augroup END
 
-augroup sh
+augroup bash
 	autocmd!
-	autocmd FileType sh :nnoremap <buffer> <leader>t :!./%<cr>
+	autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
+augroup END
+
+augroup processing
+	autocmd!
+	autocmd BufReadPost,BufNewFile *.pde :call ProcessTab()
+	autocmd BufReadPost *.pde :nnoremap <buffer> <leader>t :!prun %<cr>
 augroup END
 
 augroup html
@@ -210,7 +216,6 @@ cnoreabbr count %s///gn
 " ===================
 function! Idea()
 	let filename = expand(system("~/bin/idea"))
-	echom filename
 	execute "edit" filename
 endfunction
 
