@@ -1,6 +1,6 @@
 #!/bin/bash
-
 # Creates symlinks for dotfiles
+
 dir="$HOME/.dot_files"
 
 echo "Dot files folder: $dir"
