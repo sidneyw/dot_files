@@ -10,8 +10,8 @@ execute pathogen#infect()
 " To allow \":Man cmd"
 runtime! ftplugin/man.vim
 
-" set number              " Line numbers
 set relativenumber
+set number              " Line numbers
 syntax on               " syntax highlighting
 set tabstop=4
 set shiftwidth=4
