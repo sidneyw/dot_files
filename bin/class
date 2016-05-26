@@ -1,0 +1,97 @@
+#!/bin/bash
+# A simple script to make starting homework easier 
+
+# Add the google functionality 
+# open -a /Applications/Google Chrome.app 'http://google.com/' 'http://facebook.com/'
+
+# ============================
+# Functions
+# ============================
+
+function class_usage {
+	echo "class [options]"
+	echo "-u usage"
+	echo "-a anthro17"
+	echo "-d cs24"
+	echo "-c cs30"
+	echo "-w open websites for class"
+	echo "-n note taking"
+	echo "-b backup classes"
+	echo "no opt leads to the 16W dir"
+}
+
+function anthro {
+	cd ~/Documents/16W/ANTH17
+	echo "Anthro 17" 
+	ls
+
+	open ~/Documents/16W/ANTH17/Syllabus.pdf
+	open -a /Applications/Google\ Chrome.app 'https://canvas.dartmouth.edu/courses/13291'
+}
+
+function animation {
+	cd ~/Documents/16W/CS24
+	echo "Animation"
+	ls
+
+	open -a /Applications/Google\ Chrome.app 'https://canvas.dartmouth.edu/courses/13375'
+}
+
+function cs {
+	cd ~/Documents/16W/CS30
+	echo "Discrete Mathematics"
+	ls
+
+	open Rosen.pdf
+	open mcs.pdf
+	open -a /Applications/Google\ Chrome.app 'http://www.cs.dartmouth.edu/~cs30/'
+}
+
+function courses {
+	cd ~/Documents/16W/
+	echo "16W Courses"
+	ls
+}
+
+function note {
+	cd ~/Documents/16W/
+	echo "16W Courses"
+	ls
+	vim
+}
+
+function backup {
+	echo "Backing up to ~/Google\ Drive/16W/"
+	cp -rf /Users/sidneywijngaarde/Documents/16W/ /Users/sidneywijngaarde/Google\ Drive/16W/
+
+	if [ $? != 0 ]
+	then
+		echo "Files Backed up to ~Google\ Drive/16W"
+	else 
+		echo $?
+		echo "Files could not be backedup"
+	fi
+}
+
+# ============================
+# Get Opts Logic
+# ============================
+
+if [ $# -eq 0 ]
+then 
+	courses
+fi
+
+while getopts ":uadcnb" option; do 
+	case $option in 
+		u)  class_usage;;
+		a)  anthro;; 
+		d)  animation;;
+		c)  cs;;
+		n)  note;;
+		b)  backup;;
+
+		\?) usage;
+		    courses;;
+	esac
+done

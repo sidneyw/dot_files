@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	cd ~/Desktop/
+	ls
+else
+
+	for i in ${@:1:$#}
+	do
+
+		# check if the file exists
+		if [ -f $i ]
+		then
+			mv  $i ~/Desktop
+		else
+			echo "File: $i does not exist"
+			break
+		fi
+	done 
+
+fi

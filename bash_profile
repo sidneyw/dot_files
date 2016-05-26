@@ -17,9 +17,6 @@ export CLICOLOR=1
 LS_COLORS='di=0;35'
 export LS_COLORS
 
-# vi commandline mode
-set -o vi
-
 # C-x C-e to open vim and edit a command there
 EDITOR="vim"
 
@@ -39,6 +36,9 @@ TERM=xterm-256color
 # scripts that need to run in current shell alias dt='. dt' alias class='. class'
 alias idea='. idea'
 alias prompt='. prompt'
+alias dt='. dt'
+
+alias pi="ssh pi@192.168.1.65"
 
 # sql server
 alias sql='sudo /usr/local/mysql/bin/mysql -u root'
@@ -46,18 +46,23 @@ alias sql='sudo /usr/local/mysql/bin/mysql -u root'
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
 # code helpers
-alias server="python -m SimpleHTTPServer 9000"
+alias server="python -m SimpleHTTPServer"
 alias mygcc="gcc -Wall -pedantic -std=c11"
 
 # open vim with all my todos in splits
-alias todo="vim ~/Desktop/todo.txt"
+alias todo="vim ~/Documents/GTD/daily.txt ~/Documents/GTD/weekly.txt ~/Documents/GTD/monthly.txt -O -c \"windo exe 'normal zR'\""
+
+# create a single todo list
+alias gtd="cat ~/Desktop/daily.txt ~/Desktop/weekly.txt ~/Desktop/monthly.txt > ~/Desktop/todo.txt"
 
 # other
 alias c="clear"
 alias makec="make clean; make -j"
 
 # autojump
-. /usr/share/autojump/autojump.sh
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+	# Ubuntu
+	# . /usr/share/autojump/autojump.sh
 
 PATH=$PATH:~/bin
 
@@ -72,15 +77,6 @@ PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
 
 PATH="/usr/local/bin:${PATH}"
 
-# For adb
-PATH="$HOME/android-sdk-linux/platform-tools:${PATH}"
-
-PATH="$HOME/.ovid/current:${PATH}"
-PATH="$HOME/dev/stuff:${PATH}"
-export PATH
-
-export USE_CCACHE=1
-export CCACHE_DIR=$HOME/android-sdk-linux/cache
-
+# Ubuntu
 # Swap escape and caps lock
-/usr/bin/setxkbmap -option "caps:swapescape"
+# /usr/bin/setxkbmap -option "caps:swapescape"
