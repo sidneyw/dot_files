@@ -53,7 +53,7 @@ alias mygcc="gcc -Wall -pedantic -std=c11"
 alias todo="vim ~/Documents/GTD/daily.txt ~/Documents/GTD/weekly.txt ~/Documents/GTD/monthly.txt -O -c \"windo exe 'normal zR'\""
 
 # create a single todo list
-alias gtd="cat ~/Desktop/daily.txt ~/Desktop/weekly.txt ~/Desktop/monthly.txt > ~/Desktop/todo.txt"
+alias gtd="cat ~/Documents/GTD/daily.txt ~/Documents/GTD/weekly.txt ~/Documents/GTD/monthly.txt > ~/Documents/GTD/todo.txt"
 
 # other
 alias c="clear"
