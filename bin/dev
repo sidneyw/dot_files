@@ -14,5 +14,5 @@ then
 fi
 
 tmux new-session -s ${session_name} -d
-tmux send-keys -t ${session_name} "tmux source-file ~/.vim/tmux/dev.conf" C-m "clear" C-m
+tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files/tmux/dev.conf" C-m "clear" C-m
 tmux attach -t ${session_name}

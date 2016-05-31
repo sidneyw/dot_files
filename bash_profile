@@ -52,9 +52,6 @@ alias mygcc="gcc -Wall -pedantic -std=c11"
 # open vim with all my todos in splits
 alias todo="vim ~/Documents/GTD/daily.txt ~/Documents/GTD/weekly.txt ~/Documents/GTD/monthly.txt -O -c \"windo exe 'normal zR'\""
 
-# create a single todo list
-alias gtd="cat ~/Documents/GTD/daily.txt ~/Documents/GTD/weekly.txt ~/Documents/GTD/monthly.txt > ~/Documents/GTD/todo.txt"
-
 # other
 alias c="clear"
 alias makec="make clean; make -j"
