@@ -1,15 +1,15 @@
 # for bash prompt
-_time="\[\e[1;34m\][\[\e[0;32m\]\@\[\e[1;34m\]]"
-_user="[\e[0;34m\]\u\[\e[1;34m\]]"	
-_dir="[\[\e[0;32m\]\w\[\e[1;34m\]]"
-_info="\[\e[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(du -hs)\[\e[1;34m\]"
-_history="[\[\e[0;33m\]\!\[\e[1;34m\]]"
-_git_branch="\[\e[1;34m\][\[\e[0;32m\]\$(gitbranch.sh)\[\e[1;34m\]]"
+_time="\[\e[0;34m\][\[\e[0;32m\]\@\[\e[0;34m\]]"
+_user="[\e[0;34m\]\u\[\e[0;34m\]]"	
+_dir="[\[\e[0;32m\]\w\[\e[0;34m\]]"
+_info="\[\e[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(du -hs)\[\e[0;34m\]"
+_history="[\[\e[0;33m\]\!\[\e[0;34m\]]"
+_git_branch="\[\e[0;34m\][\[\e[0;32m\]\$(gitbranch.sh)\[\e[0;34m\]]"
 
 Old_PS1="\[\033[32m\]\u:\[\033[31;1m\]\w\[\033[m\]\$ "
-OPS1="\n$_time-$_dir\[\e[1;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
-GPS1="\n$_time-$_git_branch-$_dir\[\e[1;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
-IPS1="\n$_time-$_info-$_dir\[\e[1;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+OPS1="\n$_time-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+GPS1="\n$_time-$_git_branch-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+IPS1="\n$_time-$_info-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
 
 PS1=$OPS1
 

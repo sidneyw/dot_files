@@ -11,7 +11,7 @@ execute pathogen#infect()
 runtime! ftplugin/man.vim
 
 set relativenumber
-set number              " Line numbers
+" set number              " Line numbers
 syntax on               " syntax highlighting
 set tabstop=4
 set shiftwidth=4
@@ -175,7 +175,8 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme badwolf
+colorscheme molokai
+" colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
 
