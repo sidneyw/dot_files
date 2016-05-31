@@ -175,7 +175,9 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme badwolf
+colorscheme molokai
+" colorscheme firewatch
+" colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
 
@@ -238,6 +240,15 @@ endfunction
 function! ArgExp()
 	argdo exe "normal! zR"
 	syntax on
+endfunction
+
+function! Todo()
+	tabe ~/Documents/GTD/monthly.txt
+	vs ~/Documents/GTD/weekly.txt
+	vs ~/Documents/GTD/daily.txt
+	windo exe "normal! zR"
+	wincmd h
+	wincmd h
 endfunction
 
 " }}}
@@ -321,8 +332,8 @@ let g:airline#extensions#whitespace#checks = 'long'
 " righteous
 " tmux
 
-" let g:tmuxline_preset = 'powerline'
-let g:tmuxline_theme = 'airline_insert'
+let g:tmuxline_preset = 'powerline'
+" let g:tmuxline_theme = 'airline_insert'
 " let g:tmuxline_preset = {
 " 	\'a'       : '#S:#I',
 " 	\'b disabled'       : '',
@@ -365,6 +376,7 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 nnoremap <leader>m :CtrlPMRUFiles<cr>
 nnoremap <leader>b :CtrlPBuffer<cr>
 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*'
 " }}}
 
 " Fugitive {{{
