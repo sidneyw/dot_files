@@ -35,6 +35,7 @@ set shell=bash\ --login " make the sh command source the bash_profile
 set listchars=tab:▸\ ,eol:¬
 
 let mapleader="-"
+let maplocalleader = "\\"
 
 " }}}
 
@@ -115,7 +116,7 @@ nnoremap <leader>et :split ~/.tmux.conf<cr>
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
 
 " Edit my GTD todo list
-nnoremap <leader>g :split ~/Desktop/todo.txt<cr>
+nnoremap <leader>g :call Todo()<cr>
 
 " }}}
 
@@ -382,6 +383,10 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*'
 " Fugitive {{{
 " ======================
 
+" Autoclean fugitive buffers
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" Mappings
 nnoremap $b :Gblame<cr>
 nnoremap $c :Gcommit<cr>
 nnoremap $d :Gdiff<cr>
