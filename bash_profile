@@ -61,6 +61,9 @@ alias makec="make clean; make -j"
 	# Ubuntu
 	# . /usr/share/autojump/autojump.sh
 
+# docker
+eval "$(docker-machine env default)"
+
 PATH=$PATH:~/bin
 
 # SQL

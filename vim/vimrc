@@ -134,8 +134,9 @@ augroup END
 
 augroup javascript
 	autocmd!
-	autocmd FileType javascript :iabbrev <buffer> clog console.log()<esc>i<bs>
-	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+	autocmd FileType javascript :iabbrev <buffer> clog console.log();<esc>i<bs>
+	" autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+	autocmd FileType javascript :nnoremap <buffer> <leader>t :!npm start <C-r>%<cr>
 	autocmd FileType javascript :call ShortTab()
 augroup END
 
