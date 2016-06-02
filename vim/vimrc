@@ -28,6 +28,10 @@ set textwidth=90
 set spelllang=en_us
 set nowrap              " Turn off line wraps
 set t_ut=
+set foldlevelstart=10   " most folds should be open on start
+set foldmethod=indent
+set lazyredraw          " Don't redraw the screen during a macro
+set mat=1               " How many seconds to blink on a matched paren
 
 set shell=bash\ --login " make the sh command source the bash_profile
 
@@ -239,16 +243,10 @@ function! ShortTab()
 	exe "retab"
 endfunction
 
-function! ArgExp()
-	argdo exe "normal! zR"
-	syntax on
-endfunction
-
 function! Todo()
 	tabe ~/Documents/GTD/monthly.txt
 	vs ~/Documents/GTD/weekly.txt
 	vs ~/Documents/GTD/daily.txt
-	windo exe "normal! zR"
 	wincmd h
 	wincmd h
 endfunction
