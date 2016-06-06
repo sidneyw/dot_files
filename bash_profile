@@ -38,7 +38,7 @@ alias idea='. idea'
 alias prompt='. prompt'
 alias dt='. dt'
 
-alias pi="ssh pi@192.168.1.65"
+alias pi="ssh pi@100.64.1.173"
 
 # sql server
 alias sql='sudo /usr/local/mysql/bin/mysql -u root'
