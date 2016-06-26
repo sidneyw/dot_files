@@ -9,6 +9,7 @@ ln -s $dir/tmux/tmux.conf $HOME/.tmux.conf
 ln -s $dir/vim/vimrc $HOME/.vimrc
 ln -s $dir/vim $HOME/.vim
 ln -s $dir/bash_profile $HOME/.bash_profile
+ln -s $dir/gitconfig $HOME/.gitconfig
 
 if [[ -d $HOME/bin ]]
 then

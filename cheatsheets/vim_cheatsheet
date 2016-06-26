@@ -56,3 +56,31 @@ Command Line FU
 <C-u> [...] <C-y> | Yank the current line, run another command, paste the original line
 vim -x filename   | Encrypt file
 <ESC> *           | Insert autocompletion results on the command line
+
+Vim Unimpaired
+======================
+
+*[a*     |:previous|
+*]a*     |:next|
+*[A*     |:first|
+*]A*     |:last|
+*[b*     |:bprevious|
+*]b*     |:bnext|
+*[B*     |:bfirst|
+*]B*     |:blast|
+*[l*     |:lprevious|
+*]l*     |:lnext|
+*[L*     |:lfirst|
+*]L*     |:llast|
+*[<C-L>* |:lpfile|
+*]<C-L>* |:lnfile|
+*[q*     |:cprevious|
+*]q*     |:cnext|
+*[Q*     |:cfirst|
+*]Q*     |:clast|
+*[<C-Q>* |:cpfile| (Note that <C-Q> only works in a terminal if you disable
+*]<C-Q>* |:cnfile| flow control: stty -ixon)
+*[t*     |:tprevious|
+*]t*     |:tnext|
+*[T*     |:tfirst|
+*]T*     |:tlast|
