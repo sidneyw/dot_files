@@ -333,7 +333,7 @@ let g:airline#extensions#whitespace#checks = 'long'
 " righteous
 " tmux
 
-let g:tmuxline_preset = 'powerline'
+let g:tmuxline_preset = 'crosshair'
 " let g:tmuxline_theme = 'airline_insert'
 " let g:tmuxline_preset = {
 " 	\'a'       : '#S:#I',
@@ -361,7 +361,7 @@ let g:syntastic_mode_map = {'mode': 'active',
 
 
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191'
+let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403'
 " let g:syntastic_javascript_checkers = ['jshint']
 " let g:syntastic_javascript_checkers = ['jsxhint']
 " let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
@@ -377,7 +377,7 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 nnoremap <leader>m :CtrlPMRUFiles<cr>
 nnoremap <leader>b :CtrlPBuffer<cr>
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*|build/*'
 " }}}
 
 " Fugitive {{{

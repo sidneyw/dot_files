@@ -1,17 +1,19 @@
-# for bash prompt
-_time="\[\e[0;34m\][\[\e[0;32m\]\@\[\e[0;34m\]]"
-_user="[\e[0;34m\]\u\[\e[0;34m\]]"	
-_dir="[\[\e[0;32m\]\w\[\e[0;34m\]]"
-_info="\[\e[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(du -hs)\[\e[0;34m\]"
-_history="[\[\e[0;33m\]\!\[\e[0;34m\]]"
-_git_branch="\[\e[0;34m\][\[\e[0;32m\]\$(gitbranch.sh)\[\e[0;34m\]]"
+# Bash prompt variables
+_time="\[\e[1;34m\][\[\e[0;32m\]\@\[\e[1;34m\]]"
+_user="[\e[0;34m\]\u\[\e[1;34m\]]"	
+_dir="[\[\e[0;32m\]\w\[\e[1;34m\]]"
+_info="\[\e[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(du -hs)\[\e[1;34m\]"
+_history="[\[\e[0;33m\]\!\[\e[1;34m\]]"
+_git_branch="\[\e[1;34m\][\[\e[0;32m\]\$(gitbranch.sh)\[\e[1;34m\]]"
 
+# Bash prompts
 Old_PS1="\[\033[32m\]\u:\[\033[31;1m\]\w\[\033[m\]\$ "
 OPS1="\n$_time-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
 GPS1="\n$_time-$_git_branch-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
 IPS1="\n$_time-$_info-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
 
-PS1=$OPS1
+# Default
+PS1=$GPS1
 
 export CLICOLOR=1
 LS_COLORS='di=0;35'
@@ -20,11 +22,16 @@ export LS_COLORS
 # C-x C-e to open vim and edit a command there
 EDITOR="vim"
 
+# Shortcuts
+vimrc="$HOME/.dot_files/vim/vimrc"
+tmux="$HOME/.dot_files/tmux/tmux.conf"
+gtd="$HOME/Documents/GTD"
+
 # Aliases go here: 
 alias ls='ls -GFh'
 alias ll='ls -la'
 
-# python
+# Python aliases
 alias 3='python3'
 alias 2='python'
 
@@ -33,7 +40,7 @@ alias tmux="tmux -2"
 alias ta="tmux attach"
 TERM=xterm-256color
 
-# scripts that need to run in current shell alias dt='. dt' alias class='. class'
+# Scripts that need to run in current shell 
 alias idea='. idea'
 alias prompt='. prompt'
 alias dt='. dt'
@@ -50,7 +57,7 @@ alias server="python -m SimpleHTTPServer"
 alias mygcc="gcc -Wall -pedantic -std=c11"
 
 # open vim with all my todos in splits
-alias todo="vim ~/Documents/GTD/daily.txt ~/Documents/GTD/weekly.txt ~/Documents/GTD/monthly.txt -O -c \"windo exe 'normal zR'\""
+alias todo="vim $gtd/daily.txt $gtd/weekly.txt $gtd/monthly.txt -O -c \"windo exe 'normal zR'\""
 
 # other
 alias c="clear"
