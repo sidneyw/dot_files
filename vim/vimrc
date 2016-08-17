@@ -11,7 +11,7 @@ execute pathogen#infect()
 runtime! ftplugin/man.vim
 
 set relativenumber
-" set number              " Line numbers
+set number              " Line numbers
 syntax on               " syntax highlighting
 set tabstop=4
 set shiftwidth=4
@@ -95,6 +95,8 @@ nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
 nnoremap <silent> <leader>i :call Idea()<cr>
 
+vnoremap <leader>c :'<,'>!column -t<cr>
+
 " Calling external commands
 nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 
@@ -135,6 +137,7 @@ augroup python
 	autocmd!
 	autocmd FileType python :setlocal list foldmethod=indent
 	autocmd FileType python :nnoremap <buffer> <leader>t :!python <C-r>%<cr>
+	autocmd FileType python :call PyTab()
 augroup END
 
 augroup javascript
@@ -182,9 +185,9 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme molokai
+" colorscheme molokai
 " colorscheme firewatch
-" colorscheme badwolf
+colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
 
@@ -244,6 +247,15 @@ function! ShortTab()
 	exe "retab"
 endfunction
 
+function! PyTab()
+	let &l:tabstop = 8
+	let &l:softtabstop = 0
+	setlocal expandtab
+	let &l:shiftwidth = 4
+	setlocal smarttab
+	exe "retab"
+endfunction
+
 function! Todo()
 	tabe ~/Documents/GTD/monthly.txt
 	vs ~/Documents/GTD/weekly.txt
@@ -274,7 +286,7 @@ let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]', 'node_modules$[[dir]]'
 " Close vim if nerdtree is the only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-set winfixwidth
+" set winfixwidth
 
 " }}}
 
@@ -384,12 +396,13 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*|build/*'
 " ======================
 
 " Autoclean fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
+" autocmd BufReadPost fugitive://* set bufhidden=delete
 
 " Mappings
 nnoremap $b :Gblame<cr>
 nnoremap $c :Gcommit<cr>
 nnoremap $d :Gdiff<cr>
+nnoremap $l :Glcd<cr>
 nnoremap $s :Gstatus<cr>
 nnoremap $w :Gwrite<cr>
 

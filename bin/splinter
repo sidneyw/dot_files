@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ~/dev
+session_name="Splinter"
+tmux new -s ${session_name} -d
+tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files/tmux/splinter.conf" C-m 
+tmux attach -t ${session_name}
