@@ -3,5 +3,5 @@
 cd ~/Desktop/fups
 session_name="Fups"
 tmux new -s ${session_name} -d
-tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files//tmux/fup.conf" C-m 
+tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files/tmux/fup.conf" C-m 
 tmux attach -t ${session_name}

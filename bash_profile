@@ -37,6 +37,7 @@ alias 2='python'
 
 # tmux
 alias tmux="tmux -2"
+alias tls="tmux ls"
 alias ta="tmux attach"
 TERM=xterm-256color
 
@@ -53,7 +54,7 @@ alias sql='sudo /usr/local/mysql/bin/mysql -u root'
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
 # code helpers
-alias server="python -m SimpleHTTPServer"
+# alias server="python -m SimpleHTTPServer"
 alias mygcc="gcc -Wall -pedantic -std=c11"
 
 # open vim with all my todos in splits
