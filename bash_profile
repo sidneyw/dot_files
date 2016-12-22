@@ -23,14 +23,15 @@ export LS_COLORS
 EDITOR="vim"
 
 # Shortcuts
-vimrc="$HOME/.dot_files/vim/vimrc"
-tmux="$HOME/.dot_files/tmux/tmux.conf"
-gtd="$HOME/Documents/GTD"
+export vimrc="$HOME/.dot_files/vim/vimrc"
+export tmux="$HOME/.dot_files/tmux/tmux.conf"
 
 # Aliases go here: 
 alias ls='ls -GFh'
 alias ll='ls -la'
 
+alias pi3="ssh pi@raspberrypi.local"
+alias godaddy="ssh thesquid17@107.180.41.49"
 # Python aliases
 alias 3='python3'
 alias 2='python'
@@ -69,6 +70,11 @@ alias makec="make clean; make -j"
 	# Ubuntu
 	# . /usr/share/autojump/autojump.sh
 
+# Bash Completion
+ if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	. $(brew --prefix)/etc/bash_completion
+fi
+
 PATH=$PATH:~/bin
 
 # SQL
@@ -82,6 +88,28 @@ PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
 
 PATH="/usr/local/bin:${PATH}"
 
+# Yarn path
+PATH="$PATH:`yarn global bin`"
+
 # Ubuntu
 # Swap escape and caps lock
 # /usr/bin/setxkbmap -option "caps:swapescape"
+
+# added by travis gem
+[ -f /Users/sidneywijngaarde/.travis/travis.sh ] && source /Users/sidneywijngaarde/.travis/travis.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /Users/sidneywijngaarde/Desktop/google-cloud-sdk/path.bash.inc ]; then
+  source '/Users/sidneywijngaarde/Desktop/google-cloud-sdk/path.bash.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /Users/sidneywijngaarde/Desktop/google-cloud-sdk/completion.bash.inc ]; then
+  source '/Users/sidneywijngaarde/Desktop/google-cloud-sdk/completion.bash.inc'
+fi
+
+# Go installs packages here
+export GOPATH="/Users/sidneywijngaarde/go/"
+
+# added by Anaconda3 4.2.0 installer
+export PATH="/Users/sidneywijngaarde/anaconda3/bin:$PATH"

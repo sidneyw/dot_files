@@ -1,0 +1,98 @@
+snippet arr "Arrow function"
+($1) => {
+  $0
+}
+endsnippet
+
+snippet clog "Console Log"
+console.log($1);
+endsnippet
+
+snippet desc "A Mocha describe function"
+describe("$1", () => {
+  $0
+});
+endsnippet
+
+snippet dis "Dispatch function"
+return (dispatch) => {
+  dispatch({type: $0})
+}
+endsnippet
+
+snippet edis "Eslint disable line"
+// eslint-disable-line
+endsnippet
+
+snippet func "Function"
+function($1){
+  $0
+}
+endsnippet
+
+snippet for "For loop"
+for(var $1 = 0; $1 < $2.length; $1++){
+  $0
+}
+endsnippet
+
+snippet props "Props destructure"
+const { $1 } = this.props$0;
+endsnippet
+
+snippet rclass "React class"
+import React, { Component, PropTypes } from "react";
+
+class $1 extends Component {
+  constructor() {
+    super();
+  }
+
+  render() {
+    return (
+      <div>$2</div>
+    );
+  }
+};
+
+$1.propTypes = {
+};
+
+export default $1;
+endsnippet
+
+snippet red "Reducer Boilerplate"
+[$1]: (state, action) => {
+  $0
+}
+endsnippet
+
+snippet req "Express arrow"
+(req, res) => {
+  $0
+}
+endsnippet
+
+snippet route "Express Route"
+router.$1("/$2", (req, res) => {
+  $0
+});
+endsnippet
+
+snippet test "A Mocha test case"
+it("$1", (done) => {
+  $0
+});
+endsnippet
+
+snippet tstr "Template String"
+\`${$0}\`
+endsnippet
+
+snippet \$ "Template placeholder"
+${$0}
+endsnippet
+
+snippet todo "A todo comment"
+// TODO: $1  - `!v strftime("%m/%d/%y %H:%M:%S")` `echo $USER`
+endsnippet

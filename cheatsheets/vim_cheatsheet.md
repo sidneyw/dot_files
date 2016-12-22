@@ -84,3 +84,15 @@ Vim Unimpaired
 *]t*     |:tnext|
 *[T*     |:tfirst|
 *]T*     |:tlast|
+
+Vim Surround
+======================
+cs"' change surrounding " to '
+ds"  delete surrounding "
+yss( Add surrounding braces
+cst" change html tag to "
+
+Vim Commentary
+======================
+gcc  toggle comment on a line
+gcap toggle comment on a paragraph

@@ -1,16 +1,17 @@
 #!/bin/bash
 
 # Idea dir
-dir="$HOME/Documents/Ideas/thoughts"
+dir="$HOME/Documents/Ideas/"
 
-# Append today's date
-new_file=$dir/$(date +%b%d)
+today=$(date +%b%d)
 
 
 if [ "$1" == "-v" ]
 then
 	# For calling inside of vim
-	echo $new_file
+	file_name="$dir/${2:-$today}"
+	echo $file_name
 else
-	vim "$new_file"
+	file_name="$dir/${1:-$today}"
+	vim "$file_name"
 fi
