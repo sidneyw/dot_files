@@ -1,0 +1,1 @@
+/Users/sidneywijngaarde/.dot_files/vim/vimrc

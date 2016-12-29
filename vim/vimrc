@@ -101,19 +101,19 @@ nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 nnoremap <leader>q !!sh<cr>
 
 " Edit Bash Profile
-nnoremap <leader>eb :split ~/.bash_profile<cr>
+nnoremap <leader>eb :tabe ~/.bash_profile<cr>
 
 " Source Bash Profile
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
 " Edit vimrc 
-nnoremap <leader>ev :split ~/.vim/vimrc<cr>
+nnoremap <leader>ev :tabe ~/.vim/vimrc<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Edit tmux config
-nnoremap <leader>et :split ~/.tmux.conf<cr>
+nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
@@ -231,6 +231,7 @@ cnoreabbr makec make! clean; make -j
 cnoreabbr makel make! load_elf -j
 
 cnoreabbr count %s///gn
+cnoreabbr double %s/'/"/g
 
 " }}}
 
@@ -314,7 +315,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " sky
 " wombat
 
-let g:airline_theme= 'durant'
+let g:airline_theme= 'murmur'
 
 let g:airline#extensions#bufferline#enabled = 1
 
@@ -346,7 +347,7 @@ let g:airline#extensions#whitespace#checks = 'long'
 " righteous
 " tmux
 
-let g:tmuxline_preset = 'powerline'
+let g:tmuxline_preset = 'full'
 " let g:tmuxline_theme = 'airline_insert'
 " let g:tmuxline_preset = {
 " 	\'a'       : '#S:#I',
@@ -416,6 +417,12 @@ nnoremap $c :Gcommit<cr>
 nnoremap $d :Gdiff<cr>
 nnoremap $s :Gstatus<cr>
 nnoremap $w :Gwrite<cr>
+
+augroup fugitive
+	autocmd!
+	" autocmd BufEnter *.git/index wincmd T
+	" autocmd BufEnter *.git/index if &ft == 'gitcommit' | Gtabedit | endif
+augroup END
 
 " }}} 
 
