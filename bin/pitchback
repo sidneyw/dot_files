@@ -4,4 +4,11 @@ cd ~/Desktop/Pitchback/frontend
 session_name="Pitchback"
 tmux new -s ${session_name} -d
 tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files/tmux/pitchback.conf" C-m
+open -a /Applications/Google\ Chrome.app "http://localhost:3000" \
+	"https://github.com/RcrsvSquid/pitchback-frontend" \
+	"https://travis-ci.org/" \
+	"https://dashboard.heroku.com/apps/pitchback" \
+	"http://www.material-ui.com/#/components/app-bar" \
+	"https://console.aws.amazon.com/s3/home?region=us-east-1"
+
 tmux attach -t ${session_name}
