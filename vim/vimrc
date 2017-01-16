@@ -149,13 +149,14 @@ augroup python
 	autocmd!
 	autocmd FileType python :setlocal list foldmethod=indent
 	autocmd FileType python :setlocal commentstring=#\ %s
-	autocmd FileType python :nnoremap <buffer> <leader>t :!python <C-r>%<cr>
+	autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
 augroup END
 
 augroup javascript
 	autocmd!
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
 	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
+	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
 	autocmd FileType javascript :call ShortTab()
 augroup END
 
@@ -371,7 +372,7 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = {'mode': 'active',
 	\ 'active_filetypes': ["python", "javascript"],
-	\ 'passive_filetypes': ['html'] }
+	\ 'passive_filetypes': ['html', 'scss'] }
 
 
 let g:syntastic_error_symbol = '🚫'
@@ -386,12 +387,13 @@ highlight link SyntasticStyleWarningSign SignColumn
 let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
 
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403'
+let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 " let g:syntastic_javascript_checkers = ['jshint']
 " let g:syntastic_javascript_checkers = ['jsxhint']
 " let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe="npm run lint:vim -- %"
 " let g:jsx_ext_required = 0
 " }}}
 
@@ -417,12 +419,6 @@ nnoremap $c :Gcommit<cr>
 nnoremap $d :Gdiff<cr>
 nnoremap $s :Gstatus<cr>
 nnoremap $w :Gwrite<cr>
-
-augroup fugitive
-	autocmd!
-	" autocmd BufEnter *.git/index wincmd T
-	" autocmd BufEnter *.git/index if &ft == 'gitcommit' | Gtabedit | endif
-augroup END
 
 " }}} 
 

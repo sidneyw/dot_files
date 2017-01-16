@@ -1,3 +1,35 @@
+snippet actionTest "Test for an action"
+describe("$1", () => {
+  it("Should be a function", () => {
+	const msg = "$1 is not a function";
+	assert.equal(typeof $1, "function", msg);
+  });
+
+  it("Should return a function (thunk)", () => {
+	const msg = "$1 does not return a function";
+	assert.equal(typeof $1(), "function", msg);
+  });
+
+  it("Should call dispatch and get state once", () => {
+	  $1()(_dispatchSpy, _getStateSpy);
+	  _dispatchSpy.should.have.been.called.once;
+  });
+
+  it("Should set state to $2", () => {
+    const msg = "$1 did not set state to $2";
+    const expected = {
+      $3: {
+        $4
+      }
+	};
+
+    $1()(_dispatchSpy, _getStateSpy);
+
+    assert.deepEqual(_getStateSpy(), expected, msg);
+  });
+});
+endsnippet
+
 snippet arr "Arrow function"
 ($1) => {
   $0
@@ -12,6 +44,10 @@ snippet desc "A Mocha describe function"
 describe("$1", () => {
   $0
 });
+endsnippet
+
+snippet des "Destructure"
+const { $1 } = $0;
 endsnippet
 
 snippet dis "Dispatch function"
