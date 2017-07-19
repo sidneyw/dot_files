@@ -123,8 +123,8 @@ router.$1("/$2", (req, res) => {
 });
 endsnippet
 
-snippet test "A Mocha test case"
-it("$1", (done) => {
+snippet test "A jest test case"
+test('$1', (done) => {
   $0
 });
 endsnippet
@@ -139,4 +139,13 @@ endsnippet
 
 snippet todo "A todo comment"
 // TODO: $1  - `!v strftime("%m/%d/%y %H:%M:%S")` `echo $USER`
+endsnippet
+
+
+snippet deb "debug statement"
+debug('$1', $0);
+endsnippet
+
+snippet jdeb "json debug statement"
+debug('$1', JSON.stringify($0, null, 2));
 endsnippet

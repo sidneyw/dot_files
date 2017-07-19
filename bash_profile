@@ -75,6 +75,10 @@ alias makec="make clean; make -j"
 	. $(brew --prefix)/etc/bash_completion
 fi
 
+# NVM
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
 PATH=$PATH:~/bin
 
 # SQL

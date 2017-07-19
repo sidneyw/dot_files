@@ -31,6 +31,8 @@ set foldlevelstart=10   " most folds should be open on start
 set foldmethod=indent
 set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
+set backspace=2
+"set ttimeoutlen=0 " Delay before keys register for mappings and keypress
 
 set shell=bash\ --login " make the sh command source the bash_profile
 
