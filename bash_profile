@@ -29,16 +29,21 @@ export tmux="$HOME/.dot_files/tmux/tmux.conf"
 # Aliases go here: 
 alias ls='ls -GFh'
 alias ll='ls -la'
+alias gcd='cd $(git rev-parse --show-toplevel)'
 
 alias pi3="ssh pi@raspberrypi.local"
+alias pi="ssh pi@100.64.1.173"
 alias godaddy="ssh thesquid17@107.180.41.49"
+alias dali="ssh salvador@dolly.dali.dartmouth.edu"
+alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
+
 # Python aliases
 alias 3='python3'
-alias 2='python'
 
 # tmux
 alias tmux="tmux -2"
 alias tls="tmux ls"
+alias tkill="tmux kill-server"
 alias ta="tmux attach"
 TERM=xterm-256color
 
@@ -47,12 +52,8 @@ alias idea='. idea'
 alias prompt='. prompt'
 alias dt='. dt'
 
-alias pi="ssh pi@100.64.1.173"
-
 # sql server
 alias sql='sudo /usr/local/mysql/bin/mysql -u root'
-
-alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
 # code helpers
 # alias server="python -m SimpleHTTPServer"
@@ -84,11 +85,6 @@ PATH=$PATH:~/bin
 # SQL
 PATH=$PATH:/usr/local/mysql/bin
 
-# Setting PATH for Python 2.7
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-
-# Setting PATH for Python 3.4
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
 
 PATH="/usr/local/bin:${PATH}"
 
@@ -115,5 +111,12 @@ fi
 # Go installs packages here
 export GOPATH="/Users/sidneywijngaarde/go/"
 
-# added by Anaconda3 4.2.0 installer
-export PATH="/Users/sidneywijngaarde/anaconda3/bin:$PATH"
+# added by Anaconda3 4.3.0 installer
+export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash ] && . /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/sls.bash ] && . /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/sls.bash
