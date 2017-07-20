@@ -8,9 +8,9 @@ _git_branch="\[\e[1;34m\][\[\e[0;32m\]\$(gitbranch.sh)\[\e[1;34m\]]"
 
 # Bash prompts
 Old_PS1="\[\033[32m\]\u:\[\033[31;1m\]\w\[\033[m\]\$ "
-OPS1="\n$_time-$_dir\[\e[1;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
-GPS1="\n$_time-$_git_branch-$_dir\[\e[1;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
-IPS1="\n$_time-$_info-$_dir\[\e[1;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+OPS1="\n$_time-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+GPS1="\n$_time-$_git_branch-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+IPS1="\n$_time-$_info-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
 
 # Default
 PS1=$GPS1
@@ -20,7 +20,7 @@ LS_COLORS='di=0;35'
 export LS_COLORS
 
 # C-x C-e to open vim and edit a command there
-EDITOR="vim"
+EDITOR="nvim"
 
 # Shortcuts
 export vimrc="$HOME/.dot_files/vim/vimrc"
@@ -79,6 +79,9 @@ fi
 # NVM
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
+#
+# docker
+# eval "$(docker-machine env default)"
 
 PATH=$PATH:~/bin
 
