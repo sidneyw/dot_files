@@ -4,8 +4,6 @@
 " General {{{
 " ====================
 set shell=/bin/bash
-" For pathogen to work
-execute pathogen#infect()
 
 " To allow \":Man cmd"
 runtime! ftplugin/man.vim
@@ -17,9 +15,6 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set showcmd             " Show commands in the bottom right corner
-set hidden
-set hlsearch            " Highlight search results
-set incsearch           " Searches while still typing
 set ai                  " Sets autoindent
 set cursorline
 set vb                  " Turn off terminal bell
@@ -60,18 +55,8 @@ nnoremap <leader>df vf{%d
 nnoremap <silent> <leader>a <C-w>10<
 nnoremap <silent> <leader>d <C-w>10>
 
-" Move across windows holding control
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
 " Make with all cores
 " nnoremap <leader>n :make! -j<cr>
-nnoremap <leader>n :!notes -c % -o<cr>
-
-" reload the all files in the arg list
-nnoremap <leader>r :argdo e!<cr>
 
 " Use vimgrep to search for the previous search in the arg list
 nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
@@ -120,11 +105,6 @@ nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
-
-" Edit my GTD todo list
-nnoremap <leader>g :call Todo()<cr>
-
-nnoremap <leader>vt :vs term://bash<cr>
 
 " }}}
 
@@ -241,6 +221,7 @@ cnoreabbr makel make! load_elf -j
 
 cnoreabbr count %s///gn
 cnoreabbr double %s/'/"/g
+cnoreabbr single %s/"/'/g
 
 " }}}
 
@@ -326,22 +307,22 @@ set laststatus=2 " Shows the status bar even if there is only one file
 
 let g:airline_theme= 'murmur'
 
-let g:airline#extensions#bufferline#enabled = 1
-
-let g:airline#extensions#branch#enabled = 1
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_nr_type = 1 " splits and tab number
-let g:airline#extensions#tabline#show_tabs = 1   " shows tabs regardless of num
-
-let g:airline_powerline_fonts = 1
+" let g:airline#extensions#bufferline#enabled = 1
+"
+" let g:airline#extensions#branch#enabled = 1
+"
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#tab_nr_type = 1 " splits and tab number
+" let g:airline#extensions#tabline#show_tabs = 1   " shows tabs regardless of num
+"
+" let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-let g:airline_symbols.branch = ''
-
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline_section_warning = '[syntastic]'
-let g:airline#extensions#whitespace#checks = 'long'
+" let g:airline_symbols.branch = ''
+"
+" let g:airline#extensions#syntastic#enabled = 1
+" let g:airline_section_warning = '[syntastic]'
+" let g:airline#extensions#whitespace#checks = 'long'
 
 " }}}
 
@@ -373,43 +354,31 @@ let g:tmuxline_preset = 'crosshair'
 
 " Syntastic {{{
 " ======================
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_mode_map = {'mode': 'active',
-	\ 'active_filetypes': ["python", "javascript"],
-	\ 'passive_filetypes': ['html', 'scss'] }
+" let g:syntastic_mode_map = {'mode': 'active',
+	" "\ 'active_filetypes': ['python', 'javascript'],
+	" "\ 'passive_filetypes': ['html', 'scss'] }
 
 
 let g:syntastic_error_symbol = '🚫'
 let g:syntastic_warning_symbol = '🔮'
 
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
+" highlight link SyntasticErrorSign SignColumn
+" highlight link SyntasticWarningSign SignColumn
+" highlight link SyntasticStyleErrorSign SignColumn
+" highlight link SyntasticStyleWarningSign SignColumn
 
 " let g:syntastic_cpp_compiler = "clang++"
 let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
 
-let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe="./node_modules/.bin/eslint %"
 " let g:jsx_ext_required = 0
-" }}}
-
-" Ctrl P {{{
-" ======================
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-nnoremap <leader>m :CtrlPMRUFiles<cr>
-nnoremap <leader>b :CtrlPBuffer<cr>
-
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*|build/*'
 " }}}
 
 " Fugitive {{{
@@ -418,25 +387,14 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules/*|build/*'
 " Autoclean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
-" Mappings
-nnoremap $b :Gblame<cr>
-nnoremap $c :Gcommit<cr>
-nnoremap $d :Gdiff<cr>
-nnoremap $s :Gstatus<cr>
-nnoremap $w :Gwrite<cr>
-
 cnoreabbr Gco Git co
 cnoreabbr Gbranch Git branch
 cnoreabbr Gca Gcommit --amend --no-edit
 cnoreabbr Gcb Git co -b
-
 " }}} 
 
 " UltiSnips {{{
 " ======================
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 " }}}
 

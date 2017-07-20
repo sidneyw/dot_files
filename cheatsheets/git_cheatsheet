@@ -49,3 +49,32 @@ git commit --amend
 
 	git commit --amend --no-edit
 		- Ammend and don't change the commit message
+
+git stash
+	- Saves changes that aren't ready for a commit
+
+git stash list
+	- Show all stashes
+
+git stash pop <|stash>
+	- Reapply stashed changes - this deletes the stash
+	- No arg just uses the last stash
+
+git stash apply
+	- Applies the stashed changes but doesn't delete them
+	- Useful for applying to multiple branches
+
+git stash save <message>
+	- Puts the message on the commit for more context
+
+git stash show
+	- View stash diff
+
+git stash branch <branch_name> <stash>
+	- Create a new branch from the stash
+
+git stash drop <stash>
+	- Delete the stash
+
+git stash clear
+	- Delete all
