@@ -1,0 +1,269 @@
+snippet act "Redux action"
+export const $1 = ($2) => {
+  $0
+}
+endsnippet
+
+snippet actionTest "Test for an action"
+describe("$1", () => {
+  it("Should be a function", () => {
+	const msg = "$1 is not a function";
+	assert.equal(typeof $1, "function", msg);
+  });
+
+  it("Should return a function (thunk)", () => {
+	const msg = "$1 does not return a function";
+	assert.equal(typeof $1(), "function", msg);
+  });
+
+  it("Should call dispatch and get state once", () => {
+	  $1()(_dispatchSpy, _getStateSpy);
+	  _dispatchSpy.should.have.been.called.once;
+  });
+
+  it("Should set state to $2", () => {
+    const msg = "$1 did not set state to $2";
+    const expected = {
+      $3: {
+        $4
+      }
+	};
+
+    $1()(_dispatchSpy, _getStateSpy);
+
+    assert.deepEqual(_getStateSpy(), expected, msg);
+  });
+});
+endsnippet
+
+snippet arr "Arrow function"
+($1) => {
+  $0
+}
+endsnippet
+
+snippet async "Async redux action"
+export const $1 = ($2) => dispatch => {
+  $0
+}
+endsnippet
+
+snippet comm  "3 Line Comment"
+// ------------------------------------
+// $0
+// ------------------------------------
+endsnippet
+
+snippet clog "Console Log"
+console.log($1);
+endsnippet
+
+snippet deb "Debug Statement"
+debug($0);
+endsnippet
+
+snippet desc "A Mocha describe function"
+describe("$1", () => {
+  $0
+});
+endsnippet
+
+snippet des "Destructure"
+const { $1 } = $0;
+endsnippet
+
+snippet dis "Dispatch function"
+return (dispatch) => {
+  dispatch({type: $0})
+}
+endsnippet
+
+snippet edis "Eslint disable line"
+// eslint-disable-line
+endsnippet
+
+snippet func "Function"
+function $1($2) {
+  $0
+}
+endsnippet
+
+snippet for "For loop"
+for(var $1 = 0; $1 < $2.length; $1++){
+  $0
+}
+endsnippet
+
+snippet jdeb "JSON debug"
+debug('$1', JSON.stringify($0, null, 2));
+endsnippet
+
+
+snippet jlog "JSON log"
+console.log($2JSON.stringify($1, null, 2));
+endsnippet
+
+snippet jstr "JSON Stringify"
+JSON.stringify($0, null, 2);
+endsnippet
+
+snippet imp "Import"
+import $1 from '$1';
+endsnippet
+
+snippet require "Require"
+const $1 = require("$1");
+endsnippet
+
+snippet props "Props destructure"
+const { $1 } = this.props$0;
+endsnippet
+
+snippet rcont "Redux Connected Component"
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { actions } from '../../modules/actions';
+
+class $1 extends React.Component {
+  static propTypes = {
+
+  }
+
+  static defaultProps = {
+
+  }
+
+  constructor() {
+    super();
+  }
+
+  render() {
+	return (
+		<div>$0</div>
+	);
+  }
+
+}
+
+const mapStateToProps = state => ({ $2 });
+export default connect(mapStateToProps, { ...actions })($1);
+endsnippet
+
+snippet rclass "React class"
+import React from 'react';
+import PropTypes from 'prop-types';
+
+export default class $1 extends React.Component {
+  static propTypes = {
+  
+  }
+
+  static defaultProps = {
+
+  }
+
+  constructor() {
+    super();
+  }
+
+  render() {
+    return (
+      <div>$2</div>
+    );
+  }
+}
+endsnippet
+
+snippet rfunc "React dumb component"
+import React from 'react';
+
+import styles from './styles.scss';
+
+const $1 = ({$2}) => {
+  return (
+	$0
+  );
+}
+
+export default $1;
+endsnippet
+
+snippet rconst "Action Constant"
+export const $1 = "$1";
+endsnippet
+
+snippet red "Reducer Boilerplate"
+[$1]: (state, action) => {
+  $0
+}
+endsnippet
+
+snippet req "Express arrow"
+(req, res) => {
+  $0
+}
+endsnippet
+
+snippet ereq "Express arrow and export (controller)"
+export const $1 = (req, res) => {
+  $0
+};
+endsnippet
+
+snippet route "Express Route"
+router.$1("/$2", (req, res) => {
+  $0
+});
+endsnippet
+
+snippet test "A jest test case"
+test('$1', (done) => {
+endsnippet
+
+snippet test "A Mocha test case"
+it("$1", (done) => {
+  $0
+});
+endsnippet
+
+snippet tstr "Template String"
+\`${$0}\`
+endsnippet
+
+snippet \$ "Template placeholder"
+${$0}
+endsnippet
+
+snippet todo "A todo comment"
+// TODO: $1 - `!v strftime("%m/%d/%y %H:%M:%S")` `echo $USER`
+endsnippet
+
+# REACT TAGS
+snippet div "Div"
+<div>
+  $0
+</div>
+endsnippet
+
+snippet divc "Div with className"
+<div className='$1'>
+  $0
+</div>
+endsnippet
+
+snippet span "span tag"
+<span $0/>
+endsnippet
+
+snippet input "input tag"
+<input type="$1" $0 />
+endsnippet
+
+snippet deb "debug statement"
+debug('$1', $0);
+endsnippet
+
+snippet jdeb "json debug statement"
+debug('$1', JSON.stringify($0, null, 2));
+endsnippet

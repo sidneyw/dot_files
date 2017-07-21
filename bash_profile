@@ -77,8 +77,8 @@ alias makec="make clean; make -j"
 fi
 
 # NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+# export NVM_DIR=~/.nvm
+# source $(brew --prefix nvm)/nvm.sh
 #
 # docker
 # eval "$(docker-machine env default)"

@@ -357,10 +357,7 @@ let g:tmuxline_preset = 'crosshair'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" let g:syntastic_mode_map = {'mode': 'active',
-	" "\ 'active_filetypes': ['python', 'javascript'],
-	" "\ 'passive_filetypes': ['html', 'scss'] }
-
+let g:syntastic_mode_map = {'mode': 'active', 'active_filetypes': ['python', 'html', 'css', 'scss', 'javascript'] }
 
 let g:syntastic_error_symbol = '🚫'
 let g:syntastic_warning_symbol = '🔮'
@@ -370,15 +367,14 @@ let g:syntastic_warning_symbol = '🔮'
 " highlight link SyntasticStyleErrorSign SignColumn
 " highlight link SyntasticStyleWarningSign SignColumn
 
-" let g:syntastic_cpp_compiler = "clang++"
+let g:syntastic_cpp_compiler = "clang++"
 let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
 
-" let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe="./node_modules/.bin/eslint %"
-" let g:jsx_ext_required = 0
+let g:syntastic_javascript_eslint_exe='$(yarn bin)/eslint'
+let g:jsx_ext_required = 0
 " }}}
 
 " Fugitive {{{
@@ -395,7 +391,9 @@ cnoreabbr Gcb Git co -b
 
 " UltiSnips {{{
 " ======================
-let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+" set rtp^=$HOME
+let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
+"let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 " }}}
 
 " }}}
