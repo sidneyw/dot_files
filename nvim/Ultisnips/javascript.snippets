@@ -1,54 +1,36 @@
-snippet act "Redux action"
-export const $1 = ($2) => {
-  $0
-}
+snippet $ "template"
+${$0}
 endsnippet
 
-snippet actionTest "Test for an action"
-describe("$1", () => {
-  it("Should be a function", () => {
-	const msg = "$1 is not a function";
-	assert.equal(typeof $1, "function", msg);
-  });
-
-  it("Should return a function (thunk)", () => {
-	const msg = "$1 does not return a function";
-	assert.equal(typeof $1(), "function", msg);
-  });
-
-  it("Should call dispatch and get state once", () => {
-	  $1()(_dispatchSpy, _getStateSpy);
-	  _dispatchSpy.should.have.been.called.once;
-  });
-
-  it("Should set state to $2", () => {
-    const msg = "$1 did not set state to $2";
-    const expected = {
-      $3: {
-        $4
-      }
-	};
-
-    $1()(_dispatchSpy, _getStateSpy);
-
-    assert.deepEqual(_getStateSpy(), expected, msg);
-  });
-});
+snippet act "Redux action"
+export const $1 = ($2) => {
+	$0
+}
 endsnippet
 
 snippet arr "Arrow function"
 ($1) => {
-  $0
+	$0
 }
 endsnippet
 
 snippet async "Async redux action"
 export const $1 = ($2) => dispatch => {
-  $0
+	$0
 }
 endsnippet
 
-snippet comm  "3 Line Comment"
+snippet ax "Axios"
+axios.$1(\`/$2\`, getConfig())
+	.then((res) => {
+		$3
+	})
+	.catch(${4:(err) => {
+		$5
+	}});
+endsnippet
+
+snippet comm	"3 Line Comment"
 // ------------------------------------
 // $0
 // ------------------------------------
@@ -62,9 +44,9 @@ snippet deb "Debug Statement"
 debug($0);
 endsnippet
 
-snippet desc "A Mocha describe function"
+snippet desc "A Jest/Mocha describe function"
 describe("$1", () => {
-  $0
+	$0
 });
 endsnippet
 
@@ -72,32 +54,23 @@ snippet des "Destructure"
 const { $1 } = $0;
 endsnippet
 
-snippet dis "Dispatch function"
-return (dispatch) => {
-  dispatch({type: $0})
-}
+snippet dis "dispatch"
+dispatch({ type: ActionTypes.$1, payload: $0 });
 endsnippet
 
-snippet edis "Eslint disable line"
-// eslint-disable-line
-endsnippet
-
-snippet func "Function"
-function $1($2) {
-  $0
-}
+snippet edis "Eslint disable next line"
+// eslint-disable${0:-next}-line $1
 endsnippet
 
 snippet for "For loop"
-for(var $1 = 0; $1 < $2.length; $1++){
-  $0
+for(let $1 = 0; $1 < $2.length; $1++){
+	$0
 }
 endsnippet
 
 snippet jdeb "JSON debug"
 debug('$1', JSON.stringify($0, null, 2));
 endsnippet
-
 
 snippet jlog "JSON log"
 console.log($2JSON.stringify($1, null, 2));
@@ -115,6 +88,12 @@ snippet require "Require"
 const $1 = require("$1");
 endsnippet
 
+snippet prom "Promise"
+new Promise((resolve, reject) =>{
+	$0
+});
+endsnippet
+
 snippet props "Props destructure"
 const { $1 } = this.props$0;
 endsnippet
@@ -126,23 +105,23 @@ import PropTypes from 'prop-types';
 import { actions } from '../../modules/actions';
 
 class $1 extends React.Component {
-  static propTypes = {
+	static propTypes = {
 
-  }
+	}
 
-  static defaultProps = {
+	static defaultProps = {
 
-  }
+	}
 
-  constructor() {
-    super();
-  }
+	constructor() {
+		super();
+	}
 
-  render() {
+	render() {
 	return (
 		<div>$0</div>
 	);
-  }
+	}
 
 }
 
@@ -155,35 +134,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class $1 extends React.Component {
-  static propTypes = {
-  
-  }
+	static propTypes = {
+	
+	}
 
-  static defaultProps = {
+	static defaultProps = {
 
-  }
+	}
 
-  constructor() {
-    super();
-  }
+	constructor() {
+		super();
+	}
 
-  render() {
-    return (
-      <div>$2</div>
-    );
-  }
+	render() {
+		return (
+			<div>$2</div>
+		);
+	}
 }
 endsnippet
 
 snippet rfunc "React dumb component"
 import React from 'react';
 
-import styles from './styles.scss';
+import './styles.scss';
 
 const $1 = ({$2}) => {
-  return (
+	return (
 	$0
-  );
+	);
 }
 
 export default $1;
@@ -195,25 +174,32 @@ endsnippet
 
 snippet red "Reducer Boilerplate"
 [$1]: (state, action) => {
-  $0
+	$0
 }
+endsnippet
+
+snippet redo "Reducer Boilerplate Return Object"
+[$1]: (state, action) => ({
+	...state,
+	$0
+})
 endsnippet
 
 snippet req "Express arrow"
 (req, res) => {
-  $0
+	$0
 }
 endsnippet
 
 snippet ereq "Express arrow and export (controller)"
 export const $1 = (req, res) => {
-  $0
+	$0
 };
 endsnippet
 
 snippet route "Express Route"
 router.$1("/$2", (req, res) => {
-  $0
+	$0
 });
 endsnippet
 
@@ -221,9 +207,9 @@ snippet test "A jest test case"
 test('$1', (done) => {
 endsnippet
 
-snippet test "A Mocha test case"
+snippet it "A Mocha test case"
 it("$1", (done) => {
-  $0
+	$0
 });
 endsnippet
 
@@ -242,13 +228,13 @@ endsnippet
 # REACT TAGS
 snippet div "Div"
 <div>
-  $0
+	$0
 </div>
 endsnippet
 
 snippet divc "Div with className"
 <div className='$1'>
-  $0
+	$0
 </div>
 endsnippet
 
@@ -258,12 +244,4 @@ endsnippet
 
 snippet input "input tag"
 <input type="$1" $0 />
-endsnippet
-
-snippet deb "debug statement"
-debug('$1', $0);
-endsnippet
-
-snippet jdeb "json debug statement"
-debug('$1', JSON.stringify($0, null, 2));
 endsnippet
