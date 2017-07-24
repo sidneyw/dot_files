@@ -156,6 +156,7 @@ endsnippet
 
 snippet rfunc "React dumb component"
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './styles.scss';
 
@@ -164,6 +165,10 @@ const $1 = ({$2}) => {
 	$0
 	);
 }
+
+$1.propTypes = {
+	$3
+};
 
 export default $1;
 endsnippet
