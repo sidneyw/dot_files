@@ -37,12 +37,15 @@ alias godaddy="ssh thesquid17@107.180.41.49"
 alias dali="ssh salvador@dolly.dali.dartmouth.edu"
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
+alias yn='yarn'
+
 # Python aliases
 alias 3='python3'
 
 # tmux
 alias tmux="tmux -2"
 alias tls="tmux ls"
+alias tks="tmux kill-session -t"
 alias tkill="tmux kill-server"
 alias ta="tmux attach"
 TERM=xterm-256color
@@ -50,7 +53,7 @@ TERM=xterm-256color
 # Scripts that need to run in current shell 
 alias idea='. idea'
 alias prompt='. prompt'
-alias dt='. dt'
+# alias dt='. dt'
 
 # sql server
 alias sql='sudo /usr/local/mysql/bin/mysql -u root'
