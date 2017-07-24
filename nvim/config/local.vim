@@ -95,7 +95,7 @@ nnoremap <leader>eb :tabe ~/.bash_profile<cr>
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
 " Edit vimrc 
-nnoremap <leader>ev :tabe ~/.vim/vimrc<cr>
+nnoremap <leader>ev :tabe $MYVIMRC<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -274,6 +274,7 @@ endfunction
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " ignore .o files - see :h NERDTreeIgnore
 let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]', 'node_modules$[[dir]]']
+let g:NERDTreeWinSize = 30
 
 " Close vim if nerdtree is the only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -323,32 +324,6 @@ let g:airline_right_sep = ''
 " let g:airline#extensions#syntastic#enabled = 1
 " let g:airline_section_warning = '[syntastic]'
 " let g:airline#extensions#whitespace#checks = 'long'
-
-" }}}
-
-" Tmux line {{{
-" ======================
-
-" crosshair
-" full
-" minimal
-" nightly_fox
-" powerline
-" righteous
-" tmux
-
-let g:tmuxline_preset = 'crosshair'
-" let g:tmuxline_theme = 'airline_insert'
-" let g:tmuxline_preset = {
-" 	\'a'       : '#S:#I',
-" 	\'b disabled'       : '',
-" 	\'c disabled'       : '',
-" 	\'win'     : ['#I', '#W'],
-" 	\'cwin'    : ['#I', '#W'],
-" 	\'x disabled'       : '',
-" 	\'y'       : ['%a', '%m-%d-%Y', '%l:%M%p'],
-" 	\'z'       : ['#(whoami)', '#h'],
-" 	\'options' : {'status-justify': 'left'}}
 
 " }}}
 
