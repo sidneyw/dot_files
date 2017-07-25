@@ -348,7 +348,7 @@ let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
 let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe='$(yarn bin)/eslint'
+let g:syntastic_javascript_eslint_exe='$(yarn bin)/eslint %'
 let g:jsx_ext_required = 0
 " }}}
 
