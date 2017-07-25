@@ -213,7 +213,9 @@ router.$1("/$2", (req, res) => {
 endsnippet
 
 snippet test "A jest test case"
-test('$1', (done) => {
+test('$1', (${2:done}) => {
+	$0
+});
 endsnippet
 
 snippet it "A Mocha test case"

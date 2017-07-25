@@ -104,6 +104,8 @@ Plug 'mattn/emmet-vim'
 " javascript
 "" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
+Plug 'isRuslan/vim-es6'
+Plug 'elzr/vim-json'
 
 
 " python
