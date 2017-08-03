@@ -38,6 +38,7 @@ alias dali="ssh salvador@dolly.dali.dartmouth.edu"
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
 alias yn='yarn'
+alias npmr='npm run'
 
 # Python aliases
 alias 3='python3'
