@@ -16,6 +16,7 @@
 [push]
 	default = matching
 [alias]
+    cane = commit --amend --no-edit
 	co = checkout
 	br = branch
 	ci = commit
