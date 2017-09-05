@@ -94,8 +94,8 @@ nnoremap <leader>eb :tabe ~/.bash_profile<cr>
 " Source Bash Profile
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
-" Edit vimrc 
-nnoremap <leader>ev :tabe $MYVIMRC<cr>
+" Edit vimrc
+nnoremap <leader>ev :call EditRC()<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -256,6 +256,11 @@ function! PyTab()
 	exe "retab"
 endfunction
 
+function! EditRC()
+	tabe $HOME/.config/nvim/config/vim-bootstrap.vim
+	vs $HOME/.config/nvim/config/local.vim
+endfunction
+
 " }}}
 
 " Plugins stuff {{{
@@ -272,11 +277,11 @@ endfunction
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " ignore .o files - see :h NERDTreeIgnore
-let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]', 'node_modules$[[dir]]']
-let g:NERDTreeWinSize = 30
+" let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]', 'node_modules$[[dir]]']
+" let g:NERDTreeWinSize = 30
 
 " Close vim if nerdtree is the only window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " set winfixwidth
 
@@ -288,11 +293,11 @@ let g:bufferline_echo = 0
 
 " Airline {{{
 " ======================
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
+" if !exists('g:airline_symbols')
+" 	let g:airline_symbols = {}
+" endif
 
-let g:airline_loaded = 1
+" let g:airline_loaded = 1
 
 set noshowmode   " Gets rid of the original showing of modes in vim
 set laststatus=2 " Shows the status bar even if there is only one file
@@ -316,10 +321,10 @@ let g:airline_right_sep = ''
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#tab_nr_type = 1 " splits and tab number
 " let g:airline#extensions#tabline#show_tabs = 1   " shows tabs regardless of num
-"
+
 " let g:airline_powerline_fonts = 1
 " let g:airline_symbols.branch = ''
-"
+
 " let g:airline#extensions#syntastic#enabled = 1
 " let g:airline_section_warning = '[syntastic]'
 " let g:airline#extensions#whitespace#checks = 'long'
@@ -358,7 +363,11 @@ endif
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_mode_map = {'mode': 'active', 'active_filetypes': ['python', 'html', 'css', 'scss', 'javascript'] }
+let g:syntastic_mode_map = {
+    \ 'mode': 'active',
+    \ 'active_filetypes': ['python', 'css', 'javascript'],
+    \ 'passive_filetypes': ['scss', 'html']
+    \ }
 
 let g:syntastic_error_symbol = '🚫'
 let g:syntastic_warning_symbol = '🔮'
@@ -382,13 +391,13 @@ let g:jsx_ext_required = 0
 " ======================
 
 " Autoclean fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
+" autocmd BufReadPost fugitive://* set bufhidden=delete
 
-cnoreabbr Gco Git co
-cnoreabbr Gbranch Git branch
-cnoreabbr Gca Gcommit --amend --no-edit
-cnoreabbr Gcb Git co -b
-" }}} 
+" cnoreabbr Gco Git co
+" cnoreabbr Gbranch Git branch
+" cnoreabbr Gca Gcommit --amend --no-edit
+" cnoreabbr Gcb Git co -b
+" " }}}
 
 " UltiSnips {{{
 " ======================
