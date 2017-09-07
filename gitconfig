@@ -16,10 +16,12 @@
 [push]
 	default = matching
 [alias]
-    cane = commit --amend --no-edit
-	co = checkout
 	br = branch
 	ci = commit
+	co = checkout
 	st = status
+    cane = commit --amend --no-edit
+    cmp = "!f() { git checkout master && git pull; }; f"
+    pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/upstream/pr/$1 && git checkout FETCH_HEAD && git remote prune upstream; }; f"
 [core]
 	editor = /usr/local/bin/nvim

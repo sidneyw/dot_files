@@ -155,6 +155,7 @@ set expandtab
 
 "" Map leader to ,
 let mapleader='-'
+let maplocalleader = "\\"
 
 "" Enable hidden buffers
 set hidden

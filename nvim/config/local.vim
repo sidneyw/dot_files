@@ -35,7 +35,7 @@ set backupcopy=yes      " For webpack hot reloading
 "set list
 set listchars=tab:▸\ ,eol:¬
 
-let mapleader="-"
+let mapleader='-'
 let maplocalleader = "\\"
 
 " }}}
@@ -173,8 +173,8 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-" colorscheme monokai-phoenix
-colorscheme molokai
+colorscheme monokai-phoenix
+" colorscheme molokai
 " colorscheme firewatch
 " colorscheme badwolf
 " colorscheme sky
@@ -354,7 +354,7 @@ augroup end
 if exists('g:plugs["tern_for_vim"]')
   let g:tern_show_argument_hints = 'on_hold'
   let g:tern_show_signature_in_pum = 1
-  let g:tern_map_prefix = 1
+  let g:tern_map_keys = 1
   autocmd FileType javascript setlocal omnifunc=tern#Complete
 endif
 " }}}
