@@ -274,7 +274,7 @@ endfunction
 " Fugitive
 " CtrlP
 
-" NERDTree {{{
+" NERDTree {{r
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " ignore .o files - see :h NERDTreeIgnore
@@ -312,24 +312,6 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " wombat
 
 let g:airline_theme= 'murmur'
-
-" let g:airline#extensions#bufferline#enabled = 1
-"
-" let g:airline#extensions#branch#enabled = 1
-"
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#tab_nr_type = 1 " splits and tab number
-" let g:airline#extensions#tabline#show_tabs = 1   " shows tabs regardless of num
-
-" let g:airline_powerline_fonts = 1
-" let g:airline_left_sep = ''
-" let g:airline_right_sep = ''
-" let g:airline_symbols.branch = ''
-
-" let g:airline#extensions#syntastic#enabled = 1
-" let g:airline_section_warning = '[syntastic]'
-" let g:airline#extensions#whitespace#checks = 'long'
-
 " }}}
 
 " Syntastic {{{
@@ -357,7 +339,7 @@ let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
 let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe='$(yarn bin)/eslint'
+let g:syntastic_javascript_eslint_exe='eslint'
 let g:jsx_ext_required = 0
 " }}}
 
@@ -378,6 +360,37 @@ let g:jsx_ext_required = 0
 " set rtp^=$HOME
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 "let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+" }}}
+"
+
+" Deoplete {{{
+" ===================
+let g:deoplete#enable_at_startup = 1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" }}}
+"
+" Tern {{{
+" ===================
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
+" tern
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  let g:tern_map_keys = 1
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+endif
 " }}}
 
 " }}}
