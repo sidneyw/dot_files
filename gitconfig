@@ -3,7 +3,7 @@
 	clean = git media clean %f
 	smudge = git media smudge %f
 [user]
-	name = "Sidney.wijngaarde1"
+	name = "Sidneyw"
 	email = sidney.wijngaarde1@ibm.com
 [filter "hawser"]
 	clean = git hawser clean %f
