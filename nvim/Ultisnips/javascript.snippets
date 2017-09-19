@@ -45,7 +45,7 @@ debug($0);
 endsnippet
 
 snippet desc "A Jest/Mocha describe function"
-describe("$1", () => {
+describe("$1", function () {
 	$0
 });
 endsnippet
@@ -212,6 +212,10 @@ router.$1("/$2", (req, res) => {
 });
 endsnippet
 
+snippet strict "Use Strict"
+"use strict";
+endsnippet
+
 snippet test "A jest test case"
 test('$1', (${2:done}) => {
 	$0
@@ -219,7 +223,7 @@ test('$1', (${2:done}) => {
 endsnippet
 
 snippet it "A Mocha test case"
-it("$1", (done) => {
+it("$1", function () {
 	$0
 });
 endsnippet

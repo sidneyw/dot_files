@@ -31,13 +31,29 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
+" NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
+
+" Tpope
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+
+" Shougo
+Plug 'Shougo/denite.nvim'
+Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/neco-syntax'
+Plug 'Shougo/neco-vim'
+
+Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -46,8 +62,8 @@ Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
-" Plug 'neomake/neomake'
+" Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
@@ -101,8 +117,8 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
+Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
-
 
 " javascript
 "" Javascript Bundle
@@ -116,6 +132,7 @@ Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 " python
 "" Python Bundle
 Plug 'davidhalter/jedi-vim'
+Plug 'zchee/deoplete-jedi'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 
@@ -155,6 +172,7 @@ set expandtab
 
 "" Map leader to ,
 let mapleader='-'
+let maplocalleader = "\\"
 
 "" Enable hidden buffers
 set hidden

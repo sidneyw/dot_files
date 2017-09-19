@@ -1,6 +1,6 @@
 # Bash prompt variables
 _time="\[\e[1;34m\][\[\e[0;32m\]\@\[\e[1;34m\]]"
-_user="[\e[0;34m\]\u\[\e[1;34m\]]"	
+_user="[\e[0;34m\]\u\[\e[1;34m\]]"
 _dir="[\[\e[0;32m\]\w\[\e[1;34m\]]"
 _info="\[\e[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(du -hs)\[\e[1;34m\]"
 _history="[\[\e[0;33m\]\!\[\e[1;34m\]]"
@@ -19,8 +19,13 @@ export CLICOLOR=1
 LS_COLORS='di=0;35'
 export LS_COLORS
 
-# C-x C-e to open vim and edit a command there
+# ==================================== {{{
+# Aliases
+# ====================================
+# <C-x> <C-e> to open vim and edit a command there
 EDITOR="nvim"
+alias v='nvim'
+alias vim="nvim"
 
 # Shortcuts
 export vimrc="$HOME/.dot_files/vim/vimrc"
@@ -38,6 +43,8 @@ alias dali="ssh salvador@dolly.dali.dartmouth.edu"
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
 alias yn='yarn'
+alias npmr='npm run'
+alias npmi='npm install'
 
 # Python aliases
 alias 3='python3'
@@ -50,25 +57,19 @@ alias tkill="tmux kill-server"
 alias ta="tmux attach"
 TERM=xterm-256color
 
-# Scripts that need to run in current shell 
-alias idea='. idea'
-alias prompt='. prompt'
-# alias dt='. dt'
-
 # sql server
 alias sql='sudo /usr/local/mysql/bin/mysql -u root'
 
-# code helpers
-# alias server="python -m SimpleHTTPServer"
 alias mygcc="gcc -Wall -pedantic -std=c11"
-
-# open vim with all my todos in splits
-alias todo="vim $gtd/daily.txt $gtd/weekly.txt $gtd/monthly.txt -O -c \"windo exe 'normal zR'\""
 
 # other
 alias c="clear"
 alias makec="make clean; make -j"
+# }}}
 
+# ====================================
+# Plugins
+# ====================================
 # autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 	# Ubuntu
@@ -79,35 +80,16 @@ alias makec="make clean; make -j"
 	. $(brew --prefix)/etc/bash_completion
 fi
 
-# docker
-# eval "$(docker-machine env default)"
-
-PATH=$PATH:~/bin
-
-# SQL
-PATH=$PATH:/usr/local/mysql/bin
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
 
 PATH="/usr/local/bin:${PATH}"
 
 # Yarn path
-PATH="$PATH:`yarn global bin`"
-
-# Ubuntu
-# Swap escape and caps lock
-# /usr/bin/setxkbmap -option "caps:swapescape"
+# PATH="$PATH:`yarn global bin`"
 
 # added by travis gem
 [ -f /Users/sidneywijngaarde/.travis/travis.sh ] && source /Users/sidneywijngaarde/.travis/travis.sh
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/sidneywijngaarde/Desktop/google-cloud-sdk/path.bash.inc ]; then
-  source '/Users/sidneywijngaarde/Desktop/google-cloud-sdk/path.bash.inc'
-fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f /Users/sidneywijngaarde/Desktop/google-cloud-sdk/completion.bash.inc ]; then
-  source '/Users/sidneywijngaarde/Desktop/google-cloud-sdk/completion.bash.inc'
-fi
 
 # Go installs packages here
 export GOPATH="/Users/sidneywijngaarde/go/"

@@ -35,7 +35,7 @@ set backupcopy=yes      " For webpack hot reloading
 "set list
 set listchars=tab:▸\ ,eol:¬
 
-let mapleader="-"
+let mapleader='-'
 let maplocalleader = "\\"
 
 " }}}
@@ -58,11 +58,6 @@ nnoremap <silent> <leader>d <C-w>10>
 " Make with all cores
 " nnoremap <leader>n :make! -j<cr>
 
-" Use vimgrep to search for the previous search in the arg list
-nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
-
-" SyntasticToggle - following vim unimpaired style
-nnoremap coz :SyntasticToggleMode<cr>
 
 " Change Tmux Line color scheme
 nnoremap <leader>z :Tmuxline airline_insert<cr>
@@ -73,6 +68,10 @@ nnoremap <leader>p :echo expand("%:p")<cr>
 " Open and close the quickfix list
 nnoremap <leader>co :copen<cr>
 nnoremap <leader>cc :cclose<cr>
+"
+" Open and close the location list
+nnoremap <leader>lc :lclose<cr>
+nnoremap <leader>lo :lopen<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
@@ -105,7 +104,6 @@ nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
-
 " }}}
 
 " Autocommands {{{
@@ -127,6 +125,7 @@ augroup END
 
 augroup markdown
 	autocmd!
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 	autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
 augroup END
 
@@ -143,7 +142,7 @@ augroup javascript
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
 	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
 	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call ShortTab()
+	autocmd FileType javascript :call LongTab()
 augroup END
 
 augroup bash
@@ -173,8 +172,8 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-" colorscheme monokai-phoenix
-colorscheme molokai
+colorscheme monokai-phoenix
+" colorscheme molokai
 " colorscheme firewatch
 " colorscheme badwolf
 " colorscheme sky
@@ -266,15 +265,17 @@ endfunction
 " Plugins stuff {{{
 " ===================
 " Plugin list
-" NERDTREE
+" NerdTree
 " Bufferline
+" Tmux
 " Airline
-" Tmuxline
+" Deoplete
+" Tern
 " Syntastic
 " Fugitive
-" CtrlP
+" Ultisnips
 
-" NERDTree {{r
+" NERDTree {{{
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " ignore .o files - see :h NERDTreeIgnore
@@ -288,9 +289,27 @@ nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
 " }}}
 
-" Bufferline
+" Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
+" }}}
+
+" Markdown
+let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
+
+" Tmux {{{
+" let g:tmux_navigator_no_mappings = 1
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
+" nnoremap <silent> <C-;> :TmuxNavigatePrevious<cr>
+" tmap <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+" tmap <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+" tmap <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
+" tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+" tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
+" }}}
 
 " Airline {{{
 " ======================
@@ -314,9 +333,51 @@ set laststatus=2 " Shows the status bar even if there is only one file
 let g:airline_theme= 'murmur'
 " }}}
 
-" Syntastic {{{
+" Deoplete {{{
+" ===================
+let g:deoplete#enable_at_startup = 1
+let g:echodoc_enable_at_startup=1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
+" }}}
+
+" Tern {{{
+" ===================
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  let g:tern_map_keys = 1
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+endif
+" }}}
+
+" NeoMake {{{
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+" }}}
+"
+
+" Syntastic {{{ - Using NeoMake for now
 " ======================
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = {
@@ -341,6 +402,9 @@ let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe='eslint'
 let g:jsx_ext_required = 0
+
+" SyntasticToggle - following vim unimpaired style
+" nnoremap coz :SyntasticToggleMode<cr>
 " }}}
 
 " Fugitive {{{
@@ -353,13 +417,13 @@ let g:jsx_ext_required = 0
 " cnoreabbr Gbranch Git branch
 " cnoreabbr Gca Gcommit --amend --no-edit
 " cnoreabbr Gcb Git co -b
+let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
 " UltiSnips {{{
 " ======================
 " set rtp^=$HOME
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
-"let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 " }}}
 "
 
