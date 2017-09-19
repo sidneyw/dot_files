@@ -19,8 +19,13 @@ export CLICOLOR=1
 LS_COLORS='di=0;35'
 export LS_COLORS
 
-# C-x C-e to open vim and edit a command there
+# ==================================== {{{
+# Aliases
+# ====================================
+# <C-x> <C-e> to open vim and edit a command there
 EDITOR="nvim"
+alias v='nvim'
+alias vim="nvim"
 
 # Shortcuts
 export vimrc="$HOME/.dot_files/vim/vimrc"
@@ -39,6 +44,7 @@ alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
 alias yn='yarn'
 alias npmr='npm run'
+alias npmi='npm install'
 
 # Python aliases
 alias 3='python3'
@@ -59,7 +65,11 @@ alias mygcc="gcc -Wall -pedantic -std=c11"
 # other
 alias c="clear"
 alias makec="make clean; make -j"
+# }}}
 
+# ====================================
+# Plugins
+# ====================================
 # autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 	# Ubuntu

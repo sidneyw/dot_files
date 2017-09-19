@@ -58,11 +58,6 @@ nnoremap <silent> <leader>d <C-w>10>
 " Make with all cores
 " nnoremap <leader>n :make! -j<cr>
 
-" Use vimgrep to search for the previous search in the arg list
-nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
-
-" SyntasticToggle - following vim unimpaired style
-nnoremap coz :SyntasticToggleMode<cr>
 
 " Change Tmux Line color scheme
 nnoremap <leader>z :Tmuxline airline_insert<cr>
@@ -73,6 +68,10 @@ nnoremap <leader>p :echo expand("%:p")<cr>
 " Open and close the quickfix list
 nnoremap <leader>co :copen<cr>
 nnoremap <leader>cc :cclose<cr>
+"
+" Open and close the location list
+nnoremap <leader>lc :lclose<cr>
+nnoremap <leader>lo :lopen<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
@@ -105,7 +104,6 @@ nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
-
 " }}}
 
 " Autocommands {{{
@@ -127,6 +125,7 @@ augroup END
 
 augroup markdown
 	autocmd!
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 	autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
 augroup END
 
@@ -266,12 +265,15 @@ endfunction
 " Plugins stuff {{{
 " ===================
 " Plugin list
-" NERDTREE
+" NerdTree
 " Bufferline
+" Tmux
 " Airline
 " Deoplete
+" Tern
 " Syntastic
 " Fugitive
+" Ultisnips
 
 " NERDTree {{{
 " ======================
@@ -287,9 +289,27 @@ nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
 " }}}
 
-" Bufferline
+" Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
+" }}}
+
+" Markdown
+let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
+
+" Tmux {{{
+" let g:tmux_navigator_no_mappings = 1
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
+" nnoremap <silent> <C-;> :TmuxNavigatePrevious<cr>
+" tmap <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+" tmap <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+" tmap <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
+" tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+" tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
+" }}}
 
 " Airline {{{
 " ======================
@@ -334,11 +354,16 @@ let g:airline_right_sep = ''
 " Deoplete {{{
 " ===================
 let g:deoplete#enable_at_startup = 1
+let g:echodoc_enable_at_startup=1
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
+
 " let g:deoplete#disable_auto_complete = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " omnifuncs
 augroup omnifuncs
@@ -349,8 +374,10 @@ augroup omnifuncs
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
+" }}}
 
-" tern
+" Tern {{{
+" ===================
 if exists('g:plugs["tern_for_vim"]')
   let g:tern_show_argument_hints = 'on_hold'
   let g:tern_show_signature_in_pum = 1
@@ -359,9 +386,16 @@ if exists('g:plugs["tern_for_vim"]')
 endif
 " }}}
 
-" Syntastic {{{
+" NeoMake {{{
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+" }}}
+"
+
+" Syntastic {{{ - Using NeoMake for now
 " ======================
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = {
@@ -386,6 +420,9 @@ let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe='eslint'
 let g:jsx_ext_required = 0
+
+" SyntasticToggle - following vim unimpaired style
+" nnoremap coz :SyntasticToggleMode<cr>
 " }}}
 
 " Fugitive {{{
@@ -398,13 +435,13 @@ let g:jsx_ext_required = 0
 " cnoreabbr Gbranch Git branch
 " cnoreabbr Gca Gcommit --amend --no-edit
 " cnoreabbr Gcb Git co -b
+let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
 " UltiSnips {{{
 " ======================
 " set rtp^=$HOME
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
-"let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 " }}}
 
 " }}}
