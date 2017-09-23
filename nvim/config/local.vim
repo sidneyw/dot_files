@@ -140,9 +140,9 @@ augroup END
 augroup javascript
 	autocmd!
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
+	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint %
 	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call LongTab()
+	autocmd FileType javascript :call ShortTab()
 augroup END
 
 augroup bash
@@ -372,36 +372,35 @@ endif
 autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 " }}}
-"
 
 " Syntastic {{{ - Using NeoMake for now
 " ======================
-let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_open = 0
 " let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_check_on_wq = 0
 
-let g:syntastic_mode_map = {
-    \ 'mode': 'active',
-    \ 'active_filetypes': ['python', 'css', 'javascript'],
-    \ 'passive_filetypes': ['scss', 'html']
-    \ }
+" let g:syntastic_mode_map = {
+"     \ 'mode': 'active',
+"     \ 'active_filetypes': ['python', 'css', 'javascript'],
+"     \ 'passive_filetypes': ['scss', 'html']
+"     \ }
 
-let g:syntastic_error_symbol = '🚫'
-let g:syntastic_warning_symbol = '🔮'
+" let g:syntastic_error_symbol = '🚫'
+" let g:syntastic_warning_symbol = '🔮'
 
 " highlight link SyntasticErrorSign SignColumn
 " highlight link SyntasticWarningSign SignColumn
 " highlight link SyntasticStyleErrorSign SignColumn
 " highlight link SyntasticStyleWarningSign SignColumn
 
-let g:syntastic_cpp_compiler = "clang++"
-let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
+" let g:syntastic_cpp_compiler = \"clang++"
+" let g:syntastic_cpp_compiler_options = \" -std=c++11 -stdlib=libc++"
 
-let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
+" let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe='eslint'
-let g:jsx_ext_required = 0
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_eslint_exe='eslint'
+" let g:jsx_ext_required = 0
 
 " SyntasticToggle - following vim unimpaired style
 " nnoremap coz :SyntasticToggleMode<cr>
@@ -413,10 +412,13 @@ let g:jsx_ext_required = 0
 " Autoclean fugitive buffers
 " autocmd BufReadPost fugitive://* set bufhidden=delete
 
-" cnoreabbr Gco Git co
-" cnoreabbr Gbranch Git branch
-" cnoreabbr Gca Gcommit --amend --no-edit
-" cnoreabbr Gcb Git co -b
+cnoreabbr Gco Git co
+cnoreabbr Gbranch Git branch
+cnoreabbr Gca Gcommit --amend --no-edit
+cnoreabbr Gcb Git co -b
+cnoreabbr Gstash Git stash
+cnoreabbr Gapply Git stash apply
+
 let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
@@ -425,7 +427,6 @@ let g:github_enterprise_urls = ['https://github.ibm.com']
 " set rtp^=$HOME
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
-"
 
 " Deoplete {{{
 " ===================
@@ -436,7 +437,7 @@ endif
 " let g:deoplete#disable_auto_complete = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " }}}
-"
+
 " Tern {{{
 " ===================
 " omnifuncs
