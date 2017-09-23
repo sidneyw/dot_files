@@ -48,11 +48,16 @@ Plug 'tpope/vim-unimpaired'
 
 " Shougo
 Plug 'Shougo/denite.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim'
+Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet.vim'
 
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'ervandew/supertab'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -119,14 +124,16 @@ Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
+Plug 'niftylettuce/vim-jinja'
 
 " javascript
 "" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
 Plug 'isRuslan/vim-es6'
 Plug 'elzr/vim-json'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 
 " python
@@ -418,9 +425,9 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>q :FZF -m<CR>
 
 " snippets
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="`<C-k>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-b>"
 let g:UltiSnipsEditSplit="vertical"
 
 " syntastic
