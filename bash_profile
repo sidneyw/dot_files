@@ -80,9 +80,7 @@ alias makec="make clean; make -j"
 	. $(brew --prefix)/etc/bash_completion
 fi
 
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
+PATH="$PATH:$HOME/bin"
 PATH="/usr/local/bin:${PATH}"
 
 # Yarn path
