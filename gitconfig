@@ -14,7 +14,7 @@
 	smudge = git-lfs smudge %f
 	required = true
 [push]
-	default = matching
+	default = current
 [alias]
 	br = branch
 	ci = commit
@@ -22,6 +22,7 @@
 	st = status
     cane = commit --amend --no-edit
     cmp = "!f() { git checkout master && git pull; }; f"
+    nuke = "!f() { git push origin --delete $1; git branch -D $1; }; f"
     pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/upstream/pr/$1 && git checkout FETCH_HEAD && git remote prune upstream; }; f"
 [core]
 	editor = /usr/local/bin/nvim
