@@ -109,63 +109,63 @@ nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
 " Autocommands {{{
 " ====================
 augroup text
-	autocmd!
-	autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
+  autocmd!
+  autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
 augroup END
 
 augroup yaml
-	autocmd!
-	autocmd FileType yaml :call LongTab()
+  autocmd!
+  autocmd FileType yaml :call LongTab()
 augroup END
 
 augroup cpp
-	autocmd!
-	autocmd FileType cpp :call LongTab()
+  autocmd!
+  autocmd FileType cpp :call LongTab()
 augroup END
 
 augroup markdown
-	autocmd!
+  autocmd!
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-	autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
+  autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
 augroup END
 
 augroup python
-	autocmd!
-	autocmd FileType python :setlocal list foldmethod=indent
-	autocmd FileType python :setlocal commentstring=#\ %s
-	autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
-	autocmd FileType python :call PyTab()
+  autocmd!
+  autocmd FileType python :setlocal list foldmethod=indent
+  autocmd FileType python :setlocal commentstring=#\ %s
+  autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
+  autocmd FileType python :call PyTab()
 augroup END
 
 augroup javascript
-	autocmd!
-	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint %
-	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call ShortTab()
+  autocmd!
+  autocmd FileType javascript :nnoremap  <buffer> <leader>t :!node <C-r>%<cr>
+  autocmd FileType javascript :cnoreabbr <buffer> lint !./node_modules/.bin/eslint %
+  autocmd FileType javascript :cnoreabbr <buffer> lintfix !npm run lint:fix
+  autocmd FileType javascript :call ShortTab()
 augroup END
 
 augroup bash
-	autocmd!
-	autocmd FileType sh :setlocal commentstring=#\ %s
-	autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
+  autocmd!
+  autocmd FileType sh :setlocal commentstring=#\ %s
+  autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
 augroup END
 
 augroup html
-	autocmd!
-	autocmd FileType html :setlocal nowrap
+  autocmd!
+  autocmd FileType html :setlocal nowrap
 augroup END
 
 augroup C
-	autocmd!
-	autocmd FileType c :setlocal list foldmethod=syntax
-	autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki	<bs>
+  autocmd!
+  autocmd FileType c :setlocal list foldmethod=syntax
+  autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki  <bs>
 augroup END
 
 augroup vim
-	autocmd!
-	autocmd FileType vim :setlocal foldmethod=marker
-	autocmd FileType vim :setlocal foldlevelstart=0
+  autocmd!
+  autocmd FileType vim :setlocal foldmethod=marker
+  autocmd FileType vim :setlocal foldlevelstart=0
 augroup END
 " }}}
 
@@ -227,37 +227,37 @@ cnoreabbr single %s/"/'/g
 " Functions {{{
 " ===================
 function! Idea()
-	let filename = expand(system("~/bin/idea -v"))
-	execute "edit" filename
+  let filename = expand(system("~/bin/idea -v"))
+  execute "edit" filename
 endfunction
 
 function! ShortTab()
-	let &l:tabstop = 2
-	let &l:shiftwidth = 2
-	let &l:softtabstop = 2
-	let &l:expandtab = 1
-	exe "retab"
+  let &l:tabstop = 2
+  let &l:shiftwidth = 2
+  let &l:softtabstop = 2
+  let &l:expandtab = 1
+  exe "retab"
 endfunction
 
 function! LongTab()
-	let &l:tabstop = 4
-	let &l:shiftwidth = 4
-	let &l:softtabstop = 4
-	let &l:expandtab = 1
-	exe "retab"
+  let &l:tabstop = 4
+  let &l:shiftwidth = 4
+  let &l:softtabstop = 4
+  let &l:expandtab = 1
+  exe "retab"
 endfunction
 
 function! PyTab()
-	let &l:tabstop = 4
-	let &l:shiftwidth = 4
-	let &l:softtabstop = 4
-	let &l:expandtab = 0
-	exe "retab"
+  let &l:tabstop = 4
+  let &l:shiftwidth = 4
+  let &l:softtabstop = 4
+  let &l:expandtab = 0
+  exe "retab"
 endfunction
 
 function! EditRC()
-	tabe $HOME/.config/nvim/config/vim-bootstrap.vim
-	vs $HOME/.config/nvim/config/local.vim
+  tabe $HOME/.config/nvim/config/vim-bootstrap.vim
+  vs $HOME/.config/nvim/config/local.vim
 endfunction
 
 " }}}
@@ -314,7 +314,7 @@ let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
 " Airline {{{
 " ======================
 " if !exists('g:airline_symbols')
-" 	let g:airline_symbols = {}
+"   let g:airline_symbols = {}
 " endif
 
 " let g:airline_loaded = 1
@@ -373,11 +373,12 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "   set conceallevel=2 concealcursor=niv
 " endif
 
-" let g:deoplete#omni#functions = {}
-" let g:deoplete#omni#functions.javascript = [
-"   \ 'tern#Complete',
-"   \ 'jspc#omni'
-" \]
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'javascriptcomplete#CompleteJS',
+  \ 'jspc#omni'
+\]
 
 " set completeopt=longest,menuone,preview
 " let g:deoplete#sources = {}
@@ -474,31 +475,54 @@ let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " Deoplete {{{
 " ===================
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+let g:echodoc_enable_at_startup=1
+
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
+
 " let g:deoplete#disable_auto_complete = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" }}}
 
-" Tern {{{
-" ===================
-" omnifuncs
-augroup omnifuncs
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
-" tern
-if exists('g:plugs["tern_for_vim"]')
-  let g:tern_show_argument_hints = 'on_hold'
-  let g:tern_show_signature_in_pum = 1
-  let g:tern_map_keys = 1
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-endif
+" deoplete tab-complete
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-k>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" SuperTab like snippets behavior. {{{
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" " For conceal markers.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
+
+" let g:deoplete#omni#functions = {}
+" let g:deoplete#omni#functions.javascript = [
+"   \ 'tern#Complete',
+"   \ 'jspc#omni'
+" \]
+
+" set completeopt=longest,menuone,preview
+" let g:deoplete#sources = {}
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
+" let g:tern#command = ['tern']
+" let g:tern#arguments = ['--persistent']
 " }}}
 
 " }}}
