@@ -245,6 +245,13 @@ snippet "(T|t)odo" "A todo comment" r
 // TODO: $1 - `!v strftime("%m/%d/%y %H:%M:%S")` `echo $USER`
 endsnippet
 
+# Async
+snippet "water(|fall)" "Async Waterfall" r
+async.waterfall([
+	$1
+], ${0:done});
+endsnippet
+
 # REACT TAGS
 snippet div "Div"
 <div${1: className='${2}'}>

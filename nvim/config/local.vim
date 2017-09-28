@@ -142,7 +142,7 @@ augroup javascript
 	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
 	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
 	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call ShortTab()
+	autocmd FileType javascript :call LongTab()
 augroup END
 
 augroup bash

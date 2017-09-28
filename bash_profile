@@ -31,7 +31,8 @@ alias vim="nvim"
 export vimrc="$HOME/.dot_files/vim/vimrc"
 export tmux="$HOME/.dot_files/tmux/tmux.conf"
 
-# Aliases go here: 
+# Aliases go here:
+alias bp="source $HOME/.bash_profile"
 alias ls='ls -GFh'
 alias ll='ls -la'
 alias gcd='cd $(git rev-parse --show-toplevel)'
@@ -76,9 +77,7 @@ alias makec="make clean; make -j"
 	# . /usr/share/autojump/autojump.sh
 
 # Bash Completion
- if [ -f $(brew --prefix)/etc/bash_completion ]; then
-	. $(brew --prefix)/etc/bash_completion
-fi
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 # NVM
 # export NVM_DIR=~/.nvm

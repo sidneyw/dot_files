@@ -26,3 +26,4 @@
     pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/upstream/pr/$1 && git checkout FETCH_HEAD && git remote prune upstream; }; f"
 [core]
 	editor = /usr/local/bin/nvim
+	excludesfile = ~/.gitignore
