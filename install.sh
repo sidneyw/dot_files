@@ -15,6 +15,7 @@ ln -s $dir/vim/vimrc $HOME/.vimrc
 ln -s $dir/vim $HOME/.vim
 
 ln -s $dir/gitconfig $HOME/.gitconfig
+ln -s $dir/gitignore $HOME/.gitignore
 
 if [[ -d $HOME/bin ]]
 then
