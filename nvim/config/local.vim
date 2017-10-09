@@ -104,6 +104,9 @@ nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
+
+vnoremap <leader>s :sort<cr>
+
 " }}}
 
 " Autocommands {{{
@@ -474,10 +477,10 @@ let g:jsx_ext_required = 0
 " Autoclean fugitive buffers
 " autocmd BufReadPost fugitive://* set bufhidden=delete
 
-" cnoreabbr Gco Git co
-" cnoreabbr Gbranch Git branch
-" cnoreabbr Gca Gcommit --amend --no-edit
-" cnoreabbr Gcb Git co -b
+cnoreabbr Gco Git co
+cnoreabbr Gbranch Git branch
+cnoreabbr Gca Gcommit --amend --no-edit
+cnoreabbr Gcb Git co -b
 let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
