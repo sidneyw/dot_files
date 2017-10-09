@@ -566,10 +566,10 @@ autocmd Filetype html setlocal ts=2 sw=2 expandtab
 let g:javascript_enable_domhtmlcss = 1
 
 " vim-javascript
-augroup vimrc-javascript
-  autocmd!
-  autocmd FileType javascript set tabstop=4|set shiftwidth=4|set expandtab softtabstop=4
-augroup END
+" augroup vimrc-javascript
+"   autocmd!
+"   autocmd FileType javascript set tabstop=4|set shiftwidth=4|set expandtab softtabstop=4
+" augroup END
 
 
 " python
@@ -624,9 +624,9 @@ endif
 if !exists('g:airline_powerline_fonts')
   let g:airline#extensions#tabline#left_sep = ' '
   let g:airline#extensions#tabline#left_alt_sep = '|'
-  let g:airline_left_sep          = '▶'
+  " let g:airline_left_sep          = '▶'
   let g:airline_left_alt_sep      = '»'
-  let g:airline_right_sep         = '◀'
+  " let g:airline_right_sep         = '◀'
   let g:airline_right_alt_sep     = '«'
   let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
   let g:airline#extensions#readonly#symbol   = '⊘'

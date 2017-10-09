@@ -79,16 +79,8 @@ alias makec="make clean; make -j"
 # Bash Completion
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
-# NVM
-# export NVM_DIR=~/.nvm
-# source $(brew --prefix nvm)/nvm.sh
-
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
-PATH=$PATH:~/bin
-
-PATH="${PATH}:/usr/local/bin"
+PATH="$PATH:$HOME/bin"
+PATH="/usr/local/bin:${PATH}"
 
 # Yarn path
 # PATH="$PATH:`yarn global bin`"
@@ -96,9 +88,18 @@ PATH="${PATH}:/usr/local/bin"
 # added by travis gem
 [ -f /Users/sidneywijngaarde/.travis/travis.sh ] && source /Users/sidneywijngaarde/.travis/travis.sh
 
-
 # Go installs packages here
 export GOPATH="/Users/sidneywijngaarde/go/"
 
 # added by Anaconda3 4.3.0 installer
 export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash ] && . /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

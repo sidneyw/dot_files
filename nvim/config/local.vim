@@ -112,32 +112,32 @@ vnoremap <leader>s :sort<cr>
 " Autocommands {{{
 " ====================
 augroup text
-	autocmd!
-	autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
+  autocmd!
+  autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
 augroup END
 
 augroup yaml
-	autocmd!
-	autocmd FileType yaml :call LongTab()
+  autocmd!
+  autocmd FileType yaml :call LongTab()
 augroup END
 
 augroup cpp
-	autocmd!
-	autocmd FileType cpp :call LongTab()
+  autocmd!
+  autocmd FileType cpp :call LongTab()
 augroup END
 
 augroup markdown
-	autocmd!
+  autocmd!
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-	autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
+  autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
 augroup END
 
 augroup python
-	autocmd!
-	autocmd FileType python :setlocal list foldmethod=indent
-	autocmd FileType python :setlocal commentstring=#\ %s
-	autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
-	autocmd FileType python :call PyTab()
+  autocmd!
+  autocmd FileType python :setlocal list foldmethod=indent
+  autocmd FileType python :setlocal commentstring=#\ %s
+  autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
+  autocmd FileType python :call PyTab()
 augroup END
 
 augroup javascript
@@ -149,26 +149,26 @@ augroup javascript
 augroup END
 
 augroup bash
-	autocmd!
-	autocmd FileType sh :setlocal commentstring=#\ %s
-	autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
+  autocmd!
+  autocmd FileType sh :setlocal commentstring=#\ %s
+  autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
 augroup END
 
 augroup html
-	autocmd!
-	autocmd FileType html :setlocal nowrap
+  autocmd!
+  autocmd FileType html :setlocal nowrap
 augroup END
 
 augroup C
-	autocmd!
-	autocmd FileType c :setlocal list foldmethod=syntax
-	autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki	<bs>
+  autocmd!
+  autocmd FileType c :setlocal list foldmethod=syntax
+  autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki  <bs>
 augroup END
 
 augroup vim
-	autocmd!
-	autocmd FileType vim :setlocal foldmethod=marker
-	autocmd FileType vim :setlocal foldlevelstart=0
+  autocmd!
+  autocmd FileType vim :setlocal foldmethod=marker
+  autocmd FileType vim :setlocal foldlevelstart=0
 augroup END
 " }}}
 
@@ -230,37 +230,37 @@ cnoreabbr single %s/"/'/g
 " Functions {{{
 " ===================
 function! Idea()
-	let filename = expand(system("~/bin/idea -v"))
-	execute "edit" filename
+  let filename = expand(system("~/bin/idea -v"))
+  execute "edit" filename
 endfunction
 
 function! ShortTab()
-	let &l:tabstop = 2
-	let &l:shiftwidth = 2
-	let &l:softtabstop = 2
-	let &l:expandtab = 1
-	exe "retab"
+  let &l:tabstop = 2
+  let &l:shiftwidth = 2
+  let &l:softtabstop = 2
+  let &l:expandtab = 1
+  exe "retab"
 endfunction
 
 function! LongTab()
-	let &l:tabstop = 4
-	let &l:shiftwidth = 4
-	let &l:softtabstop = 4
-	let &l:expandtab = 1
-	exe "retab"
+  let &l:tabstop = 4
+  let &l:shiftwidth = 4
+  let &l:softtabstop = 4
+  let &l:expandtab = 1
+  exe "retab"
 endfunction
 
 function! PyTab()
-	let &l:tabstop = 4
-	let &l:shiftwidth = 4
-	let &l:softtabstop = 4
-	let &l:expandtab = 0
-	exe "retab"
+  let &l:tabstop = 4
+  let &l:shiftwidth = 4
+  let &l:softtabstop = 4
+  let &l:expandtab = 0
+  exe "retab"
 endfunction
 
 function! EditRC()
-	tabe $HOME/.config/nvim/config/vim-bootstrap.vim
-	vs $HOME/.config/nvim/config/local.vim
+  tabe $HOME/.config/nvim/config/vim-bootstrap.vim
+  vs $HOME/.config/nvim/config/local.vim
 endfunction
 
 " }}}
@@ -317,7 +317,7 @@ let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
 " Airline {{{
 " ======================
 " if !exists('g:airline_symbols')
-" 	let g:airline_symbols = {}
+"   let g:airline_symbols = {}
 " endif
 
 " let g:airline_loaded = 1
@@ -334,24 +334,145 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " wombat
 
 let g:airline_theme= 'murmur'
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+" }}}
 
-" let g:airline#extensions#bufferline#enabled = 1
-"
-" let g:airline#extensions#branch#enabled = 1
-"
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#tab_nr_type = 1 " splits and tab number
-" let g:airline#extensions#tabline#show_tabs = 1   " shows tabs regardless of num
+" Deoplete {{{
+" ===================
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 
-" let g:airline_powerline_fonts = 1
-" let g:airline_symbols.branch = ''
+let g:echodoc_enable_at_startup=1
 
-" let g:airline#extensions#syntastic#enabled = 1
-" let g:airline_section_warning = '[syntastic]'
-" let g:airline#extensions#whitespace#checks = 'long'
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
 
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-k>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" SuperTab like snippets behavior. {{{
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" " For conceal markers.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'javascriptcomplete#CompleteJS',
+  \ 'jspc#omni'
+\]
+
+" set completeopt=longest,menuone,preview
+" let g:deoplete#sources = {}
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
+" let g:tern#command = ['tern']
+" let g:tern#arguments = ['--persistent']
+" }}}
+
+
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
+
+" }}}
+
+
+
+" Tern {{{
+" ===================
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  let g:tern_map_keys = 1
+endif
+" }}}
+
+" NeoMake {{{
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+" }}}
+
+" Syntastic {{{ - Using NeoMake for now
+" ======================
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
+" let g:syntastic_mode_map = {
+"     \ 'mode': 'active',
+"     \ 'active_filetypes': ['python', 'css', 'javascript'],
+"     \ 'passive_filetypes': ['scss', 'html']
+"     \ }
+
+" let g:syntastic_error_symbol = '🚫'
+" let g:syntastic_warning_symbol = '🔮'
+
+" highlight link SyntasticErrorSign SignColumn
+" highlight link SyntasticWarningSign SignColumn
+" highlight link SyntasticStyleErrorSign SignColumn
+" highlight link SyntasticStyleWarningSign SignColumn
+
+" let g:syntastic_cpp_compiler = \"clang++"
+" let g:syntastic_cpp_compiler_options = \" -std=c++11 -stdlib=libc++"
+
+" let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
+
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_eslint_exe='eslint'
+" let g:jsx_ext_required = 0
+
+" SyntasticToggle - following vim unimpaired style
+" nnoremap coz :SyntasticToggleMode<cr>
+" }}}
+
+" Fugitive {{{
+" ======================
+
+" Autoclean fugitive buffers
+" autocmd BufReadPost fugitive://* set bufhidden=delete
+
+cnoreabbr Gco Git co
+cnoreabbr Gbranch Git branch
+cnoreabbr Gca Gcommit --amend --no-edit
+cnoreabbr Gcb Git co -b
+cnoreabbr Gstash Git stash
+cnoreabbr Gapply Git stash apply
+
+let g:github_enterprise_urls = ['https://github.ibm.com']
+" " }}}
+
+" UltiSnips {{{
+" ======================
+" set rtp^=$HOME
+let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
 
 " Deoplete {{{
@@ -405,89 +526,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
 " let g:tern#command = ['tern']
 " let g:tern#arguments = ['--persistent']
-" }}}
-
-
-" omnifuncs
-augroup omnifuncs
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
-
-" }}}
-
-
-
-" Tern {{{
-" ===================
-if exists('g:plugs["tern_for_vim"]')
-  let g:tern_show_argument_hints = 'on_hold'
-  let g:tern_show_signature_in_pum = 1
-  let g:tern_map_keys = 1
-endif
-" }}}
-
-" NeoMake {{{
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
-" }}}
-"
-
-" Syntastic {{{ - Using NeoMake for now
-" ======================
-let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_mode_map = {
-    \ 'mode': 'active',
-    \ 'active_filetypes': ['python', 'css', 'javascript'],
-    \ 'passive_filetypes': ['scss', 'html']
-    \ }
-
-let g:syntastic_error_symbol = '🚫'
-let g:syntastic_warning_symbol = '🔮'
-
-" highlight link SyntasticErrorSign SignColumn
-" highlight link SyntasticWarningSign SignColumn
-" highlight link SyntasticStyleErrorSign SignColumn
-" highlight link SyntasticStyleWarningSign SignColumn
-
-let g:syntastic_cpp_compiler = "clang++"
-let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
-
-let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
-
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe='eslint'
-let g:jsx_ext_required = 0
-
-" SyntasticToggle - following vim unimpaired style
-" nnoremap coz :SyntasticToggleMode<cr>
-" }}}
-
-" Fugitive {{{
-" ======================
-
-" Autoclean fugitive buffers
-" autocmd BufReadPost fugitive://* set bufhidden=delete
-
-cnoreabbr Gco Git co
-cnoreabbr Gbranch Git branch
-cnoreabbr Gca Gcommit --amend --no-edit
-cnoreabbr Gcb Git co -b
-let g:github_enterprise_urls = ['https://github.ibm.com']
-" " }}}
-
-" UltiSnips {{{
-" ======================
-" set rtp^=$HOME
-let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
 
 " }}}
