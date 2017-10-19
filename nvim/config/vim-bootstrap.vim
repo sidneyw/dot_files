@@ -56,7 +56,6 @@ Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/neosnippet.vim'
 
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
 
 Plug 'vim-airline/vim-airline'
