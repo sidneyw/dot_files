@@ -6,7 +6,7 @@ then
 	PS1=$OPS1
 
 elif [ "$1" == "-g" ]
-then 
+then
 	# Git branch
 	PS1=$GPS1
 

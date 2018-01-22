@@ -29,6 +29,8 @@ set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
 set backspace=indent,eol,start " Backspace for insert mode
 
+set inccommand=split " Interactive substitue
+
 set shell=bash\ --login " make the sh command source the bash_profile
 set backupcopy=yes      " For webpack hot reloading
 
@@ -87,6 +89,7 @@ nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 " Run the current line as a command and read in the output
 " nnoremap <leader>q !!sh<cr>
 
+nnoremap <leader>ue :UltiSnipsEdit<cr>
 " Edit Bash Profile
 nnoremap <leader>eb :tabe ~/.bash_profile<cr>
 
@@ -174,12 +177,13 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme monokai-phoenix
+" colorscheme monokai-phoenix
 " colorscheme molokai
 " colorscheme firewatch
 " colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
+colorscheme turtles
 
 " }}}
 
@@ -294,6 +298,11 @@ nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
+" }}}
+
+
+" vim-highlightedyank {{{
+let g:highlightedyank_highlight_duration = 200
 " }}}
 
 " Markdown
