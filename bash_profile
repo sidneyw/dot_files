@@ -1,4 +1,7 @@
-# Bash prompt variables
+# ====================================
+# Prompts and colors {{{
+# ====================================
+
 _time="\[\e[1;34m\][\[\e[0;32m\]\@\[\e[1;34m\]]"
 _user="[\e[0;34m\]\u\[\e[1;34m\]]"
 _dir="[\[\e[0;32m\]\w\[\e[1;34m\]]"
@@ -18,31 +21,39 @@ PS1=$GPS1
 export CLICOLOR=1
 LS_COLORS='di=0;35'
 export LS_COLORS
+# }}}
 
-# ==================================== {{{
-# Aliases
+# ====================================
+# Aliases {{{
 # ====================================
 # <C-x> <C-e> to open vim and edit a command there
-EDITOR="nvim"
-alias v='nvim'
-alias vim="nvim"
-
 # Shortcuts
-export vimrc="$HOME/.dot_files/vim/vimrc"
-export tmux="$HOME/.dot_files/tmux/tmux.conf"
+export vimrc='$HOME/.dot_files/vim/vimrc'
+export tmux='$HOME/.dot_files/tmux/tmux.conf'
 
+EDITOR='nvim'
+alias v='nvim'
+alias vim='nvim'
+
+<<<<<<< HEAD
 # Aliases go here:
 alias bp="source $HOME/.bash_profile"
+=======
+>>>>>>> personal
 alias ls='ls -GFh'
 alias ll='ls -la'
 alias gcd='cd $(git rev-parse --show-toplevel)'
 
-alias pi3="ssh pi@raspberrypi.local"
-alias pi="ssh pi@100.64.1.173"
-alias godaddy="ssh thesquid17@107.180.41.49"
-alias dali="ssh salvador@dolly.dali.dartmouth.edu"
+# SSH
+alias pi3='ssh pi@raspberrypi.local'
+alias pi='ssh pi@100.64.1.173'
+alias godaddy='ssh thesquid17@107.180.41.49'
+alias dali='ssh salvador@dolly.dali.dartmouth.edu'
 alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 
+alias kc='kubectl'
+alias dcomp='docker-compose'
+alias dmongo='docker run -d -p 27017:27017 mongo'
 alias yn='yarn'
 alias npmr='npm run'
 alias npmi='npm install'
@@ -51,25 +62,22 @@ alias npmi='npm install'
 alias 3='python3'
 
 # tmux
-alias tmux="tmux -2"
-alias tls="tmux ls"
-alias tks="tmux kill-session -t"
-alias tkill="tmux kill-server"
-alias ta="tmux attach"
+alias tmux='tmux -2'
+alias tls='tmux ls'
+alias tks='tmux kill-session -t'
+alias tkill='tmux kill-server'
+alias ta='tmux attach'
 TERM=xterm-256color
 
-# sql server
-alias sql='sudo /usr/local/mysql/bin/mysql -u root'
-
-alias mygcc="gcc -Wall -pedantic -std=c11"
+alias mygcc='gcc -Wall -pedantic -std=c11'
 
 # other
-alias c="clear"
-alias makec="make clean; make -j"
+alias c='clear'
+alias makec='make clean; make -j'
 # }}}
 
 # ====================================
-# Plugins
+# Plugins {{{
 # ====================================
 # autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
@@ -77,8 +85,14 @@ alias makec="make clean; make -j"
 	# . /usr/share/autojump/autojump.sh
 
 # Bash Completion
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	. $(brew --prefix)/etc/bash_completion
+fi
+# }}}
 
+# ====================================
+# Path {{{
+# ====================================
 PATH="$PATH:$HOME/bin"
 PATH="/usr/local/bin:${PATH}"
 # source $(brew --prefix nvm)/nvm.sh
@@ -102,8 +116,21 @@ export GOPATH="/Users/sidneywijngaarde/go/"
 # added by Anaconda3 4.3.0 installer
 export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
 
+<<<<<<< HEAD
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [ -f /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash ] && . /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
+=======
+ export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# added by Anaconda3 5.0.1 installer
+export PATH="/anaconda3/bin:$PATH"
+# }}}
+>>>>>>> personal

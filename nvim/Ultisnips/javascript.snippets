@@ -8,6 +8,12 @@ export const $1 = ($2) => {
 }
 endsnippet
 
+snippet afunc "Async function"
+async function $1($2) {
+	$0
+}
+endsnippet
+
 snippet arr "Arrow function" i
 ($1) => {
 	$0
@@ -36,7 +42,7 @@ snippet comm	"3 Line Comment"
 // ------------------------------------
 endsnippet
 
-snippet clog "Console Log"
+snippet clog "Console Log" i
 console.log($1);
 endsnippet
 
@@ -263,6 +269,31 @@ snippet span "span tag"
 <span $0/>
 endsnippet
 
+snippet img "img tag"
+<img src={$1} ${2:alt='${3}' }/>
+endsnippet
+
 snippet input "input tag"
 <input type="$1" $0 />
+endsnippet
+
+snippet pure "Pure CSS in JS"
+// pure-sm
+@media screen and (min-width: 35.5em) {
+  $1
+}
+
+// pure-md
+@media screen and (min-width: 48em) {
+ $2
+}
+
+//pure-lg
+@media screen and (min-width: 64em) {
+ $3
+}
+// pure-xl
+@media screen and (min-width: 80em) {
+ $0
+}
 endsnippet
