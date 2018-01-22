@@ -33,9 +33,11 @@ export tmux="$HOME/.dot_files/tmux/tmux.conf"
 
 # Aliases go here:
 alias bp="source $HOME/.bash_profile"
+alias dcomp="docker-compose"
 alias ls='ls -GFh'
 alias ll='ls -la'
 alias gcd='cd $(git rev-parse --show-toplevel)'
+alias kc='kubectl'
 
 alias pi3="ssh pi@raspberrypi.local"
 alias pi="ssh pi@100.64.1.173"

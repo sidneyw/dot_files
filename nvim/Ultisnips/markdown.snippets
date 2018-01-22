@@ -12,3 +12,17 @@ endsnippet
 snippet toc "Table of Contents"
 # Table of Contents
 endsnippet
+
+snippet "(S|s)cenario" "A Gherkin Scenario" r
+Scenario: $1
+  Given $2
+  When $3
+  Then $0
+endsnippet
+
+snippet priv "Slack MD Priv Support Request"
+*Tool*: ${1:Slack}
+*Action*: $2
+*Email*: $3
+*Support Request*: $4
+endsnippet
