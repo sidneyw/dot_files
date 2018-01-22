@@ -29,6 +29,8 @@ set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
 set backspace=indent,eol,start " Backspace for insert mode
 
+set inccommand=split " Interactive substitue
+
 set shell=bash\ --login " make the sh command source the bash_profile
 set backupcopy=yes      " For webpack hot reloading
 
@@ -87,6 +89,7 @@ nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 " Run the current line as a command and read in the output
 " nnoremap <leader>q !!sh<cr>
 
+nnoremap <leader>ue :UltiSnipsEdit<cr>
 " Edit Bash Profile
 nnoremap <leader>eb :tabe ~/.bash_profile<cr>
 
@@ -106,7 +109,6 @@ nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
 
 vnoremap <leader>s :sort<cr>
-
 " }}}
 
 " Autocommands {{{
@@ -175,12 +177,13 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme monokai-phoenix
+" colorscheme monokai-phoenix
 " colorscheme molokai
 " colorscheme firewatch
 " colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
+colorscheme turtles
 
 " }}}
 
@@ -295,6 +298,11 @@ nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
+" }}}
+
+
+" vim-highlightedyank {{{
+let g:highlightedyank_highlight_duration = 200
 " }}}
 
 " Markdown
@@ -417,7 +425,20 @@ endif
 
 " NeoMake {{{
 autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_jsx_enabled_makers = ['eslint']
+
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--ignore=E501,E302,E128,W191,F403,E402',  '--format=default'],
+    \ 'errorformat':
+        \ '%E%f:%l: could not compile,%-Z%p^,' .
+        \ '%A%f:%l:%c: %t%n %m,' .
+        \ '%A%f:%l: %t%n %m,' .
+        \ '%-G%.%#',
+    \ }
+
+let g:neomake_python_enabled_makers = ['flake8']
 " }}}
 
 " Syntastic {{{ - Using NeoMake for now

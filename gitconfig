@@ -17,12 +17,12 @@
 	default = current
 [alias]
 	br = branch
-	dh = diff HEAD
 	ca = commit --amend
 	cane = commit --amend --no-edit
 	ci = commit
 	cmp = "!f() { git checkout master && git pull upstream master; }; f"
 	co = checkout
+	dh = diff HEAD
 	nuke = "!f() { git push origin --delete $1; git branch -D $1; }; f"
 	pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/upstream/pr/$1 && git checkout FETCH_HEAD && git remote prune upstream; }; f"
 	st = status
