@@ -4,11 +4,6 @@ const fs = require("fs");
 
 const [_, _a, input, output = input] = process.argv;
 
-if (!fs.existsSync(input) || !fs.lstatSync(input).isFile()) {
-  console.error(`Invalid path: ${input}`);
-  process.exit(1);
-}
-
 const data = fs.readFileSync(input);
 const jsonData = JSON.parse(data);
 fs.writeFileSync(output, JSON.stringify(jsonData, null, 2));
