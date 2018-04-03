@@ -24,43 +24,27 @@ export LS_COLORS
 # }}}
 
 # ====================================
-# Aliases {{{
+# Global Variables {{{
 # ====================================
-# <C-x> <C-e> to open vim and edit a command there
-# Shortcuts
 export vimrc='$HOME/.dot_files/vim/vimrc'
 export tmux='$HOME/.dot_files/tmux/tmux.conf'
 
-EDITOR='nvim'
+export CLUSTER_IP='9.42.135.236'
+export CLUSTER_USER="ibmadmin@$CLUSTER_IP"
+
+export EDITOR='nvim'
+# }}}
+
+# ====================================
+# Aliases {{{
+# ====================================
+# <C-x> <C-e> to open vim and edit a command there
+# Vim
 alias v='nvim'
 alias vim='nvim'
+alias ebash='nvim ~/.bash_profile'
 
-# Aliases go here:
-alias bp="source $HOME/.bash_profile"
-alias dcomp="docker-compose"
-alias ls='ls -GFh'
-alias ll='ls -la'
-alias gcd='cd $(git rev-parse --show-toplevel)'
-alias kc='kubectl'
-
-# SSH
-alias pi3='ssh pi@raspberrypi.local'
-alias pi='ssh pi@100.64.1.173'
-alias godaddy='ssh thesquid17@107.180.41.49'
-alias dali='ssh salvador@dolly.dali.dartmouth.edu'
-alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
-
-alias kc='kubectl'
-alias dcomp='docker-compose'
-alias dmongo='docker run -d -p 27017:27017 mongo'
-alias yn='yarn'
-alias npmr='npm run'
-alias npmi='npm install'
-
-# Python aliases
-alias 3='python3'
-
-# tmux
+# Tmux
 alias tmux='tmux -2'
 alias tls='tmux ls'
 alias tks='tmux kill-session -t'
@@ -68,11 +52,43 @@ alias tkill='tmux kill-server'
 alias ta='tmux attach'
 TERM=xterm-256color
 
-alias mygcc='gcc -Wall -pedantic -std=c11'
+# Bash
+alias bp="source $HOME/.bash_profile"
+alias ls='ls -GFh'
+alias ll='ls -la'
+
+# cd to top level git dir
+alias gcd='cd $(git rev-parse --show-toplevel)'
+
+# SSH
+alias icp="ssh $CLUSTER_USER"
+alias pi3='ssh pi@raspberrypi.local'
+alias pi='ssh pi@100.64.1.173'
+alias godaddy='ssh thesquid17@107.180.41.49'
+alias dali='ssh salvador@dolly.dali.dartmouth.edu'
+alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
+
+# Kubernetes
+alias kc='kubectl'
+alias kca='kubectl apply -f'
+alias kcd='kubectl delete -f'
+
+# Docker
+alias dcomp='docker-compose'
+alias dmongo='docker run -d -p 27017:27017 mongo'
+
+# JS
+alias yn='yarn'
+alias npmr='npm run'
+alias npmi='npm install'
+
+# Python
+alias 3='python3'
 
 # other
 alias c='clear'
 alias makec='make clean; make -j'
+alias mygcc='gcc -Wall -pedantic -std=c11'
 # }}}
 
 # ====================================
@@ -107,7 +123,11 @@ PATH="${PATH}:/usr/local/bin"
 [ -f /Users/sidneywijngaarde/.travis/travis.sh ] && source /Users/sidneywijngaarde/.travis/travis.sh
 
 # Go installs packages here
-export GOPATH="/Users/sidneywijngaarde/go/"
+export GOPATH="$HOME/go"
+export GOBIN=$HOME/go/bin
+# export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOBIN
+export PATH=$PATH:$GOROOT/bin
 
 # added by Anaconda3 4.3.0 installer
 export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"

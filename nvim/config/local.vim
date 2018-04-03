@@ -29,7 +29,7 @@ set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
 set backspace=indent,eol,start " Backspace for insert mode
 
-set inccommand=split " Interactive substitue
+set inccommand=split " Interactive substitute
 
 set shell=bash\ --login " make the sh command source the bash_profile
 set backupcopy=yes      " For webpack hot reloading
@@ -130,8 +130,9 @@ augroup END
 
 augroup markdown
   autocmd!
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
+  autocmd FileType markdown, :colorscheme badwolf
 augroup END
 
 augroup python
@@ -143,11 +144,11 @@ augroup python
 augroup END
 
 augroup javascript
-	autocmd!
-	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
-	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call LongTab()
+  autocmd!
+  autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+  autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
+  autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
+  autocmd FileType javascript :call ShortTab()
 augroup END
 
 augroup bash
@@ -180,10 +181,10 @@ hi clear
 " colorscheme monokai-phoenix
 " colorscheme molokai
 " colorscheme firewatch
-" colorscheme badwolf
+colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
-colorscheme turtles
+" colorscheme turtles
 
 " }}}
 
@@ -223,6 +224,7 @@ cnoreabbr xwhite %s/    /\t/g
 
 cnoreabbr makec make! clean; make -j
 cnoreabbr makel make! load_elf -j
+cnoreabbr bad colorscheme badwolf
 
 cnoreabbr count %s///gn
 cnoreabbr double %s/'/"/g
@@ -341,7 +343,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " sky
 " wombat
 
-let g:airline_theme= 'murmur'
+let g:airline_theme= 'durant'
 " }}}
 
 " Deoplete {{{
@@ -412,8 +414,6 @@ augroup end
 
 " }}}
 
-
-
 " Tern {{{
 " ===================
 if exists('g:plugs["tern_for_vim"]')
@@ -439,6 +439,7 @@ let g:neomake_python_flake8_maker = {
     \ }
 
 let g:neomake_python_enabled_makers = ['flake8']
+" let g:neomake_go_enabled_makers = ['govet']
 " }}}
 
 " Syntastic {{{ - Using NeoMake for now
