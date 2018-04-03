@@ -1,6 +1,6 @@
 .*DS_Store
-*ngrok
-*wsk
 
 nvim/autoload*
 nvim/plugged*
+
+shell/local_bin*

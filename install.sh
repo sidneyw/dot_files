@@ -1,25 +1,27 @@
 #!/bin/bash
+set -x
+
 # Creates symlinks for dotfiles
+DOT_FILES="$HOME/.dot_files"
 
-dir="$HOME/.dot_files"
+echo "Dot files folder: $DOT_FILES"
 
-echo "Dot files folder: $dir"
+ln -s $DOT_FILES/tmux/tmux.conf $HOME/.tmux.conf
+ln -s $DOT_FILES/tmux/tmux.conf.local $HOME/.tmux.conf.local
 
-ln -s $dir/tmux/tmux.conf $HOME/.tmux.conf
-ln -s $dir/tmux/tmux.conf.local $HOME/.tmux.conf.local
+ln -s $DOT_FILES/nvim $HOME/.config/nvim
+ln -s $DOT_FILES/shell/bash_profile $HOME/.bash_profile
 
-ln -s $dir/nvim $HOME/.config/nvim
-ln -s $dir/bash_profile $HOME/.bash_profile
+ln -s $DOT_FILES/vim/vimrc $HOME/.vimrc
+ln -s $DOT_FILES/vim $HOME/.vim
 
-ln -s $dir/vim/vimrc $HOME/.vimrc
-ln -s $dir/vim $HOME/.vim
-
-ln -s $dir/gitconfig $HOME/.gitconfig
-ln -s $dir/gitignore $HOME/.gitignore
+ln -s $DOT_FILES/git/gitconfig $HOME/.gitconfig
+ln -s $DOT_FILES/git/gitignore $HOME/.gitignore
 
 if [[ -d $HOME/bin ]]
 then
 	echo User level bin already exists
 else
-	ln -s $dir/bin ~/bin
+	ln -s $DOT_FILES/shell/bin ~/bin
+	ln -s $DOT_FILES/shell/local_bin ~/local_bin
 fi
