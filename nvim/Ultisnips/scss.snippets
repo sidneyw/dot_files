@@ -1,0 +1,62 @@
+snippet pad "padding"
+padding: $0;
+endsnippet
+
+snippet mar "margin"
+margin: $0;
+endsnippet
+
+snippet bg "background"
+background: $0;
+endsnippet
+
+snippet imp "Import"
+@import "$1";
+endsnippet
+
+snippet comm "Comment"
+// ------------------------------------
+// $0
+// ------------------------------------
+endsnippet
+
+snippet ex "Extend"
+@extend $0
+endsnippet
+
+snippet pure "Pure CSS Media Queries"
+// pure-sm
+@media screen and (min-width: 35.5em) {
+
+}
+
+// pure-md
+@media screen and (min-width: 48em) {
+
+}
+
+//pure-lg
+@media screen and (min-width: 64em) {
+
+}
+// pure-xl
+@media screen and (min-width: 80em) {
+
+}
+endsnippet
+
+snippet media "Media Queries"
+// Tablets
+@media screen
+	and (min-width: 768px)
+	and (max-width: 1024px) {
+	$1
+}
+
+// Phone
+@media screen
+	and (min-width: 320px)
+	and (max-width: 767px) {
+	$0
+}
+endsnippet

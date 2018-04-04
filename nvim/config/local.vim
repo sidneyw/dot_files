@@ -29,13 +29,15 @@ set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
 set backspace=indent,eol,start " Backspace for insert mode
 
+set inccommand=split " Interactive substitute
+
 set shell=bash\ --login " make the sh command source the bash_profile
 set backupcopy=yes      " For webpack hot reloading
 
 "set list
 set listchars=tab:▸\ ,eol:¬
 
-let mapleader="-"
+let mapleader='-'
 let maplocalleader = "\\"
 
 " }}}
@@ -58,11 +60,6 @@ nnoremap <silent> <leader>d <C-w>10>
 " Make with all cores
 " nnoremap <leader>n :make! -j<cr>
 
-" Use vimgrep to search for the previous search in the arg list
-nnoremap <leader>v :vimgrep /<C-r>//g ##<cr>
-
-" SyntasticToggle - following vim unimpaired style
-nnoremap coz :SyntasticToggleMode<cr>
 
 " Change Tmux Line color scheme
 nnoremap <leader>z :Tmuxline airline_insert<cr>
@@ -73,6 +70,10 @@ nnoremap <leader>p :echo expand("%:p")<cr>
 " Open and close the quickfix list
 nnoremap <leader>co :copen<cr>
 nnoremap <leader>cc :cclose<cr>
+"
+" Open and close the location list
+nnoremap <leader>lc :lclose<cr>
+nnoremap <leader>lo :lopen<cr>
 
 " Change CWD for the window to the dir of the current file
 nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
@@ -86,16 +87,17 @@ nnoremap <silent> <leader>i :call Idea()<cr>
 nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
 
 " Run the current line as a command and read in the output
-nnoremap <leader>q !!sh<cr>
+" nnoremap <leader>q !!sh<cr>
 
+nnoremap <leader>ue :UltiSnipsEdit<cr>
 " Edit Bash Profile
 nnoremap <leader>eb :tabe ~/.bash_profile<cr>
 
 " Source Bash Profile
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
-" Edit vimrc 
-nnoremap <leader>ev :tabe ~/.vim/vimrc<cr>
+" Edit vimrc
+nnoremap <leader>ev :call EditRC()<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -106,67 +108,70 @@ nnoremap <leader>et :tabe ~/.tmux.conf<cr>
 " Source tmux config
 nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
 
+vnoremap <leader>s :sort<cr>
 " }}}
 
 " Autocommands {{{
 " ====================
 augroup text
-	autocmd!
-	autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
+  autocmd!
+  autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
 augroup END
 
 augroup yaml
-	autocmd!
-	autocmd FileType yaml :call LongTab()
+  autocmd!
+  autocmd FileType yaml :call LongTab()
 augroup END
 
 augroup cpp
-	autocmd!
-	autocmd FileType cpp :call LongTab()
+  autocmd!
+  autocmd FileType cpp :call LongTab()
 augroup END
 
 augroup markdown
-	autocmd!
-	autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
+  autocmd!
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
+  autocmd FileType markdown, :colorscheme badwolf
 augroup END
 
 augroup python
-	autocmd!
-	autocmd FileType python :setlocal list foldmethod=indent
-	autocmd FileType python :setlocal commentstring=#\ %s
-	autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
-	autocmd FileType python :call PyTab()
+  autocmd!
+  autocmd FileType python :setlocal list foldmethod=indent
+  autocmd FileType python :setlocal commentstring=#\ %s
+  autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
+  autocmd FileType python :call PyTab()
 augroup END
 
 augroup javascript
-	autocmd!
-	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
-	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call ShortTab()
+  autocmd!
+  autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+  autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
+  autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
+  autocmd FileType javascript :call ShortTab()
 augroup END
 
 augroup bash
-	autocmd!
-	autocmd FileType sh :setlocal commentstring=#\ %s
-	autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
+  autocmd!
+  autocmd FileType sh :setlocal commentstring=#\ %s
+  autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
 augroup END
 
 augroup html
-	autocmd!
-	autocmd FileType html :setlocal nowrap
+  autocmd!
+  autocmd FileType html :setlocal nowrap
 augroup END
 
 augroup C
-	autocmd!
-	autocmd FileType c :setlocal list foldmethod=syntax
-	autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki	<bs>
+  autocmd!
+  autocmd FileType c :setlocal list foldmethod=syntax
+  autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki  <bs>
 augroup END
 
 augroup vim
-	autocmd!
-	autocmd FileType vim :setlocal foldmethod=marker
-	autocmd FileType vim :setlocal foldlevelstart=0
+  autocmd!
+  autocmd FileType vim :setlocal foldmethod=marker
+  autocmd FileType vim :setlocal foldlevelstart=0
 augroup END
 " }}}
 
@@ -174,11 +179,12 @@ augroup END
 " ====================
 hi clear
 " colorscheme monokai-phoenix
-colorscheme molokai
+" colorscheme molokai
 " colorscheme firewatch
-" colorscheme badwolf
+colorscheme badwolf
 " colorscheme sky
 " colorscheme brogrammer
+" colorscheme turtles
 
 " }}}
 
@@ -218,6 +224,7 @@ cnoreabbr xwhite %s/    /\t/g
 
 cnoreabbr makec make! clean; make -j
 cnoreabbr makel make! load_elf -j
+cnoreabbr bad colorscheme badwolf
 
 cnoreabbr count %s///gn
 cnoreabbr double %s/'/"/g
@@ -227,33 +234,33 @@ cnoreabbr single %s/"/'/g
 
 " Functions {{{
 " ===================
-function! Idea()
-	let filename = expand(system("~/bin/idea -v"))
-	execute "edit" filename
-endfunction
-
 function! ShortTab()
-	let &l:tabstop = 2
-	let &l:shiftwidth = 2
-	let &l:softtabstop = 2
-	let &l:expandtab = 1
-	exe "retab"
+  let &l:tabstop = 2
+  let &l:shiftwidth = 2
+  let &l:softtabstop = 2
+  let &l:expandtab = 1
+  exe "retab"
 endfunction
 
 function! LongTab()
-	let &l:tabstop = 4
-	let &l:shiftwidth = 4
-	let &l:softtabstop = 4
-	let &l:expandtab = 1
-	exe "retab"
+  let &l:tabstop = 4
+  let &l:shiftwidth = 4
+  let &l:softtabstop = 4
+  let &l:expandtab = 1
+  exe "retab"
 endfunction
 
 function! PyTab()
-	let &l:tabstop = 4
-	let &l:shiftwidth = 4
-	let &l:softtabstop = 4
-	let &l:expandtab = 0
-	exe "retab"
+  let &l:tabstop = 4
+  let &l:shiftwidth = 4
+  let &l:softtabstop = 4
+  let &l:expandtab = 0
+  exe "retab"
+endfunction
+
+function! EditRC()
+  tabe $HOME/.config/nvim/config/vim-bootstrap.vim
+  vs $HOME/.config/nvim/config/local.vim
 endfunction
 
 " }}}
@@ -261,38 +268,64 @@ endfunction
 " Plugins stuff {{{
 " ===================
 " Plugin list
-" NERDTREE
+" NerdTree
 " Bufferline
+" Tmux
 " Airline
-" Tmuxline
+" Deoplete
+" Tern
 " Syntastic
 " Fugitive
-" CtrlP
+" Ultisnips
 
 " NERDTree {{{
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 " ignore .o files - see :h NERDTreeIgnore
-let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]', 'node_modules$[[dir]]']
+" let NERDTreeIgnore=['\.o$[[file]]', '\.py[cdo]$[[file]]', 'node_modules$[[dir]]']
+" let g:NERDTreeWinSize = 30
 
 " Close vim if nerdtree is the only window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " set winfixwidth
 
 " }}}
 
-" Bufferline
+" Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
+" }}}
+
+
+" vim-highlightedyank {{{
+let g:highlightedyank_highlight_duration = 200
+" }}}
+
+" Markdown
+let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
+
+" Tmux {{{
+" let g:tmux_navigator_no_mappings = 1
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
+" nnoremap <silent> <C-;> :TmuxNavigatePrevious<cr>
+" tmap <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
+" tmap <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
+" tmap <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
+" tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+" tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
+" }}}
 
 " Airline {{{
 " ======================
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
 
-let g:airline_loaded = 1
+" let g:airline_loaded = 1
 
 set noshowmode   " Gets rid of the original showing of modes in vim
 set laststatus=2 " Shows the status bar even if there is only one file
@@ -305,97 +338,211 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " sky
 " wombat
 
-let g:airline_theme= 'murmur'
+let g:airline_theme= 'durant'
+" }}}
 
-" let g:airline#extensions#bufferline#enabled = 1
-"
-" let g:airline#extensions#branch#enabled = 1
-"
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#tab_nr_type = 1 " splits and tab number
-" let g:airline#extensions#tabline#show_tabs = 1   " shows tabs regardless of num
-"
-" let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-" let g:airline_symbols.branch = ''
-"
-" let g:airline#extensions#syntastic#enabled = 1
-" let g:airline_section_warning = '[syntastic]'
-" let g:airline#extensions#whitespace#checks = 'long'
+" Deoplete {{{
+" ===================
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+let g:echodoc_enable_at_startup=1
+
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-k>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" SuperTab like snippets behavior. {{{
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" " For conceal markers.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'javascriptcomplete#CompleteJS',
+  \ 'jspc#omni'
+\]
+
+" set completeopt=longest,menuone,preview
+" let g:deoplete#sources = {}
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
+" let g:tern#command = ['tern']
+" let g:tern#arguments = ['--persistent']
+" }}}
+
+
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
 
 " }}}
 
-" Tmux line {{{
-" ======================
-
-" crosshair
-" full
-" minimal
-" nightly_fox
-" powerline
-" righteous
-" tmux
-
-let g:tmuxline_preset = 'crosshair'
-" let g:tmuxline_theme = 'airline_insert'
-" let g:tmuxline_preset = {
-" 	\'a'       : '#S:#I',
-" 	\'b disabled'       : '',
-" 	\'c disabled'       : '',
-" 	\'win'     : ['#I', '#W'],
-" 	\'cwin'    : ['#I', '#W'],
-" 	\'x disabled'       : '',
-" 	\'y'       : ['%a', '%m-%d-%Y', '%l:%M%p'],
-" 	\'z'       : ['#(whoami)', '#h'],
-" 	\'options' : {'status-justify': 'left'}}
-
+" Tern {{{
+" ===================
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  let g:tern_map_keys = 1
+endif
 " }}}
 
-" Syntastic {{{
+" NeoMake {{{
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_jsx_enabled_makers = ['eslint']
+
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--ignore=E501,E302,E128,W191,F403,E402',  '--format=default'],
+    \ 'errorformat':
+        \ '%E%f:%l: could not compile,%-Z%p^,' .
+        \ '%A%f:%l:%c: %t%n %m,' .
+        \ '%A%f:%l: %t%n %m,' .
+        \ '%-G%.%#',
+    \ }
+
+let g:neomake_python_enabled_makers = ['flake8']
+" let g:neomake_go_enabled_makers = ['govet']
+" }}}
+
+" Syntastic {{{ - Using NeoMake for now
 " ======================
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
-" let g:syntastic_mode_map = {'mode': 'active',
-	" "\ 'active_filetypes': ['python', 'javascript'],
-	" "\ 'passive_filetypes': ['html', 'scss'] }
+" let g:syntastic_mode_map = {
+"     \ 'mode': 'active',
+"     \ 'active_filetypes': ['python', 'css', 'javascript'],
+"     \ 'passive_filetypes': ['scss', 'html']
+"     \ }
 
-
-let g:syntastic_error_symbol = '🚫'
-let g:syntastic_warning_symbol = '🔮'
+" let g:syntastic_error_symbol = '🚫'
+" let g:syntastic_warning_symbol = '🔮'
 
 " highlight link SyntasticErrorSign SignColumn
 " highlight link SyntasticWarningSign SignColumn
 " highlight link SyntasticStyleErrorSign SignColumn
 " highlight link SyntasticStyleWarningSign SignColumn
 
-" let g:syntastic_cpp_compiler = "clang++"
-let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++"
+" let g:syntastic_cpp_compiler = \"clang++"
+" let g:syntastic_cpp_compiler_options = \" -std=c++11 -stdlib=libc++"
 
-" let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
+" let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
 
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe="./node_modules/.bin/eslint %"
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_eslint_exe='eslint'
 " let g:jsx_ext_required = 0
+
+" SyntasticToggle - following vim unimpaired style
+" nnoremap coz :SyntasticToggleMode<cr>
 " }}}
 
 " Fugitive {{{
 " ======================
 
 " Autoclean fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
+" autocmd BufReadPost fugitive://* set bufhidden=delete
 
 cnoreabbr Gco Git co
 cnoreabbr Gbranch Git branch
 cnoreabbr Gca Gcommit --amend --no-edit
 cnoreabbr Gcb Git co -b
-" }}} 
+cnoreabbr Gstash Git stash
+cnoreabbr Gapply Git stash apply
+
+let g:github_enterprise_urls = ['https://github.ibm.com']
+" " }}}
 
 " UltiSnips {{{
 " ======================
-let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+" set rtp^=$HOME
+let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
+" }}}
+
+" Deoplete {{{
+" ===================
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+let g:echodoc_enable_at_startup=1
+
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-k>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" SuperTab like snippets behavior. {{{
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" " For conceal markers.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
+
+" let g:deoplete#omni#functions = {}
+" let g:deoplete#omni#functions.javascript = [
+"   \ 'tern#Complete',
+"   \ 'jspc#omni'
+" \]
+
+" set completeopt=longest,menuone,preview
+" let g:deoplete#sources = {}
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
+" let g:tern#command = ['tern']
+" let g:tern#arguments = ['--persistent']
 " }}}
 
 " }}}

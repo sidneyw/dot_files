@@ -1,2 +1,2 @@
-so $HOME/.config/nvim/config/vim-bootstrap.vim
-so $HOME/.config/nvim/config/local.vim
+source $HOME/.config/nvim/config/vim-bootstrap.vim
+source $HOME/.config/nvim/config/local.vim
