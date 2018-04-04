@@ -36,6 +36,10 @@ axios.$1(\`/$2\`, getConfig())
 	}});
 endsnippet
 
+snippet econst "Export const"
+export const $1 = $0
+endsnippet
+
 snippet comm	"3 Line Comment"
 // ------------------------------------
 // $0
@@ -226,6 +230,12 @@ snippet strict "Use Strict"
 "use strict";
 endsnippet
 
+snippet sty "Styled Component"
+const $1 = styled.$2\`
+	$0
+\`
+endsnippet
+
 snippet test "A jest test case"
 test('$1', (${2:done}) => {
 	$0
@@ -279,6 +289,20 @@ endsnippet
 
 snippet input "input tag"
 <input type="$1" $0 />
+endsnippet
+
+snippet sm "Pure CSS sm"
+// pure-sm
+@media screen and (min-width: 35.5em) {
+  $0
+}
+endsnippet
+
+snippet md "Pure CSS md"
+// pure-md
+@media screen and (min-width: 48em) {
+ $0
+}
 endsnippet
 
 snippet pure "Pure CSS in JS"

@@ -127,6 +127,7 @@ Plug 'niftylettuce/vim-jinja'
 
 " javascript
 "" Javascript Bundle
+Plug 'styled-components/vim-styled-components'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'isRuslan/vim-es6'
 Plug 'elzr/vim-json'

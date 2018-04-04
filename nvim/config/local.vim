@@ -234,11 +234,6 @@ cnoreabbr single %s/"/'/g
 
 " Functions {{{
 " ===================
-function! Idea()
-  let filename = expand(system("~/bin/idea -v"))
-  execute "edit" filename
-endfunction
-
 function! ShortTab()
   let &l:tabstop = 2
   let &l:shiftwidth = 2
