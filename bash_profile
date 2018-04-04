@@ -35,11 +35,8 @@ EDITOR='nvim'
 alias v='nvim'
 alias vim='nvim'
 
-<<<<<<< HEAD
 # Aliases go here:
 alias bp="source $HOME/.bash_profile"
-=======
->>>>>>> personal
 alias ls='ls -GFh'
 alias ll='ls -la'
 alias gcd='cd $(git rev-parse --show-toplevel)'
@@ -116,13 +113,6 @@ export GOPATH="/Users/sidneywijngaarde/go/"
 # added by Anaconda3 4.3.0 installer
 export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
 
-<<<<<<< HEAD
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash ] && . /Users/sidneywijngaarde/.config/yarn/global/node_modules/tabtab/.completions/serverless.bash
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-=======
  export NVM_DIR="$HOME/.nvm"
   . "/usr/local/opt/nvm/nvm.sh"
 
@@ -133,4 +123,3 @@ export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
 # added by Anaconda3 5.0.1 installer
 export PATH="/anaconda3/bin:$PATH"
 # }}}
->>>>>>> personal

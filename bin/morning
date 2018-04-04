@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~/Documents/thoughts/
+nvim "`date +%m-%d-%Y`.md"

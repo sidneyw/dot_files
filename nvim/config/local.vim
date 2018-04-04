@@ -130,8 +130,9 @@ augroup END
 
 augroup markdown
   autocmd!
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
+  autocmd BufNewFile,BufReadPost *.md colorscheme badwolf
 augroup END
 
 augroup python
@@ -143,11 +144,11 @@ augroup python
 augroup END
 
 augroup javascript
-	autocmd!
-	autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-	autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
-	autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
-	autocmd FileType javascript :call LongTab()
+  autocmd!
+  autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+  autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
+  autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
+  autocmd FileType javascript :call ShortTab()
 augroup END
 
 augroup bash
@@ -232,11 +233,6 @@ cnoreabbr single %s/"/'/g
 
 " Functions {{{
 " ===================
-function! Idea()
-  let filename = expand(system("~/bin/idea -v"))
-  execute "edit" filename
-endfunction
-
 function! ShortTab()
   let &l:tabstop = 2
   let &l:shiftwidth = 2
