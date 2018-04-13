@@ -29,8 +29,10 @@ export LS_COLORS
 export vimrc='$HOME/.dot_files/vim/vimrc'
 export tmux='$HOME/.dot_files/tmux/tmux.conf'
 
-export CLUSTER_IP='9.42.135.236'
-export CLUSTER_USER="ibmadmin@$CLUSTER_IP"
+export VLAUNCH_IP='9.42.135.236'
+export VLAUNCH_USER="ibmadmin@$VLAUNCH_IP"
+
+export HDC_IP='9.37.239.98'
 
 export EDITOR='nvim'
 # }}}
@@ -43,6 +45,7 @@ export EDITOR='nvim'
 alias v='nvim'
 alias vim='nvim'
 alias ebash='nvim ~/.bash_profile'
+alias hdcui="open https://$HDC_IP:8443/console"
 
 # Tmux
 alias tmux='tmux -2'
@@ -61,7 +64,7 @@ alias ll='ls -la'
 alias gcd='cd $(git rev-parse --show-toplevel)'
 
 # SSH
-alias icp="ssh $CLUSTER_USER"
+alias vlaunch="ssh $VLAUNCH_USER"
 alias pi3='ssh pi@raspberrypi.local'
 alias pi='ssh pi@100.64.1.173'
 alias godaddy='ssh thesquid17@107.180.41.49'
@@ -79,8 +82,11 @@ alias dmongo='docker run -d -p 27017:27017 mongo'
 
 # JS
 alias yn='yarn'
+alias yns='yarn start'
+
 alias npmr='npm run'
 alias npmi='npm install'
+alias npms='npm start'
 
 # Python
 alias 3='python3'
