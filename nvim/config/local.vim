@@ -338,7 +338,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " sky
 " wombat
 
-let g:airline_theme= 'durant'
+let g:airline_theme= 'murmur'
 " }}}
 
 " Deoplete {{{
