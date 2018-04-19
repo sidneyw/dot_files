@@ -120,7 +120,7 @@ augroup END
 
 augroup yaml
   autocmd!
-  autocmd FileType yaml :call LongTab()
+  autocmd FileType yaml :call ShortTab()
 augroup END
 
 augroup cpp
