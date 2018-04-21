@@ -65,8 +65,8 @@ debug($0);
 endsnippet
 
 snippet desc "A Jest/Mocha describe function"
-describe("$1", function () {
-	$0
+describe('$1', () => {
+	${VISUAL}$0
 });
 endsnippet
 
@@ -76,6 +76,10 @@ endsnippet
 
 snippet dis "dispatch"
 dispatch({ type: ActionTypes.$1, payload: $0 });
+endsnippet
+
+snippet edisf "Eslint disable file"
+/* eslint-disable */
 endsnippet
 
 snippet edis "Eslint disable next line"

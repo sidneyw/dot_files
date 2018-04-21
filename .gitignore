@@ -4,3 +4,4 @@ nvim/autoload*
 nvim/plugged*
 
 shell/local_bin*
+vim*

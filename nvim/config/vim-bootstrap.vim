@@ -82,10 +82,6 @@ if exists('make')
 endif
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
-"" Vim-Session
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-
 if v:version >= 703
   Plug 'Shougo/vimshell.vim'
 endif
@@ -108,7 +104,6 @@ Plug 'tomasr/molokai'
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 Plug 'ludwig/split-manpage.vim'
 
-
 " go
 "" Go Lang Bundle
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
@@ -120,17 +115,15 @@ let g:go_bin_path="/Users/sidneywijngaarde/go/bin"
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'gorodinskiy/vim-coloresque'
-Plug 'tpope/vim-haml'
 Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
-Plug 'niftylettuce/vim-jinja'
 
 " javascript
 "" Javascript Bundle
-Plug 'styled-components/vim-styled-components'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'isRuslan/vim-es6'
-Plug 'elzr/vim-json'
+Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
@@ -279,21 +272,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
-"*****************************************************************************
-"" Abbreviations
-"*****************************************************************************
-"" no one is really happy until you have this shortcuts
-cnoreabbrev W! w!
-cnoreabbrev Q! q!
-cnoreabbrev Qall! qall!
-cnoreabbrev Wq wq
-cnoreabbrev Wa wa
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qall qall
-
 "" NERDTree configuration
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
@@ -383,12 +361,6 @@ noremap <Leader>gb :Gblame<CR>
 noremap <Leader>gd :Gvdiff<CR>
 noremap <Leader>gr :Gremove<CR>
 
-" session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
-
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
@@ -409,7 +381,7 @@ let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/
 
 " The Silver Searcher
 if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore vendor -g ""'
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 

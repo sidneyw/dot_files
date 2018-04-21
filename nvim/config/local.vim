@@ -37,6 +37,9 @@ set backupcopy=yes      " For webpack hot reloading
 "set list
 set listchars=tab:▸\ ,eol:¬
 
+set noshowmode   " Gets rid of the original showing of modes in vim
+set laststatus=2 " Shows the status bar even if there is only one file
+
 let mapleader='-'
 let maplocalleader = "\\"
 
@@ -120,7 +123,7 @@ augroup END
 
 augroup yaml
   autocmd!
-  autocmd FileType yaml :call LongTab()
+  autocmd FileType yaml :call ShortTab()
 augroup END
 
 augroup cpp
@@ -296,7 +299,6 @@ nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 let g:bufferline_echo = 0
 " }}}
 
-
 " vim-highlightedyank {{{
 let g:highlightedyank_highlight_duration = 200
 " }}}
@@ -304,31 +306,9 @@ let g:highlightedyank_highlight_duration = 200
 " Markdown
 let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
 
-" Tmux {{{
-" let g:tmux_navigator_no_mappings = 1
-" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
-" nnoremap <silent> <C-;> :TmuxNavigatePrevious<cr>
-" tmap <C-j> <C-\><C-n>:TmuxNavigateDown<cr>
-" tmap <C-k> <C-\><C-n>:TmuxNavigateUp<cr>
-" tmap <C-l> <C-\><C-n>:TmuxNavigateRight<cr>
-" tmap <C-h> <C-\><C-n>:TmuxNavigateLeft<CR>
-" tmap <C-;> <C-\><C-n>:TmuxNavigatePrevious<cr>
-" }}}
 
 " Airline {{{
 " ======================
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-
-" let g:airline_loaded = 1
-
-set noshowmode   " Gets rid of the original showing of modes in vim
-set laststatus=2 " Shows the status bar even if there is only one file
-
 " badwolf
 " dark
 " durant
@@ -337,7 +317,7 @@ set laststatus=2 " Shows the status bar even if there is only one file
 " sky
 " wombat
 
-let g:airline_theme= 'durant'
+let g:airline_theme= 'murmur'
 " }}}
 
 " Deoplete {{{
@@ -359,41 +339,12 @@ autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<C-k>"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" SuperTab like snippets behavior. {{{
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" " For conceal markers.
-" if has('conceal')
-"   set conceallevel=2 concealcursor=niv
-" endif
-
 let g:deoplete#omni#functions = {}
 let g:deoplete#omni#functions.javascript = [
   \ 'tern#Complete',
   \ 'javascriptcomplete#CompleteJS',
   \ 'jspc#omni'
 \]
-
-" set completeopt=longest,menuone,preview
-" let g:deoplete#sources = {}
-" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
-" let g:tern#command = ['tern']
-" let g:tern#arguments = ['--persistent']
-" }}}
-
 
 " omnifuncs
 augroup omnifuncs
@@ -439,56 +390,27 @@ let g:neomake_python_enabled_makers = ['flake8']
 " Prettier {{{
 " ===================
 let g:prettier#autoformat = 0
-let g:prettier#config#semi = 'true'
+let g:prettier#exec_cmd_async = 1
+autocmd! BufWritePre *.js,*.css,*.scss,*.less,*.json PrettierAsync
 
-" semi colons
-let g:prettier#config#semi = 'true'
+" max line lengh that prettier will wrap on
+let g:prettier#config#print_width = 120
 
 " single quotes over double quotes
 let g:prettier#config#single_quote = 'true'
 
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'true'
+
 " put > on the last line instead of new line
 let g:prettier#config#jsx_bracket_same_line = 'true'
-"}}}
-
-" Syntastic {{{ - Using NeoMake for now
-" ======================
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
-" let g:syntastic_mode_map = {
-"     \ 'mode': 'active',
-"     \ 'active_filetypes': ['python', 'css', 'javascript'],
-"     \ 'passive_filetypes': ['scss', 'html']
-"     \ }
-
-" let g:syntastic_error_symbol = '🚫'
-" let g:syntastic_warning_symbol = '🔮'
-
-" highlight link SyntasticErrorSign SignColumn
-" highlight link SyntasticWarningSign SignColumn
-" highlight link SyntasticStyleErrorSign SignColumn
-" highlight link SyntasticStyleWarningSign SignColumn
-
-" let g:syntastic_cpp_compiler = \"clang++"
-" let g:syntastic_cpp_compiler_options = \" -std=c++11 -stdlib=libc++"
-
-" let g:syntastic_python_flake8_args='--ignore=E501,E302,E128,W191,F403,E402'
-
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_javascript_eslint_exe='eslint'
-" let g:jsx_ext_required = 0
-
-" SyntasticToggle - following vim unimpaired style
-" nnoremap coz :SyntasticToggleMode<cr>
 " }}}
 
 " Fugitive {{{
 " ======================
 
 " Autoclean fugitive buffers
-" autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd! BufReadPost fugitive://* set bufhidden=delete
 
 cnoreabbr Gco Git co
 cnoreabbr Gbranch Git branch
@@ -524,39 +446,4 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<C-k>"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" SuperTab like snippets behavior. {{{
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" " For conceal markers.
-" if has('conceal')
-"   set conceallevel=2 concealcursor=niv
-" endif
-
-" let g:deoplete#omni#functions = {}
-" let g:deoplete#omni#functions.javascript = [
-"   \ 'tern#Complete',
-"   \ 'jspc#omni'
-" \]
-
-" set completeopt=longest,menuone,preview
-" let g:deoplete#sources = {}
-" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs', 'neosnippets']
-" let g:tern#command = ['tern']
-" let g:tern#arguments = ['--persistent']
-" }}}
-
 " }}}
