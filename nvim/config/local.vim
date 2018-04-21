@@ -146,9 +146,8 @@ augroup END
 augroup javascript
   autocmd!
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-  autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
-  autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
   autocmd FileType javascript :call ShortTab()
+  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
 augroup bash
@@ -420,7 +419,7 @@ endif
 
 " NeoMake {{{
 autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
+let g:neomake_javascript_eslint_exe = system('PATH=$(yarn bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 
@@ -436,6 +435,21 @@ let g:neomake_python_flake8_maker = {
 let g:neomake_python_enabled_makers = ['flake8']
 " let g:neomake_go_enabled_makers = ['govet']
 " }}}
+
+" Prettier {{{
+" ===================
+let g:prettier#autoformat = 0
+let g:prettier#config#semi = 'true'
+
+" semi colons
+let g:prettier#config#semi = 'true'
+
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'true'
+
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'true'
+"}}}
 
 " Syntastic {{{ - Using NeoMake for now
 " ======================
