@@ -126,7 +126,7 @@ Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+" Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 

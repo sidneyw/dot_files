@@ -26,13 +26,13 @@ export LS_COLORS
 # ====================================
 # Global Variables {{{
 # ====================================
-export VIMRC='$home/.dot_files/nvim/config/local.vim'
+export VIMRC='$HOME/.dot_files/nvim/config/local.vim'
 export tmux='$HOME/.dot_files/tmux/tmux.conf'
 
 export VLAUNCH_IP='9.42.135.236'
 export VLAUNCH_USER="ibmadmin@$VLAUNCH_IP"
 
-export HDC_IP='9.37.142.107'
+export HDC_IP='9.37.39.37'
 
 export EDITOR='nvim'
 # }}}

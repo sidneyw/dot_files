@@ -43,6 +43,8 @@ set laststatus=2 " Shows the status bar even if there is only one file
 let mapleader='-'
 let maplocalleader = "\\"
 
+let g:python_host_prog  = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
 " }}}
 
 " Mappings {{{
@@ -232,7 +234,13 @@ cnoreabbr bad colorscheme badwolf
 cnoreabbr count %s///gn
 cnoreabbr double %s/'/"/g
 cnoreabbr single %s/"/'/g
+" Env to JSON
+cnoreabbr etj s/\(\w*\)=\(.*$\)/"\1": "\2",/
+" JSON to Env
+cnoreabbr jte s/"\(\w*\)": "\(.*\)"/export \1="\2"/
 
+"JSON to graphql
+cnoreabbr jtg s/:.*[ {}]\@<!//
 " }}}
 
 " Functions {{{
@@ -394,10 +402,10 @@ let g:neomake_python_enabled_makers = ['flake8']
 " ===================
 let g:prettier#autoformat = 0
 let g:prettier#exec_cmd_async = 1
-autocmd BufWritePre *.js,*.css,*.scss,*.less,*.json PrettierAsync
+" autocmd BufWritePre *.js,*.css,*.scss,*.less,*.json PrettierAsync
 
 " max line lengh that prettier will wrap on
-let g:prettier#config#print_width = 120
+let g:prettier#config#print_width = 100
 
 " single quotes over double quotes
 let g:prettier#config#single_quote = 'true'
