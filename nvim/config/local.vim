@@ -151,9 +151,8 @@ augroup END
 augroup javascript
   autocmd!
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-  autocmd FileType javascript :cnoreabbr  <buffer> lint !./node_modules/.bin/eslint % 
-  autocmd FileType javascript :cnoreabbr  <buffer> lintfix !npm run lint:fix
   autocmd FileType javascript :call ShortTab()
+  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
 augroup bash
@@ -379,9 +378,7 @@ endif
 
 " NeoMake {{{
 autocmd! BufWritePost,BufEnter * Neomake
-" let g:neomake_error_sign= { 'text': '🚫', 'texthl': 'ErrorMsg' }
-" let g:neomake_warning_sign= { 'text': '⚠️', 'texthl': 'WaningMsg' }
-let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
+let g:neomake_javascript_eslint_exe = system('PATH=$(yarn bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 
@@ -402,7 +399,7 @@ let g:neomake_python_enabled_makers = ['flake8']
 " ===================
 let g:prettier#autoformat = 0
 let g:prettier#exec_cmd_async = 1
-" autocmd BufWritePre *.js,*.css,*.scss,*.less,*.json PrettierAsync
+autocmd! BufWritePre *.js,*.css,*.scss,*.less,*.json PrettierAsync
 
 " max line lengh that prettier will wrap on
 let g:prettier#config#print_width = 100
@@ -421,7 +418,7 @@ let g:prettier#config#jsx_bracket_same_line = 'true'
 " ======================
 
 " Autoclean fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd! BufReadPost fugitive://* set bufhidden=delete
 
 cnoreabbr Gco Git co
 cnoreabbr Gbranch Git branch

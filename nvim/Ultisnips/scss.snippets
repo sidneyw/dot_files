@@ -20,6 +20,12 @@ snippet comm "Comment"
 // ------------------------------------
 endsnippet
 
+snippet child "All children"
+& > * {
+	$0
+}
+endsnippet
+
 snippet ex "Extend"
 @extend $0
 endsnippet
@@ -39,24 +45,37 @@ snippet pure "Pure CSS Media Queries"
 @media screen and (min-width: 64em) {
 
 }
+
 // pure-xl
 @media screen and (min-width: 80em) {
 
 }
 endsnippet
 
-snippet media "Media Queries"
-// Tablets
-@media screen
-	and (min-width: 768px)
-	and (max-width: 1024px) {
-	$1
+snippet sm "Pure CSS sm"
+// pure-sm
+@media screen and (min-width: 35.5em) {
+  $0
 }
+endsnippet
 
-// Phone
-@media screen
-	and (min-width: 320px)
-	and (max-width: 767px) {
-	$0
+snippet md "Pure CSS md"
+// pure-md
+@media screen and (min-width: 48em) {
+ $0
+}
+endsnippet
+
+snippet lg "Pure CSS lg"
+//pure-lg
+@media screen and (min-width: 64em) {
+
+}
+endsnippet
+
+snippet xl "Pure CSS xl"
+// pure-xl
+@media screen and (min-width: 80em) {
+
 }
 endsnippet
