@@ -285,6 +285,7 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <leader>te :tabe %<CR>
+nnoremap <leader>tc :tabc<CR>
 
 " See the full file path
 nnoremap <leader>p :echo expand("%:p")<cr>
@@ -759,7 +760,7 @@ endif
 
 nnoremap <silent> <leader>a :Ag<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>f :GitFiles -m<CR>
+nnoremap <silent> <leader>f :GitFiles<CR>
 nnoremap <silent> <leader>m :History -m<CR>
 nnoremap <silent> <leader>c :Commands<CR>
 nnoremap <silent> <leader>w :Windows<CR>
@@ -842,7 +843,7 @@ let g:github_enterprise_urls = ['https://github.ibm.com']
 " UltiSnips {{{
 " ======================
 " set rtp^=$HOME
-let g:UltiSnipsExpandTrigger="`<C-k>"
+let g:UltiSnipsExpandTrigger="<C-k>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-b>"
 let g:UltiSnipsEditSplit="vertical"
