@@ -63,7 +63,6 @@ Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
@@ -270,6 +269,10 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
 
+" Create Splits
+noremap <leader>h :<C-u>split<CR>
+noremap <leader>v :<C-u>vsplit<CR>
+
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
@@ -278,23 +281,10 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-" Change the window size more easily
-nnoremap <silent> <leader>a <C-w>10<
-nnoremap <silent> <leader>d <C-w>10>
-
-" Create Splits
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
-
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-
-"" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-" Change Tmux Line color scheme
-nnoremap <leader>z :Tmuxline airline_insert<cr>
+nnoremap <leader>te :tabe %<CR>
 
 " See the full file path
 nnoremap <leader>p :echo expand("%:p")<cr>
@@ -313,11 +303,6 @@ nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
 " Eval till = char
 nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 
-nnoremap <silent> <leader>i :call Idea()<cr>
-
-" Calling external commands
-nnoremap <leader>c :!clear<cr><cr>:echo "Terminal Cleared"<cr>
-
 " Run the current line as a command and read in the output
 " nnoremap <leader>q !!sh<cr>
 
@@ -325,9 +310,6 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 
 " Edit Bash Profile
 nnoremap <leader>eb :tabe ~/.bash_profile<cr>
-
-" Source Bash Profile
-nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
 " Edit vimrc
 nnoremap <leader>ev :call EditRC()<cr>
@@ -337,9 +319,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Edit tmux config
 nnoremap <leader>et :tabe ~/.tmux.conf<cr>
-
-" Source tmux config
-nnoremap <leader>st :!tmux source-file ~/.tmux.conf<cr>
 
 " Launch Terminal
 nnoremap <silent> <leader>sh :terminal<CR>
@@ -403,7 +382,7 @@ augroup javascript
   autocmd!
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
-  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
+  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
 augroup bash
@@ -529,8 +508,7 @@ if !exists('*s:setupWrapping')
 endif
 
 function! EditRC()
-  tabe $HOME/.config/nvim/config/vim-bootstrap.vim
-  vs $HOME/.config/nvim/config/local.vim
+  tabe $HOME/.config/nvim/init.vim
 endfunction
 
 " }}}
@@ -548,7 +526,6 @@ endfunction
 " Tern
 " Tmux
 " Ultisnips
-" Grep.vim
 " Vim Go
 " Vim Python
 
@@ -645,14 +622,6 @@ augroup go
   au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
   au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
 augroup END
-" }}}
-
-" Grep.vim {{{
-" ======================
-nnoremap <silent> <leader>f :Rgrep<CR>
-let Grep_Default_Options = '-IR'
-let Grep_Skip_Files = '*.log *.db'
-let Grep_Skip_Dirs = '.git node_modules'
 " }}}
 
 " NERDTree {{{
@@ -788,8 +757,12 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 
+nnoremap <silent> <leader>a :Ag<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>q :FZF -m<CR>
+nnoremap <silent> <leader>f :GitFiles -m<CR>
+nnoremap <silent> <leader>m :History -m<CR>
+nnoremap <silent> <leader>c :Commands<CR>
+nnoremap <silent> <leader>w :Windows<CR>
 " }}}
 
 " Tern {{{
@@ -824,7 +797,6 @@ let g:neomake_python_enabled_makers = ['flake8']
 " ===================
 let g:prettier#autoformat = 0
 let g:prettier#exec_cmd_async = 1
-autocmd! BufWritePre *.js,*.css,*.scss,*.less,*.json PrettierAsync
 
 " max line lengh that prettier will wrap on
 let g:prettier#config#print_width = 100
@@ -845,17 +817,17 @@ let g:prettier#config#jsx_bracket_same_line = 'true'
 autocmd! BufReadPost fugitive://* set bufhidden=delete
 
 " Mappings
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>glc :Glcd<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
+noremap <leader>ga :Gwrite<CR>
+noremap <leader>gc :Gcommit<CR>
+noremap <leader>gsh :Gpush<CR>
+noremap <leader>gll :Gpull<CR>
+noremap <leader>glc :Glcd<CR>
+noremap <leader>gs :Gstatus<CR>
+noremap <leader>gb :Gblame<CR>
+noremap <leader>gd :Gvdiff<CR>
+noremap <leader>gr :Gremove<CR>
 " Open current line on github
-nnoremap <Leader>o :.Gbrowse<CR>
+nnoremap <leader>o :.Gbrowse<CR>
 
 cnoreabbr Gco Git co
 cnoreabbr Gbranch Git branch
