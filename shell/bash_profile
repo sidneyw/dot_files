@@ -62,6 +62,7 @@ alias ll='ls -la'
 
 # cd to top level git dir
 alias gcd='cd $(git rev-parse --show-toplevel)'
+alias genv='source genv'
 
 # SSH
 alias vlaunch="ssh $VLAUNCH_USER"
@@ -131,6 +132,8 @@ f () {
             /dev/null | head -500' \
     "$@"
 }
+
+alias vf='nvim $(f -m)'
 
 # export FZF_DEFAULT_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
