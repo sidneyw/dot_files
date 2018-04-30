@@ -95,7 +95,7 @@ endif
 
 Plug 'honza/vim-snippets'
 
-"" Color
+" Color
 Plug 'tomasr/molokai'
 
 " c
@@ -133,7 +133,7 @@ Plug 'zchee/deoplete-jedi'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " }}}
 
-"" Include user's extra bundle
+" Include user's extra bundle
 if filereadable(expand("~/.config/nvim/local_bundles.vim"))
   source ~/.config/nvim/local_bundles.vim
 endif
@@ -188,7 +188,7 @@ set listchars=tab:▸\ ,eol:¬
 set noshowmode   " Gets rid of the original showing of modes in vim
 set laststatus=2 " Shows the status bar even if there is only one file
 
-"" Encoding
+" Encoding
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -197,10 +197,10 @@ set binary
 
 set fileformats=unix,dos,mac
 
-"" Enable hidden buffers
+" Enable hidden buffers
 set hidden
 
-"" Searching
+" Searching
 set hlsearch
 set incsearch
 set ignorecase
@@ -212,23 +212,23 @@ if has('autocmd')
   autocmd GUIEnter * set visualbell t_vb=
 endif
 
-"" Copy/Paste/Cut
+" Copy/Paste/Cut
 if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
 
-"" Directories for swp files
+" Directories for swp files
 set nobackup
 set noswapfile
 
-"" Disable the blinking cursor.
+" Disable the blinking cursor.
 set gcr=a:blinkon0
 set scrolloff=3
 
-"" Status bar
+" Status bar
 set laststatus=2
 
-"" Use modeline overrides
+" Use modeline overrides
 set modeline
 set modelines=10
 
@@ -260,10 +260,10 @@ vnoremap : ;
 " Delete a function
 nnoremap <leader>df vf{%d
 
-"" Clean search (highlight)
+" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
 
-"" Switching windows
+" Switching windows
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
@@ -273,15 +273,15 @@ noremap <C-h> <C-w>h
 noremap <leader>h :<C-u>split<CR>
 noremap <leader>v :<C-u>vsplit<CR>
 
-"" Vmap for maintain Visual Mode after shifting > and <
+" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
 
-"" Move visual block
+" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-"" Tabs
+" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <leader>te :tabe %<CR>
@@ -329,19 +329,19 @@ vnoremap <leader>s :sort<cr>
 
 " Autocommands {{{
 " ====================
-"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
+" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
 augroup vimrc-sync-fromstart
   autocmd!
   autocmd BufEnter * :syntax sync maxlines=200
 augroup END
 
-"" Remember cursor position
+" Remember cursor position
 augroup vimrc-remember-cursor-position
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"" make/cmake
+" make/cmake
 augroup vimrc-make-cmake
   autocmd!
   autocmd FileType make setlocal noexpandtab
