@@ -31,7 +31,7 @@ export tmux='$HOME/.dot_files/tmux/tmux.conf'
 export VLAUNCH_IP='9.42.135.236'
 export VLAUNCH_USER="ibmadmin@$VLAUNCH_IP"
 
-export HDC_IP='9.37.39.37'
+export HDC_IP='9.37.39.190'
 
 export EDITOR='nvim'
 # }}}
@@ -133,7 +133,11 @@ f () {
     "$@"
 }
 
-alias vf='nvim $(f -m)'
+# FZF search files to open in vim
+function vf() {
+	nvim "$@" $(f -m)
+}
+
 
 # export FZF_DEFAULT_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -236,4 +240,3 @@ export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
 
 # added by Anaconda3 5.0.1 installer
 export PATH="/anaconda3/bin:$PATH"
-# }}}
