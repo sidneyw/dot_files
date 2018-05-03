@@ -11,7 +11,7 @@ endif
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
 let g:vim_bootstrap_langs = "c,go,html,javascript,python"
-let g:vim_bootstrap_editor = "nvim"				" nvim or vim
+let g:vim_bootstrap_editor = "nvim"       " nvim or vim
 
 if !filereadable(vimplug_exists)
   if !executable("curl")
@@ -53,8 +53,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neocomplete.vim'
-" Plug 'Shougo/neosnippet-snippets'
-" Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/neosnippet.vim'
 " }}}
 
 " Other {{{
@@ -118,8 +118,10 @@ Plug 'mattn/emmet-vim'
 
 " Javascript Bundle {{{
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'jparise/vim-graphql'
 Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
@@ -383,6 +385,7 @@ augroup javascript
   autocmd!
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
+  autocmd FileType javascript setlocal foldmethod=syntax
   " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
@@ -414,14 +417,8 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-" colorscheme monokai-phoenix
-" colorscheme molokai
-" colorscheme firewatch
+colorscheme monokai-phoenix
 colorscheme badwolf
-" colorscheme sky
-" colorscheme brogrammer
-" colorscheme turtles
-
 " }}}
 
 " Abbreviations {{{
@@ -763,6 +760,7 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>f :GitFiles<CR>
 nnoremap <silent> <leader>m :History -m<CR>
 nnoremap <silent> <leader>c :Commands<CR>
+nnoremap <silent> <leader>q :Lines<CR>
 nnoremap <silent> <leader>w :Windows<CR>
 " }}}
 
