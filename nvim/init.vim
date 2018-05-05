@@ -495,6 +495,11 @@ function! PyTab()
 endfunction
 
 function! TabCd(dir)
+	if !isdirectory(a:dir)
+		echoerr a:dir . " is not a directory"
+		return
+	endif
+
 	execute "tabe " . a:dir
 	execute "lcd " . a:dir
 endfunction
