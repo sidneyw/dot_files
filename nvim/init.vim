@@ -53,8 +53,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet.vim'
 " }}}
 
 " Other {{{
@@ -452,11 +452,6 @@ iabbrev xpython #!/usr/bin/python
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
 
-" Todo: use retab instead
-cnoreabbr xwhite %s/    /\t/g
-
-cnoreabbr makec make! clean; make -j
-cnoreabbr makel make! load_elf -j
 cnoreabbr bad colorscheme badwolf
 
 cnoreabbr count %s///gn
@@ -469,6 +464,8 @@ cnoreabbr jte s/"\(\w*\)": "\(.*\)"/export \1="\2"/
 
 "JSON to graphql
 cnoreabbr jtg s/:.*[ {}]\@<!//
+
+cnoreabbr evim e $MYVIMRC
 " }}}
 
 " Functions {{{
@@ -496,6 +493,13 @@ function! PyTab()
   let &l:expandtab = 0
   exe "retab"
 endfunction
+
+function! TabCd(dir)
+	execute "tabe " . a:dir
+	execute "lcd " . a:dir
+endfunction
+
+command! -nargs=1 -complete=dir Tabcd call TabCd(<f-args>)
 
 if !exists('*s:setupWrapping')
   function s:setupWrapping()
