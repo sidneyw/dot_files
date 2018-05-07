@@ -9,9 +9,9 @@ ${$0}
 endsnippet
 
 snippet act "Redux action"
-export const $1 = ($2) => {
+export const $1 = ($2) => ({
 	$0
-}
+})
 endsnippet
 
 snippet afunc "Async function"
@@ -24,6 +24,12 @@ snippet arr "Arrow function" i
 ($1) => {
 	$0
 }
+endsnippet
+
+snippet arro "Arrow function to object" i
+($1) => ({
+	$0
+})
 endsnippet
 
 snippet async "Async redux action"
@@ -56,8 +62,17 @@ snippet cerr "Console Error"
 console.error($1);
 endsnippet
 
-snippet clog "Console Log" i
-console.log($1);
+snippet "in(line)?" "Inline Comment" ir
+/* ${VISUAL}$1 */
+endsnippet
+
+snippet "ecl(og)?" "Console Log" r
+// eslint-disable-next-line no-console
+console.log(${VISUAL}$0)
+endsnippet
+
+snippet "cl(og)?" "Console Log" ir
+console.log(${VISUAL}$0);
 endsnippet
 
 snippet deb "Debug Statement"
@@ -93,15 +108,15 @@ for (let $1 = 0; $1 < $2.length; $1++) {
 endsnippet
 
 snippet jdeb "JSON debug"
-debug('$1', JSON.stringify($0, null, 2));
+debug('$1', JSON.stringify(${VISUAL}$0, null, 2));
 endsnippet
 
 snippet jlog "JSON log"
-console.log($2JSON.stringify($1, null, 2));
+console.log($2JSON.stringify(${VISUAL}$1, null, 2));
 endsnippet
 
 snippet jstr "JSON Stringify"
-JSON.stringify($0, null, 2);
+JSON.stringify(${VISUAL}$0, null, 2);
 endsnippet
 
 snippet imp "Import"
@@ -163,7 +178,7 @@ import PropTypes from 'prop-types';
 
 export default class $1 extends React.Component {
 	static propTypes = {
-	
+
 	}
 
 	static defaultProps = {

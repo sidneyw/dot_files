@@ -452,11 +452,16 @@ iabbrev xpython #!/usr/bin/python
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
 
+cnoreabbr evim e $MYVIMRC
+cnoreabbr tabcd Tabcd
 cnoreabbr bad colorscheme badwolf
 
 cnoreabbr count %s///gn
+
+" Quotes
 cnoreabbr double %s/'/"/g
 cnoreabbr single %s/"/'/g
+
 " Env to JSON
 cnoreabbr etj s/\(\w*\)=\(.*$\)/"\1": "\2",/
 " JSON to Env
