@@ -52,14 +52,10 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim'
-Plug 'Shougo/neocomplete.vim'
-" Plug 'Shougo/neosnippet-snippets'
-" Plug 'Shougo/neosnippet.vim'
 " }}}
 
 " Other {{{
 Plug 'ervandew/supertab'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -386,7 +382,7 @@ augroup javascript
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
+  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
 augroup bash
@@ -417,7 +413,7 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme monokai-phoenix
+" colorscheme monokai-phoenix
 colorscheme badwolf
 " }}}
 
@@ -641,8 +637,7 @@ augroup END
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 
-" set winfixwidth
-let g:NERDTreeChDirMode=2
+" setlet g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
@@ -789,7 +784,7 @@ endif
 
 " NeoMake {{{
 autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_eslint_exe = system('PATH=$(yarn bin):$PATH && which eslint | tr -d "\n"')
+let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 
@@ -830,17 +825,17 @@ let g:prettier#config#jsx_bracket_same_line = 'true'
 autocmd! BufReadPost fugitive://* set bufhidden=delete
 
 " Mappings
-noremap <leader>ga :Gwrite<CR>
-noremap <leader>gb :Gblame<CR>
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gd :Gvdiff<CR>
+noremap <leader>ga  :Gwrite<CR>
+noremap <leader>gb  :Gblame<CR>
+noremap <leader>gc  :Gcommit<CR>
+noremap <leader>gd  :Gvdiff<CR>
 noremap <leader>glc :Glcd<CR>
 noremap <leader>gll :Gpull<CR>
-noremap <leader>gr :Gremove<CR>
-noremap <leader>gs :Gstatus<CR>
-noremap <leader>gu :Gpush<CR>
+noremap <leader>gr  :Gremove<CR>
+noremap <leader>gs  :Gstatus<CR>
+noremap <leader>gu  :Gpush<CR>
 " Open current line on github
-nnoremap <leader>o :.Gbrowse<CR>
+nnoremap <leader>go :.Gbrowse<CR>
 
 cnoreabbr Gco Git co
 cnoreabbr Gbranch Git branch
