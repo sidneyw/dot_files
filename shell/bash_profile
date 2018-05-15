@@ -1,4 +1,5 @@
-# ====================================
+# vim: set foldmethod=marker :
+
 # Prompts and colors {{{
 # ====================================
 
@@ -22,7 +23,6 @@ export CLICOLOR=1
 export LS_COLORS='di=0;35'
 # }}}
 
-# ====================================
 # Global Variables {{{
 # ====================================
 export VIMRC='$HOME/.dot_files/nvim/init.vim'
@@ -31,12 +31,11 @@ export tmux='$HOME/.dot_files/tmux/tmux.conf'
 export VLAUNCH_IP='9.42.135.236'
 export VLAUNCH_USER="ibmadmin@$VLAUNCH_IP"
 
-export HDC_IP='9.37.239.210'
+export HDC_IP='9.37.239.229'
 
 export EDITOR='nvim'
 # }}}
 
-# ====================================
 # Aliases {{{
 # ====================================
 # <C-x> <C-e> to open vim and edit a command there
@@ -76,6 +75,10 @@ alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 alias kc='kubectl'
 alias kca='kubectl apply -f'
 alias kcd='kubectl delete -f'
+# Secure Helm
+function shelm() {
+	helm "$@" --tls
+}
 
 # Docker
 alias dcomp='docker-compose'
@@ -98,7 +101,6 @@ alias makec='make clean; make -j'
 alias mygcc='gcc -Wall -pedantic -std=c11'
 # }}}
 
-# ====================================
 # Plugins {{{
 # ====================================
 # autojump
@@ -137,7 +139,6 @@ f () {
 function vf() {
 	nvim "$@" $(f -m)
 }
-
 
 # export FZF_DEFAULT_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -222,7 +223,6 @@ if [[ $- =~ i ]]; then
 fi
 # }}}
 
-# ====================================
 # Path {{{
 # ====================================
 PATH="$PATH:$HOME/bin"
@@ -240,3 +240,4 @@ export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
 
 # added by Anaconda3 5.0.1 installer
 export PATH="/anaconda3/bin:$PATH"
+export HELM_HOME=~/.helm
