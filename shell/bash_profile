@@ -31,7 +31,7 @@ export tmux='$HOME/.dot_files/tmux/tmux.conf'
 export VLAUNCH_IP='9.42.135.236'
 export VLAUNCH_USER="ibmadmin@$VLAUNCH_IP"
 
-export HDC_IP='9.37.239.229'
+export HDC_IP='9.42.40.36'
 
 export EDITOR='nvim'
 # }}}
@@ -44,7 +44,6 @@ alias v='nvim'
 alias vim='nvim'
 alias ebash='nvim ~/.bash_profile'
 alias evim="nvim $VIMRC"
-alias hdcui="open https://$HDC_IP:8443/console"
 
 # Tmux
 alias tmux='tmux -2'
@@ -75,9 +74,12 @@ alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 alias kc='kubectl'
 alias kca='kubectl apply -f'
 alias kcd='kubectl delete -f'
+alias hdcui="open https://$HDC_IP:8443/console"
+alias hi='helm-init'
 # Secure Helm
 function shelm() {
-	helm "$@" --tls
+	echo "helm $@ --tls"
+	helm $@ --tls
 }
 
 # Docker
@@ -221,6 +223,11 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
   bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 fi
+
+# WIP
+fyn() {
+	jq -r '.scripts | keys[] as $k | "\($k) \(.[$k])"' package.json | fzf-down
+}
 # }}}
 
 # Path {{{
