@@ -387,7 +387,7 @@ augroup javascript
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
+  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
 augroup bash
@@ -792,7 +792,7 @@ endif
 
 nnoremap <silent> <leader>a :Ag<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>f :GitFiles<CR>
+nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
 nnoremap <silent> <leader>m :History -m<CR>
 nnoremap <silent> <leader>c :Commands<CR>
 nnoremap <silent> <leader>q :Lines<CR>
