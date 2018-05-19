@@ -1,6 +1,3 @@
-" My vimrc
-" The_Squid
-
 " Vim Plug {{{
 " ====================
 " Init {{{
@@ -526,52 +523,251 @@ endfunction
 
 " }}}
 
-" Plugins stuff {{{
+" Plugins {{{
 " ===================
-" Plugin list
-" Airline
-" Bufferline
-" Deoplete
-" Fugitive
-" NerdTree
-" Syntastic
-" FZF
-" Tern
-" Tmux
-" Ultisnips
-" Vim Go
-" Vim Python
 
-" Vim Python {{{
+" Airline {{{
+" ======================
+
+" badwolf
+" dark
+" durant
+" luna
+" murmur
+" sky
+" wombat
+" powerlineish
+
+" let g:airline_theme= 'murmur'
+let g:airline_theme = 'murmur'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+if !exists('g:airline_powerline_fonts')
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+  " let g:airline_left_sep          = '▶'
+  let g:airline_left_alt_sep      = '»'
+  " let g:airline_right_sep         = '◀'
+  let g:airline_right_alt_sep     = '«'
+  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
+  let g:airline#extensions#readonly#symbol   = '⊘'
+  let g:airline#extensions#linecolumn#prefix = '¶'
+  let g:airline#extensions#paste#symbol      = 'ρ'
+  let g:airline_symbols.linenr    = '␊'
+  let g:airline_symbols.branch    = '⎇'
+  let g:airline_symbols.paste     = 'ρ'
+  let g:airline_symbols.paste     = 'Þ'
+  let g:airline_symbols.paste     = '∥'
+  let g:airline_symbols.whitespace = 'Ξ'
+else
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
+endif
+" }}}
+
+" Bufferline {{{
+" ======================
+let g:bufferline_echo = 0
+" }}}
+
+" Deoplete {{{
 " ===================
-augroup vimrc-python
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+let g:echodoc_enable_at_startup=1
+
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'javascriptcomplete#CompleteJS',
+  \ 'jspc#omni'
+\]
+
+" omnifuncs
+augroup omnifuncs
   autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
 
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
+" }}}
 
-" syntastic
-let g:syntastic_python_checkers=['python', 'flake8']
+" Fzf {{{
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
+" The Silver Searcher
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -g ""'
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
-let python_highlight_all = 1
+nnoremap <silent> <leader>a :Ag<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
+nnoremap <silent> <leader>m :History -m<CR>
+nnoremap <silent> <leader>c :Commands<CR>
+nnoremap <silent> <leader>q :BLines<CR>
+nnoremap <silent> <leader>w :Windows<CR>
+" }}}
+
+" Fugitive {{{
+" ======================
+" Autoclean fugitive buffers
+autocmd! BufReadPost fugitive://* set bufhidden=delete
+
+" Mappings
+noremap <leader>ga  :Gwrite<CR>
+noremap <leader>gb  :Gblame<CR>
+noremap <leader>gc  :Gcommit<CR>
+noremap <leader>gd  :Gvdiff<CR>
+noremap <leader>glc :Glcd<CR>
+noremap <leader>gll :Gpull<CR>
+noremap <leader>gr  :Gremove<CR>
+noremap <leader>gs  :Gstatus<CR>
+noremap <leader>gu  :Gpush<CR>
+" Open current line on github
+nnoremap <leader>go :.Gbrowse<CR>
+
+cnoreabbr Gco Git co
+cnoreabbr Gbranch Git branch
+cnoreabbr Gca Gcommit --amend --no-edit
+cnoreabbr Gcb Git co -b
+cnoreabbr Gstash Git stash
+cnoreabbr Gapply Git stash apply
+
+let g:github_enterprise_urls = ['https://github.ibm.com']
+" " }}}
+
+" Goyo {{{
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+endfunction
+
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
+  set showcmd
+  set scrolloff=5
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" }}}
+
+" NeoMake {{{
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_jsx_enabled_makers = ['eslint']
+
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--ignore=E501,E302,E128,W191,F403,E402',  '--format=default'],
+    \ 'errorformat':
+        \ '%E%f:%l: could not compile,%-Z%p^,' .
+        \ '%A%f:%l:%c: %t%n %m,' .
+        \ '%A%f:%l: %t%n %m,' .
+        \ '%-G%.%#',
+    \ }
+
+let g:neomake_python_enabled_makers = ['flake8']
+" let g:neomake_go_enabled_makers = ['govet']
+" }}}
+
+" NERDTree {{{
+" ======================
+nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <F2> :NERDTreeFind<CR>
+
+" setlet g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+" }}}
+
+" Prettier {{{
+" ===================
+let g:prettier#autoformat = 0
+let g:prettier#exec_cmd_async = 1
+
+" max line lengh that prettier will wrap on
+let g:prettier#config#print_width = 100
+
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'true'
+
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'true'
+
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'true'
+" }}}
+
+" Tagbar {{{
+" ======================
+nnoremap <leader>tb :TagbarToggle<CR>
+" }}}
+
+" Tern {{{
+" ===================
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  let g:tern_map_keys = 1
+endif
+" }}}
+
+" UltiSnips {{{
+" ======================
+" set rtp^=$HOME
+let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<C-b>"
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
 
 " Vim Go {{{
@@ -637,267 +833,39 @@ augroup go
 augroup END
 " }}}
 
-" NERDTree {{{
-" ======================
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-
-" setlet g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-" }}}
-
-" Bufferline {{{
-" ======================
-let g:bufferline_echo = 0
-" }}}
-
-" vim-highlightedyank {{{
+" Vim Highlighted Yank {{{
+" ===================
 let g:highlightedyank_highlight_duration = 200
 " }}}
 
-" Markdown
-let g:markdown_fenced_languages = ['html', 'javascript', 'python', 'bash=sh']
-
-" Airline {{{
-" ======================
-
-" badwolf
-" dark
-" durant
-" luna
-" murmur
-" sky
-" wombat
-" powerlineish
-
-" let g:airline_theme= 'murmur'
-let g:airline_theme = 'murmur'
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  " let g:airline_left_sep          = '▶'
-  let g:airline_left_alt_sep      = '»'
-  " let g:airline_right_sep         = '◀'
-  let g:airline_right_alt_sep     = '«'
-  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-  let g:airline#extensions#readonly#symbol   = '⊘'
-  let g:airline#extensions#linecolumn#prefix = '¶'
-  let g:airline#extensions#paste#symbol      = 'ρ'
-  let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.branch    = '⎇'
-  let g:airline_symbols.paste     = 'ρ'
-  let g:airline_symbols.paste     = 'Þ'
-  let g:airline_symbols.paste     = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
-else
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
-endif
-" }}}
-
-" Deoplete {{{
+" Vim Python {{{
 " ===================
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-let g:echodoc_enable_at_startup=1
-
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-
-" let g:deoplete#disable_auto_complete = 1
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" deoplete tab-complete
-autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
-  \ 'javascriptcomplete#CompleteJS',
-  \ 'jspc#omni'
-\]
-
-" omnifuncs
-augroup omnifuncs
+augroup vimrc-python
   autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
+      \ formatoptions+=croq softtabstop=4
+      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+augroup END
 
-" }}}
+" jedi-vim
+let g:jedi#popup_on_dot = 0
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#show_call_signatures = "0"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#smart_auto_mappings = 0
 
-" Goyo {{{
-function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-endfunction
+" syntastic
+let g:syntastic_python_checkers=['python', 'flake8']
 
-function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  set showmode
-  set showcmd
-  set scrolloff=5
-endfunction
+" vim-airline
+let g:airline#extensions#virtualenv#enabled = 1
 
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-" }}}
-
-" Fzf {{{
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-
-" The Silver Searcher
-if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -g ""'
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
-
-nnoremap <silent> <leader>a :Ag<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
-nnoremap <silent> <leader>m :History -m<CR>
-nnoremap <silent> <leader>c :Commands<CR>
-nnoremap <silent> <leader>q :Lines<CR>
-nnoremap <silent> <leader>w :Windows<CR>
-" }}}
-
-" Tern {{{
-" ===================
-if exists('g:plugs["tern_for_vim"]')
-  let g:tern_show_argument_hints = 'on_hold'
-  let g:tern_show_signature_in_pum = 1
-  let g:tern_map_keys = 1
-endif
-" }}}
-
-" NeoMake {{{
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-
-let g:neomake_python_flake8_maker = {
-    \ 'args': ['--ignore=E501,E302,E128,W191,F403,E402',  '--format=default'],
-    \ 'errorformat':
-        \ '%E%f:%l: could not compile,%-Z%p^,' .
-        \ '%A%f:%l:%c: %t%n %m,' .
-        \ '%A%f:%l: %t%n %m,' .
-        \ '%-G%.%#',
-    \ }
-
-let g:neomake_python_enabled_makers = ['flake8']
-" let g:neomake_go_enabled_makers = ['govet']
-" }}}
-
-" Prettier {{{
-" ===================
-let g:prettier#autoformat = 0
-let g:prettier#exec_cmd_async = 1
-
-" max line lengh that prettier will wrap on
-let g:prettier#config#print_width = 100
-
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'true'
-
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'true'
-
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'true'
-" }}}
-
-" Fugitive {{{
-" ======================
-" Autoclean fugitive buffers
-autocmd! BufReadPost fugitive://* set bufhidden=delete
-
-" Mappings
-noremap <leader>ga  :Gwrite<CR>
-noremap <leader>gb  :Gblame<CR>
-noremap <leader>gc  :Gcommit<CR>
-noremap <leader>gd  :Gvdiff<CR>
-noremap <leader>glc :Glcd<CR>
-noremap <leader>gll :Gpull<CR>
-noremap <leader>gr  :Gremove<CR>
-noremap <leader>gs  :Gstatus<CR>
-noremap <leader>gu  :Gpush<CR>
-" Open current line on github
-nnoremap <leader>go :.Gbrowse<CR>
-
-cnoreabbr Gco Git co
-cnoreabbr Gbranch Git branch
-cnoreabbr Gca Gcommit --amend --no-edit
-cnoreabbr Gcb Git co -b
-cnoreabbr Gstash Git stash
-cnoreabbr Gapply Git stash apply
-
-let g:github_enterprise_urls = ['https://github.ibm.com']
-" " }}}
-
-" UltiSnips {{{
-" ======================
-" set rtp^=$HOME
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<C-b>"
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
-" }}}
-
-" Deoplete {{{
-" ===================
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-let g:echodoc_enable_at_startup=1
-
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-
-" let g:deoplete#disable_auto_complete = 1
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" deoplete tab-complete
-autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" Syntax highlight
+" Default highlight is better than polyglot
+let g:polyglot_disabled = ['python']
+let python_highlight_all = 1
 " }}}
