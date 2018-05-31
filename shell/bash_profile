@@ -32,7 +32,7 @@ set_bash_prompt(){
     PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
   fi
 
-  PS1="${PS1}\n${YELLOW} \@ \!${BLUE} » ${GREEN}"
+  PS1="${PS1}\n${YELLOW} \@ ⟦\!⟧${BLUE} » ${GREEN}"
 }
 
 PROMPT_COMMAND=set_bash_prompt
