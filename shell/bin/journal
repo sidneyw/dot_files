@@ -8,5 +8,5 @@ if [ "$1" == "-v" ]
 then
 	echo "$file_name"
 else
-	nvim "$file_name" +Goyo
+	nvim "$file_name" '+Goyo 120'
 fi

@@ -62,7 +62,7 @@ endif
 " }}}
 
 " Other {{{
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -244,6 +244,11 @@ endif
 
 " Mappings {{{
 " ====================
+noremap  <buffer> <silent> k gk
+noremap  <buffer> <silent> j gj
+noremap  <buffer> <silent> 0 g0
+noremap  <buffer> <silent> $ g$
+
 nnoremap <space> zt
 
 " Search mappings: These will make it so that going to the next one in a
@@ -257,6 +262,7 @@ nnoremap : ;
 
 vnoremap ; :
 vnoremap : ;
+
 " Delete a function
 nnoremap <leader>df vf{%d
 
@@ -384,7 +390,7 @@ augroup javascript
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
+  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
 augroup END
 
 augroup bash
