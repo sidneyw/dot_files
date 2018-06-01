@@ -2,22 +2,40 @@
 
 # Prompts and colors {{{
 # ====================================
+RED='\033[00;31m'
+GREEN='\033[00;32m'
+YELLOW='\033[00;33m'
+BLUE='\033[00;34m'
+PURPLE='\033[00;35m'
+CYAN='\033[00;36m'
+LIGHTGRAY='\033[00;37m'
 
-_time="\[\e[1;34m\][\[\e[0;32m\]\@\[\e[1;34m\]]"
-_user="[\e[0;34m\]\u\[\e[1;34m\]]"
-_dir="[\[\e[0;32m\]\w\[\e[1;34m\]]"
-_info="\[\e[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(du -hs)\[\e[1;34m\]"
-_history="[\[\e[0;33m\]\!\[\e[1;34m\]]"
-_git_branch="\[\e[1;34m\][\[\e[0;32m\]\$(gitbranch.sh)\[\e[1;34m\]]"
+LRED='\033[01;31m'
+LGREEN='\033[01;32m'
+LYELLOW='\033[01;33m'
+LBLUE='\033[01;34m'
+LPURPLE='\033[01;35m'
+LCYAN='\033[01;36m'
+WHITE='\033[01;37m'
 
-# Bash prompts
-Old_PS1="\[\033[32m\]\u:\[\033[31;1m\]\w\[\033[m\]\$ "
-OPS1="\n$_time-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
-GPS1="\n$_time-$_git_branch-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
-IPS1="\n$_time-$_info-$_dir\[\e[0;34m\]\n$_history\[\e[0;34m\] -> \[\e[0;32m\]"
+isGitRepo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
 
-# Default
-PS1=$GPS1
+set_bash_prompt(){
+  PS1="\n${BLUE}\h ${YELLOW} ${GREEN}\w"
+
+  isGitRepo
+  if [[ $? == 0 ]]
+  then
+    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+    PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
+  fi
+
+  PS1="${PS1}\n${YELLOW} \@ - \!${BLUE} » ${GREEN}"
+}
+
+PROMPT_COMMAND=set_bash_prompt
 
 export CLICOLOR=1
 export LS_COLORS='di=0;35'
@@ -74,8 +92,13 @@ alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
 alias kc='kubectl'
 alias kca='kubectl apply -f'
 alias kcd='kubectl delete -f'
-alias hdcui="open https://$HDC_IP:8443/console"
 alias hi='helm-init'
+
+# ICP Links
+alias hdcui="open https://$HDC_IP:8443/console"
+alias hdcsvc="open https://$HDC_IP:8443/console/access/services"
+alias hcmrel="open https://$HDC_IP:8443/catalog/instancedetails/kube-system/hcm"
+
 # Secure Helm
 function shelm() {
 	echo "helm $@ --tls"
