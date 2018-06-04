@@ -155,9 +155,10 @@ set relativenumber number " Line numbers
 syntax on
 
 set autoread
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
 
 set autoindent                  " Sets autoindent
 set colorcolumn=80      " Turn on the colored column at column 80
