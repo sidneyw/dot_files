@@ -23,6 +23,9 @@ isGitRepo() {
 }
 
 set_bash_prompt(){
+  success=$?
+
+
   PS1="\n${BLUE}\h ${YELLOW} ${GREEN}\w"
 
   isGitRepo
@@ -32,7 +35,13 @@ set_bash_prompt(){
     PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
   fi
 
-  PS1="${PS1}\n${YELLOW} \@ -  \!${BLUE} » ${GREEN}"
+  PS1="${PS1}\n${YELLOW} \@"
+	if [ $success -ne 0 ]; then
+		PS1="${PS1} ${RED}${YELLOW}"
+	fi
+
+# »
+	PS1="${PS1}${YELLOW}  \!${BLUE}  ${GREEN}"
 }
 
 PROMPT_COMMAND=set_bash_prompt
@@ -101,8 +110,8 @@ alias hcmrel="open https://$HDC_IP:8443/catalog/instancedetails/kube-system/hcm"
 
 # Secure Helm
 function shelm() {
-	echo "helm $@ --tls"
-	helm $@ --tls
+  echo "helm $@ --tls"
+  helm $@ --tls
 }
 
 # Docker
@@ -133,7 +142,7 @@ alias mygcc='gcc -Wall -pedantic -std=c11'
 
 # Bash Completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-	. $(brew --prefix)/etc/bash_completion
+  . $(brew --prefix)/etc/bash_completion
 fi
 
 # Travis Gem
@@ -162,7 +171,7 @@ f () {
 
 # FZF search files to open in vim
 function vf() {
-	nvim "$@" $(f -m)
+  nvim "$@" $(f -m)
 }
 
 # export FZF_DEFAULT_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"
@@ -249,7 +258,7 @@ fi
 
 # WIP
 fyn() {
-	jq -r '.scripts | keys[] as $k | "\($k) \(.[$k])"' package.json | fzf-down
+  jq -r '.scripts | keys[] as $k | "\($k) \(.[$k])"' package.json | fzf-down
 }
 # }}}
 
