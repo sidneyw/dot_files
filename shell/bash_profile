@@ -2,29 +2,28 @@
 
 # Prompts and colors {{{
 # ====================================
-RED='\033[00;31m'
-GREEN='\033[00;32m'
-YELLOW='\033[00;33m'
-BLUE='\033[00;34m'
-PURPLE='\033[00;35m'
-CYAN='\033[00;36m'
-LIGHTGRAY='\033[00;37m'
+RED='\[\033[00;31m\]'
+GREEN='\[\033[00;32m\]'
+YELLOW='\[\033[00;33m\]'
+BLUE='\[\033[00;34m\]'
+PURPLE='\[\033[00;35m\]'
+CYAN='\[\033[00;36m\]'
+LIGHTGRAY='\[\033[00;37m\]'
 
-LRED='\033[01;31m'
-LGREEN='\033[01;32m'
-LYELLOW='\033[01;33m'
-LBLUE='\033[01;34m'
-LPURPLE='\033[01;35m'
-LCYAN='\033[01;36m'
-WHITE='\033[01;37m'
+LRED='\[\033[01;31m\]'
+LGREEN='\[\033[01;32m\]'
+LYELLOW='\[\033[01;33m\]'
+LBLUE='\[\033[01;34m\]'
+LPURPLE='\[\033[01;35m\]'
+LCYAN='\[\033[01;36m\]'
+WHITE='\[\033[01;37m\]'
 
 isGitRepo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
-set_bash_prompt(){
+fullPrompt(){
   success=$?
-
 
   PS1="\n${BLUE}\h ${YELLOW} ${GREEN}\w"
 
@@ -36,15 +35,34 @@ set_bash_prompt(){
   fi
 
   PS1="${PS1}\n${YELLOW} \@"
-	if [ $success -ne 0 ]; then
-		PS1="${PS1} ${RED}${YELLOW}"
-	fi
+  if [ $success -ne 0 ]; then
+    PS1="${PS1} ${RED}${YELLOW}"
+  fi
 
 # »
-	PS1="${PS1}${YELLOW}  \!${BLUE}  ${GREEN}"
+  PS1="${PS1}${YELLOW}  \!${BLUE}  ${GREEN}"
 }
 
-PROMPT_COMMAND=set_bash_prompt
+minimalPrompt(){
+  success=$?
+
+  PS1="\n${YELLOW} ${GREEN}\w"
+
+  isGitRepo
+  if [[ $? == 0 ]]
+  then
+    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+    PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
+  fi
+
+  if [ $success -ne 0 ]; then
+    PS1="${PS1} ${RED}${YELLOW}"
+  fi
+
+  PS1="${PS1}${YELLOW}  \!${BLUE} » ${GREEN}"
+}
+
+PROMPT_COMMAND=minimalPrompt
 
 export CLICOLOR=1
 export LS_COLORS='di=0;35'
