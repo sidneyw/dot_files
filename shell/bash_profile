@@ -46,7 +46,7 @@ fullPrompt(){
 minimalPrompt(){
   success=$?
 
-  PS1="\n${YELLOW} ${GREEN}\w"
+  PS1="\n${YELLOW} ${GREEN}\W"
 
   isGitRepo
   if [[ $? == 0 ]]
