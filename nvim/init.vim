@@ -370,6 +370,8 @@ augroup cpp
   autocmd FileType cpp :call LongTab()
 augroup END
 
+
+let g:markdown_syntax_conceal = 0
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown

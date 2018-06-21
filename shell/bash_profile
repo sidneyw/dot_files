@@ -62,7 +62,26 @@ minimalPrompt(){
   PS1="${PS1}${YELLOW}  \!${BLUE} » ${GREEN}"
 }
 
-PROMPT_COMMAND=minimalPrompt
+onelinerPrompt(){
+  success=$?
+
+  PS1="\n${YELLOW} ${GREEN}\w"
+
+  isGitRepo
+  if [[ $? == 0 ]]
+  then
+    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+    PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
+  fi
+
+  if [ $success -ne 0 ]; then
+    PS1="${PS1} ${RED}${YELLOW}"
+  fi
+
+  PS1="${PS1}${YELLOW}  \!${BLUE} » ${GREEN}"
+}
+
+PROMPT_COMMAND=onelinerPrompt
 
 export CLICOLOR=1
 export LS_COLORS='di=0;35'

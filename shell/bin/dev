@@ -7,12 +7,13 @@ else
 	session_name=$1
 fi
 
-if [[ ${#} -gt 1 ]]
+if [ ! -z $1 ] && [ -f "$HOME/.dot_files/tmux/$1.conf" ]
 then
-	echo "dev [session_name]"
-	exit 1
+	conf_path="$HOME/.dot_files/tmux/$1.conf"
+else
+	conf_path="$HOME/.dot_files/tmux/dev.conf"
 fi
 
-tmux new-session -s ${session_name} -d
-tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files/tmux/dev.conf" C-m "clear" C-m
-tmux attach -t ${session_name}
+tmux new-session -s $session_name -d
+tmux send-keys -t $session_name "tmux source-file $conf_path" C-m "clear" C-m
+tmux attach -t $session_name

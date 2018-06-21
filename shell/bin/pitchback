@@ -1,8 +1,0 @@
-#!/bin/bash
-
-cd /Users/sidneywijngaarde/Code/javascript/Pitchback/frontend
-
-session_name="Pitchback"
-tmux new -s ${session_name} -d
-tmux send-keys -t ${session_name} "tmux source-file ~/.dot_files/tmux/pitchback.conf" C-m
-tmux attach -t ${session_name}

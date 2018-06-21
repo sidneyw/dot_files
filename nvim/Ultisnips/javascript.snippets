@@ -4,16 +4,6 @@ snippet asynci "Async IIF"
 })()
 endsnippet
 
-snippet $ "template"
-${$0}
-endsnippet
-
-snippet act "Redux action"
-export const $1 = ($2) => ({
-	$0
-})
-endsnippet
-
 snippet afunc "Async function"
 async function $1($2) {
 	$0
@@ -36,22 +26,6 @@ snippet arro "Arrow function to object" i
 ($1) => ({
 	$0
 })
-endsnippet
-
-snippet async "Async redux action"
-export const $1 = ($2) => dispatch => {
-	$0
-}
-endsnippet
-
-snippet ax "Axios"
-axios.$1(\`/$2\`, getConfig())
-	.then((res) => {
-		$3
-	})
-	.catch(${4:(err) => {
-		$5
-	}});
 endsnippet
 
 snippet econst "Export const"
@@ -81,7 +55,7 @@ snippet "cl(og)?" "console log" ir
 console.log(${VISUAL}$0);
 endsnippet
 
-snippet "rcl(og)?" "react console log" ir
+snippet "rl(og)?" "react console log" ir
 {console.log(${VISUAL}$0)}
 endsnippet
 
@@ -288,10 +262,6 @@ snippet "(\.|)then" "Promise Then" r
 ${5:.catch((${6:err}) => {$7})}
 endsnippet
 
-snippet tstr "Template String"
-\`${$0}\`
-endsnippet
-
 snippet \$ "Template placeholder" i
 ${$0}
 endsnippet
@@ -329,34 +299,48 @@ endsnippet
 snippet sm "Pure CSS sm"
 // pure-sm
 @media screen and (min-width: 35.5em) {
-  $0
+	${VISUAL}$0
 }
 endsnippet
 
 snippet md "Pure CSS md"
 // pure-md
 @media screen and (min-width: 48em) {
- $0
+	${VISUAL}$0
 }
 endsnippet
 
-snippet pure "Pure CSS in JS"
+snippet lg "Pure CSS lg"
+//pure-lg
+@media screen and (min-width: 64em) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet xl "Pure CSS xl"
+// pure-xl
+@media screen and (min-width: 80em) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet pure "Pure CSS"
 // pure-sm
 @media screen and (min-width: 35.5em) {
-  $1
+	$1
 }
 
 // pure-md
 @media screen and (min-width: 48em) {
- $2
+	$2
 }
 
 //pure-lg
 @media screen and (min-width: 64em) {
- $3
+	$3
 }
 // pure-xl
 @media screen and (min-width: 80em) {
- $0
+	$0
 }
 endsnippet
