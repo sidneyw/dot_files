@@ -114,6 +114,7 @@ Plug 'mattn/emmet-vim'
 " }}}
 
 " Javascript Bundle {{{
+Plug 'othree/yajs.vim'
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
@@ -130,6 +131,13 @@ Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'davidhalter/jedi-vim'
 Plug 'zchee/deoplete-jedi'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+" }}}
+
+" Typescript Bundle {{{
+" Plug 'leafgarland/typescript-vim'
+" Plug 'ianks/vim-tsx'
+" Plug 'Quramy/tsuquyomi', { 'do': 'make -f make_mac.mak' }
+" Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
 " Include user's extra bundle
@@ -392,7 +400,7 @@ augroup javascript
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less PrettierAsync
+  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
 augroup END
 
 augroup bash
@@ -707,6 +715,13 @@ autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
+" let g:neomake_scss_enabled_makers = ['stylelint']
+" let g:neomake_scss_stylelint_maker = {
+" 	\'args': ['--syntax', 'scss'],
+" 	\ }
+
+" let g:neomake_typescript_tslint_exe = system('PATH=$(npm bin):$PATH && which tslint | tr -d "\n"')
+" let g:neomake_typescript_enabled_makers = ['tslint', 'tsc']
 
 let g:neomake_python_flake8_maker = {
     \ 'args': ['--ignore=E501,E302,E128,W191,F403,E402',  '--format=default'],
