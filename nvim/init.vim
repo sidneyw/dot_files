@@ -94,6 +94,7 @@ Plug 'honza/vim-snippets'
 
 " Color
 Plug 'tomasr/molokai'
+Plug 'flazz/vim-colorschemes'
 
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
@@ -398,9 +399,10 @@ augroup END
 augroup javascript
   autocmd!
   autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
+  autocmd FileType javascript :nnoremap <buffer> <leader>ne :!npx eslint --fix <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
+  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
 augroup END
 
 augroup bash
@@ -671,6 +673,7 @@ noremap <leader>ga  :Gwrite<CR>
 noremap <leader>gb  :Gblame<CR>
 noremap <leader>gc  :Gcommit<CR>
 noremap <leader>gd  :Gvdiff<CR>
+noremap <leader>gh  :!gh-launch<CR>
 noremap <leader>glc :Glcd<CR>
 noremap <leader>gll :Gpull<CR>
 noremap <leader>gr  :Gremove<CR>
@@ -780,6 +783,8 @@ if exists('g:plugs["tern_for_vim"]')
   let g:tern_show_argument_hints = 'on_hold'
   let g:tern_show_signature_in_pum = 1
   let g:tern_map_keys = 1
+	" let g:tern#command = ["tern"]
+	let g:tern#arguments = ["--persistent"]
 endif
 " }}}
 
