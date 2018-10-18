@@ -632,6 +632,8 @@ let g:deoplete#omni#functions.javascript = [
   \ 'jspc#omni'
 \]
 
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
 " omnifuncs
 augroup omnifuncs
   autocmd!
