@@ -103,6 +103,8 @@ Plug 'ludwig/split-manpage.vim'
 
 " Go Lang Bundle {{{
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'jodosha/vim-godebug'
 let g:go_bin_path="/Users/sidneywijngaarde/go/bin"
 " }}}
 
@@ -736,7 +738,7 @@ let g:neomake_python_flake8_maker = {
     \ }
 
 let g:neomake_python_enabled_makers = ['flake8']
-" let g:neomake_go_enabled_makers = ['govet']
+let g:neomake_go_enabled_makers = ['golint', 'govet']
 " }}}
 
 " NERDTree {{{
@@ -829,6 +831,10 @@ let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_trailing_whitespace_error = 0
 let g:go_highlight_extra_types = 1
 
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 augroup completion_preview_close
@@ -850,14 +856,17 @@ augroup go
   au FileType go nmap <localleader>db <Plug>(go-doc-browser)
 
   au FileType go nmap <localleader>r  <Plug>(go-run)
-  au FileType go nmap <localleader>R  <Plug>(go-rename)
+  au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
+  au FileType go nmap <localleader>gr <Plug>(go-rename)
   au FileType go nmap <localleader>t  <Plug>(go-test)
   au FileType go nmap <localleader>gt <Plug>(go-coverage-toggle)
-  au FileType go nmap <localleader>i <Plug>(go-info)
-  au FileType go nmap <silent> <localleader>l <Plug>(go-metalinter)
-  au FileType go nmap <C-g> :GoDecls<cr>
+  au FileType go nmap <localleader>i  <Plug>(go-info)
+  au FileType go nmap <localleader>gi <Plug>(go-implements)
+
+  au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
+
+  au FileType go nnoremap <localleader>gd :GoDecls<cr>
   au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
-  au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
 augroup END
 " }}}
 
