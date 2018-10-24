@@ -137,10 +137,10 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " }}}
 
 " Typescript Bundle {{{
-" Plug 'leafgarland/typescript-vim'
-" Plug 'ianks/vim-tsx'
-" Plug 'Quramy/tsuquyomi', { 'do': 'make -f make_mac.mak' }
-" Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
+Plug 'Quramy/tsuquyomi', { 'do': 'make -f make_mac.mak' }
+Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
 " Include user's extra bundle
@@ -820,6 +820,7 @@ let g:go_fmt_fail_silently = 1
 let g:syntastic_go_checkers = ['golint', 'govet']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
+let g:go_auto_type_info = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
@@ -859,15 +860,15 @@ augroup go
 
   au FileType go nmap <localleader>r  <Plug>(go-run)
   au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
-  au FileType go nmap <localleader>gr <Plug>(go-rename)
+  au FileType go nmap <localleader>R <Plug>(go-rename)
   au FileType go nmap <localleader>t  <Plug>(go-test)
-  au FileType go nmap <localleader>gt <Plug>(go-coverage-toggle)
-  au FileType go nmap <localleader>i  <Plug>(go-info)
-  au FileType go nmap <localleader>gi <Plug>(go-implements)
+  au FileType go nmap <localleader>c <Plug>(go-coverage-toggle)
+  au FileType go nmap <localleader>gi  <Plug>(go-info)
+  au FileType go nmap <localleader>i <Plug>(go-implements)
 
   au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
-  au FileType go nnoremap <localleader>gd :GoDecls<cr>
+  au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
   au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
 augroup END
 " }}}
