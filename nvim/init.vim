@@ -435,8 +435,10 @@ augroup END
 " Color Scheme {{{
 " ====================
 hi clear
-colorscheme monokai-phoenix
-colorscheme badwolf
+" colorscheme monokai-phoenix
+" colorscheme badwolf
+" colorscheme brogrammer
+colorscheme turtles
 " }}}
 
 " Abbreviations {{{
@@ -821,6 +823,8 @@ let g:syntastic_go_checkers = ['golint', 'govet']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 let g:go_auto_type_info = 1
+" Uncomment to highlight variable references
+" let g:go_auto_sameids = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
@@ -854,17 +858,23 @@ augroup go
   au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
+	au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
+	au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
+	au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
+
+	au Filetype go nnoremap <localleader>p :GoImport 
+
   au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
   au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
   au FileType go nmap <localleader>db <Plug>(go-doc-browser)
 
   au FileType go nmap <localleader>r  <Plug>(go-run)
   au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
-  au FileType go nmap <localleader>R <Plug>(go-rename)
+  au FileType go nmap <localleader>R  <Plug>(go-rename)
   au FileType go nmap <localleader>t  <Plug>(go-test)
-  au FileType go nmap <localleader>c <Plug>(go-coverage-toggle)
-  au FileType go nmap <localleader>gi  <Plug>(go-info)
-  au FileType go nmap <localleader>i <Plug>(go-implements)
+  au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
+  au FileType go nmap <localleader>gi <Plug>(go-info)
+  au FileType go nmap <localleader>i  <Plug>(go-implements)
 
   au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
