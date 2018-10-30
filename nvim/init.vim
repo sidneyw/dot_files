@@ -104,7 +104,7 @@ Plug 'ludwig/split-manpage.vim'
 " Go Lang Bundle {{{
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'jodosha/vim-godebug'
+" Plug 'jodosha/vim-godebug'
 let g:go_bin_path="/Users/sidneywijngaarde/go/bin"
 " }}}
 
@@ -434,11 +434,11 @@ augroup END
 
 " Color Scheme {{{
 " ====================
-hi clear
+" hi clear
 " colorscheme monokai-phoenix
 " colorscheme badwolf
-" colorscheme brogrammer
-colorscheme turtles
+colorscheme brogrammer
+" colorscheme turtles
 " }}}
 
 " Abbreviations {{{
@@ -825,18 +825,20 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:go_auto_type_info = 1
 " Uncomment to highlight variable references
 " let g:go_auto_sameids = 1
-let g:go_highlight_types = 1
+let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
+" let g:go_highlight_function_arguments = 1
+let g:go_highlight_function_calls = 1
 let g:go_highlight_functions = 1
+let g:go_highlight_generate_tags = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_generate_tags = 1
 let g:go_highlight_space_tab_error = 0
-let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_structs = 1
 let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_extra_types = 1
+let g:go_highlight_types = 1
 
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
@@ -862,7 +864,14 @@ augroup go
 	au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
 	au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
 
-	au Filetype go nnoremap <localleader>p :GoImport 
+	" gd = :GoDef
+	" <C-t> :GoDefPop
+	" K :GoDoc press enter to quit
+	" :GoDescribe shows all information about a type
+	" :GoChannelPeers shows all sends and recvs from a channel
+	" :GoCallers :Gocallees show where functions are used
+	" :GoWhichErrs shows what type an error might be
+	au Filetype go nnoremap <localleader>p :GoImport<space>
 
   au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
   au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
@@ -871,6 +880,7 @@ augroup go
   au FileType go nmap <localleader>r  <Plug>(go-run)
   au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
   au FileType go nmap <localleader>R  <Plug>(go-rename)
+  au FileType go nmap <localleader>gr :GoReferrers<cr>
   au FileType go nmap <localleader>t  <Plug>(go-test)
   au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
   au FileType go nmap <localleader>gi <Plug>(go-info)
