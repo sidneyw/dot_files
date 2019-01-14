@@ -102,8 +102,8 @@ Plug 'ludwig/split-manpage.vim'
 " }}}
 
 " Go Lang Bundle {{{
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+" Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+" Plug 'zchee/deoplete-go', { 'do': 'make'}
 " Plug 'jodosha/vim-godebug'
 let g:go_bin_path="/Users/sidneywijngaarde/go/bin"
 " }}}
@@ -190,7 +190,7 @@ set ruler
 
 set inccommand=split " Interactive substitute
 
-set shell=bash\ --login " make the sh command source the bash_profile
+" set shell=bash\ --login " make the sh command source the bash_profile
 set backupcopy=yes      " For webpack hot reloading
 
 "set list
@@ -404,7 +404,7 @@ augroup javascript
   autocmd FileType javascript :nnoremap <buffer> <leader>ne :!npx eslint --fix <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
+  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
 augroup END
 
 augroup bash
@@ -436,9 +436,10 @@ augroup END
 " ====================
 " hi clear
 " colorscheme monokai-phoenix
-" colorscheme badwolf
-colorscheme brogrammer
+colorscheme badwolf
+" colorscheme brogrammer
 " colorscheme turtles
+" colorscheme molokai_dark
 " }}}
 
 " Abbreviations {{{
@@ -829,6 +830,7 @@ let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
+let g:echodoc#highlight_trailing = 1
 " let g:go_highlight_function_arguments = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_functions = 1
@@ -890,6 +892,9 @@ augroup go
 
   au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
   au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
+
+
+  au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
 augroup END
 " }}}
 
@@ -926,6 +931,6 @@ let g:airline#extensions#virtualenv#enabled = 1
 
 " Syntax highlight
 " Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
+let g:polyglot_disabled = ['python', 'go']
 let python_highlight_all = 1
 " }}}

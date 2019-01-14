@@ -81,7 +81,7 @@ onelinerPrompt(){
   PS1="${PS1}${YELLOW}  \!${BLUE} » ${GREEN}"
 }
 
-PROMPT_COMMAND=onelinerPrompt
+PROMPT_COMMAND=fullPrompt
 
 export CLICOLOR=1
 export LS_COLORS='di=0;35'
@@ -304,6 +304,7 @@ fyn() {
 PATH="$PATH:$HOME/bin"
 PATH="$PATH:$HOME/local_bin"
 PATH="$PATH:/usr/local/bin"
+PATH="$PATH:$HOME/.local/bin"
 
 # Go installs packages here
 export GOPATH="$HOME/go"
@@ -317,3 +318,7 @@ export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
 # added by Anaconda3 5.0.1 installer
 export PATH="/anaconda3/bin:$PATH"
 export HELM_HOME=~/.helm
+
+# heroku autocomplete setup
+HEROKU_AC_BASH_SETUP_PATH=/Users/sidneywijngaarde/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
+export PATH="$HOME/.cargo/bin:$PATH"
