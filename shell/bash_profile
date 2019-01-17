@@ -22,10 +22,17 @@ isGitRepo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
+pyEnv() {
+	if command -v pyenv 1>/dev/null 2>&1; then
+		echo "$(pyenv virtualenvs | grep "\*" | cut -d " " -f2)"
+	fi
+}
+
 fullPrompt(){
   success=$?
 
-  PS1="\n${BLUE}\h ${YELLOW} ${GREEN}\w"
+  PS1="\n${BLUE}\u"
+	PS1="${PS1} ${YELLOW} ${GREEN}\w"
 
   isGitRepo
   if [[ $? == 0 ]]
@@ -40,7 +47,12 @@ fullPrompt(){
   fi
 
 # »
-  PS1="${PS1}${YELLOW}  \!${BLUE}  ${GREEN}"
+  PS1="${PS1} ${YELLOW} \!"
+	if [[ ! -z "$(pyEnv)" ]]; then
+		PS1="${PS1} ${YELLOW} ${GREEN}$(pyEnv)"
+	fi
+
+	PS1="${PS1} ${BLUE} ${GREEN}"
 }
 
 minimalPrompt(){
