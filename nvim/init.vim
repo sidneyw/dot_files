@@ -74,7 +74,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'neomake/neomake'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
@@ -102,10 +102,10 @@ Plug 'ludwig/split-manpage.vim'
 " }}}
 
 " Go Lang Bundle {{{
-" Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-" Plug 'zchee/deoplete-go', { 'do': 'make'}
-" Plug 'jodosha/vim-godebug'
-let g:go_bin_path="/Users/sidneywijngaarde/go/bin"
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'jodosha/vim-godebug'
+let g:go_bin_path="/Users/sidneyw/go/bin"
 " }}}
 
 " HTML Bundle {{{
@@ -685,7 +685,7 @@ noremap <leader>glc :Glcd<CR>
 noremap <leader>gll :Gpull<CR>
 noremap <leader>gr  :Gremove<CR>
 noremap <leader>gs  :Gstatus<CR>
-noremap <leader>gu  :Gpush<CR>
+noremap <leader>gu  :Gpush -u<CR>
 " Open current line on github
 nnoremap <leader>go :.Gbrowse<CR>
 
@@ -922,9 +922,6 @@ let g:jedi#rename_command = "<leader>r"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#smart_auto_mappings = 0
-
-" syntastic
-let g:syntastic_python_checkers=['python', 'flake8']
 
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
