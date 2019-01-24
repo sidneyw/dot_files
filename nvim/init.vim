@@ -74,7 +74,6 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'neomake/neomake'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
-" Plug 'sheerun/vim-polyglot'
 let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
@@ -107,6 +106,7 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'jodosha/vim-godebug'
 let g:go_bin_path="/Users/sidneyw/go/bin"
 " }}}
+Plug 'sheerun/vim-polyglot'
 
 " HTML Bundle {{{
 Plug 'hail2u/vim-css3-syntax'
@@ -474,7 +474,6 @@ cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
 
 cnoreabbr evim e $MYVIMRC
-cnoreabbr tabcd Tabcd
 cnoreabbr bad colorscheme badwolf
 
 cnoreabbr count %s///gn
@@ -530,7 +529,26 @@ function! TabCd(dir)
 	execute "lcd " . a:dir
 endfunction
 
+
 command! -nargs=1 -complete=dir Tabcd call TabCd(<f-args>)
+
+" remap tabcd to Tabcd
+cnoreabbr tabcd Tabcd
+
+function! ScratchFn(fileExt)
+	let curdate=system('date +%s')[:-2]
+	let buffName="scratch-" . curdate . "." . a:fileExt
+	execute "new " . l:buffName
+
+	setlocal buftype=nofile
+	setlocal bufhidden=hide
+	setlocal noswapfile
+endfunction
+
+" remap scratch to Scratch
+cnoreabbr scratch Scratch
+
+command -nargs=1 Scratch call ScratchFn(<f-args>)
 
 if !exists('*s:setupWrapping')
   function s:setupWrapping()

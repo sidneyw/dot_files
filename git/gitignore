@@ -48,3 +48,6 @@ tags*
 
 # Tern
 .tern-port
+
+# Neomake
+.*neomake*
