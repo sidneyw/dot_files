@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # vim: set foldmethod=marker :
 
 # Prompts and colors {{{

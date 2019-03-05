@@ -560,6 +560,7 @@ endif
 
 function! EditRC()
   tabe $HOME/.config/nvim/init.vim
+	execute "Glcd"
 endfunction
 
 " }}}
