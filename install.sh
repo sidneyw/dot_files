@@ -23,6 +23,8 @@ brew install \
 	the_silver_searcher \
 	tmux
 
+$(brew --prefix)/opt/fzf/install
+
 # Creates symlinks for dotfiles
 DOT_FILES="$HOME/.dot_files"
 
@@ -81,7 +83,8 @@ rm -rf "$DOT_FILES/fonts"
 
 # Install Python 3.6.8
 pyenv install 3.6.8
-
+pyenv virtualenv 3.6.8 workspace
+pyenv activate workspace
 
 # Set up go mono repo
 mkdir -p "$HOME/go/bin"
@@ -91,3 +94,21 @@ mkdir -p "$HOME/go/src"
 # Install Vim Plugins
 pip install pynvim
 nvim +PlugInstall +GoInstallBinaries +qa
+
+# Increase Key Repeat
+defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+
+# Hide Dock
+defaults write com.apple.Dock autohide -bool TRUE
+killall Dock
+
+# Show Battery Percentage
+defaults write com.apple.menuextra.battery ShowPercent YES
+
+# Show Bluetooth and Clock
+defaults write com.apple.systemuiserver menuExtras -array \
+	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
+	"/System/Library/CoreServices/Menu Extras/Clock.menu"
+
+killall SystemUIServer

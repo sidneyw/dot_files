@@ -327,17 +327,14 @@ export PATH=$PATH:$GOBIN
 export PATH=$PATH:$GOROOT/bin
 export GO111MODULE=on
 
-# added by Anaconda3 4.3.0 installer
-export PATH="/Users/sidneywijngaarde/anaconda/bin:$PATH"
-
-# added by Anaconda3 5.0.1 installer
-export PATH="/anaconda3/bin:$PATH"
-export HELM_HOME=~/.helm
-
-# heroku autocomplete setup
-HEROKU_AC_BASH_SETUP_PATH=/Users/sidneywijngaarde/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
-export PATH="$HOME/.cargo/bin:$PATH"
+# Pyenv
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 fi
+
+# heroku autocomplete setup
+HEROKU_AC_BASH_SETUP_PATH=/Users/sidneywijngaarde/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
+
+export PATH="$HOME/.cargo/bin:$PATH"

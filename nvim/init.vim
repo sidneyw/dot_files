@@ -118,7 +118,6 @@ Plug 'mattn/emmet-vim'
 
 " Javascript Bundle {{{
 Plug 'othree/yajs.vim'
-Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'javascript.jsx'] }
