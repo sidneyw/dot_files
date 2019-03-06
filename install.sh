@@ -15,6 +15,7 @@ brew install \
 	nvm \
 	go \
 	autojump \
+	bash-completion \
 	fzf \
 	git \
 	htop \
@@ -24,6 +25,8 @@ brew install \
 	tmux
 
 $(brew --prefix)/opt/fzf/install
+
+# gem install coderay
 
 # Creates symlinks for dotfiles
 DOT_FILES="$HOME/.dot_files"
@@ -81,12 +84,17 @@ cd $DOT_FILES
 
 rm -rf "$DOT_FILES/fonts"
 
+# Install Node 10
+nvm install 10
+npm i -g prettier
+
 # Install Python 3.6.8
 pyenv install 3.6.8
 pyenv virtualenv 3.6.8 workspace
 pyenv activate workspace
 
 # Set up go mono repo
+mkdir -p "$HOME/go"
 mkdir -p "$HOME/go/bin"
 mkdir -p "$HOME/go/pkg"
 mkdir -p "$HOME/go/src"
