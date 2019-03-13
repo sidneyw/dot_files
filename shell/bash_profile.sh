@@ -166,6 +166,7 @@ function shelm() {
 }
 
 # Docker
+alias doc='docker'
 alias dcomp='docker-compose'
 alias dmongo='docker run -d -p 27017:27017 mongo'
 
