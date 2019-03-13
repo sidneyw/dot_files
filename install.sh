@@ -120,3 +120,8 @@ defaults write com.apple.systemuiserver menuExtras -array \
 	"/System/Library/CoreServices/Menu Extras/Clock.menu"
 
 killall SystemUIServer
+
+# Manual Installs
+
+open -na "Google Chrome" --args --new-window \
+	https://iterm2colorschemes.com/
