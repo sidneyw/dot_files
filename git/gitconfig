@@ -23,6 +23,7 @@
 	cmp = "!f() { git checkout master && git pull; }; f"
 	co = checkout
 	dh = diff HEAD
+	fa = fetch --all
 	nuke = "!f() { git push origin --delete $1; git branch -D $1; }; f"
 	pr = "!f() { git fetch origin refs/pull/$1/head:refs/remotes/origin/pr/$1 && git checkout FETCH_HEAD && git remote prune origin; }; f"
 	st = status
