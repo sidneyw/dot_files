@@ -104,9 +104,9 @@ Plug 'ludwig/split-manpage.vim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'jodosha/vim-godebug'
-let g:go_bin_path="/Users/sidneyw/go/bin"
+let g:go_bin_path= $HOME . "/go/bin"
 " }}}
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 " HTML Bundle {{{
 Plug 'hail2u/vim-css3-syntax'
