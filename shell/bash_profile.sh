@@ -141,7 +141,6 @@ alias gcd='cd $(git rev-parse --show-toplevel)'
 alias genv='source genv'
 
 # SSH
-alias vlaunch="ssh $VLAUNCH_USER"
 alias pi3='ssh pi@raspberrypi.local'
 alias pi='ssh pi@100.64.1.173'
 alias godaddy='ssh thesquid17@107.180.41.49'
@@ -154,10 +153,6 @@ alias kca='kubectl apply -f'
 alias kcd='kubectl delete -f'
 alias hi='helm-init'
 
-# ICP Links
-alias hdcui="open https://$HDC_IP:8443/console"
-alias hdcsvc="open https://$HDC_IP:8443/console/access/services"
-alias hcmrel="open https://$HDC_IP:8443/catalog/instancedetails/kube-system/hcm"
 
 # Secure Helm
 function shelm() {
@@ -166,6 +161,7 @@ function shelm() {
 }
 
 # Docker
+alias doc='docker'
 alias dcomp='docker-compose'
 alias dmongo='docker run -d -p 27017:27017 mongo'
 
@@ -182,8 +178,8 @@ alias 3='python3'
 
 # other
 alias c='clear'
-alias makec='make clean; make -j'
 alias mygcc='gcc -Wall -pedantic -std=c11'
+alias fup='make -C deploy/local fixture-up logs'
 # }}}
 
 # Plugins {{{
@@ -329,6 +325,7 @@ export GO111MODULE=on
 
 # Pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PYENV_VERSION=3.6.8
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"

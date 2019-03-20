@@ -55,40 +55,19 @@ else
 	ln -s $DOT_FILES/shell/local_bin ~/local_bin
 fi
 
-# Install Fonts
-
-declare -a fonts=("Black/complete/Sauce%20Code%20Pro%20Black%20Nerd%20Font%20Complete%20Mono.ttf"
-	"Bold/complete/Sauce%20Code%20Pro%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
-	"Regular/complete/Sauce%21Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf"
-	"Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf"
-	"Light/complete/Sauce%20Code%20Pro%20Light%20Nerd%20Font%20Complete%20Mono.ttf"
-	)
-
-mkdir -p "$DOT_FILES/fonts"
-
-cd "$DOT_FILES/fonts"
-
-for font_path in "${fonts[@]}"
-do
-	curl \
-		-H 'Accept: application/vnd.github.v3.raw' \
-		-O \
-		-L "https://api.github.com/repos/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/$font_path"
-done
-
-mkdir -p "$HOME/Library/Fonts"
-
-cp *.ttf "$HOME/Library/Fonts"
-
-cd $DOT_FILES
-
-rm -rf "$DOT_FILES/fonts"
-
 # Install Node 10
 nvm install 10
 npm i -g prettier
 
 # Install Python 3.6.8
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PYENV_VERSION=3.6.8
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+fi
+
 pyenv install 3.6.8
 pyenv virtualenv 3.6.8 workspace
 pyenv activate workspace
@@ -120,3 +99,11 @@ defaults write com.apple.systemuiserver menuExtras -array \
 	"/System/Library/CoreServices/Menu Extras/Clock.menu"
 
 killall SystemUIServer
+
+# Manual Installs
+
+open -na "Google Chrome" --args --new-window \
+	https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/SourceCodePro \
+	https://iterm2colorschemes.com/ \
+	https://www.alfredapp.com/ \
+	https://www.spectacleapp.com/
