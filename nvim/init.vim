@@ -326,16 +326,16 @@ nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 nnoremap <leader>ue :UltiSnipsEdit<cr>
 
 " Edit Bash Profile
-nnoremap <leader>eb :tabe ~/.bash_profile<cr>
+nnoremap <leader>eb :call EditDot("shell/bash_profile.sh")<cr>
 
 " Edit vimrc
-nnoremap <leader>ev :call EditRC()<cr>
+nnoremap <leader>ev :call EditDot("nvim/init.vim")<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Edit tmux config
-nnoremap <leader>et :tabe ~/.tmux.conf<cr>
+nnoremap <leader>et :call EditDot("tmux/tmux.conf")<cr>
 
 " Launch Terminal
 nnoremap <silent> <leader>sh :terminal<CR>
@@ -557,8 +557,9 @@ if !exists('*s:setupWrapping')
   endfunction
 endif
 
-function! EditRC()
-  tabe $HOME/.config/nvim/init.vim
+function! EditDot(file)
+	let path = $HOME . '/.dot_files/' . a:file
+  execute "tabe " . fnameescape(l:path)
 	execute "Glcd"
 endfunction
 
