@@ -180,6 +180,8 @@ alias 3='python3'
 alias c='clear'
 alias mygcc='gcc -Wall -pedantic -std=c11'
 alias fup='make -C deploy/local fixture-up logs'
+alias fdn='make -C deploy/local fixture-down'
+alias pydl='pyenv activate pedl'
 # }}}
 
 # Plugins {{{
