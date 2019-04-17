@@ -403,7 +403,7 @@ augroup javascript
   autocmd FileType javascript :nnoremap <buffer> <leader>ne :!npx eslint --fix <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
+  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
 augroup END
 
 augroup bash
@@ -768,7 +768,7 @@ let g:neomake_go_enabled_makers = ['golint', 'govet']
 " NERDTree {{{
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-nnoremap <silent> <F2> :NERDTreeFind<CR>
+nnoremap <silent> <leader>P :NERDTreeFind<CR>
 
 " setlet g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
@@ -861,6 +861,8 @@ let g:go_highlight_structs = 1
 let g:go_highlight_trailing_whitespace_error = 0
 let g:go_highlight_types = 1
 
+let g:go_fmt_experimental = 1
+
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
@@ -933,11 +935,11 @@ augroup END
 
 " jedi-vim
 let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<localleader>g"
+let g:jedi#goto_definitions_command = "<localleader>d"
 let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
+let g:jedi#usages_command = "<localleader>n"
+let g:jedi#rename_command = "<localleader>r"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#smart_auto_mappings = 0
