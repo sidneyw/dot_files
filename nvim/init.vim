@@ -547,7 +547,7 @@ endfunction
 " remap scratch to Scratch
 cnoreabbr scratch Scratch
 
-command -nargs=1 Scratch call ScratchFn(<f-args>)
+command! -nargs=1 Scratch call ScratchFn(<f-args>)
 
 if !exists('*s:setupWrapping')
   function s:setupWrapping()
@@ -896,6 +896,7 @@ augroup go
 	" :GoWhichErrs shows what type an error might be
 	au Filetype go nnoremap <localleader>p :GoImport<space>
 
+  au FileType go nmap <localleader>g  <Plug>(go-def)
   au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
   au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
   au FileType go nmap <localleader>db <Plug>(go-doc-browser)
@@ -903,17 +904,14 @@ augroup go
   au FileType go nmap <localleader>r  <Plug>(go-run)
   au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
   au FileType go nmap <localleader>R  <Plug>(go-rename)
-  au FileType go nmap <localleader>gr :GoReferrers<cr>
+  au FileType go nmap <localleader>n :GoReferrers<cr>
   au FileType go nmap <localleader>t  <Plug>(go-test)
   au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-  au FileType go nmap <localleader>gi <Plug>(go-info)
+  " au FileType go nmap <localleader>gi <Plug>(go-info)
   au FileType go nmap <localleader>i  <Plug>(go-implements)
-
   au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
   au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
-  au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
-
 
   au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
 augroup END
