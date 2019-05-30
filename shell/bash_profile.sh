@@ -337,3 +337,6 @@ fi
 HEROKU_AC_BASH_SETUP_PATH=/Users/sidneywijngaarde/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
+test -f "$local_conf" && source "$local_conf"
