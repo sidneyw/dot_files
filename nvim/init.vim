@@ -42,13 +42,19 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " }}}
+"
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+let g:coc_global_extensions = [
+		\ 'coc-emoji', 'coc-eslint', 'coc-prettier', 'coc-snippets',
+		\ 'coc-tsserver', 'coc-tslint', 'coc-tslint-plugin',
+		\ 'coc-css', 'coc-json', 'coc-yaml', 'coc-python', 'coc-ultisnips'
+		\ ]
+
 
 " Shougo {{{
 Plug 'Shougo/denite.nvim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/neco-syntax'
-Plug 'Shougo/neco-vim'
 " }}}
 
 " Junegunn {{{
@@ -62,7 +68,6 @@ endif
 " }}}
 
 " Other {{{
-Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -71,7 +76,6 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'machakann/vim-highlightedyank'
-Plug 'neomake/neomake'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 let g:make = 'gmake'
@@ -85,7 +89,7 @@ if v:version >= 703
 endif
 
 if v:version >= 704
-  "" Snippets
+  " Snippets
   Plug 'SirVer/ultisnips'
 endif
 
@@ -97,16 +101,12 @@ Plug 'flazz/vim-colorschemes'
 
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-Plug 'ludwig/split-manpage.vim'
 " }}}
 
 " Go Lang Bundle {{{
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'jodosha/vim-godebug'
 let g:go_bin_path= $HOME . "/go/bin"
 " }}}
-" Plug 'sheerun/vim-polyglot'
 
 " HTML Bundle {{{
 Plug 'hail2u/vim-css3-syntax'
@@ -123,8 +123,6 @@ Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'jparise/vim-graphql'
 Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " }}}
@@ -163,6 +161,12 @@ runtime! ftplugin/man.vim
 
 set relativenumber number " Line numbers
 syntax on
+
+set cmdheight=2 " Better display for messages
+set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
+set shortmess+=c
+set signcolumn=yes  " always show signcolumns
+
 
 set autoread
 set tabstop=2
@@ -393,7 +397,6 @@ augroup python
   autocmd!
   autocmd FileType python :setlocal list foldmethod=indent
   autocmd FileType python :setlocal commentstring=#\ %s
-  autocmd FileType python :nnoremap <buffer> <leader>t :!python2 <C-r>%<cr>
   autocmd FileType python :call PyTab()
 augroup END
 
@@ -629,42 +632,69 @@ endif
 let g:bufferline_echo = 0
 " }}}
 
+" Coc.nvim {{{
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use `lp` and `ln` for navigate diagnostics
+nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>ln <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> <localleader>g <Plug>(coc-definition)
+nmap <silent> <localleader>t <Plug>(coc-type-definition)
+nmap <silent> <localleader>i <Plug>(coc-implementation)
+nmap <silent> <localleader>n <Plug>(coc-references)
+
+vmap <localleader>p  <Plug>(coc-format-selected)
+nmap <localleader>p  <Plug>(coc-format-selected)
+
+
+" Remap for rename current word
+nmap <localleader>R <Plug>(coc-rename)
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
+				 \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+" }}}
+
 " Deoplete {{{
 " ===================
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-let g:echodoc_enable_at_startup=1
-
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-
-" let g:deoplete#disable_auto_complete = 1
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" deoplete tab-complete
-autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
-  \ 'javascriptcomplete#CompleteJS',
-  \ 'jspc#omni'
-\]
-
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
 " omnifuncs
 augroup omnifuncs
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd!
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
 
 " }}}
@@ -676,8 +706,8 @@ let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/
 
 " The Silver Searcher
 if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -g ""'
-  set grepprg=ag\ --nogroup\ --nocolor
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -g ""'
+set grepprg=ag\ --nogroup\ --nocolor
 endif
 
 nnoremap <silent> <leader>a :Ag<CR>
@@ -739,32 +769,6 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " }}}
 
-" NeoMake {{{
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-" let g:neomake_scss_enabled_makers = ['stylelint']
-" let g:neomake_scss_stylelint_maker = {
-" 	\'args': ['--syntax', 'scss'],
-" 	\ }
-
-" let g:neomake_typescript_tslint_exe = system('PATH=$(npm bin):$PATH && which tslint | tr -d "\n"')
-" let g:neomake_typescript_enabled_makers = ['tslint', 'tsc']
-
-let g:neomake_python_flake8_maker = {
-    \ 'args': ['--ignore=E501,E302,E128,W191,F403,E402',  '--format=default'],
-    \ 'errorformat':
-        \ '%E%f:%l: could not compile,%-Z%p^,' .
-        \ '%A%f:%l:%c: %t%n %m,' .
-        \ '%A%f:%l: %t%n %m,' .
-        \ '%-G%.%#',
-    \ }
-
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_go_enabled_makers = ['golint', 'govet']
-" }}}
-
 " NERDTree {{{
 " ======================
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
@@ -803,23 +807,12 @@ let g:prettier#config#jsx_bracket_same_line = 'true'
 nnoremap <leader>tb :TagbarToggle<CR>
 " }}}
 
-" Tern {{{
-" ===================
-if exists('g:plugs["tern_for_vim"]')
-  let g:tern_show_argument_hints = 'on_hold'
-  let g:tern_show_signature_in_pum = 1
-  let g:tern_map_keys = 1
-	" let g:tern#command = ["tern"]
-	let g:tern#arguments = ["--persistent"]
-endif
-" }}}
-
 " UltiSnips {{{
 " ======================
 " set rtp^=$HOME
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<C-b>"
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
@@ -839,8 +832,6 @@ endfunction
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
-let g:syntastic_go_checkers = ['golint', 'govet']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 let g:go_auto_type_info = 1
 " Uncomment to highlight variable references
@@ -902,18 +893,16 @@ augroup go
   au FileType go nmap <localleader>db <Plug>(go-doc-browser)
 
   au FileType go nmap <localleader>r  <Plug>(go-run)
-  au FileType go nmap <localleader>rb :<C-u>call <SID>build_go_files()<CR>
-  au FileType go nmap <localleader>R  <Plug>(go-rename)
-  au FileType go nmap <localleader>n :GoReferrers<cr>
+  " au FileType go nmap <localleader>n :GoReferrers<cr>
   au FileType go nmap <localleader>t  <Plug>(go-test)
   au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-  " au FileType go nmap <localleader>gi <Plug>(go-info)
   au FileType go nmap <localleader>i  <Plug>(go-implements)
   au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
   au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
 
   au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
+
 augroup END
 " }}}
 

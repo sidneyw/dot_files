@@ -57,7 +57,7 @@ fi
 
 # Install Node 10
 nvm install 10
-npm i -g prettier
+npm i -g prettier dockerfile-language-server-nodejs bash-language-server
 
 # Install Python 3.6.8
 
