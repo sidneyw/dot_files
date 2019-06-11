@@ -1,4 +1,19 @@
 {
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+	"html.filetypes": ["html", "handlebars"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact"
+  ],
+	"prettier.eslintIntegration": true,
+  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact"],
+  "eslint.options": {
+    "configFile": "/Users/sidneywijngaarde/Code/javascript/wijnents-versions/small-business/.eslintrc.json"
+  },
   "languageserver": {
     "bash": {
       "command": "bash-language-server",

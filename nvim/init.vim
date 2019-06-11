@@ -42,20 +42,32 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " }}}
-"
-
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
-let g:coc_global_extensions = [
-		\ 'coc-emoji', 'coc-eslint', 'coc-prettier', 'coc-snippets',
-		\ 'coc-tsserver', 'coc-tslint', 'coc-tslint-plugin',
-		\ 'coc-css', 'coc-json', 'coc-yaml', 'coc-python', 'coc-ultisnips'
-		\ ]
-
 
 " Shougo {{{
 Plug 'Shougo/denite.nvim'
 " }}}
+
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+let g:coc_global_extensions = [
+			\ 'coc-css',
+			\ 'coc-emmet',
+			\ 'coc-emoji',
+			\ 'coc-eslint',
+			\ 'coc-git',
+			\ 'coc-html',
+			\ 'coc-json',
+			\ 'coc-prettier',
+			\ 'coc-python',
+			\ 'coc-snippets',
+			\ 'coc-tslint',
+			\ 'coc-tslint-plugin',
+			\ 'coc-tsserver',
+			\ 'coc-ultisnips',
+			\ 'coc-vimlsp',
+			\ 'coc-yaml',
+			\ ]
 
 " Junegunn {{{
 Plug 'junegunn/goyo.vim'
@@ -65,42 +77,6 @@ else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
-" }}}
-
-" Other {{{
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/CSApprox'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
-Plug 'machakann/vim-highlightedyank'
-Plug 'Yggdroot/indentLine'
-Plug 'avelino/vim-bootstrap-updater'
-let g:make = 'gmake'
-if exists('make')
-        let g:make = 'make'
-endif
-Plug 'Shougo/vimproc.vim', {'do': g:make}
-
-if v:version >= 703
-  Plug 'Shougo/vimshell.vim'
-endif
-
-if v:version >= 704
-  " Snippets
-  Plug 'SirVer/ultisnips'
-endif
-
-Plug 'honza/vim-snippets'
-
-" Color
-Plug 'tomasr/molokai'
-Plug 'flazz/vim-colorschemes'
-
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 " }}}
 
 " Go Lang Bundle {{{
@@ -118,10 +94,6 @@ Plug 'mattn/emmet-vim'
 
 " Javascript Bundle {{{
 Plug 'othree/yajs.vim'
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'jparise/vim-graphql'
 Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
@@ -129,16 +101,44 @@ Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 " Python Bundle {{{
 Plug 'davidhalter/jedi-vim'
-Plug 'zchee/deoplete-jedi'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " }}}
 
-" Typescript Bundle {{{
-Plug 'leafgarland/typescript-vim'
-Plug 'ianks/vim-tsx'
-Plug 'Quramy/tsuquyomi', { 'do': 'make -f make_mac.mak' }
-Plug 'HerringtonDarkholme/yats.vim'
+" Other {{{
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-scripts/CSApprox'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'Raimondi/delimitMate'
+Plug 'machakann/vim-highlightedyank'
+Plug 'Yggdroot/indentLine'
+let g:make = 'gmake'
+if exists('make')
+        let g:make = 'make'
+endif
+Plug 'Shougo/vimproc.vim', {'do': g:make}
+
+if v:version >= 703
+  Plug 'Shougo/vimshell.vim'
+endif
+
+if v:version >= 704
+  " Snippets
+  Plug 'SirVer/ultisnips'
+endif
+
+Plug 'honza/vim-snippets'
+Plug 'sheerun/vim-polyglot'
+
+" Color
+Plug 'tomasr/molokai'
+Plug 'flazz/vim-colorschemes'
+
+" c
+Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 " }}}
+
 
 " Include user's extra bundle
 if filereadable(expand("~/.config/nvim/local_bundles.vim"))
@@ -163,10 +163,9 @@ set relativenumber number " Line numbers
 syntax on
 
 set cmdheight=2 " Better display for messages
-set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=500 " Smaller updatetime for CursorHold & CursorHoldI
 set shortmess+=c
 set signcolumn=yes  " always show signcolumns
-
 
 set autoread
 set tabstop=2
@@ -195,6 +194,7 @@ set inccommand=split " Interactive substitute
 
 " set shell=bash\ --login " make the sh command source the bash_profile
 set backupcopy=yes      " For webpack hot reloading
+set shell=/bin/sh
 
 "set list
 set listchars=tab:▸\ ,eol:¬
@@ -234,6 +234,7 @@ endif
 " Directories for swp files
 set nobackup
 set noswapfile
+set nowritebackup
 
 " Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -250,10 +251,10 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
+" set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+" if exists("*fugitive#statusline")
+"   set statusline+=%{fugitive#statusline()}
+" endif
 " }}}
 
 " Mappings {{{
@@ -308,7 +309,7 @@ nnoremap <leader>te :tabe %<CR>
 nnoremap <leader>tc :tabc<CR>
 
 " See the full file path
-nnoremap <leader>p :echo expand("%:p")<cr>
+" nnoremap <leader>p :echo expand("%:p")<cr>
 
 " Open and close the quickfix list
 nnoremap <leader>co :copen<cr>
@@ -350,10 +351,10 @@ vnoremap <leader>s :sort<cr>
 " Autocommands {{{
 " ====================
 " The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-augroup vimrc-sync-fromstart
-  autocmd!
-  autocmd BufEnter * :syntax sync maxlines=200
-augroup END
+" augroup vimrc-sync-fromstart
+"   autocmd!
+"   autocmd BufEnter * :syntax sync maxlines=200
+" augroup END
 
 " Remember cursor position
 augroup vimrc-remember-cursor-position
@@ -402,11 +403,8 @@ augroup END
 
 augroup javascript
   autocmd!
-  autocmd FileType javascript :nnoremap <buffer> <leader>t :!node <C-r>%<cr>
-  autocmd FileType javascript :nnoremap <buffer> <leader>ne :!npx eslint --fix <C-r>%<cr>
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  " autocmd BufWritePre *.js,*.css,*.scss,*.json,*.less,*.ts,*.tsx PrettierAsync
 augroup END
 
 augroup bash
@@ -424,7 +422,6 @@ augroup END
 augroup C
   autocmd!
   autocmd FileType c :setlocal list foldmethod=syntax
-  autocmd FileType c :iabbrev <buffer> xmain int main()<cr>{<cr><cr>}<esc>ki  <bs>
 augroup END
 
 augroup vim
@@ -477,8 +474,6 @@ cnoreabbr kcaf !killall caffeinate
 
 cnoreabbr evim e $MYVIMRC
 cnoreabbr bad colorscheme badwolf
-
-cnoreabbr count %s///gn
 
 " Quotes
 cnoreabbr double %s/'/"/g
@@ -641,18 +636,26 @@ function! s:show_documentation()
   endif
 endfunction
 
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Use `lp` and `ln` for navigate diagnostics
-nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>ln <Plug>(coc-diagnostic-next)
+nmap <silent> gp <Plug>(coc-diagnostic-prev)
+nmap <silent> gn <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> <localleader>g <Plug>(coc-definition)
-nmap <silent> <localleader>t <Plug>(coc-type-definition)
-nmap <silent> <localleader>i <Plug>(coc-implementation)
-nmap <silent> <localleader>n <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 vmap <localleader>p  <Plug>(coc-format-selected)
 nmap <localleader>p  <Plug>(coc-format-selected)
@@ -675,28 +678,13 @@ imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_next = '<c-l>'
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
+let g:coc_snippet_prev = '<c-j>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
-" }}}
-
-" Deoplete {{{
-" ===================
-" omnifuncs
-augroup omnifuncs
-autocmd!
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
-
 " }}}
 
 " Fzf {{{
@@ -745,7 +733,7 @@ cnoreabbr Gcb Git co -b
 cnoreabbr Gstash Git stash
 cnoreabbr Gapply Git stash apply
 
-let g:github_enterprise_urls = ['https://github.ibm.com']
+" let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
 " Goyo {{{
@@ -784,34 +772,11 @@ let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " }}}
 
-" Prettier {{{
-" ===================
-let g:prettier#autoformat = 0
-let g:prettier#exec_cmd_async = 1
-
-" max line lengh that prettier will wrap on
-let g:prettier#config#print_width = 100
-
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'true'
-
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'true'
-
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'true'
-" }}}
-
-" Tagbar {{{
-" ======================
-nnoremap <leader>tb :TagbarToggle<CR>
-" }}}
-
 " UltiSnips {{{
 " ======================
 " set rtp^=$HOME
-let g:UltiSnipsExpandTrigger="<C-l>"
-let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-l>"
 let g:UltiSnipsJumpBackwardTrigger="<C-j>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
@@ -829,6 +794,7 @@ function! s:build_go_files()
   endif
 endfunction
 
+let g:go_def_mode = 'gopls'
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
@@ -922,13 +888,8 @@ augroup END
 
 " jedi-vim
 let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<localleader>g"
-let g:jedi#goto_definitions_command = "<localleader>d"
 let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<localleader>n"
-let g:jedi#rename_command = "<localleader>r"
 let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
 let g:jedi#smart_auto_mappings = 0
 
 " vim-airline
@@ -937,5 +898,5 @@ let g:airline#extensions#virtualenv#enabled = 1
 " Syntax highlight
 " Default highlight is better than polyglot
 let g:polyglot_disabled = ['python', 'go']
-let python_highlight_all = 1
+let g:python_highlight_all = 1
 " }}}
