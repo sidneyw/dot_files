@@ -99,6 +99,9 @@ PROMPT_COMMAND=fullPrompt
 
 export CLICOLOR=1
 export LS_COLORS='di=0;35'
+
+gruvbox_colors="$HOME/.dot_files/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
+test -f "$gruvbox_colors" && source $gruvbox_colors
 # }}}
 
 # Global Variables {{{

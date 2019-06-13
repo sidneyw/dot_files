@@ -134,6 +134,9 @@ Plug 'sheerun/vim-polyglot'
 " Color
 Plug 'tomasr/molokai'
 Plug 'flazz/vim-colorschemes'
+" Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+let g:gruvbox_contrast_dark = 'hard'
 
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
@@ -251,11 +254,13 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-" set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-" if exists("*fugitive#statusline")
-"   set statusline+=%{fugitive#statusline()}
-" endif
-" }}}
+if (has("nvim"))
+	"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if (has("termguicolors"))
+	set termguicolors
+endif
 
 " Mappings {{{
 " ====================
@@ -435,7 +440,9 @@ augroup END
 " ====================
 " hi clear
 " colorscheme monokai-phoenix
-colorscheme badwolf
+" colorscheme badwolf
+" colorscheme onedark
+colorscheme gruvbox
 " colorscheme brogrammer
 " colorscheme turtles
 " colorscheme molokai_dark
@@ -578,12 +585,9 @@ endfunction
 " wombat
 " powerlineish
 
-" let g:airline_theme= 'murmur'
-let g:airline_theme = 'murmur'
-let g:airline#extensions#syntastic#enabled = 1
+let g:airline_theme = 'badwolf'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 if !exists('g:airline_symbols')
@@ -799,7 +803,7 @@ let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 
-let g:go_auto_type_info = 1
+let g:go_auto_type_info = 0
 " Uncomment to highlight variable references
 " let g:go_auto_sameids = 1
 let g:go_highlight_array_whitespace_error = 0
