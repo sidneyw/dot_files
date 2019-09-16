@@ -109,11 +109,6 @@ test -f "$gruvbox_colors" && source $gruvbox_colors
 export VIMRC='$HOME/.dot_files/nvim/init.vim'
 export tmux='$HOME/.dot_files/tmux/tmux.conf'
 
-export VLAUNCH_IP='9.42.135.236'
-export VLAUNCH_USER="ibmadmin@$VLAUNCH_IP"
-
-export HDC_IP='9.42.40.36'
-
 export EDITOR='nvim'
 # }}}
 
@@ -185,6 +180,8 @@ alias mygcc='gcc -Wall -pedantic -std=c11'
 alias fup='make -C deploy/local fixture-up logs'
 alias fdn='make -C deploy/local fixture-down'
 alias pydl='pyenv activate pedl'
+alias p=pedl
+alias d=docker
 # }}}
 
 # Plugins {{{

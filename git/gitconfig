@@ -20,6 +20,7 @@
 	ca = commit --amend
 	cane = commit --amend --no-edit
 	ci = commit
+	cinv = commit --no-verify
 	cmp = "!f() { git checkout master && git pull; }; f"
 	co = checkout
 	dh = diff HEAD
