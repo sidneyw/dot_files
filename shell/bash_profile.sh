@@ -127,7 +127,7 @@ alias tls='tmux ls'
 alias tks='tmux kill-session -t'
 alias tkill='tmux kill-server'
 alias ta='tmux attach'
-# TERM=xterm-256color
+export TERM=xterm-256color
 
 # Bash
 alias bp="source $HOME/.bash_profile"

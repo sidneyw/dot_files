@@ -5,15 +5,13 @@
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
+		"typescript.tsx",
     "typescriptreact",
     "json",
     "javascriptreact"
   ],
 	"prettier.eslintIntegration": true,
-  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact"],
-  "eslint.options": {
-    "configFile": "/Users/sidneywijngaarde/Code/javascript/wijnents-versions/small-business/.eslintrc.json"
-  },
+	"eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact"],
   "languageserver": {
     "bash": {
       "command": "bash-language-server",

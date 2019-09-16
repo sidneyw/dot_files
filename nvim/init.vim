@@ -93,10 +93,13 @@ Plug 'mattn/emmet-vim'
 " }}}
 
 " Javascript Bundle {{{
-Plug 'othree/yajs.vim'
+" Plug 'othree/yajs.vim'
 Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'sheerun/vim-polyglot'
+Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 " }}}
 
 " Python Bundle {{{
@@ -129,7 +132,6 @@ if v:version >= 704
 endif
 
 Plug 'honza/vim-snippets'
-Plug 'sheerun/vim-polyglot'
 
 " Color
 Plug 'tomasr/molokai'
@@ -182,7 +184,7 @@ set cursorline
 set nowrap              " Turn off line wraps
 set showcmd             " Show commands in the bottom right corner
 set spelllang=en_us
-set t_ut=
+" set t_ut=
 set textwidth=80
 
 set foldlevelstart=10   " most folds should be open on start
@@ -261,6 +263,8 @@ endif
 if (has("termguicolors"))
 	set termguicolors
 endif
+
+" }}}
 
 " Mappings {{{
 " ====================
@@ -350,7 +354,15 @@ nnoremap <leader>et :call EditDot("tmux/tmux.conf")<cr>
 " Launch Terminal
 nnoremap <silent> <leader>sh :terminal<CR>
 
+if has('nvim')
+	" Use escape to enter normal mode in a terminal buffer
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <M-[> <Esc>
+  tnoremap <C-v><Esc> <Esc>
+endif
+
 vnoremap <leader>s :sort<cr>
+
 " }}}
 
 " Autocommands {{{
@@ -643,8 +655,6 @@ endfunction
 
 augroup mygroup
   autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
