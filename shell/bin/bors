@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# ssh into bors and map desired ports
+
+if [ "$1" == "-h" ]; then
+	echo "bors [port1] [port2] ..."
+	echo -e "\tports mapped to sidneyw@bors.determined.ai"
+	echo -e "\tdefault bors:8080 -> localhost:8080"
+	exit 0
+fi
+
+PORTS=""
+if [[ $# -eq 0 ]] ; then
+    PORTS="-L 8080:localhost:8080"
+else
+	for PORT in "$@"
+	do
+			PORTS="$PORTS -L $PORT:localhost:$PORT"
+	done
+fi
+
+eval "ssh $PORTS sidneyw@bors.determined.ai"

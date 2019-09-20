@@ -11,6 +11,11 @@
     "javascriptreact"
   ],
 	"prettier.eslintIntegration": true,
+	"python.formatting.provider": "black",
+	"python.linting.flake8Enabled": true,
+	"python.linting.pylintEnabled": false,
+	"python.linting.flake8Args": ["--config=/Users/sidneywijngaarde/go/src/github.com/determined-ai/pedl/.flake8"],
+	"python.jediEnabled": false,
 	"eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact"],
   "languageserver": {
     "bash": {
