@@ -103,7 +103,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
 " Python Bundle {{{
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " }}}
 
@@ -159,7 +159,7 @@ filetype plugin indent on
 " General {{{
 " ====================
 " CursorShape Block
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 let mapleader='-'
 let maplocalleader = "\\"
 
@@ -288,9 +288,6 @@ nnoremap : ;
 
 vnoremap ; :
 vnoremap : ;
-
-" Delete a function
-nnoremap <leader>df vf{%d
 
 " Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
@@ -709,15 +706,32 @@ set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+	\ 'bg':      ['bg', 'Normal'],
+	\ 'hl':      ['fg', 'Comment'],
+	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+	\ 'hl+':     ['fg', 'Statement'],
+	\ 'info':    ['fg', 'PreProc'],
+	\ 'border':  ['fg', 'Ignore'],
+	\ 'prompt':  ['fg', 'Conditional'],
+	\ 'pointer': ['fg', 'Exception'],
+	\ 'marker':  ['fg', 'Keyword'],
+	\ 'spinner': ['fg', 'Label'],
+	\ 'header':  ['fg', 'Comment'] }
+
 " The Silver Searcher
 if executable('ag')
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -g ""'
 set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-nnoremap <silent> <leader>a :Ag<CR>
+nnoremap <silent> <leader>a :Rg<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
+nnoremap <silent> <leader>y :call fzf#vim#gitfiles('?', fzf#vim#with_preview('right'))<CR>
 nnoremap <silent> <leader>m :History -m<CR>
 nnoremap <silent> <leader>c :Commands<CR>
 nnoremap <silent> <leader>q :BLines<CR>
@@ -811,10 +825,10 @@ function! s:build_go_files()
   endif
 endfunction
 
-let g:go_def_mode = 'gopls'
+" let g:go_def_mode = 'gopls'
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
-let g:go_fmt_fail_silently = 1
+" let g:go_fmt_fail_silently = 1
 
 let g:go_auto_type_info = 0
 " Uncomment to highlight variable references
@@ -837,9 +851,10 @@ let g:go_highlight_types = 1
 
 " let g:go_fmt_experimental = 1
 let g:go_def_mapping_enabled = 0
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_disabled = []
+" let g:go_metalinter_autosave = 1
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
@@ -902,12 +917,6 @@ augroup vimrc-python
       \ formatoptions+=croq softtabstop=4
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
-
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#documentation_command = "K"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#smart_auto_mappings = 0
 
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1

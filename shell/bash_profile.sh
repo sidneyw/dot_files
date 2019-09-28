@@ -177,7 +177,7 @@ alias 3='python3'
 # other
 alias c='clear'
 alias mygcc='gcc -Wall -pedantic -std=c11'
-alias fup='make -C deploy/local fixture-up logs'
+alias fup='python deploy/local/cluster_cmd.py fixture-up && python deploy/local/cluster_cmd.py logs'
 alias fdn='make -C deploy/local fixture-down'
 alias pydl='pyenv activate pedl'
 alias p=pedl
