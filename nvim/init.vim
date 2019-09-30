@@ -764,6 +764,8 @@ cnoreabbr Gcb Git co -b
 cnoreabbr Gstash Git stash
 cnoreabbr Gapply Git stash apply
 
+cnoreabbr cheat tabe ~/.dot_files/cheatsheets/
+
 " let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
