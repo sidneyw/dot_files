@@ -2,88 +2,86 @@
 03/19/16 22:30:12
 ======================
 
-Ctags
+Last Edited Text
+======================
+\ is to escape the backtick and not part of the command
+\`[ beginning of last edited
+\`] end of last edited
+
+Substitute
+======================
+Use substitute to count occurances
+	:%s/pattern//gn
+
+	The n flag at the end is no op and therefore you just see the matches echoed in the
+	Vim command line
+
+	:h regexp
+
+Marks
+======================
+	Marks [a-Z] are local
+	Marks [A-Z] are global (between files)
+
+	Marks '[ and '] delimit the last modified text
+		- This is useful if you want to do something with text you just pasted or
+		  something similar
+
+	'a goes to a
+	`a also goes to a
+
+Range
+======================
+	(number)  Absolute line number
+	.         Current line
+	$         Last line in the file
+	%         The current file
+	't        Location of mark t
+	/pattern/ The next line where pattern occurs
+	?pattern? The previous line where pattern occurs
+
+	:h range
+
+Moving Lines
 ======================
 
-<C-]>    goto tag
-<C-w> ]  open tag in preview
-[ I      see where else the function/variable is used
+	'am/Moving/-1
+		moves the line at mark a to the line before the next occurrence of Moving
 
-Fugitive
+	/Test/m/Moving/-1
+		moves the line starting with test to the line before the next occurrence of Moving
+
+Note
 ======================
+Press C-f in command line mode to get a list of the last few commands in a buffer.
+You can edit a command as text and then hit enter to run it
 
-:Git [args]
-:Gwrite    stages the current file
-:Gremove
-:Gmove
-:Gcommit
-:Gblame
-
-Syntastic
+Registers
 ======================
+Registers 1-9 are delete registers. They work like a stack
 
-:SyntasticCheck
-:Errors
-:lclose
-:lnext
-:lprevious
-:SyntasticToggleMode
+Registers are executable as macros. If you pull into a register you can execute that text
+as a macro since macro registers and copy/paste registers are the same group of registers
 
-Tmux
+Note
 ======================
+Count Operator Motion
 
-Copy Paste
-	<prefix [> Enter copy mode
-	Space      Start selection
-			   * Highlight Selection *
-	<CR>       Copy to Tmux Buffer
-			   * Navigate to Paste Location *
-	<prefix	]> Paste From Buffer
-
-Other Copy Paste
-	tmux show-buffer
-	tmux save-buffer file_name.txt
-	tmux list-buffers
-	tmux show-buffer -b [buff_index]
-	tmux save-buffer -b [buff_index]
-
-Command Line FU
-==================
-
-<C-x> <C-e>       | Opens a text editor to write a command in
-<ESC> .           | The arguments from the last line
-<space> command   | Command wont be saved in history
-<C-u> [...] <C-y> | Yank the current line, run another command, paste the original line
-vim -x filename   | Encrypt file
-<ESC> *           | Insert autocompletion results on the command line
-
-Vim Unimpaired
+External Tools
 ======================
+To read in a file or output from a command
+	:r file_name
+	:r !external command
 
-*[a*     |:previous|
-*]a*     |:next|
-*[A*     |:first|
-*]A*     |:last|
-*[b*     |:bprevious|
-*]b*     |:bnext|
-*[B*     |:bfirst|
-*]B*     |:blast|
-*[l*     |:lprevious|
-*]l*     |:lnext|
-*[L*     |:lfirst|
-*]L*     |:llast|
-*[<C-L>* |:lpfile|
-*]<C-L>* |:lnfile|
-*[q*     |:cprevious|
-*]q*     |:cnext|
-*[Q*     |:cfirst|
-*]Q*     |:clast|
-*[<C-Q>* |:cpfile| (Note that <C-Q> only works in a terminal if you disable
-*]<C-Q>* |:cnfile| flow control: stty -ixon)
-*[t*     |:tprevious|
-*]t*     |:tnext|
-*[T*     |:tfirst|
-*]T*     |:tlast|
+To run the current line through the stdin of an external command
+	:.![cmd]
+
+From normal mode to run the current line as a command
+	!!sh
+
+Note
+======================
+	:h ins-completion
 
 Vim Surround
 ======================
