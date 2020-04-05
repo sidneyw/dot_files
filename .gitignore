@@ -5,3 +5,7 @@ nvim/plugged*
 
 shell/local_bin*
 vim*
+
+.mypy_cache/
+go.mod
+go.sum
