@@ -151,6 +151,8 @@ alias kca='kubectl apply -f'
 alias kcd='kubectl delete -f'
 alias hi='helm-init'
 
+# Other
+alias cat="bat"
 
 # Secure Helm
 function shelm() {
@@ -159,9 +161,13 @@ function shelm() {
 }
 
 # Docker
-alias doc='docker'
+alias dps="docker ps"
 alias dcomp='docker-compose'
 alias dmongo='docker run -d -p 27017:27017 mongo'
+
+function dshell() {
+	docker exec -it $1 /bin/bash
+}
 
 # JS
 alias yn='yarn'
@@ -176,12 +182,14 @@ alias 3='python3'
 
 # other
 alias c='clear'
-alias mygcc='gcc -Wall -pedantic -std=c11'
-alias fup='python deploy/local/cluster_cmd.py fixture-up && python deploy/local/cluster_cmd.py logs'
-alias fdn='make -C deploy/local fixture-down'
+
+# PEDL
+alias d=det
+START_PEDL="det-deploy local"
+alias dec="det experiment create"
+alias fup="$START_PEDL fixture-up --agents 1 && $START_PEDL logs"
+alias fdn="$START_PEDL fixture-down"
 alias pydl='pyenv activate pedl'
-alias p=pedl
-alias d=docker
 # }}}
 
 # Plugins {{{
@@ -206,25 +214,14 @@ source "/usr/local/opt/nvm/nvm.sh"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-# preview_opts='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'
-# export FZF_DEFAULT_OPTS="--preview $preview_opts"
-
-f () {
-    fzf \
-        --border \
-        --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file \
-            || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> \
-            /dev/null | head -500' \
-    "$@"
-}
 
 # FZF search files to open in vim
 function vf() {
-  nvim "$@" $(f -m)
+  nvim "$@" $(fzf -m --preview "bat --style=numbers --color=always {} | head -500")
 }
 
-# export FZF_DEFAULT_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS='--preview "bat --style=numbers --color=always {} | head -500"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
 # Experimental
 fzf-down() {
@@ -308,6 +305,7 @@ PATH="$PATH:$HOME/bin"
 PATH="$PATH:$HOME/local_bin"
 PATH="$PATH:/usr/local/bin"
 PATH="$PATH:$HOME/.local/bin"
+PATH=/usr/local/opt/ruby/bin:$PATH
 
 # Go installs packages here
 export GOPATH="$HOME/go"
@@ -332,3 +330,5 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
 test -f "$local_conf" && source "$local_conf"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
