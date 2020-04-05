@@ -12,6 +12,7 @@ brew upgrade
 brew install \
 	pyenv \
 	pyenv-virtualenv \
+	bat \
 	nvm \
 	go \
 	autojump \
