@@ -61,8 +61,6 @@ let g:coc_global_extensions = [
 			\ 'coc-prettier',
 			\ 'coc-python',
 			\ 'coc-snippets',
-			\ 'coc-tslint',
-			\ 'coc-tslint-plugin',
 			\ 'coc-tsserver',
 			\ 'coc-ultisnips',
 			\ 'coc-vimlsp',
@@ -85,8 +83,6 @@ let g:go_bin_path= $HOME . "/go/bin"
 " }}}
 
 " HTML Bundle {{{
-Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
 Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
@@ -94,17 +90,21 @@ Plug 'mattn/emmet-vim'
 
 " Javascript Bundle {{{
 " Plug 'othree/yajs.vim'
-Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
+" Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'sheerun/vim-polyglot'
-Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+" }}}
+
+" Typescript Bundle {{{
+" Plug 'leafgarland/typescript-vim'
+" Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
 " Python Bundle {{{
 " Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'psf/black', { 'tag': '19.10b0' }
 " }}}
 
 " Other {{{
@@ -415,6 +415,7 @@ augroup python
   autocmd FileType python :setlocal list foldmethod=indent
   autocmd FileType python :setlocal commentstring=#\ %s
   autocmd FileType python :call PyTab()
+	autocmd BufWritePre *.py execute ':Black'
 augroup END
 
 augroup javascript
@@ -449,7 +450,7 @@ augroup END
 
 " Color Scheme {{{
 " ====================
-" hi clear
+hi clear
 " colorscheme monokai-phoenix
 " colorscheme badwolf
 " colorscheme onedark
@@ -487,12 +488,12 @@ iabbrev xdate <c-r>=strftime("%H:%M:%S")<cr><cr><c-r>a
 iabbrev xbash #!/bin/bash
 iabbrev xpython #!/usr/bin/python
 
+" Open Help in it's own tab
+cnoreabbr th tab h
+
 " Turn sleep on and off (OSX)
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
-
-cnoreabbr evim e $MYVIMRC
-cnoreabbr bad colorscheme badwolf
 
 " Quotes
 cnoreabbr double %s/'/"/g
@@ -505,8 +506,6 @@ cnoreabbr jte s/"\(\w*\)": "\(.*\)"/export \1="\2"/
 
 "JSON to graphql
 cnoreabbr jtg s/:.*[ {}]\@<!//
-
-cnoreabbr evim e $MYVIMRC
 " }}}
 
 " Functions {{{
@@ -638,6 +637,10 @@ else
 endif
 " }}}
 
+" Black {{{
+let g:black_linelength=100
+" }}}
+
 " Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
@@ -674,6 +677,7 @@ nmap <silent> gr <Plug>(coc-references)
 vmap <localleader>p  <Plug>(coc-format-selected)
 nmap <localleader>p  <Plug>(coc-format-selected)
 
+command! -nargs=0 Format :call CocAction('format')<Paste>
 
 " Remap for rename current word
 nmap <localleader>R <Plug>(coc-rename)
@@ -829,7 +833,6 @@ endfunction
 
 " let g:go_def_mode = 'gopls'
 let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
 " let g:go_fmt_fail_silently = 1
 
 let g:go_auto_type_info = 0
@@ -896,7 +899,7 @@ augroup go
   " au FileType go nmap <localleader>n :GoReferrers<cr>
   au FileType go nmap <localleader>t  <Plug>(go-test)
   au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-  au FileType go nmap <localleader>i  <Plug>(go-implements)
+  au FileType go nmap gi  <Plug>(go-implements)
   au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
   au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
