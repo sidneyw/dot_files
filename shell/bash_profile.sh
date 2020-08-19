@@ -153,6 +153,7 @@ alias hi='helm-init'
 
 # Other
 alias cat="bat"
+alias t="tree"
 
 # Secure Helm
 function shelm() {
@@ -183,13 +184,13 @@ alias 3='python3'
 # other
 alias c='clear'
 
-# PEDL
+# DET
 alias d=det
-START_PEDL="det-deploy local"
+START_DET="det-deploy local"
 alias dec="det experiment create"
-alias fup="$START_PEDL fixture-up --agents 1 && $START_PEDL logs"
-alias fdn="$START_PEDL fixture-down"
-alias pydl='pyenv activate pedl'
+alias fup="$START_DET fixture-up --agents 1 && $START_DET logs"
+alias fdn="$START_DET fixture-down"
+alias denv='pyenv activate determined'
 # }}}
 
 # Plugins {{{

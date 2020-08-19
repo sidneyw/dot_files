@@ -47,8 +47,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'Shougo/denite.nvim'
 " }}}
 
+" Coc {{{
 " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 let g:coc_global_extensions = [
 			\ 'coc-css',
@@ -66,6 +67,7 @@ let g:coc_global_extensions = [
 			\ 'coc-vimlsp',
 			\ 'coc-yaml',
 			\ ]
+" }}}
 
 " Junegunn {{{
 Plug 'junegunn/goyo.vim'
@@ -91,18 +93,17 @@ Plug 'mattn/emmet-vim'
 " Javascript Bundle {{{
 " Plug 'othree/yajs.vim'
 " Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'sheerun/vim-polyglot'
+" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 " }}}
 
 " Typescript Bundle {{{
 " Plug 'leafgarland/typescript-vim'
-" Plug 'HerringtonDarkholme/yats.vim'
+Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
 " Python Bundle {{{
-" Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'psf/black', { 'tag': '19.10b0' }
 " }}}
@@ -116,6 +117,8 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
 Plug 'machakann/vim-highlightedyank'
 Plug 'Yggdroot/indentLine'
+Plug 'kristijanhusak/vim-carbon-now-sh'
+let g:carbon_now_sh_options = {'t': 'monokai'}
 let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
@@ -158,8 +161,6 @@ filetype plugin indent on
 
 " General {{{
 " ====================
-" CursorShape Block
-" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 let mapleader='-'
 let maplocalleader = "\\"
 
@@ -186,7 +187,6 @@ set cursorline
 set nowrap              " Turn off line wraps
 set showcmd             " Show commands in the bottom right corner
 set spelllang=en_us
-" set t_ut=
 set textwidth=80
 
 set foldlevelstart=10   " most folds should be open on start
@@ -422,6 +422,7 @@ augroup javascript
   autocmd!
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
+  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
 augroup END
 
 augroup bash
@@ -599,6 +600,7 @@ endfunction
 let g:airline_theme = 'badwolf'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 if !exists('g:airline_symbols')
@@ -703,6 +705,17 @@ let g:coc_snippet_prev = '<c-j>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 " }}}
 
 " Fzf {{{

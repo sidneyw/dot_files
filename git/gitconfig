@@ -4,7 +4,7 @@
 	smudge = git media smudge %f
 [user]
 	name = sidneyw
-	email = sidneywijngaarde@gmail.com
+	email = sidney@determined.ai
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
@@ -19,6 +19,7 @@
 	br = branch
 	ca = commit --amend
 	cane = commit --amend --no-edit
+	canef = commit --amend --no-edit --no-verify
 	ci = commit
 	cinv = commit --no-verify
 	cmp = "!f() { git checkout master && git pull; }; f"
