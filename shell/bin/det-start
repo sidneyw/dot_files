@@ -1,0 +1,102 @@
+#!/bin/bash
+
+__ScriptVersion="2.0"
+DET_PATH=$GOPATH/src/github.com/determined-ai/determined
+DET_CLUSTER_CMD="make -C $DET_PATH/tools run"
+
+SUCCESS_ICON=✅
+ERROR_ICON=❌
+
+#===  FUNCTION  ================================================================
+#         NAME:  usage
+#  DESCRIPTION:  Display usage information.
+#===============================================================================
+function usage () {
+	echo "Usage:  $0 [options]
+
+		Builds and runs DET. Options -a and -m are mutually exclusive.
+    Options:
+    help       Display this message
+    -v|version    Display script version
+		-a|all        Build all components
+		-c|common     Build only common
+		-h|harness    Build only harness
+		-m|master     Build only master"
+
+}    # ----------  end of function usage  ----------
+
+
+function notify () {
+	osascript -e "display notification \"$1\" with title \"DET BUILD\""
+}
+
+function build() {
+	echo "make -C "$DET_PATH/$1" build -j"
+	make -C "$DET_PATH/$1" build -j
+	if [[ $? -ne 0 ]]; then
+		notify "$ERROR_ICON Build $1 Failed"
+		exit 1
+	else
+		notify "$SUCCESS_ICON Build $1 Succeeded"
+	fi
+}
+
+function deploy_local_cluster() {
+	$DET_CLUSTER_CMD
+	if [[ $? -ne 0 ]]; then
+		notify "$ERROR_ICON Running Cluster Failed"
+		exit 1
+	fi
+
+	notify "$SUCCESS_ICON Cluster Running"
+	# $DET_CLUSTER_CMD logs
+}
+
+#-----------------------------------------------------------------------
+#  Handle command line arguments
+#-----------------------------------------------------------------------
+
+all=0
+common=0
+harness=0
+master=0
+
+while getopts ":amchv" opt
+do
+  case $opt in
+	help       )  usage; exit 0   ;;
+	v|version  )  echo "$0 -- Version $__ScriptVersion"; exit 0   ;;
+
+	a|all      )  all=1   ;;
+	h|harness  )  harness=1  ;;
+	c|common   )  common=1   ;;
+	m|master   )  master=1   ;;
+
+	* )  echo -e "\n  Option does not exist: $OPTARG\n"
+		  usage; exit 1   ;;
+
+  esac    # --- end of case ---
+done
+shift $(($OPTIND-1))
+
+sum=$(( $all + $common + $harness + $master ))
+if [[ $sum -eq 0 ]]; then
+	deploy_local_cluster
+	exit 0
+fi
+
+if (( $all )); then
+	build
+else
+	if (( $common )); then
+		build "common"
+	fi
+	if (( $harness )); then
+		build "harness"
+	fi
+	if (( $master )); then
+		build "master"
+	fi
+fi
+
+deploy_local_cluster
