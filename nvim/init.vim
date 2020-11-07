@@ -54,9 +54,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = [
 			\ 'coc-css',
 			\ 'coc-emmet',
-			\ 'coc-emoji',
-			\ 'coc-eslint',
-			\ 'coc-git',
+			\ 'coc-go',
 			\ 'coc-html',
 			\ 'coc-json',
 			\ 'coc-prettier',
@@ -80,7 +78,7 @@ endif
 " }}}
 
 " Go Lang Bundle {{{
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+" Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 let g:go_bin_path= $HOME . "/go/bin"
 " }}}
 
@@ -94,6 +92,11 @@ Plug 'mattn/emmet-vim'
 " Plug 'othree/yajs.vim'
 " Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+
+" Syntax highlight
+" Default highlight is better than polyglot
+let g:polyglot_disabled = ['python']
+" let g:polyglot_disabled = ['python', 'go']
 Plug 'sheerun/vim-polyglot'
 " Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 " }}}
@@ -407,7 +410,12 @@ augroup markdown
   autocmd!
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
-  autocmd FileType markdown, :colorscheme badwolf
+  " autocmd FileType markdown, :colorscheme badwolf
+augroup END
+
+augroup starlark
+  autocmd!
+  autocmd BufNewFile,BufReadPost *.star set filetype=python
 augroup END
 
 augroup python
@@ -721,7 +729,6 @@ omap ac <Plug>(coc-classobj-a)
 " Fzf {{{
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 
 
 let g:fzf_colors =
@@ -739,10 +746,9 @@ let g:fzf_colors =
 	\ 'spinner': ['fg', 'Label'],
 	\ 'header':  ['fg', 'Comment'] }
 
-" The Silver Searcher
-if executable('ag')
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -g ""'
-set grepprg=ag\ --nogroup\ --nocolor
+" Rip Grep
+if executable('rg')
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 endif
 
 nnoremap <silent> <leader>a :Rg<CR>
@@ -782,8 +788,6 @@ cnoreabbr Gstash Git stash
 cnoreabbr Gapply Git stash apply
 
 cnoreabbr cheat tabe ~/.dot_files/cheatsheets/
-
-" let g:github_enterprise_urls = ['https://github.ibm.com']
 " " }}}
 
 " Goyo {{{
@@ -819,6 +823,7 @@ let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
+let g:NERDTreeHighlightCursorline = 0
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " }}}
 
@@ -845,12 +850,12 @@ function! s:build_go_files()
 endfunction
 
 " let g:go_def_mode = 'gopls'
-let g:go_list_type = "quickfix"
+" let g:go_list_type = "quickfix"
 " let g:go_fmt_fail_silently = 1
 
 let g:go_auto_type_info = 0
 " Uncomment to highlight variable references
-" let g:go_auto_sameids = 1
+let g:go_auto_sameids = 0
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
@@ -885,14 +890,14 @@ augroup END
 
 augroup go
   au!
-  au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+  " au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  " au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  " au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  " au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
-	au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
-	au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
-	au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
+	" au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
+	" au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
+	" au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
 
 	" gd = :GoDef
 	" <C-t> :GoDefPop
@@ -901,23 +906,23 @@ augroup go
 	" :GoChannelPeers shows all sends and recvs from a channel
 	" :GoCallers :Gocallees show where functions are used
 	" :GoWhichErrs shows what type an error might be
-	au Filetype go nnoremap <localleader>p :GoImport<space>
+	" au Filetype go nnoremap <localleader>p :GoImport<space>
 
-  au FileType go nmap <localleader>g  <Plug>(go-def)
-  au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
-  au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <localleader>db <Plug>(go-doc-browser)
+  " au FileType go nmap <localleader>g  <Plug>(go-def)
+  " au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
+  " au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
+  " au FileType go nmap <localleader>db <Plug>(go-doc-browser)
 
-  au FileType go nmap <localleader>r  <Plug>(go-run)
-  " au FileType go nmap <localleader>n :GoReferrers<cr>
-  au FileType go nmap <localleader>t  <Plug>(go-test)
-  au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-  au FileType go nmap gi  <Plug>(go-implements)
-  au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
+  " au FileType go nmap <localleader>r  <Plug>(go-run)
+  " " au FileType go nmap <localleader>n :GoReferrers<cr>
+  " au FileType go nmap <localleader>t  <Plug>(go-test)
+  " au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
+  " au FileType go nmap gi  <Plug>(go-implements)
+  " au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
-  au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
+  " au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
 
-  au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
+  " au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
 
 augroup END
 " }}}
@@ -938,9 +943,5 @@ augroup END
 
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
-
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python', 'go']
 let g:python_highlight_all = 1
 " }}}

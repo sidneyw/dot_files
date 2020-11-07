@@ -4,7 +4,7 @@
 	smudge = git media smudge %f
 [user]
 	name = sidneyw
-	email = sidney@determined.ai
+	email = sidney@chronosphere.io
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
@@ -21,15 +21,17 @@
 	cane = commit --amend --no-edit
 	canef = commit --amend --no-edit --no-verify
 	ci = commit
-	cinv = commit --no-verify
+	cif = commit --no-verify
 	cmp = "!f() { git checkout master && git pull; }; f"
 	co = checkout
 	dh = diff HEAD
 	fa = fetch --all
 	pf = push -f
 	pr = "!f() { git fetch origin refs/pull/$1/head:refs/remotes/origin/pr/$1 && git checkout FETCH_HEAD && git remote prune origin; }; f"
-	rim = rebase -i upstream/master
+	rim = rebase -i origin/master
 	st = status
 [core]
 	editor = /usr/local/bin/nvim
 	excludesfile = ~/.gitignore
+[url "git@github.com:"]
+	insteadOf = https://github.com/

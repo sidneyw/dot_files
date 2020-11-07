@@ -4,7 +4,8 @@ set -x
 # Quick install script for mac
 
 # Install homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
 
 # Brew install all packages
 brew upgrade
@@ -22,12 +23,9 @@ brew install \
 	htop \
 	neovim \
 	ripgrep \
-	the_silver_searcher \
 	tmux
 
 $(brew --prefix)/opt/fzf/install
-
-# gem install coderay
 
 # Creates symlinks for dotfiles
 DOT_FILES="$HOME/.dot_files"
@@ -59,18 +57,19 @@ fi
 # Install Node 10
 nvm install 10
 npm i -g prettier dockerfile-language-server-nodejs bash-language-server
+brew install yarn
 
-# Install Python 3.6.8
+# Install Python
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_VERSION=3.6.8
+export PYENV_VERSION=3.8.5
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 fi
 
-pyenv install 3.6.8
-pyenv virtualenv 3.6.8 workspace
+pyenv install 3.8.5
+pyenv virtualenv 3.8.5 workspace
 pyenv activate workspace
 
 # Set up go mono repo

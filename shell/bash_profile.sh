@@ -24,10 +24,39 @@ isGitRepo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
-pyEnv() {
+currentPyEnv() {
 	if command -v pyenv 1>/dev/null 2>&1; then
-		echo "$(pyenv virtualenvs | grep "\*" | cut -d " " -f2)"
+		echo "$(pyenv version-name)"
 	fi
+}
+
+k8sPrompt(){
+  success=$?
+
+  PS1="\n${BLUE}\u"
+	PS1="${PS1} ${YELLOW} ${GREEN}\w"
+
+  isGitRepo
+  if [[ $? == 0 ]]
+  then
+    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+    PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
+  fi
+
+	PS1="${PS1}${YELLOW} ﴱ${GREEN} $(kubens -c)"
+
+  PS1="${PS1}\n${YELLOW} \@"
+  if [ $success -ne 0 ]; then
+    PS1="${PS1} ${RED}${YELLOW}"
+  fi
+
+# »
+  PS1="${PS1} ${YELLOW} \!"
+	if [[ ! -z "$(currentPyEnv)" ]]; then
+		PS1="${PS1} ${YELLOW} ${GREEN}$(currentPyEnv)"
+	fi
+
+	PS1="${PS1} ${BLUE} ${GREEN}"
 }
 
 fullPrompt(){
@@ -50,8 +79,8 @@ fullPrompt(){
 
 # »
   PS1="${PS1} ${YELLOW} \!"
-	if [[ ! -z "$(pyEnv)" ]]; then
-		PS1="${PS1} ${YELLOW} ${GREEN}$(pyEnv)"
+	if [[ ! -z "$(currentPyEnv)" ]]; then
+		PS1="${PS1} ${YELLOW} ${GREEN}$(currentPyEnv)"
 	fi
 
 	PS1="${PS1} ${BLUE} ${GREEN}"
@@ -95,7 +124,7 @@ onelinerPrompt(){
   PS1="${PS1}${YELLOW}  \!${BLUE} » ${GREEN}"
 }
 
-PROMPT_COMMAND=fullPrompt
+PROMPT_COMMAND=k8sPrompt
 
 export CLICOLOR=1
 export LS_COLORS='di=0;35'
@@ -138,13 +167,6 @@ alias ll='ls -la'
 alias gcd='cd $(git rev-parse --show-toplevel)'
 alias genv='source genv'
 
-# SSH
-alias pi3='ssh pi@raspberrypi.local'
-alias pi='ssh pi@100.64.1.173'
-alias godaddy='ssh thesquid17@107.180.41.49'
-alias dali='ssh salvador@dolly.dali.dartmouth.edu'
-alias sudi='ssh sidneyw@torsion.cs.dartmouth.edu'
-
 # Kubernetes
 alias kc='kubectl'
 alias kca='kubectl apply -f'
@@ -154,6 +176,7 @@ alias hi='helm-init'
 # Other
 alias cat="bat"
 alias t="tree"
+alias pi3='ssh pi@raspberrypi.local'
 
 # Secure Helm
 function shelm() {
@@ -183,14 +206,6 @@ alias 3='python3'
 
 # other
 alias c='clear'
-
-# DET
-alias d=det
-START_DET="det-deploy local"
-alias dec="det experiment create"
-alias fup="$START_DET fixture-up --agents 1 && $START_DET logs"
-alias fdn="$START_DET fixture-down"
-alias denv='pyenv activate determined'
 # }}}
 
 # Plugins {{{
@@ -203,9 +218,6 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
-# Travis Gem
-[ -f /Users/sidneywijngaarde/.travis/travis.sh ] && source /Users/sidneywijngaarde/.travis/travis.sh
-
 # NVM
 export NVM_DIR="$HOME/.nvm"
 source "/usr/local/opt/nvm/nvm.sh"
@@ -214,7 +226,7 @@ source "/usr/local/opt/nvm/nvm.sh"
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_COMMAND='rg --files'
 
 # FZF search files to open in vim
 function vf() {
@@ -317,19 +329,26 @@ export GO111MODULE=on
 
 # Pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_VERSION=3.6.8
+export PYENV_VERSION=workspace
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 fi
 
-# heroku autocomplete setup
-HEROKU_AC_BASH_SETUP_PATH=/Users/sidneywijngaarde/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
-
+# Rust Cargo
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Local Config
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
 test -f "$local_conf" && source "$local_conf"
 
+# Yarn bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# }}}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.bash.inc' ]; then . '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/completion.bash.inc'; fi
