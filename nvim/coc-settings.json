@@ -36,7 +36,8 @@
     "typescript.tsx",
     "typescriptreact",
     "json",
-    "javascriptreact"
+    "javascriptreact",
+    "go"
   ],
   "prettier.eslintIntegration": true,
   "python.formatting.provider": "black",
@@ -50,18 +51,9 @@
     "typescriptreact",
     "javascriptreact"
   ],
+  "suggest.noselect": false,
+  "coc.preferences.hoverTarget": "float",
   "languageserver": {
-    "bash": {
-      "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
-    },
     "golang": {
       "command": "gopls",
       "args": [],
@@ -69,7 +61,19 @@
       "filetypes": ["go"],
       "initializationOptions": {
         "completeUnimported": true,
-        "usePlaceholders": true
+        "usePlaceholders": true,
+        "staticcheck": true
+      },
+      "bash": {
+        "command": "bash-language-server",
+        "args": ["start"],
+        "filetypes": ["sh"],
+        "ignoredRootPaths": ["~"]
+      },
+      "dockerfile": {
+        "command": "docker-langserver",
+        "filetypes": ["dockerfile"],
+        "args": ["--stdio"]
       }
     }
   }

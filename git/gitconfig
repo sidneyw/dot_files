@@ -3,7 +3,7 @@
 	clean = git media clean %f
 	smudge = git media smudge %f
 [user]
-	name = sidneyw
+	name = Sidney Wijngaarde
 	email = sidney@chronosphere.io
 [filter "hawser"]
 	clean = git hawser clean %f
@@ -34,4 +34,6 @@
 	editor = /usr/local/bin/nvim
 	excludesfile = ~/.gitignore
 [url "git@github.com:"]
+	insteadOf = https://github.com/
+	insteadOf = https://github.com/
 	insteadOf = https://github.com/

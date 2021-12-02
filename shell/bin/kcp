@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ -n $1 ]]; then
+	kubectl get pods | rg $1
+else
+	kubectl get pods
+fi

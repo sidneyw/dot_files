@@ -17,3 +17,36 @@ endsnippet
 snippet ti "Type ignore comment"
   # type: ignore
 endsnippet
+
+snippet simg "Starlark image tag"
+"image": {
+    "tag": "$0",
+},
+endsnippet
+
+snippet trl "Starlark template ref" 
+"templateRef": "${1:local}",$0
+endsnippet
+
+snippet cdaemon "Starlark collector daemonset"
+annotationsPrefix = "collector-rc-$1.io"
+collectorAnnotationsPrefix = annotationsPrefix + "/"
+
+services = {
+    "chronocollector-daemonset": {
+        "enabled": True,
+        "runOnDedicatedNodes": True,
+        "gatewayAddress": "rc-$1.chronosphere.io:443",
+        "kubernetesClusterName": parent_global_cfg["global"]["kubeCluster"],
+        "kubernetesProcessorAnnotationsPrefix": collectorAnnotationsPrefix,
+        # Ensure that collector daemonset pods will kick other pods off the
+        # nodes.
+        "enablePriorityClass": True,
+        "defaultLabels": {
+            "collector_source": "sidney-dev",
+        },
+        "image": {
+            "tag": "$2",
+        },
+    },
+endsnippet

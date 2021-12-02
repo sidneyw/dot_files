@@ -27,12 +27,10 @@ endif
 call plug#begin(expand('~/.config/nvim/plugged'))
 " }}}
 
-" NERDTree {{{
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
-" "}}}
+" NVIM Tree {{{
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua', { 'tag': 'c75e4a63b73f223a80835ab3b75f602dc3e60e66' }
+" }}}
 
 " Tpope {{{
 Plug 'tpope/vim-commentary'
@@ -53,8 +51,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 let g:coc_global_extensions = [
 			\ 'coc-css',
-			\ 'coc-emmet',
 			\ 'coc-go',
+			\ 'coc-emmet',
 			\ 'coc-html',
 			\ 'coc-json',
 			\ 'coc-prettier',
@@ -92,14 +90,10 @@ Plug 'mattn/emmet-vim'
 " Plug 'othree/yajs.vim'
 " Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
-" let g:polyglot_disabled = ['python', 'go']
-Plug 'sheerun/vim-polyglot'
-" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 " }}}
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'towolf/vim-helm'
 
 " Typescript Bundle {{{
 " Plug 'leafgarland/typescript-vim'
@@ -114,7 +108,11 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 " Other {{{
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+
 Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
@@ -261,6 +259,9 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
+" Tpope fugitive vim expects netrw which is disabled by nvim-tree
+let g:loaded_netrwPlugin = 1
+
 if (has("nvim"))
 	"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -394,16 +395,26 @@ augroup text
   autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 augroup END
 
+augroup gitcommit
+  autocmd!
+  autocmd FileType gitcommit :setlocal wrap spell textwidth=72
+augroup END
+
 augroup yaml
   autocmd!
-  autocmd FileType yaml :call ShortTab()
+  autocmd BufNewFile,BufRead *.yml,*.yaml setlocal filetype=helm
+	autocmd FileType yaml,helm :call ShortTab()
+augroup END
+
+augroup helm
+	autocmd!
+	autocmd FileType helm :setlocal commentstring=#\ %s
 augroup END
 
 augroup cpp
   autocmd!
   autocmd FileType cpp :call LongTab()
 augroup END
-
 
 let g:markdown_syntax_conceal = 0
 augroup markdown
@@ -430,7 +441,8 @@ augroup javascript
   autocmd!
   autocmd FileType javascript :call ShortTab()
   autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+  " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+  " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.yml,*.html Prettier
 augroup END
 
 augroup bash
@@ -464,6 +476,7 @@ hi clear
 " colorscheme badwolf
 " colorscheme onedark
 colorscheme gruvbox
+" colorscheme srcerydrk
 " colorscheme papercolor
 " colorscheme brogrammer
 " colorscheme turtles
@@ -515,6 +528,10 @@ cnoreabbr jte s/"\(\w*\)": "\(.*\)"/export \1="\2"/
 
 "JSON to graphql
 cnoreabbr jtg s/:.*[ {}]\@<!//
+
+cnoreabbr mg make gen
+
+cnoreabbr cheat tabe ~/.dot_files/cheatsheets/
 " }}}
 
 " Functions {{{
@@ -550,7 +567,8 @@ function! TabCd(dir)
 	endif
 
 	execute "tabe " . a:dir
-	execute "lcd " . a:dir
+	" execute "lcd " . a:dir
+	execute "Glcd"
 endfunction
 
 
@@ -657,13 +675,24 @@ let g:bufferline_echo = 0
 " }}}
 
 " Coc.nvim {{{
+" function! s:show_documentation()
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 function! s:show_documentation()
-  if &filetype == 'vim'
+  if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 augroup mygroup
   autocmd!
@@ -674,22 +703,30 @@ augroup end
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Use `lp` and `ln` for navigate diagnostics
+" Use `gp` and `gn` for navigate diagnostics
 nmap <silent> gp <Plug>(coc-diagnostic-prev)
 nmap <silent> gn <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nmap <localleader>d :call CocDefSplit()<CR>
+
+function! CocDefSplit()
+  execute "vsplit"
+  execute "normal gd"
+endfunction
+
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>ca <Plug>(coc-codeaction)
 
 vmap <localleader>p  <Plug>(coc-format-selected)
 nmap <localleader>p  <Plug>(coc-format-selected)
 
 command! -nargs=0 Format :call CocAction('format')<Paste>
 
-" Remap for rename current word
+" " Remap for rename current word
 nmap <localleader>R <Plug>(coc-rename)
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -724,6 +761,14 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
+
+noremap <localleader>gt :call GoTestToggle()<CR>
+
+function! GoTestToggle()
+  execute "vsplit"
+  execute "CocCommand go.test.toggle"
+endfunction
+
 " }}}
 
 " Fzf {{{
@@ -768,27 +813,36 @@ autocmd! BufReadPost fugitive://* set bufhidden=delete
 
 " Mappings
 noremap <leader>ga  :Gwrite<CR>
-noremap <leader>gb  :Gblame<CR>
-noremap <leader>gc  :Gcommit<CR>
+noremap <leader>gb  :Git blame<CR>
+noremap <leader>gc  :Git commit<CR>
 noremap <leader>gd  :Gvdiff<CR>
 noremap <leader>gh  :!gh-launch<CR>
 noremap <leader>glc :Glcd<CR>
-noremap <leader>gll :Gpull<CR>
+noremap <leader>gll :Git pull<CR>
 noremap <leader>gr  :Gremove<CR>
-noremap <leader>gs  :Gstatus<CR>
-noremap <leader>gu  :Gpush -u<CR>
+noremap <leader>gs  :Git<CR>
+noremap <leader>gu  :Git push -u<CR>
+"
 " Open current line on github
-nnoremap <leader>go :.Gbrowse<CR>
+nnoremap <leader>gn :.GBrowse<CR>
+vnoremap <leader>gn :'<,'>GBrowse<CR>
+
+" Copy the github link to the clipboard
+nnoremap <leader>go :.GBrowse!<CR>
+vnoremap <leader>go :'<,'>GBrowse!<CR>
 
 cnoreabbr Gco Git co
-cnoreabbr Gbranch Git branch
-cnoreabbr Gca Gcommit --amend --no-edit
+cnoreabbr Gpush Git push
+cnoreabbr Gcommit Git commit
 cnoreabbr Gcb Git co -b
 cnoreabbr Gstash Git stash
-cnoreabbr Gapply Git stash apply
-
-cnoreabbr cheat tabe ~/.dot_files/cheatsheets/
 " " }}}
+
+" Git Signs {{{
+lua <<EOF
+require('gitsigns').setup()
+EOF
+" }}}
 
 " Goyo {{{
 function! s:goyo_enter()
@@ -811,20 +865,107 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " }}}
 
-" NERDTree {{{
-" ======================
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-nnoremap <silent> <leader>P :NERDTreeFind<CR>
+" NVIM Tree {{{
+" let g:nvim_tree_side = 'right' "left by default
+let g:nvim_tree_width = 40 "30 by default, can be width_in_columns or 'width_in_percent%'
+let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+let g:nvim_tree_gitignore = 1 "0 by default
+let g:nvim_tree_auto_open = 0 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+let g:nvim_tree_auto_close = 0 "0 by default, closes the tree when it's the last window
+let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
+let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
+let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
+let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
+let g:nvim_tree_auto_resize = 0 "1 by default, will resize the tree to its saved width when opening a file
+let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
+let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
+let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
+let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+let g:nvim_tree_hijack_cursor = 1 "1 by default, when moving cursor in the tree, will position the cursor at the start of the file on the current line
+let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
+let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
+let g:nvim_tree_window_picker_exclude = {
+    \   'filetype': [
+    \     'packer',
+    \     'qf'
+    \   ],
+    \   'buftype': [
+    \     'terminal'
+    \   ]
+    \ }
+" Dictionary of buffer option names mapped to a list of option values that
+" indicates to the window picker that the buffer's window should not be
+" selectable.
+let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 1,
+    \ 'files': 1,
+    \ 'folder_arrows': 1,
+    \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath.
+"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
+"but this will not work when you set indent_markers (because of UI conflict)
 
-" setlet g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
-let g:NERDTreeHighlightCursorline = 0
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+" default will show icon by default if no icon is provided
+" default shows no icon by default
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   },
+    \   'lsp': {
+    \     'hint': "",
+    \     'info': "",
+    \     'warning': "",
+    \     'error': "",
+    \   }
+    \ }
+
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+
+" a list of groups can be found at `:help nvim_tree_highlight`
+highlight NvimTreeFolderIcon guibg=blue
+" }}}
+
+" Treesitter {{{
+" ======================
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+		disable = { "yaml", "helm" },  -- list of language that will be disabled
+  },
+}
+EOF
 " }}}
 
 " UltiSnips {{{
@@ -851,30 +992,30 @@ endfunction
 
 " let g:go_def_mode = 'gopls'
 " let g:go_list_type = "quickfix"
-" let g:go_fmt_fail_silently = 1
+" " let g:go_fmt_fail_silently = 1
 
-let g:go_auto_type_info = 0
-" Uncomment to highlight variable references
-let g:go_auto_sameids = 0
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:echodoc#highlight_trailing = 1
-" let g:go_highlight_function_arguments = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_structs = 1
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_types = 1
+" let g:go_auto_type_info = 1
+" " Uncomment to highlight variable references
+" let g:go_auto_sameids = 0
+" let g:go_highlight_array_whitespace_error = 0
+" let g:go_highlight_build_constraints = 1
+" let g:go_highlight_extra_types = 1
+" let g:go_highlight_fields = 1
+" let g:echodoc#highlight_trailing = 1
+" " let g:go_highlight_function_arguments = 1
+" let g:go_highlight_function_calls = 1
+" let g:go_highlight_functions = 1
+" let g:go_highlight_generate_tags = 1
+" let g:go_highlight_methods = 1
+" let g:go_highlight_operators = 1
+" let g:go_highlight_space_tab_error = 0
+" let g:go_highlight_structs = 1
+" let g:go_highlight_trailing_whitespace_error = 0
+" let g:go_highlight_types = 1
 
 " let g:go_fmt_experimental = 1
-let g:go_def_mapping_enabled = 0
-let g:go_metalinter_disabled = []
+" let g:go_def_mapping_enabled = 1
+" let g:go_metalinter_disabled = []
 " let g:go_metalinter_autosave = 1
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 " let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
@@ -890,39 +1031,43 @@ augroup END
 
 augroup go
   au!
-  " au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  " au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  " au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  " au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+	autocmd BufWritePost *.go !go fmt %
+	"" autocmd BufWritePost *.go CocFix
+  autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
+	""
+  "au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  "au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  "au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  "au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
-	" au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
-	" au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
-	" au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
+	"au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
+	"au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
+	"au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
 
-	" gd = :GoDef
-	" <C-t> :GoDefPop
-	" K :GoDoc press enter to quit
-	" :GoDescribe shows all information about a type
-	" :GoChannelPeers shows all sends and recvs from a channel
-	" :GoCallers :Gocallees show where functions are used
-	" :GoWhichErrs shows what type an error might be
-	" au Filetype go nnoremap <localleader>p :GoImport<space>
+	"" gd = :GoDef
+	"" <C-t> :GoDefPop
+	"" K :GoDoc press enter to quit
+	"" :GoDescribe shows all information about a type
+	"" :GoChannelPeers shows all sends and recvs from a channel
+	"" :GoCallers :Gocallees show where functions are used
+	"" :GoWhichErrs shows what type an error might be
+	"" au Filetype go nnoremap <localleader>p :GoImport<space>
 
-  " au FileType go nmap <localleader>g  <Plug>(go-def)
-  " au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
-  " au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
-  " au FileType go nmap <localleader>db <Plug>(go-doc-browser)
+  "au FileType go nmap <localleader>g  <Plug>(go-def)
+  "au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
+  "au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
+  "au FileType go nmap <localleader>db <Plug>(go-doc-browser)
 
-  " au FileType go nmap <localleader>r  <Plug>(go-run)
-  " " au FileType go nmap <localleader>n :GoReferrers<cr>
-  " au FileType go nmap <localleader>t  <Plug>(go-test)
-  " au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-  " au FileType go nmap gi  <Plug>(go-implements)
-  " au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
+  "au FileType go nmap <localleader>r  <Plug>(go-run)
+  "" au FileType go nmap <localleader>n :GoReferrers<cr>
+  "au FileType go nmap <localleader>t  <Plug>(go-test)
+  "au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
+  "au FileType go nmap gi  <Plug>(go-implements)
+  "au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
 
-  " au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
+  "au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
 
-  " au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
+  "au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
 
 augroup END
 " }}}

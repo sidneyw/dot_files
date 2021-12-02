@@ -139,6 +139,9 @@ export VIMRC='$HOME/.dot_files/nvim/init.vim'
 export tmux='$HOME/.dot_files/tmux/tmux.conf'
 
 export EDITOR='nvim'
+
+# Gcloud SDK uses this variable to pick a python version
+# export CLOUDSDK_PYTHON=python2.7
 # }}}
 
 # Aliases {{{
@@ -169,9 +172,12 @@ alias genv='source genv'
 
 # Kubernetes
 alias kc='kubectl'
+# alias kcp='kubectl get pods'
 alias kca='kubectl apply -f'
 alias kcd='kubectl delete -f'
+alias kcl="kubectl logs -f"
 alias hi='helm-init'
+alias watch='watch '
 
 # Other
 alias cat="bat"
@@ -189,8 +195,21 @@ alias dps="docker ps"
 alias dcomp='docker-compose'
 alias dmongo='docker run -d -p 27017:27017 mongo'
 
-function dshell() {
+# function kcp() {
+# 	if [[ -n $1 ]]; then
+# 		kubectl get pods | rg $1
+# 		return
+# 	fi
+
+# 	kubectl get pods
+# }
+
+function dexec() {
 	docker exec -it $1 /bin/bash
+}
+
+function kexec() {
+	kubectl exec --stdin --tty $1 -- /bin/sh
 }
 
 # JS
@@ -314,6 +333,20 @@ fyn() {
 
 # Path {{{
 # ====================================
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PYENV_VERSION=workspace
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/shims:$PATH"
+export PYENV_SHELL="bash"
+
+# Pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+	# To enable shims and autocompletion
+  eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+fi
+
 PATH="$PATH:$HOME/bin"
 PATH="$PATH:$HOME/local_bin"
 PATH="$PATH:/usr/local/bin"
@@ -327,21 +360,8 @@ export PATH=$PATH:$GOBIN
 export PATH=$PATH:$GOROOT/bin
 export GO111MODULE=on
 
-# Pyenv
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_VERSION=workspace
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-fi
-
 # Rust Cargo
 export PATH="$HOME/.cargo/bin:$PATH"
-
-# Local Config
-local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
-test -f "$local_conf" && source "$local_conf"
 
 # Yarn bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -352,3 +372,7 @@ if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.b
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/completion.bash.inc'; fi
+
+# Local Config
+local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
+test -f "$local_conf" && source "$local_conf"

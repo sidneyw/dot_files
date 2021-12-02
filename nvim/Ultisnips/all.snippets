@@ -1,0 +1,7 @@
+global !p
+from vimsnippets import get_comment_format
+endglobal
+
+snippet todo "TODO comment" bw
+`!p snip.rv=get_comment_format()[0]` TODO(sidneyw): $0
+endsnippet

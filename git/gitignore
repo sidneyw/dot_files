@@ -37,6 +37,9 @@ Temporary Items
 [._]s[a-v][a-z]
 [._]sw[a-p]
 
+# folder
+.vim*
+
 # Session
 Session.vim
 
