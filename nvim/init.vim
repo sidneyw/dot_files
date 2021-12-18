@@ -50,8 +50,8 @@ Plug 'Shougo/denite.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 let g:coc_global_extensions = [
-			\ 'coc-css',
 			\ 'coc-go',
+			\ 'coc-css',
 			\ 'coc-emmet',
 			\ 'coc-html',
 			\ 'coc-json',
@@ -64,6 +64,10 @@ let g:coc_global_extensions = [
 			\ 'coc-yaml',
 			\ ]
 " }}}
+"
+Plug 'liuchengxu/vista.vim'
+let g:vista_sidebar_width = 50
+let g:vista_fzf_preview = ['right:50%']
 
 " Junegunn {{{
 Plug 'junegunn/goyo.vim'
@@ -675,13 +679,6 @@ let g:bufferline_echo = 0
 " }}}
 
 " Coc.nvim {{{
-" function! s:show_documentation()
-"   if &filetype == 'vim'
-"     execute 'h '.expand('<cword>')
-"   else
-"     call CocAction('doHover')
-"   endif
-" endfunction
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -694,7 +691,7 @@ endfunction
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-augroup mygroup
+augroup coc
   autocmd!
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
@@ -709,17 +706,12 @@ nmap <silent> gn <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
-nmap <localleader>d :call CocDefSplit()<CR>
-
-function! CocDefSplit()
-  execute "vsplit"
-  execute "normal gd"
-endfunction
+nnoremap <silent> <localleader>dd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nnoremap <silent> <localleader>dt :call CocAction('jumpDefinition', 'tabe')<CR>
 
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> <leader>ca <Plug>(coc-codeaction)
 
 vmap <localleader>p  <Plug>(coc-format-selected)
 nmap <localleader>p  <Plug>(coc-format-selected)
@@ -761,6 +753,12 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
+
+augroup coc-go
+	autocmd BufWritePost *.go !go fmt %
+	autocmd BufWritePost *.go CocFix
+  autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
+augroup END
 
 noremap <localleader>gt :call GoTestToggle()<CR>
 
@@ -978,99 +976,102 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
 
-" Vim Go {{{
-" ===================
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#cmd#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-" let g:go_def_mode = 'gopls'
-" let g:go_list_type = "quickfix"
-" " let g:go_fmt_fail_silently = 1
-
-" let g:go_auto_type_info = 1
-" " Uncomment to highlight variable references
-" let g:go_auto_sameids = 0
-" let g:go_highlight_array_whitespace_error = 0
-" let g:go_highlight_build_constraints = 1
-" let g:go_highlight_extra_types = 1
-" let g:go_highlight_fields = 1
-" let g:echodoc#highlight_trailing = 1
-" " let g:go_highlight_function_arguments = 1
-" let g:go_highlight_function_calls = 1
-" let g:go_highlight_functions = 1
-" let g:go_highlight_generate_tags = 1
-" let g:go_highlight_methods = 1
-" let g:go_highlight_operators = 1
-" let g:go_highlight_space_tab_error = 0
-" let g:go_highlight_structs = 1
-" let g:go_highlight_trailing_whitespace_error = 0
-" let g:go_highlight_types = 1
-
-" let g:go_fmt_experimental = 1
-" let g:go_def_mapping_enabled = 1
-" let g:go_metalinter_disabled = []
-" let g:go_metalinter_autosave = 1
-" let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
-
-augroup completion_preview_close
-  autocmd!
-  if v:version > 703 || v:version == 703 && has('patch598')
-    autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
-  endif
-augroup END
-
-augroup go
-  au!
-	autocmd BufWritePost *.go !go fmt %
-	"" autocmd BufWritePost *.go CocFix
-  autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
-	""
-  "au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  "au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  "au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  "au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
-	"au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
-	"au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
-	"au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
-
-	"" gd = :GoDef
-	"" <C-t> :GoDefPop
-	"" K :GoDoc press enter to quit
-	"" :GoDescribe shows all information about a type
-	"" :GoChannelPeers shows all sends and recvs from a channel
-	"" :GoCallers :Gocallees show where functions are used
-	"" :GoWhichErrs shows what type an error might be
-	"" au Filetype go nnoremap <localleader>p :GoImport<space>
-
-  "au FileType go nmap <localleader>g  <Plug>(go-def)
-  "au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
-  "au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
-  "au FileType go nmap <localleader>db <Plug>(go-doc-browser)
-
-  "au FileType go nmap <localleader>r  <Plug>(go-run)
-  "" au FileType go nmap <localleader>n :GoReferrers<cr>
-  "au FileType go nmap <localleader>t  <Plug>(go-test)
-  "au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-  "au FileType go nmap gi  <Plug>(go-implements)
-  "au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
-
-  "au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
-
-  "au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
-
-augroup END
-" }}}
+"  Vim Go {{{
+"" ===================
+"" run :GoBuild or :GoTestCompile based on the go file
+"function! s:build_go_files()
+"  let l:file = expand('%')
+"  if l:file =~# '^\f\+_test\.go$'
+"    call go#cmd#Test(0, 1)
+"  elseif l:file =~# '^\f\+\.go$'
+"    call go#cmd#Build(0)
+"  endif
+"endfunction
+"
+"" let g:go_def_mode = 'guru'
+"" let g:go_referrers_mode = 'guru'
+"" let g:go_implements_mode = 'guru'
+"let g:go_list_type = "quickfix"
+"" let g:go_fmt_fail_silently = 1
+"let g:go_fmt_command = "goimports"
+"
+"let g:go_auto_type_info = 1
+"" Uncomment to highlight variable references
+"" let g:go_auto_sameids = 1
+"let g:go_highlight_array_whitespace_error = 0
+"let g:go_highlight_build_constraints = 1
+"let g:go_highlight_extra_types = 1
+"let g:go_highlight_fields = 1
+"let g:echodoc#highlight_trailing = 1
+"let g:go_highlight_function_arguments = 1
+"let g:go_highlight_function_calls = 1
+"let g:go_highlight_functions = 1
+"let g:go_highlight_generate_tags = 1
+"let g:go_highlight_methods = 1
+"let g:go_highlight_operators = 1
+"let g:go_highlight_space_tab_error = 0
+"let g:go_highlight_structs = 1
+"let g:go_highlight_trailing_whitespace_error = 0
+"let g:go_highlight_types = 1
+"
+"let g:go_fmt_experimental = 1
+"let g:go_doc_popup_window = 1
+"let g:go_def_mapping_enabled = 1
+"let g:go_metalinter_disabled = []
+"let g:go_metalinter_autosave = 1
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+"
+"autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+"
+"augroup completion_preview_close
+"  autocmd!
+"  if v:version > 703 || v:version == 703 && has('patch598')
+"    autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
+"  endif
+"augroup END
+"
+"augroup go
+"  au!
+"	autocmd BufWritePost *.go !go fmt %
+"	"" autocmd BufWritePost *.go CocFix
+"  " autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
+"	""
+"  au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+"  au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+"  au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+"  au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+"
+"	au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
+"	au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
+"	au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
+"
+"	" gd = :GoDef
+"	" <C-t> :GoDefPop
+"	" K :GoDoc press enter to quit
+"	" :GoDescribe shows all information about a type
+"	" :GoChannelPeers shows all sends and recvs from a channel
+"	" :GoCallers :Gocallees show where functions are used
+"	" :GoWhichErrs shows what type an error might be
+"	" au Filetype go nnoremap <localleader>p :GoImport<space>
+"
+"  au FileType go nmap gt <Plug>(go-def-type)
+"  au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
+"  au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
+"  au FileType go nmap <localleader>db <Plug>(go-doc-browser)
+"
+"  au FileType go nmap <localleader>r  <Plug>(go-run)
+"  " au FileType go nmap <localleader>n :GoReferrers<cr>
+"  au FileType go nmap <localleader>t  <Plug>(go-test)
+"  au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
+"  " au FileType go nmap gi  <Plug>(go-implements)
+"  au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
+"
+"  au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
+"
+"  au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
+"augroup END
+"" }}}
 
 " Vim Highlighted Yank {{{
 " ===================
