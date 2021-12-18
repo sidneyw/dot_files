@@ -1,0 +1,7 @@
+#!/bin/bash
+
+collectorName=$(collector-name $1)
+
+kubeNamespace=$(kubens -c)
+echo "SSH'ing into $collectorName in $kubeNamespace"
+kubectl exec --stdin --tty $collectorName -- /bin/sh

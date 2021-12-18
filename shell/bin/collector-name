@@ -1,0 +1,4 @@
+#!/bin/bash
+
+collectorNumber=${1:-1}
+kubectl get pods | rg collector | awk '{print $1}' | head -n $collectorNumber | tail -n 1
