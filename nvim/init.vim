@@ -4,7 +4,6 @@
 if has('vim_starting')
   set nocompatible               " Be iMproved
 endif
-
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
 let g:vim_bootstrap_langs = "c,go,html,javascript,python"
@@ -75,13 +74,20 @@ Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
 " }}}
-"
+
+" Lualine {{{
+Plug 'nvim-lualine/lualine.nvim'
+" Plug 'kdheepak/tabline.nvim'
+Plug 'akinsho/bufferline.nvim'
+" }}}
+
 Plug 'liuchengxu/vista.vim'
 let g:vista_sidebar_width = 50
 let g:vista_fzf_preview = ['right:50%']
 
 " Junegunn {{{
 Plug 'junegunn/goyo.vim'
+"}}} 
 
 " Go Lang Bundle {{{
 " Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
@@ -114,8 +120,8 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 " }}}
 
 " Other {{{
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 " Plug 'airblade/vim-gitgutter'
 
 Plug 'nvim-lua/plenary.nvim'
@@ -144,13 +150,19 @@ if v:version >= 704
 endif
 
 Plug 'honza/vim-snippets'
+" }}}
 
 " Color
-Plug 'tomasr/molokai'
-Plug 'flazz/vim-colorschemes'
-" Plug 'joshdick/onedark.vim'
-Plug 'morhetz/gruvbox'
+" Plug 'tomasr/molokai'
+" Plug 'flazz/vim-colorschemes'
+
+set background=dark
+" Plug 'rktjmp/lush.nvim'
+" Plug 'ellisonleao/gruvbox.nvim'
+
 let g:gruvbox_contrast_dark = 'hard'
+Plug 'morhetz/gruvbox'
+" Plug 'EdenEast/nightfox.nvim'
 
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
@@ -168,6 +180,8 @@ call plug#end()
 filetype plugin indent on
 " }}}
 
+" }}}
+"
 " General {{{
 " ====================
 let mapleader='-'
@@ -199,7 +213,6 @@ set spelllang=en_us
 set textwidth=80
 
 set foldlevelstart=15   " most folds should be open on start
-set foldmethod=indent
 
 set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
@@ -236,6 +249,14 @@ set incsearch
 set ignorecase
 set smartcase
 
+" Term color stuff
+if (has("nvim"))
+	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if (has("termguicolors"))
+	set termguicolors
+endif
+
 " Disable visualbell
 set noerrorbells visualbell t_vb=
 if has('autocmd')
@@ -269,15 +290,6 @@ set titlestring=%F
 
 " Tpope fugitive vim expects netrw which is disabled by nvim-tree
 let g:loaded_netrwPlugin = 1
-
-if (has("nvim"))
-	"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-if (has("termguicolors"))
-	set termguicolors
-endif
-
 " }}}
 
 " Mappings {{{
@@ -479,11 +491,12 @@ augroup END
 
 " Color Scheme {{{
 " ====================
-hi clear
+" hi clear
 " colorscheme monokai-phoenix
 " colorscheme badwolf
 " colorscheme onedark
 colorscheme gruvbox
+" colorscheme nightfox
 " colorscheme srcerydrk
 " colorscheme papercolor
 " colorscheme brogrammer
@@ -631,46 +644,46 @@ endfunction
 " wombat
 " powerlineish
 
-let g:airline_theme = 'badwolf'
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#coc#enabled = 1
-let g:airline_skip_empty_sections = 1
+" let g:airline_theme = 'badwolf'
+" let g:airline#extensions#branch#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#coc#enabled = 1
+" let g:airline_skip_empty_sections = 1
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
 
-if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  " let g:airline_left_sep          = '▶'
-  let g:airline_left_alt_sep      = '»'
-  " let g:airline_right_sep         = '◀'
-  let g:airline_right_alt_sep     = '«'
-  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-  let g:airline#extensions#readonly#symbol   = '⊘'
-  let g:airline#extensions#linecolumn#prefix = '¶'
-  let g:airline#extensions#paste#symbol      = 'ρ'
-  let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.branch    = '⎇'
-  let g:airline_symbols.paste     = 'ρ'
-  let g:airline_symbols.paste     = 'Þ'
-  let g:airline_symbols.paste     = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
-else
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
+" if !exists('g:airline_powerline_fonts')
+"   let g:airline#extensions#tabline#left_sep = ' '
+"   let g:airline#extensions#tabline#left_alt_sep = '|'
+"   " let g:airline_left_sep          = '▶'
+"   let g:airline_left_alt_sep      = '»'
+"   " let g:airline_right_sep         = '◀'
+"   let g:airline_right_alt_sep     = '«'
+"   let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
+"   let g:airline#extensions#readonly#symbol   = '⊘'
+"   let g:airline#extensions#linecolumn#prefix = '¶'
+"   let g:airline#extensions#paste#symbol      = 'ρ'
+"   let g:airline_symbols.linenr    = '␊'
+"   let g:airline_symbols.branch    = '⎇'
+"   let g:airline_symbols.paste     = 'ρ'
+"   let g:airline_symbols.paste     = 'Þ'
+"   let g:airline_symbols.paste     = '∥'
+"   let g:airline_symbols.whitespace = 'Ξ'
+" else
+"   let g:airline#extensions#tabline#left_sep = ''
+"   let g:airline#extensions#tabline#left_alt_sep = ''
 
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
-endif
+"   " powerline symbols
+"   let g:airline_left_sep = ''
+"   let g:airline_left_alt_sep = ''
+"   let g:airline_right_sep = ''
+"   let g:airline_right_alt_sep = ''
+"   let g:airline_symbols.branch = ''
+"   let g:airline_symbols.readonly = ''
+"   let g:airline_symbols.linenr = ''
+" endif
 " }}}
 
 " Black {{{
@@ -971,18 +984,6 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 highlight NvimTreeFolderIcon guibg=blue
 " }}}
 
-" Treesitter {{{
-" ======================
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-		disable = { "yaml", "helm" },  -- list of language that will be disabled
-  },
-}
-EOF
-" }}}
 
 " UltiSnips {{{
 " ======================
