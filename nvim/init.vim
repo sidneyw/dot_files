@@ -152,7 +152,7 @@ endif
 Plug 'honza/vim-snippets'
 " }}}
 
-" Color
+" Color {{{
 " Plug 'tomasr/molokai'
 " Plug 'flazz/vim-colorschemes'
 
@@ -162,11 +162,10 @@ set background=dark
 
 let g:gruvbox_contrast_dark = 'hard'
 Plug 'morhetz/gruvbox'
-" Plug 'EdenEast/nightfox.nvim'
+" }}}
 
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-" }}}
 
 
 " Include user's extra bundle
@@ -180,8 +179,6 @@ call plug#end()
 filetype plugin indent on
 " }}}
 
-" }}}
-"
 " General {{{
 " ====================
 let mapleader='-'
@@ -983,7 +980,6 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
 " }}}
-
 
 " UltiSnips {{{
 " ======================
