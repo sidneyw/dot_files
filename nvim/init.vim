@@ -51,6 +51,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 let g:coc_global_extensions = [
 			\ 'coc-go',
+			\ 'coc-lua',
 			\ 'coc-css',
 			\ 'coc-emmet',
 			\ 'coc-html',
@@ -65,19 +66,22 @@ let g:coc_global_extensions = [
 			\ ]
 " }}}
 "
+" Telescope {{{
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-github.nvim'
+Plug 'fannheyward/telescope-coc.nvim'
+Plug 'fhill2/telescope-ultisnips.nvim'
+" }}}
+"
 Plug 'liuchengxu/vista.vim'
 let g:vista_sidebar_width = 50
 let g:vista_fzf_preview = ['right:50%']
 
 " Junegunn {{{
 Plug 'junegunn/goyo.vim'
-if isdirectory('/usr/local/opt/fzf')
-  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-  Plug 'junegunn/fzf.vim'
-endif
-" }}}
 
 " Go Lang Bundle {{{
 " Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
@@ -194,7 +198,7 @@ set showcmd             " Show commands in the bottom right corner
 set spelllang=en_us
 set textwidth=80
 
-set foldlevelstart=10   " most folds should be open on start
+set foldlevelstart=15   " most folds should be open on start
 set foldmethod=indent
 
 set lazyredraw          " Don't redraw the screen during a macro
@@ -307,7 +311,7 @@ noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
 
 " Create Splits
-noremap <leader>h :<C-u>split<CR>
+" noremap <leader>h :<C-u>split<CR>
 noremap <leader>v :<C-u>vsplit<CR>
 
 " Vmap for maintain Visual Mode after shifting > and <
@@ -469,7 +473,7 @@ augroup END
 augroup vim
   autocmd!
   autocmd FileType vim :setlocal foldmethod=marker
-  autocmd FileType vim :setlocal foldlevelstart=0
+  " autocmd FileType vim :setlocal foldlevelstart=0
 augroup END
 " }}}
 
@@ -769,39 +773,53 @@ endfunction
 
 " }}}
 
+" Telescope {{{
+" Find files using Telescope command-line sugar.
+lua require("sidneyw")
+
+nnoremap <C-p> <cmd>lua require('sidneyw.telescope').project_files()<CR>
+nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
+nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>h <cmd>lua require('telescope.builtin').help_tags()<CR>
+nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
+nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
+nnoremap <leader>i <cmd>lua require('sidneyw.telescope').implementations()<CR>
+" }}}
+
 " Fzf {{{
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+" set wildmode=list:longest,list:full
+" set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 
 
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-	\ 'bg':      ['bg', 'Normal'],
-	\ 'hl':      ['fg', 'Comment'],
-	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-	\ 'hl+':     ['fg', 'Statement'],
-	\ 'info':    ['fg', 'PreProc'],
-	\ 'border':  ['fg', 'Ignore'],
-	\ 'prompt':  ['fg', 'Conditional'],
-	\ 'pointer': ['fg', 'Exception'],
-	\ 'marker':  ['fg', 'Keyword'],
-	\ 'spinner': ['fg', 'Label'],
-	\ 'header':  ['fg', 'Comment'] }
+" let g:fzf_colors =
+" \ { 'fg':      ['fg', 'Normal'],
+" 	\ 'bg':      ['bg', 'Normal'],
+" 	\ 'hl':      ['fg', 'Comment'],
+" 	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+" 	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+" 	\ 'hl+':     ['fg', 'Statement'],
+" 	\ 'info':    ['fg', 'PreProc'],
+" 	\ 'border':  ['fg', 'Ignore'],
+" 	\ 'prompt':  ['fg', 'Conditional'],
+" 	\ 'pointer': ['fg', 'Exception'],
+" 	\ 'marker':  ['fg', 'Keyword'],
+" 	\ 'spinner': ['fg', 'Label'],
+" 	\ 'header':  ['fg', 'Comment'] }
 
-" Rip Grep
-if executable('rg')
-let $FZF_DEFAULT_COMMAND = 'rg --files'
-endif
+" " Rip Grep
+" if executable('rg')
+" let $FZF_DEFAULT_COMMAND = 'rg --files'
+" endif
 
-nnoremap <silent> <leader>a :Rg<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
-nnoremap <silent> <leader>y :call fzf#vim#gitfiles('?', fzf#vim#with_preview('right'))<CR>
-nnoremap <silent> <leader>m :History -m<CR>
-nnoremap <silent> <leader>c :Commands<CR>
-nnoremap <silent> <leader>q :BLines<CR>
-nnoremap <silent> <leader>w :Windows<CR>
+" nnoremap <silent> <leader>a :Rg<CR>
+" nnoremap <silent> <leader>b :Buffers<CR>
+" nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
+" nnoremap <silent> <leader>y :call fzf#vim#gitfiles('?', fzf#vim#with_preview('right'))<CR>
+" nnoremap <silent> <leader>m :History -m<CR>
+" nnoremap <silent> <leader>c :Commands<CR>
+" nnoremap <silent> <leader>q :BLines<CR>
+" nnoremap <silent> <leader>w :Windows<CR>
 " }}}
 
 " Fugitive {{{
