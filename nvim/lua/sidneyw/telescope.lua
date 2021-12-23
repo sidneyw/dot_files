@@ -50,6 +50,8 @@ require("telescope").load_extension("fzy_native")
 require('telescope').load_extension('gh')
 require('telescope').load_extension('coc')
 require('telescope').load_extension('ultisnips')
+require('telescope').load_extension('dap')
+require("telescope").load_extension("notify")
 
 local M = {}
 
@@ -63,6 +65,12 @@ M.implementations = function(opts)
   opts = opts or {}
   local themed_opts = require'telescope.themes'.get_ivy(opts)
   require('telescope').extensions.coc.implementations(themed_opts)
+end
+
+M.references = function(opts)
+  opts = opts or {}
+  local themed_opts = require'telescope.themes'.get_ivy(opts)
+  require('telescope').extensions.coc.references(themed_opts)
 end
 
 M.search_dotfiles = function()

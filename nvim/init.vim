@@ -71,6 +71,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-telescope/telescope-github.nvim'
+Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
 " }}}
@@ -164,6 +165,11 @@ let g:gruvbox_contrast_dark = 'hard'
 Plug 'morhetz/gruvbox'
 " }}}
 
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'rcarriga/nvim-notify'
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 
@@ -363,7 +369,7 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 nnoremap <leader>eb :call EditDot("shell/bash_profile.sh")<cr>
 
 " Edit vimrc
-nnoremap <leader>ev :call EditDot("nvim/init.vim")<cr>
+nnoremap <leader>ev :call EditVimrc()<cr>
 
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -618,6 +624,16 @@ if !exists('*s:setupWrapping')
   endfunction
 endif
 
+function! EditVimrc()
+	let dotfilesDir = fnameescape($HOME . '/.dot_files/nvim/')
+	let initVim = l:dotfilesDir . fnameescape("init.vim")
+	let initLua = l:dotfilesDir . fnameescape('/lua/sidneyw/init.lua')
+
+	call TabCd(l:dotfilesDir)
+	exe "edit " . l:initLua
+	exe "vs " . l:initVim
+endfunction
+
 function! EditDot(file)
 	let path = $HOME . '/.dot_files/' . a:file
   execute "tabe " . fnameescape(l:path)
@@ -724,8 +740,11 @@ nnoremap <silent> <localleader>dd :call CocAction('jumpDefinition', 'vsplit')<CR
 nnoremap <silent> <localleader>dt :call CocAction('jumpDefinition', 'tabe')<CR>
 
 nmap <silent> gt <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> gi <cmd>lua require('sidneyw.telescope').implementations()<CR>
+nmap <silent> gr <cmd>lua require('sidneyw.telescope').references()<CR>
 
 vmap <localleader>p  <Plug>(coc-format-selected)
 nmap <localleader>p  <Plug>(coc-format-selected)
@@ -783,6 +802,14 @@ endfunction
 
 " }}}
 
+" Dap {{
+nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dc :lua require('dap').continue()<CR>
+nnoremap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
+nnoremap <silent> <leader>dv :lua require"telescope".extensions.dap.variables{}<CR>
+nnoremap <silent> <leader>do :lua require("dapui").toggle()<CR>
+" }}
+
 " Telescope {{{
 " Find files using Telescope command-line sugar.
 lua require("sidneyw")
@@ -791,10 +818,10 @@ nnoremap <C-p> <cmd>lua require('sidneyw.telescope').project_files()<CR>
 nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
 nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
-nnoremap <leader>h <cmd>lua require('telescope.builtin').help_tags()<CR>
+nnoremap <leader>h  <cmd>lua require('telescope.builtin').help_tags()<CR>
 nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
 nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
-nnoremap <leader>i <cmd>lua require('sidneyw.telescope').implementations()<CR>
+" nnoremap <leader>i  <cmd>lua require('sidneyw.telescope').implementations()<CR>
 " }}}
 
 " Fzf {{{

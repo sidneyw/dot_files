@@ -10,9 +10,13 @@ require("sidneyw.telescope")
 --   }
 -- }
 
+require('dap-go').setup()
+require("nvim-dap-virtual-text").setup()
+require("dapui").setup()
+
 require('lualine').setup{
   options = {theme = 'ayu_dark'},
-  -- options = {theme = 'nightfox'},
+  -- options = {theme = 'gruvbox_dark'},
   -- extensions = {},
   tabline = {
     -- lualine_a = {
@@ -22,6 +26,8 @@ require('lualine').setup{
     -- lualine_c = { require'tabline'.tabline_buffers },
   },
 }
+
+vim.notify = require("notify")
 
 -- vim.opt.termguicolors = true
 
@@ -34,6 +40,7 @@ require("bufferline").setup{
         -- text_align = "center",
       }
     },
+		show_close_icon = true,
     separator_style = "slant",
     diagnostics = "coc",
   }

@@ -58,7 +58,8 @@
     "completeUnimported": true,
     "usePlaceholders": true,
     "staticcheck": true,
-    "gofumpt": true
+    "gofumpt": true,
+    "buildFlags": ["-tags=cluster_integration"]
   },
   "languageserver": {
     "bash": {
