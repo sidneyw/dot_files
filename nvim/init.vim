@@ -583,35 +583,13 @@ function! PyTab()
   exe "retab"
 endfunction
 
-function CwdTab()
-	echo "calling cwd tab"
-	let basename = system("basename $(pwd)")
-	let basename = substitute(basename, '\n$', '', '')
-
-	exe "TablineTabRename " . l:basename
-endfunction
-
 " Delayed to allow the tab to load before attempting to name it.
 " TablineTabRename cannot be called before the window comes up.
 augroup name-tab
-	autocmd VimEnter * call timer_start(200, { tid -> execute('call CwdTab()')})
+	autocmd VimEnter * call timer_start(200, { tid -> execute("lua require'sidneyw.lualine'.cwdTab()")})
 augroup end
 
-function! TabCd(dir)
-	if !isdirectory(a:dir)
-		echoerr a:dir . " is not a directory"
-		return
-	endif
-
-	exe "TablineTabNew " . a:dir . "/."
-
-	let newDirName = expand('%:p:h:t')
-	exe "TablineTabRename " . l:newDirName
-	exe "Glcd"
-endfunction
-
-
-command! -nargs=1 -complete=dir Tabcd call TabCd(<f-args>)
+command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args>)
 
 " remap tabcd to Tabcd
 cnoreabbr tabcd Tabcd

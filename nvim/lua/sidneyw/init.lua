@@ -1,4 +1,5 @@
 require("sidneyw.telescope")
+require("sidneyw.lualine")
 
 -- require('tabline').setup {
 --   enable = true,
@@ -14,20 +15,6 @@ require('dap-go').setup()
 require("nvim-dap-virtual-text").setup()
 require("dapui").setup()
 
-require'tabline'.setup {
-  enable = true,
-  options = {
-    show_tabs_always = true,
-  }
-}
-
-require('lualine').setup{
-  options = {theme = 'ayu_dark'},
-  tabline = {
-    lualine_x = { require'tabline'.tabline_tabs },
-    lualine_c = { require'tabline'.tabline_buffers },
-  },
-}
 
 vim.notify = require("notify")
 
