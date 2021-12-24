@@ -14,43 +14,43 @@ require('dap-go').setup()
 require("nvim-dap-virtual-text").setup()
 require("dapui").setup()
 
+require'tabline'.setup {
+  enable = true,
+  options = {
+    show_tabs_always = true,
+  }
+}
+
 require('lualine').setup{
   options = {theme = 'ayu_dark'},
-  -- options = {theme = 'gruvbox_dark'},
-  -- extensions = {},
   tabline = {
-    -- lualine_a = {
-      -- { 'tabs', mode = 2, }
-    -- },
-    -- lualine_x = { require'tabline'.tabline_tabs },
-    -- lualine_c = { require'tabline'.tabline_buffers },
+    lualine_x = { require'tabline'.tabline_tabs },
+    lualine_c = { require'tabline'.tabline_buffers },
   },
 }
 
 vim.notify = require("notify")
 
--- vim.opt.termguicolors = true
-
-require("bufferline").setup{
-  options = {
-    offsets = {
-      {
-        filetype = "NvimTree",
-        -- text = "File Explorer",
-        -- text_align = "center",
-      }
-    },
-		show_close_icon = true,
-    separator_style = "slant",
-    diagnostics = "coc",
-  }
-}
+-- require("bufferline").setup{
+--   options = {
+--     offsets = {
+--       {
+--         filetype = "NvimTree",
+--         -- text = "File Explorer",
+--         -- text_align = "center",
+--       }
+--     },
+--    show_close_icon = true,
+--     separator_style = "slant",
+--     diagnostics = "coc",
+--   }
+-- }
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { "yaml", "helm" },  -- list of language that will be disabled
+    enable = true,
+    disable = { "yaml", "helm" },
   },
   indent = {
     enable = true

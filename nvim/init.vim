@@ -69,7 +69,8 @@ let g:coc_global_extensions = [
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+" Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
@@ -78,8 +79,9 @@ Plug 'fhill2/telescope-ultisnips.nvim'
 
 " Lualine {{{
 Plug 'nvim-lualine/lualine.nvim'
-" Plug 'kdheepak/tabline.nvim'
-Plug 'akinsho/bufferline.nvim'
+Plug 'kdheepak/tabline.nvim'
+" Plug 'akinsho/bufferline.nvim'
+" Plug 'romgrk/barbar.nvim'
 " }}}
 
 Plug 'liuchengxu/vista.vim'
@@ -142,7 +144,7 @@ endif
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
 if v:version >= 703
-  Plug 'Shougo/vimshell.vim'
+ Plug 'Shougo/vimshell.vim'
 endif
 
 if v:version >= 704
@@ -154,13 +156,7 @@ Plug 'honza/vim-snippets'
 " }}}
 
 " Color {{{
-" Plug 'tomasr/molokai'
-" Plug 'flazz/vim-colorschemes'
-
 set background=dark
-" Plug 'rktjmp/lush.nvim'
-" Plug 'ellisonleao/gruvbox.nvim'
-
 let g:gruvbox_contrast_dark = 'hard'
 Plug 'morhetz/gruvbox'
 " }}}
@@ -295,6 +291,8 @@ set titlestring=%F
 let g:loaded_netrwPlugin = 1
 " }}}
 
+lua require("sidneyw")
+
 " Mappings {{{
 " ====================
 noremap  <buffer> <silent> k gk
@@ -340,7 +338,8 @@ vnoremap K :m '<-2<CR>gv=gv
 " Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-nnoremap <leader>te :tabe %<CR>
+nnoremap <leader>te :TablineTabNew %<CR>
+" nnoremap <leader>te :tabe %<CR>
 nnoremap <leader>tc :tabc<CR>
 
 " See the full file path
@@ -584,15 +583,31 @@ function! PyTab()
   exe "retab"
 endfunction
 
+function CwdTab()
+	echo "calling cwd tab"
+	let basename = system("basename $(pwd)")
+	let basename = substitute(basename, '\n$', '', '')
+
+	exe "TablineTabRename " . l:basename
+endfunction
+
+" Delayed to allow the tab to load before attempting to name it.
+" TablineTabRename cannot be called before the window comes up.
+augroup name-tab
+	autocmd VimEnter * call timer_start(200, { tid -> execute('call CwdTab()')})
+augroup end
+
 function! TabCd(dir)
 	if !isdirectory(a:dir)
 		echoerr a:dir . " is not a directory"
 		return
 	endif
 
-	execute "tabe " . a:dir
-	" execute "lcd " . a:dir
-	execute "Glcd"
+	exe "TablineTabNew " . a:dir . "/."
+
+	let newDirName = expand('%:p:h:t')
+	exe "TablineTabRename " . l:newDirName
+	exe "Glcd"
 endfunction
 
 
@@ -629,8 +644,10 @@ function! EditVimrc()
 	let initVim = l:dotfilesDir . fnameescape("init.vim")
 	let initLua = l:dotfilesDir . fnameescape('/lua/sidneyw/init.lua')
 
-	call TabCd(l:dotfilesDir)
-	exe "edit " . l:initLua
+	exe "tabe " . l:initLua
+	" call TabCd(l:dotfilesDir)
+	" exe "edit " . l:initLua
+	exe "Glcd"
 	exe "vs " . l:initVim
 endfunction
 
@@ -812,15 +829,14 @@ nnoremap <silent> <leader>do :lua require("dapui").toggle()<CR>
 
 " Telescope {{{
 " Find files using Telescope command-line sugar.
-lua require("sidneyw")
-
 nnoremap <C-p> <cmd>lua require('sidneyw.telescope').project_files()<CR>
+nnoremap <leader>f <cmd>lua require('sidneyw.telescope').project_files()<CR>
 nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
 nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>h  <cmd>lua require('telescope.builtin').help_tags()<CR>
 nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
-nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
+" nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
 " nnoremap <leader>i  <cmd>lua require('sidneyw.telescope').implementations()<CR>
 " }}}
 
