@@ -1,4 +1,6 @@
 local actions = require("telescope.actions")
+local telescope = require("telescope")
+local themes = require("telescope.themes")
 
 require("telescope").setup({
     defaults = {
@@ -7,14 +9,14 @@ require("telescope").setup({
         qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
         vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "--trim" -- added this value
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--hidden",
         },
 
         layout_strategy = "flex",
@@ -38,20 +40,27 @@ require("telescope").setup({
       },
     },
     extensions = {
-        fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
-        },
+      -- fzy_native = {
+      --     override_generic_sorter = false,
+      --     override_file_sorter = true,
+      -- },
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
     },
 })
 
 -- require("telescope").load_extension("git_worktree")
-require("telescope").load_extension("fzy_native")
-require('telescope').load_extension('gh')
-require('telescope').load_extension('coc')
-require('telescope').load_extension('ultisnips')
-require('telescope').load_extension('dap')
-require("telescope").load_extension("notify")
+telescope.load_extension("fzf")
+-- telescope.load_extension("fzy_native")
+telescope.load_extension('gh')
+telescope.load_extension('coc')
+telescope.load_extension('ultisnips')
+telescope.load_extension('dap')
+telescope.load_extension("notify")
 
 local M = {}
 
@@ -63,14 +72,14 @@ end
 
 M.implementations = function(opts)
   opts = opts or {}
-  local themed_opts = require'telescope.themes'.get_ivy(opts)
-  require('telescope').extensions.coc.implementations(themed_opts)
+  local themed_opts = themes.get_ivy(opts)
+  telescope.extensions.coc.implementations(themed_opts)
 end
 
 M.references = function(opts)
   opts = opts or {}
-  local themed_opts = require'telescope.themes'.get_ivy(opts)
-  require('telescope').extensions.coc.references(themed_opts)
+  local themed_opts = themes.get_ivy(opts)
+  telescope.extensions.coc.references(themed_opts)
 end
 
 M.search_dotfiles = function()
