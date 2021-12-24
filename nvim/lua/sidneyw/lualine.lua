@@ -1,5 +1,6 @@
-local lualine = require'lualine'
-local tabline = require'tabline'
+local lualine = require"lualine"
+local tabline = require"tabline"
+local notify = require"notify"
 
 tabline.setup {
   enable = true,
@@ -9,8 +10,7 @@ tabline.setup {
 }
 
 lualine.setup{
-  -- options = {theme = 'ayu_dark'},
-  options = {theme = 'ayu_mirage'},
+  options = {theme = "ayu_dark"},
   tabline = {
     lualine_x = { tabline.tabline_tabs },
     lualine_c = { tabline.tabline_buffers },
@@ -21,7 +21,8 @@ local M = {}
 
 M.tabcd = function (directory)
 	if vim.fn.isdirectory(directory) ~= 1 then
-		error(directory .. " is not directory")
+		print(directory .. " is not a directory")
+		notify(directory .. " is not a directory", "error")
 		return
 	end
 
@@ -29,7 +30,9 @@ M.tabcd = function (directory)
 	local newDirName = vim.fn.expand("%:p:h:t")
 
 	tabline.tab_rename(newDirName)
-	vim.cmd("Glcd")
+
+  local ok = pcall(vim.cmd, "Glcd")
+	if not ok then vim.cmd("lcd %:p:h") end
 end
 
 M.cwdTab = function ()
