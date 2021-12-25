@@ -39,6 +39,7 @@ M.cwdTab = function ()
 	local basename = vim.fn.system("basename $(pwd)")
 	basename = vim.fn.substitute(basename, "\n$", "", "")
 	tabline.tab_rename(basename)
+	tabline.toggle_show_all_buffers()
 end
 
 return M
