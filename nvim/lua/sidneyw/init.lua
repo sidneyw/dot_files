@@ -1,6 +1,7 @@
 require"sidneyw.telescope"
 require"sidneyw.lualine"
 require"sidneyw.nvim-tree"
+require"sidneyw.lsp"
 
 require("dap-go").setup()
 require("nvim-dap-virtual-text").setup()

@@ -57,7 +57,7 @@ require("telescope").setup({
 telescope.load_extension("fzf")
 -- telescope.load_extension("fzy_native")
 telescope.load_extension('gh')
-telescope.load_extension('coc')
+-- telescope.load_extension('coc')
 telescope.load_extension('ultisnips')
 telescope.load_extension('dap')
 telescope.load_extension("notify")

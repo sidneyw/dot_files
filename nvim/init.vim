@@ -45,27 +45,40 @@ Plug 'tpope/vim-unimpaired'
 Plug 'Shougo/denite.nvim'
 " }}}
 
-" Coc {{{
-" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" " Coc {{{
+" " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" \ 'coc-go',
-let g:coc_global_extensions = [
-			\ 'coc-lua',
-			\ 'coc-css',
-			\ 'coc-emmet',
-			\ 'coc-html',
-			\ 'coc-json',
-			\ 'coc-prettier',
-			\ 'coc-python',
-			\ 'coc-snippets',
-			\ 'coc-tsserver',
-			\ 'coc-ultisnips',
-			\ 'coc-vimlsp',
-			\ 'coc-yaml',
-			\ ]
+" " \ 'coc-go',
+" let g:coc_global_extensions = [
+" 			\ 'coc-lua',
+" 			\ 'coc-css',
+" 			\ 'coc-emmet',
+" 			\ 'coc-html',
+" 			\ 'coc-json',
+" 			\ 'coc-prettier',
+" 			\ 'coc-python',
+" 			\ 'coc-snippets',
+" 			\ 'coc-tsserver',
+" 			\ 'coc-ultisnips',
+" 			\ 'coc-vimlsp',
+" 			\ 'coc-yaml',
+" 			\ ]
+" " }}}
+
+" Nvim LSP {{{
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+" Plug 'onsails/lspkind-nvim'
+Plug 'nvim-lua/lsp_extensions.nvim'
+
+" Plug 'glepnir/lspsaga.nvim'
+" Plug 'simrat39/symbols-outline.nvim'
 " }}}
-"
+
 " Telescope {{{
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -74,7 +87,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-telescope/telescope-dap.nvim'
-Plug 'fannheyward/telescope-coc.nvim'
+" Plug 'fannheyward/telescope-coc.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
 " }}}
 
@@ -705,99 +718,99 @@ let g:black_linelength=100
 let g:bufferline_echo = 0
 " }}}
 
-" Coc.nvim {{{
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+" " Coc.nvim {{{
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
 
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-augroup coc
-  autocmd!
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+" augroup coc
+"   autocmd!
+"   " Update signature help on jump placeholder
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" " Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Use `gp` and `gn` for navigate diagnostics
-nmap <silent> gp <Plug>(coc-diagnostic-prev)
-nmap <silent> gn <Plug>(coc-diagnostic-next)
+" " Use `gp` and `gn` for navigate diagnostics
+" nmap <silent> gp <Plug>(coc-diagnostic-prev)
+" nmap <silent> gn <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> <localleader>dd :call CocAction('jumpDefinition', 'vsplit')<CR>
-nnoremap <silent> <localleader>dt :call CocAction('jumpDefinition', 'tabe')<CR>
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nnoremap <silent> <localleader>dd :call CocAction('jumpDefinition', 'vsplit')<CR>
+" nnoremap <silent> <localleader>dt :call CocAction('jumpDefinition', 'tabe')<CR>
 
-nmap <silent> gt <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gt <Plug>(coc-type-definition)
+" " nmap <silent> gi <Plug>(coc-implementation)
+" " nmap <silent> gr <Plug>(coc-references)
 
-nmap <silent> gi <cmd>lua require('sidneyw.telescope').implementations()<CR>
-nmap <silent> gr <cmd>lua require('sidneyw.telescope').references()<CR>
+" nmap <silent> gi <cmd>lua require('sidneyw.telescope').implementations()<CR>
+" nmap <silent> gr <cmd>lua require('sidneyw.telescope').references()<CR>
 
-vmap <localleader>p  <Plug>(coc-format-selected)
-nmap <localleader>p  <Plug>(coc-format-selected)
+" vmap <localleader>p  <Plug>(coc-format-selected)
+" nmap <localleader>p  <Plug>(coc-format-selected)
 
-command! -nargs=0 Format :call CocAction('format')<Paste>
+" command! -nargs=0 Format :call CocAction('format')<Paste>
 
-" " Remap for rename current word
-nmap <localleader>R <Plug>(coc-rename)
+" " " Remap for rename current word
+" nmap <localleader>R <Plug>(coc-rename)
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
-				 \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
+" 				 \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Snippets
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+" " Snippets
+" " Use <C-l> for trigger snippet expand.
+" imap <C-l> <Plug>(coc-snippets-expand)
 
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+" " Use <C-j> for select text for visual placeholder of snippet.
+" vmap <C-j> <Plug>(coc-snippets-select)
 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-l>'
+" " Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" let g:coc_snippet_next = '<c-l>'
 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-j>'
+" " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+" let g:coc_snippet_prev = '<c-j>'
 
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+" " Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+" " Map function and class text objects
+" " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
 
-augroup coc-go
-	autocmd BufWritePost *.go !go fmt %
-	autocmd BufWritePost *.go CocFix
-  autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
-augroup END
+" augroup coc-go
+" 	autocmd BufWritePost *.go !go fmt %
+" 	autocmd BufWritePost *.go CocFix
+"   autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
+" augroup END
 
-noremap <localleader>gt :call GoTestToggle()<CR>
+" noremap <localleader>gt :call GoTestToggle()<CR>
 
-function! GoTestToggle()
-  execute "vsplit"
-  execute "CocCommand go.test.toggle"
-endfunction
+" function! GoTestToggle()
+"   execute "vsplit"
+"   execute "CocCommand go.test.toggle"
+" endfunction
 
-" }}}
+" " }}}
 
 " Dap {{
 nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
@@ -807,6 +820,57 @@ nnoremap <silent> <leader>dv :lua require"telescope".extensions.dap.variables{}<
 nnoremap <silent> <leader>do :lua require("dapui").toggle()<CR>
 " }}
 
+" LSP {{{
+" Do this in lua?? maybe...
+" vim.o is short for something teej thinks makes sense.
+set completeopt=menu,menuone,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+" fun! LspLocationList()
+"     " lua vim.lsp.diagnostic.set_loclist({open_loclist = false})
+" endfun
+
+nnoremap gd :lua vim.lsp.buf.definition()<CR>
+nnoremap gi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
+nnoremap gr :lua vim.lsp.buf.references()<CR>
+nnoremap <localleader>R :lua vim.lsp.buf.rename()<CR>
+" nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
+" nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
+" nnoremap <leader>vsd :lua vim.lsp.diagnostic.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
+" nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_next()<CR>
+" nnoremap <leader>vll :call LspLocationList()<CR>
+
+" augroup THE_PRIMEAGEN_LSP
+"     autocmd!
+"     autocmd! BufWrite,BufEnter,InsertLeave * :call LspLocationList()
+" augroup END
+
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
+let g:compe.source.ultisnips = v:true
+let g:compe.source.luasnip = v:true
+" }}}
+"
 " Telescope {{{
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('sidneyw.telescope').project_files()<CR>
