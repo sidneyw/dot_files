@@ -376,3 +376,5 @@ if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/comple
 # Local Config
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
 test -f "$local_conf" && source "$local_conf"
+
+[[ -s "/Users/sidneyw/.gvm/scripts/gvm" ]] && source "/Users/sidneyw/.gvm/scripts/gvm"

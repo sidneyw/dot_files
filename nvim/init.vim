@@ -49,8 +49,8 @@ Plug 'Shougo/denite.nvim'
 " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" \ 'coc-go',
 let g:coc_global_extensions = [
-			\ 'coc-go',
 			\ 'coc-lua',
 			\ 'coc-css',
 			\ 'coc-emmet',
