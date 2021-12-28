@@ -367,6 +367,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # }}}
 
+export PATH="$HOME/tools/sumneko/lua-language-server/bin:$PATH"
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.bash.inc' ]; then . '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.bash.inc'; fi
 
@@ -378,3 +380,5 @@ local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
 test -f "$local_conf" && source "$local_conf"
 
 [[ -s "/Users/sidneyw/.gvm/scripts/gvm" ]] && source "/Users/sidneyw/.gvm/scripts/gvm"
+
+alias luamake=/Users/sidneyw/tools/sumneko/lua-language-server/3rd/luamake/luamake

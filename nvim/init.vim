@@ -51,32 +51,39 @@ Plug 'Shougo/denite.nvim'
 
 " " \ 'coc-go',
 " let g:coc_global_extensions = [
-" 			\ 'coc-lua',
-" 			\ 'coc-css',
-" 			\ 'coc-emmet',
-" 			\ 'coc-html',
-" 			\ 'coc-json',
-" 			\ 'coc-prettier',
-" 			\ 'coc-python',
-" 			\ 'coc-snippets',
-" 			\ 'coc-tsserver',
-" 			\ 'coc-ultisnips',
-" 			\ 'coc-vimlsp',
-" 			\ 'coc-yaml',
-" 			\ ]
+"       \ 'coc-lua',
+"       \ 'coc-css',
+"       \ 'coc-emmet',
+"       \ 'coc-html',
+"       \ 'coc-json',
+"       \ 'coc-prettier',
+"       \ 'coc-python',
+"       \ 'coc-snippets',
+"       \ 'coc-tsserver',
+"       \ 'coc-ultisnips',
+"       \ 'coc-vimlsp',
+"       \ 'coc-yaml',
+"       \ ]
 " " }}}
 
 " Nvim LSP {{{
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-" Plug 'onsails/lspkind-nvim'
 Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-path'
+Plug 'onsails/lspkind-nvim'
+
+" For ultisnips users.
+Plug 'SirVer/ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+" set completeopt=menu,menuone,noselect
 
 " Plug 'glepnir/lspsaga.nvim'
-" Plug 'simrat39/symbols-outline.nvim'
+Plug 'tami5/lspsaga.nvim'
+Plug 'simrat39/symbols-outline.nvim'
 " }}}
 
 " Telescope {{{
@@ -124,6 +131,7 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " }}}
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'towolf/vim-helm'
 
 " Typescript Bundle {{{
@@ -264,10 +272,10 @@ set smartcase
 
 " Term color stuff
 if (has("nvim"))
-	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 if (has("termguicolors"))
-	set termguicolors
+  set termguicolors
 endif
 
 " Disable visualbell
@@ -394,7 +402,7 @@ nnoremap <leader>et :call EditDot("tmux/tmux.conf")<cr>
 nnoremap <silent> <leader>sh :terminal<CR>
 
 if has('nvim')
-	" Use escape to enter normal mode in a terminal buffer
+  " Use escape to enter normal mode in a terminal buffer
   tnoremap <Esc> <C-\><C-n>
   tnoremap <M-[> <Esc>
   tnoremap <C-v><Esc> <Esc>
@@ -439,12 +447,12 @@ augroup END
 augroup yaml
   autocmd!
   autocmd BufNewFile,BufRead *.yml,*.yaml setlocal filetype=helm
-	autocmd FileType yaml,helm :call ShortTab()
+  autocmd FileType yaml,helm :call ShortTab()
 augroup END
 
 augroup helm
-	autocmd!
-	autocmd FileType helm :setlocal commentstring=#\ %s
+  autocmd!
+  autocmd FileType helm :setlocal commentstring=#\ %s
 augroup END
 
 augroup cpp
@@ -470,7 +478,7 @@ augroup python
   autocmd FileType python :setlocal list foldmethod=indent
   autocmd FileType python :setlocal commentstring=#\ %s
   autocmd FileType python :call PyTab()
-	autocmd BufWritePre *.py execute ':Black'
+  autocmd BufWritePre *.py execute ':Black'
 augroup END
 
 augroup javascript
@@ -600,7 +608,7 @@ endfunction
 " Delayed to allow the tab to load before attempting to name it.
 " TablineTabRename cannot be called before the window comes up.
 augroup name-tab
-	autocmd VimEnter * call timer_start(200, { tid -> execute("lua require'sidneyw.lualine'.cwdTab()")})
+  autocmd VimEnter * call timer_start(200, { tid -> execute("lua require'sidneyw.lualine'.cwdTab()")})
 augroup end
 
 command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args>)
@@ -609,13 +617,13 @@ command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args
 cnoreabbr tabcd Tabcd
 
 function! ScratchFn(fileExt)
-	let curdate=system('date +%s')[:-2]
-	let buffName="scratch-" . curdate . "." . a:fileExt
-	execute "new " . l:buffName
+  let curdate=system('date +%s')[:-2]
+  let buffName="scratch-" . curdate . "." . a:fileExt
+  execute "new " . l:buffName
 
-	setlocal buftype=nofile
-	setlocal bufhidden=hide
-	setlocal noswapfile
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal noswapfile
 endfunction
 
 " remap scratch to Scratch
@@ -632,22 +640,22 @@ if !exists('*s:setupWrapping')
 endif
 
 function! EditVimrc()
-	let dotfilesDir = fnameescape($HOME . '/.dot_files/nvim/')
-	let initVim = l:dotfilesDir . fnameescape("init.vim")
-	let initLua = l:dotfilesDir . fnameescape('/lua/sidneyw/init.lua')
+  let dotfilesDir = fnameescape($HOME . '/.dot_files/nvim/')
+  let initVim = l:dotfilesDir . fnameescape("init.vim")
+  let initLua = l:dotfilesDir . fnameescape('/lua/sidneyw/init.lua')
 
-	exe "TablineTabNew " . l:initLua
-	" call TabCd(l:dotfilesDir)
-	" exe "edit " . l:initLua
-	exe "Glcd"
-	exe "vs " . l:initVim
-	exe "TablineTabRename DotFiles"
+  exe "TablineTabNew " . l:initLua
+  " call TabCd(l:dotfilesDir)
+  " exe "edit " . l:initLua
+  exe "Glcd"
+  exe "vs " . l:initVim
+  exe "TablineTabRename DotFiles"
 endfunction
 
 function! EditDot(file)
-	let path = $HOME . '/.dot_files/' . a:file
+  let path = $HOME . '/.dot_files/' . a:file
   execute "tabe " . fnameescape(l:path)
-	execute "Glcd"
+  execute "Glcd"
 endfunction
 
 " }}}
@@ -768,7 +776,7 @@ let g:bufferline_echo = 0
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
-" 				 \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"          \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " " Snippets
 " " Use <C-l> for trigger snippet expand.
@@ -798,8 +806,8 @@ let g:bufferline_echo = 0
 " omap ac <Plug>(coc-classobj-a)
 
 " augroup coc-go
-" 	autocmd BufWritePost *.go !go fmt %
-" 	autocmd BufWritePost *.go CocFix
+"   autocmd BufWritePost *.go !go fmt %
+"   autocmd BufWritePost *.go CocFix
 "   autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
 " augroup END
 
@@ -812,63 +820,48 @@ let g:bufferline_echo = 0
 
 " " }}}
 
-" Dap {{
+" Dap {{{
 nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dc :lua require('dap').continue()<CR>
 nnoremap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
 nnoremap <silent> <leader>dv :lua require"telescope".extensions.dap.variables{}<CR>
 nnoremap <silent> <leader>do :lua require("dapui").toggle()<CR>
-" }}
+" }}}
 
 " LSP {{{
 " Do this in lua?? maybe...
 " vim.o is short for something teej thinks makes sense.
-set completeopt=menu,menuone,noselect
+" set completeopt=menu,menuone,noselect
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
-" fun! LspLocationList()
-"     " lua vim.lsp.diagnostic.set_loclist({open_loclist = false})
-" endfun
+nnoremap <C-\> :SymbolsOutline<cr>
 
-nnoremap gd :lua vim.lsp.buf.definition()<CR>
-nnoremap gi :lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
-nnoremap gr :lua vim.lsp.buf.references()<CR>
-nnoremap <localleader>R :lua vim.lsp.buf.rename()<CR>
-" nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
-" nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
-" nnoremap <leader>vsd :lua vim.lsp.diagnostic.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
-" nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_next()<CR>
-" nnoremap <leader>vll :call LspLocationList()<CR>
+" nnoremap gd :lua vim.lsp.buf.definition()<CR>
+nnoremap go <cmd>Lspsaga preview_definition<CR>
+nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap ga <cmd>Lspsaga code_action<CR>
+nnoremap gt <cmd>lua vim.lsp.buf.type_definition()<CR>
 
-" augroup THE_PRIMEAGEN_LSP
-"     autocmd!
-"     autocmd! BufWrite,BufEnter,InsertLeave * :call LspLocationList()
-" augroup END
+nnoremap K     <cmd>Lspsaga hover_doc<CR>
+nnoremap <C-k> <cmd>Lspsaga signature_help<CR>
 
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
+nnoremap <silent> gi <cmd>lua require('sidneyw.telescope').implementations()<CR>
+nnoremap <silent> gr <cmd>lua require('sidneyw.telescope').references()<CR>
 
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.ultisnips = v:true
-let g:compe.source.luasnip = v:true
+nnoremap <localleader>dd :vsp<cr>:lua vim.lsp.buf.definition()<cr>
+nnoremap <localleader>dt :tab<cr>:lua vim.lsp.buf.definition()<cr>
+
+nnoremap <silent> gn <cmd>Lspsaga diagnostic_jump_next<CR>
+nnoremap <silent> gp <cmd>Lspsaga diagnostic_jump_prev<CR>
+
+nnoremap <silent> <C-u> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+nnoremap <silent> <C-d> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+
+augroup go-fmt
+	autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+	autocmd BufWritePre *.go lua require'sidneyw.lsp'.goimports(1000)
+augroup END
+
 " }}}
 "
 " Telescope {{{
@@ -882,41 +875,6 @@ nnoremap <leader>h  <cmd>lua require('telescope.builtin').help_tags()<CR>
 nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
 " nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
 " nnoremap <leader>i  <cmd>lua require('sidneyw.telescope').implementations()<CR>
-" }}}
-
-" Fzf {{{
-" set wildmode=list:longest,list:full
-" set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-
-
-" let g:fzf_colors =
-" \ { 'fg':      ['fg', 'Normal'],
-" 	\ 'bg':      ['bg', 'Normal'],
-" 	\ 'hl':      ['fg', 'Comment'],
-" 	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-" 	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-" 	\ 'hl+':     ['fg', 'Statement'],
-" 	\ 'info':    ['fg', 'PreProc'],
-" 	\ 'border':  ['fg', 'Ignore'],
-" 	\ 'prompt':  ['fg', 'Conditional'],
-" 	\ 'pointer': ['fg', 'Exception'],
-" 	\ 'marker':  ['fg', 'Keyword'],
-" 	\ 'spinner': ['fg', 'Label'],
-" 	\ 'header':  ['fg', 'Comment'] }
-
-" " Rip Grep
-" if executable('rg')
-" let $FZF_DEFAULT_COMMAND = 'rg --files'
-" endif
-
-" nnoremap <silent> <leader>a :Rg<CR>
-" nnoremap <silent> <leader>b :Buffers<CR>
-" nnoremap <silent> <leader>f :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
-" nnoremap <silent> <leader>y :call fzf#vim#gitfiles('?', fzf#vim#with_preview('right'))<CR>
-" nnoremap <silent> <leader>m :History -m<CR>
-" nnoremap <silent> <leader>c :Commands<CR>
-" nnoremap <silent> <leader>q :BLines<CR>
-" nnoremap <silent> <leader>w :Windows<CR>
 " }}}
 
 " Fugitive {{{
@@ -951,12 +909,6 @@ cnoreabbr Gcb Git co -b
 cnoreabbr Gstash Git stash
 " " }}}
 
-" Git Signs {{{
-lua <<EOF
-require('gitsigns').setup()
-EOF
-" }}}
-
 " Goyo {{{
 function! s:goyo_enter()
   silent !tmux set status off
@@ -978,203 +930,15 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " }}}
 
-" NVIM Tree {{{
-" let g:nvim_tree_side = 'right' "left by default
-
-"let g:nvim_tree_width = 40 "30 by default, can be width_in_columns or 'width_in_percent%'
-"let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
-"let g:nvim_tree_gitignore = 1 "0 by default
-"let g:nvim_tree_auto_open = 0 "0 by default, opens the tree when typing `vim $DIR` or `vim`
-"let g:nvim_tree_auto_close = 0 "0 by default, closes the tree when it's the last window
-"let g:nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ] "empty by default, don't auto open tree on specific filetypes.
-"let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
-"let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-"let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-"let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
-"let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-"let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-"let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-"let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
-"let g:nvim_tree_auto_resize = 0 "1 by default, will resize the tree to its saved width when opening a file
-"let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
-"let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
-"let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-"let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-"let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-"let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
-"let g:nvim_tree_hijack_cursor = 1 "1 by default, when moving cursor in the tree, will position the cursor at the start of the file on the current line
-"let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
-"let g:nvim_tree_update_cwd = 1 "0 by default, will update the tree cwd when changing nvim's directory (DirChanged event). Behaves strangely with autochdir set.
-"let g:nvim_tree_window_picker_exclude = {
-"    \   'filetype': [
-"    \     'packer',
-"    \     'qf'
-"    \   ],
-"    \   'buftype': [
-"    \     'terminal'
-"    \   ]
-"    \ }
-"" Dictionary of buffer option names mapped to a list of option values that
-"" indicates to the window picker that the buffer's window should not be
-"" selectable.
-"let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
-"let g:nvim_tree_show_icons = {
-"    \ 'git': 1,
-"    \ 'folders': 1,
-"    \ 'files': 1,
-"    \ 'folder_arrows': 1,
-"    \ }
-""If 0, do not show the icons for one of 'git' 'folder' and 'files'
-""1 by default, notice that if 'files' is 1, it will only display
-""if nvim-web-devicons is installed and on your runtimepath.
-""if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
-""but this will not work when you set indent_markers (because of UI conflict)
-
-"" default will show icon by default if no icon is provided
-"" default shows no icon by default
-"let g:nvim_tree_icons = {
-"    \ 'default': '',
-"    \ 'symlink': '',
-"    \ 'git': {
-"    \   'unstaged': "✗",
-"    \   'staged': "✓",
-"    \   'unmerged': "",
-"    \   'renamed': "➜",
-"    \   'untracked': "★",
-"    \   'deleted': "",
-"    \   'ignored': "◌"
-"    \   },
-"    \ 'folder': {
-"    \   'arrow_open': "",
-"    \   'arrow_closed': "",
-"    \   'default': "",
-"    \   'open': "",
-"    \   'empty': "",
-"    \   'empty_open': "",
-"    \   'symlink': "",
-"    \   'symlink_open': "",
-"    \   },
-"    \   'lsp': {
-"    \     'hint': "",
-"    \     'info': "",
-"    \     'warning': "",
-"    \     'error': "",
-"    \   }
-"    \ }
-
-nnoremap <C-n> :NvimTreeToggle<CR>
-" nnoremap <leader>r :NvimTreeRefresh<CR>
-
-"" a list of groups can be found at `:help nvim_tree_highlight`
-"highlight NvimTreeFolderIcon guibg=blue
-" }}}
-
 " UltiSnips {{{
 " ======================
 " set rtp^=$HOME
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<C-l>"
-let g:UltiSnipsJumpBackwardTrigger="<C-j>"
-let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsExpandTrigger="<C-k>"
+" let g:UltiSnipsJumpForwardTrigger="<C-l>"
+" let g:UltiSnipsJumpBackwardTrigger="<C-j>"
+" let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
 " }}}
-
-"  Vim Go {{{
-"" ===================
-"" run :GoBuild or :GoTestCompile based on the go file
-"function! s:build_go_files()
-"  let l:file = expand('%')
-"  if l:file =~# '^\f\+_test\.go$'
-"    call go#cmd#Test(0, 1)
-"  elseif l:file =~# '^\f\+\.go$'
-"    call go#cmd#Build(0)
-"  endif
-"endfunction
-"
-"" let g:go_def_mode = 'guru'
-"" let g:go_referrers_mode = 'guru'
-"" let g:go_implements_mode = 'guru'
-"let g:go_list_type = "quickfix"
-"" let g:go_fmt_fail_silently = 1
-"let g:go_fmt_command = "goimports"
-"
-"let g:go_auto_type_info = 1
-"" Uncomment to highlight variable references
-"" let g:go_auto_sameids = 1
-"let g:go_highlight_array_whitespace_error = 0
-"let g:go_highlight_build_constraints = 1
-"let g:go_highlight_extra_types = 1
-"let g:go_highlight_fields = 1
-"let g:echodoc#highlight_trailing = 1
-"let g:go_highlight_function_arguments = 1
-"let g:go_highlight_function_calls = 1
-"let g:go_highlight_functions = 1
-"let g:go_highlight_generate_tags = 1
-"let g:go_highlight_methods = 1
-"let g:go_highlight_operators = 1
-"let g:go_highlight_space_tab_error = 0
-"let g:go_highlight_structs = 1
-"let g:go_highlight_trailing_whitespace_error = 0
-"let g:go_highlight_types = 1
-"
-"let g:go_fmt_experimental = 1
-"let g:go_doc_popup_window = 1
-"let g:go_def_mapping_enabled = 1
-"let g:go_metalinter_disabled = []
-"let g:go_metalinter_autosave = 1
-"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-"
-"autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
-"
-"augroup completion_preview_close
-"  autocmd!
-"  if v:version > 703 || v:version == 703 && has('patch598')
-"    autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
-"  endif
-"augroup END
-"
-"augroup go
-"  au!
-"	autocmd BufWritePost *.go !go fmt %
-"	"" autocmd BufWritePost *.go CocFix
-"  " autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
-"	""
-"  au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-"  au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-"  au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-"  au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-"
-"	au Filetype go nmap <localleader>ae <Plug>(go-alternate-edit)
-"	au Filetype go nmap <localleader>ah <Plug>(go-alternate-split)
-"	au Filetype go nmap <localleader>a  <Plug>(go-alternate-vertical)
-"
-"	" gd = :GoDef
-"	" <C-t> :GoDefPop
-"	" K :GoDoc press enter to quit
-"	" :GoDescribe shows all information about a type
-"	" :GoChannelPeers shows all sends and recvs from a channel
-"	" :GoCallers :Gocallees show where functions are used
-"	" :GoWhichErrs shows what type an error might be
-"	" au Filetype go nnoremap <localleader>p :GoImport<space>
-"
-"  au FileType go nmap gt <Plug>(go-def-type)
-"  au FileType go nmap <localleader>dd <Plug>(go-def-vertical)
-"  au FileType go nmap <localleader>dv <Plug>(go-doc-vertical)
-"  au FileType go nmap <localleader>db <Plug>(go-doc-browser)
-"
-"  au FileType go nmap <localleader>r  <Plug>(go-run)
-"  " au FileType go nmap <localleader>n :GoReferrers<cr>
-"  au FileType go nmap <localleader>t  <Plug>(go-test)
-"  au FileType go nmap <localleader>c  <Plug>(go-coverage-toggle)
-"  " au FileType go nmap gi  <Plug>(go-implements)
-"  au FileType go nnoremap <silent> <localleader>l <Plug>(go-metalinter)
-"
-"  au FileType go nnoremap <localleader>gd :GoDeclsDir<cr>
-"
-"  au FileType go nnoremap <localleader>b :GoDebugBreakpoint<cr>
-"augroup END
-"" }}}
 
 " Vim Highlighted Yank {{{
 " ===================

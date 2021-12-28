@@ -1,7 +1,11 @@
+require"sidneyw.treesitter"
 require"sidneyw.telescope"
-require"sidneyw.lualine"
 require"sidneyw.nvim-tree"
+require"sidneyw.lualine"
 require"sidneyw.lsp"
+require"sidneyw.cmp"
+
+require"gitsigns".setup()
 
 require("dap-go").setup()
 require("nvim-dap-virtual-text").setup()
@@ -9,19 +13,11 @@ require("dapui").setup()
 
 vim.notify = require("notify")
 
-require"nvim-treesitter.configs".setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,
-    disable = { "yaml", "helm" },
-  },
-  indent = {
-    enable = true
-  }
+require"symbols-outline".setup{
+	highlight_hovered_item = false,
+	width = 30,
+	show_numbers = true,
 }
-
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- require("bufferline").setup{
 --   options = {

@@ -73,13 +73,15 @@ end
 M.implementations = function(opts)
   opts = opts or {}
   local themed_opts = themes.get_ivy(opts)
-  telescope.extensions.coc.implementations(themed_opts)
+  -- telescope.extensions.coc.implementations(themed_opts)
+	require"telescope.builtin".lsp_implementations(themed_opts)
 end
 
 M.references = function(opts)
   opts = opts or {}
   local themed_opts = themes.get_ivy(opts)
-  telescope.extensions.coc.references(themed_opts)
+  -- telescope.extensions.coc.references(themed_opts)
+	require"telescope.builtin".lsp_references(themed_opts)
 end
 
 M.search_dotfiles = function()
