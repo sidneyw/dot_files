@@ -726,100 +726,6 @@ let g:black_linelength=100
 let g:bufferline_echo = 0
 " }}}
 
-" " Coc.nvim {{{
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   elseif (coc#rpc#ready())
-"     call CocActionAsync('doHover')
-"   else
-"     execute '!' . &keywordprg . " " . expand('<cword>')
-"   endif
-" endfunction
-
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-" augroup coc
-"   autocmd!
-"   " Update signature help on jump placeholder
-"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-" augroup end
-
-" " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" " Use `gp` and `gn` for navigate diagnostics
-" nmap <silent> gp <Plug>(coc-diagnostic-prev)
-" nmap <silent> gn <Plug>(coc-diagnostic-next)
-
-" " Remap keys for gotos
-" nmap <silent> gd <Plug>(coc-definition)
-" nnoremap <silent> <localleader>dd :call CocAction('jumpDefinition', 'vsplit')<CR>
-" nnoremap <silent> <localleader>dt :call CocAction('jumpDefinition', 'tabe')<CR>
-
-" nmap <silent> gt <Plug>(coc-type-definition)
-" " nmap <silent> gi <Plug>(coc-implementation)
-" " nmap <silent> gr <Plug>(coc-references)
-
-" nmap <silent> gi <cmd>lua require('sidneyw.telescope').implementations()<CR>
-" nmap <silent> gr <cmd>lua require('sidneyw.telescope').references()<CR>
-
-" vmap <localleader>p  <Plug>(coc-format-selected)
-" nmap <localleader>p  <Plug>(coc-format-selected)
-
-" command! -nargs=0 Format :call CocAction('format')<Paste>
-
-" " " Remap for rename current word
-" nmap <localleader>R <Plug>(coc-rename)
-
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
-"          \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" " Snippets
-" " Use <C-l> for trigger snippet expand.
-" imap <C-l> <Plug>(coc-snippets-expand)
-
-" " Use <C-j> for select text for visual placeholder of snippet.
-" vmap <C-j> <Plug>(coc-snippets-select)
-
-" " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-" let g:coc_snippet_next = '<c-l>'
-
-" " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-" let g:coc_snippet_prev = '<c-j>'
-
-" " Use <C-j> for both expand and jump (make expand higher priority.)
-" imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" " Map function and class text objects
-" " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-" xmap if <Plug>(coc-funcobj-i)
-" omap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap af <Plug>(coc-funcobj-a)
-" xmap ic <Plug>(coc-classobj-i)
-" omap ic <Plug>(coc-classobj-i)
-" xmap ac <Plug>(coc-classobj-a)
-" omap ac <Plug>(coc-classobj-a)
-
-" augroup coc-go
-"   autocmd BufWritePost *.go !go fmt %
-"   autocmd BufWritePost *.go CocFix
-"   autocmd BufWritePost *.go silent! call CocAction('runCommand', 'editor.action.organizeImport')
-" augroup END
-
-" noremap <localleader>gt :call GoTestToggle()<CR>
-
-" function! GoTestToggle()
-"   execute "vsplit"
-"   execute "CocCommand go.test.toggle"
-" endfunction
-
-" " }}}
-
 " Dap {{{
 nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dc :lua require('dap').continue()<CR>
@@ -863,7 +769,11 @@ augroup go-fmt
 augroup END
 
 " }}}
-"
+
+" NVIM Tree {{{
+nnoremap <C-n> :NvimTreeFindFileToggle<CR>
+" }}}
+
 " Telescope {{{
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('sidneyw.telescope').project_files()<CR>
