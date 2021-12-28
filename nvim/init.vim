@@ -663,60 +663,6 @@ endfunction
 " Plugins {{{
 " ===================
 
-" Airline {{{
-" ======================
-
-" badwolf
-" dark
-" durant
-" luna
-" murmur
-" sky
-" wombat
-" powerlineish
-
-" let g:airline_theme = 'badwolf'
-" let g:airline#extensions#branch#enabled = 1
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#coc#enabled = 1
-" let g:airline_skip_empty_sections = 1
-
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-
-" if !exists('g:airline_powerline_fonts')
-"   let g:airline#extensions#tabline#left_sep = ' '
-"   let g:airline#extensions#tabline#left_alt_sep = '|'
-"   " let g:airline_left_sep          = '▶'
-"   let g:airline_left_alt_sep      = '»'
-"   " let g:airline_right_sep         = '◀'
-"   let g:airline_right_alt_sep     = '«'
-"   let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-"   let g:airline#extensions#readonly#symbol   = '⊘'
-"   let g:airline#extensions#linecolumn#prefix = '¶'
-"   let g:airline#extensions#paste#symbol      = 'ρ'
-"   let g:airline_symbols.linenr    = '␊'
-"   let g:airline_symbols.branch    = '⎇'
-"   let g:airline_symbols.paste     = 'ρ'
-"   let g:airline_symbols.paste     = 'Þ'
-"   let g:airline_symbols.paste     = '∥'
-"   let g:airline_symbols.whitespace = 'Ξ'
-" else
-"   let g:airline#extensions#tabline#left_sep = ''
-"   let g:airline#extensions#tabline#left_alt_sep = ''
-
-"   " powerline symbols
-"   let g:airline_left_sep = ''
-"   let g:airline_left_alt_sep = ''
-"   let g:airline_right_sep = ''
-"   let g:airline_right_alt_sep = ''
-"   let g:airline_symbols.branch = ''
-"   let g:airline_symbols.readonly = ''
-"   let g:airline_symbols.linenr = ''
-" endif
-" }}}
-
 " Black {{{
 let g:black_linelength=100
 " }}}
@@ -735,14 +681,10 @@ nnoremap <silent> <leader>do :lua require("dapui").toggle()<CR>
 " }}}
 
 " LSP {{{
-" Do this in lua?? maybe...
-" vim.o is short for something teej thinks makes sense.
-" set completeopt=menu,menuone,noselect
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 nnoremap <C-\> :SymbolsOutline<cr>
 
-" nnoremap gd :lua vim.lsp.buf.definition()<CR>
 nnoremap go <cmd>Lspsaga preview_definition<CR>
 nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap ga <cmd>Lspsaga code_action<CR>
@@ -751,8 +693,8 @@ nnoremap gt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap K     <cmd>Lspsaga hover_doc<CR>
 nnoremap <C-k> <cmd>Lspsaga signature_help<CR>
 
-nnoremap <silent> gi <cmd>lua require('sidneyw.telescope').implementations()<CR>
-nnoremap <silent> gr <cmd>lua require('sidneyw.telescope').references()<CR>
+nnoremap <silent> gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
+nnoremap <silent> gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
 
 nnoremap <localleader>dd :vsp<cr>:lua vim.lsp.buf.definition()<cr>
 nnoremap <localleader>dt :tab<cr>:lua vim.lsp.buf.definition()<cr>

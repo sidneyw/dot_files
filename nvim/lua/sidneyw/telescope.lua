@@ -8,17 +8,6 @@ require("telescope").setup({
         grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
         qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
-        vimgrep_arguments = {
-          "rg",
-          "--color=never",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-          "--smart-case",
-          "--hidden",
-        },
-
         layout_strategy = "flex",
 
         mappings = {
@@ -36,8 +25,16 @@ require("telescope").setup({
         -- theme = "ivy",
       },
       live_grep = {
-        path_display = "truncate"
+        path_display = "smart"
       },
+      lsp_implementations = {
+        theme = "ivy",
+        initial_mode = "normal"
+      },
+      lsp_references = {
+        theme = "ivy",
+        initial_mode = "normal"
+      }
     },
     extensions = {
       -- fzy_native = {
@@ -74,14 +71,14 @@ M.implementations = function(opts)
   opts = opts or {}
   local themed_opts = themes.get_ivy(opts)
   -- telescope.extensions.coc.implementations(themed_opts)
-	require"telescope.builtin".lsp_implementations(themed_opts)
+  require"telescope.builtin".lsp_implementations(themed_opts)
 end
 
 M.references = function(opts)
   opts = opts or {}
   local themed_opts = themes.get_ivy(opts)
   -- telescope.extensions.coc.references(themed_opts)
-	require"telescope.builtin".lsp_references(themed_opts)
+  require"telescope.builtin".lsp_references(themed_opts)
 end
 
 M.search_dotfiles = function()
