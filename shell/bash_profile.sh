@@ -135,6 +135,7 @@ test -f "$gruvbox_colors" && source $gruvbox_colors
 
 # Global Variables {{{
 # ====================================
+export DOT_FILES='$HOME/.dot_files/'
 export VIMRC='$HOME/.dot_files/nvim/init.vim'
 export VIMRC_LUA='/Users/sidneyw/.dot_files/nvim/lua/sidneyw/init.lua'
 export tmux='$HOME/.dot_files/tmux/tmux.conf'
@@ -152,7 +153,7 @@ export EDITOR='nvim'
 alias v='nvim'
 alias vim='nvim'
 alias ebash='nvim ~/.bash_profile'
-alias evim="nvim $VIMRC $VIMRC_LUA -O"
+alias evim="cd $DOT_FILES; nvim $VIMRC $VIMRC_LUA -O; cd -"
 
 # Tmux
 alias tmux='tmux -2'
