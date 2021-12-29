@@ -511,6 +511,11 @@ augroup vim
   autocmd FileType vim :setlocal foldmethod=marker
   " autocmd FileType vim :setlocal foldlevelstart=0
 augroup END
+
+augroup snippets
+	autocmd!
+	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
+augroup END
 " }}}
 
 " Color Scheme {{{
