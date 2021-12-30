@@ -68,12 +68,14 @@ Plug 'Shougo/denite.nvim'
 
 " Nvim LSP {{{
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
 Plug 'nvim-lua/lsp_extensions.nvim'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-path'
 Plug 'onsails/lspkind-nvim'
+
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-path'
 
 " For ultisnips users.
 Plug 'SirVer/ultisnips'
@@ -516,6 +518,12 @@ augroup snippets
 	autocmd!
 	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
 augroup END
+
+augroup telescope
+	autocmd!
+	" Turn off auto complete for Telescope prompts
+	autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { completion = { autocomplete = false } }
+augroup END
 " }}}
 
 " Color Scheme {{{
@@ -723,12 +731,12 @@ nnoremap <C-n> :NvimTreeFindFileToggle<CR>
 
 " Telescope {{{
 " Find files using Telescope command-line sugar.
-nnoremap <C-p> <cmd>lua require('sidneyw.telescope').project_files()<CR>
-nnoremap <leader>f <cmd>lua require('sidneyw.telescope').project_files()<CR>
+nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR>
+nnoremap <leader>f  <cmd>lua require('sidneyw.telescope').project_files()<CR>
 nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
 nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
-nnoremap <leader>h  <cmd>lua require('telescope.builtin').help_tags()<CR>
+nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR>
 nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
 " nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
 " nnoremap <leader>i  <cmd>lua require('sidneyw.telescope').implementations()<CR>

@@ -2,8 +2,8 @@ require"sidneyw.treesitter"
 require"sidneyw.telescope"
 require"sidneyw.nvim-tree"
 require"sidneyw.lualine"
-require"sidneyw.lsp"
 require"sidneyw.cmp"
+require"sidneyw.lsp"
 
 require"gitsigns".setup()
 
@@ -33,3 +33,4 @@ require"symbols-outline".setup{
 --     diagnostics = "coc",
 --   }
 -- }
+
