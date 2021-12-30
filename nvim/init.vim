@@ -29,7 +29,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 " NVIM Tree {{{
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
-" Plug 'kyazdani42/nvim-tree.lua', { 'tag': 'c75e4a63b73f223a80835ab3b75f602dc3e60e66' }
 " }}}
 
 " Tpope {{{
@@ -44,27 +43,6 @@ Plug 'tpope/vim-unimpaired'
 " Shougo {{{
 Plug 'Shougo/denite.nvim'
 " }}}
-
-" " Coc {{{
-" " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" " \ 'coc-go',
-" let g:coc_global_extensions = [
-"       \ 'coc-lua',
-"       \ 'coc-css',
-"       \ 'coc-emmet',
-"       \ 'coc-html',
-"       \ 'coc-json',
-"       \ 'coc-prettier',
-"       \ 'coc-python',
-"       \ 'coc-snippets',
-"       \ 'coc-tsserver',
-"       \ 'coc-ultisnips',
-"       \ 'coc-vimlsp',
-"       \ 'coc-yaml',
-"       \ ]
-" " }}}
 
 " Nvim LSP {{{
 Plug 'neovim/nvim-lspconfig'
@@ -96,15 +74,12 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-telescope/telescope-dap.nvim'
-" Plug 'fannheyward/telescope-coc.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
 " }}}
 
 " Lualine {{{
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kdheepak/tabline.nvim'
-" Plug 'akinsho/bufferline.nvim'
-" Plug 'romgrk/barbar.nvim'
 " }}}
 
 Plug 'liuchengxu/vista.vim'
@@ -127,8 +102,6 @@ Plug 'mattn/emmet-vim'
 " }}}
 
 " Javascript Bundle {{{
-" Plug 'othree/yajs.vim'
-" Plug 'elzr/vim-json', { 'for': ['javascript', 'javascript.jsx', 'json'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " }}}
 
@@ -137,7 +110,6 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'towolf/vim-helm'
 
 " Typescript Bundle {{{
-" Plug 'leafgarland/typescript-vim'
 Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
@@ -147,10 +119,6 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 " }}}
 
 " Other {{{
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'airblade/vim-gitgutter'
-
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 
@@ -704,7 +672,7 @@ nnoremap ga <cmd>Lspsaga code_action<CR>
 nnoremap gt <cmd>lua vim.lsp.buf.type_definition()<CR>
 
 nnoremap K     <cmd>Lspsaga hover_doc<CR>
-nnoremap <C-k> <cmd>Lspsaga signature_help<CR>
+nnoremap <C-s> <cmd>Lspsaga signature_help<CR>
 
 nnoremap <silent> gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
 nnoremap <silent> gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
