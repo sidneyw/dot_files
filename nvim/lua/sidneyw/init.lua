@@ -5,6 +5,8 @@ require"sidneyw.lualine"
 require"sidneyw.cmp"
 require"sidneyw.lsp"
 
+require('Comment').setup()
+
 require"gitsigns".setup()
 
 require("dap-go").setup()

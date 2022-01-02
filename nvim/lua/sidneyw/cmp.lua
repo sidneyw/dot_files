@@ -17,13 +17,27 @@ cmp.setup {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
 
+		-- Recommended supertab-like configuration.
+		-- ["<Tab>"] = cmp.mapping(
+		-- 	function(fallback)
+		-- 		cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+		-- 	end,
+		-- 	{ "i", "s" }
+		-- ),
+		-- ["<S-Tab>"] = cmp.mapping(
+		-- 	function(fallback)
+		-- 		cmp_ultisnips_mappings.jump_backwards(fallback)
+		-- 	end,
+		-- 	{ "i", "s" }
+		-- ),
+
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-,>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,
@@ -33,14 +47,14 @@ cmp.setup {
     ["<C-k>"] = cmp.mapping(
       function (fallback)
         cmp_ultisnips_mappings.compose({ "expand", "jump_forwards" })(fallback)
-      end
-    ),
+      end,
+    { "i", "s" }),
 
     ["<C-j>"] = cmp.mapping(
       function (fallback)
         cmp_ultisnips_mappings.compose({ "jump_backwards" })(fallback)
-      end
-    ),
+      end,
+    { "i", "s" }),
   },
 
   sources = {

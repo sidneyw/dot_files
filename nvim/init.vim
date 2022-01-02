@@ -32,7 +32,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 " }}}
 
 " Tpope {{{
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
@@ -48,6 +48,7 @@ Plug 'Shougo/denite.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'onsails/lspkind-nvim'
+Plug 'tjdevries/nlua.nvim'
 
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
@@ -121,6 +122,7 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 " Other {{{
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'numToStr/Comment.nvim'
 
 Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
