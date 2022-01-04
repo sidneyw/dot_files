@@ -108,6 +108,9 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
+
 Plug 'towolf/vim-helm'
 
 " Typescript Bundle {{{
