@@ -68,7 +68,7 @@ require"nvim-treesitter.configs".setup {
   },
 	refactor = {
     -- highlight the definition or other usages of what's underneath the cursor
-    highlight_definitions = { enable = true },
+    highlight_definitions = { enable = false },
   },
 }
 
