@@ -4,16 +4,11 @@ require"sidneyw.nvim-tree"
 require"sidneyw.lualine"
 require"sidneyw.cmp"
 require"sidneyw.lsp"
+require"sidneyw.dap"
 
-require('Comment').setup()
+require"Comment".setup()
 
 require"gitsigns".setup()
-
-require("dap-go").setup()
-require("nvim-dap-virtual-text").setup()
-require("dapui").setup()
-
-vim.notify = require("notify")
 
 require"symbols-outline".setup{
 	highlight_hovered_item = false,
@@ -21,18 +16,4 @@ require"symbols-outline".setup{
 	show_numbers = true,
 }
 
--- require("bufferline").setup{
---   options = {
---     offsets = {
---       {
---         filetype = "NvimTree",
---         -- text = "File Explorer",
---         -- text_align = "center",
---       }
---     },
---    show_close_icon = true,
---     separator_style = "slant",
---     diagnostics = "coc",
---   }
--- }
-
+vim.notify = require"notify"

@@ -17,9 +17,19 @@ lualine.setup{
   },
 }
 
+vim.cmd [[ nnoremap ]b :TablineBufferNext<CR> ]]
+vim.cmd [[ nnoremap [b :TablineBufferPrevious<CR> ]]
+
 local M = {}
 
-M.tabcd = function (directory)
+function M.cwdTab()
+	local basename = vim.fn.system("basename $(pwd)")
+	basename = vim.fn.substitute(basename, "\n$", "", "")
+	tabline.tab_rename(basename)
+	tabline.toggle_show_all_buffers()
+end
+
+function M.tabcd(directory)
 	if vim.fn.isdirectory(directory) ~= 1 then
 		print(directory .. " is not a directory")
 		notify(directory .. " is not a directory", "error")
@@ -27,19 +37,11 @@ M.tabcd = function (directory)
 	end
 
 	tabline.tab_new(directory .. "/.")
-	local newDirName = vim.fn.expand("%:p:h:t")
 
-	tabline.tab_rename(newDirName)
-
-  local ok = pcall(vim.cmd, "Glcd")
+	local ok = pcall(vim.cmd, "Glcd")
 	if not ok then vim.cmd("lcd %:p:h") end
-end
 
-M.cwdTab = function ()
-	local basename = vim.fn.system("basename $(pwd)")
-	basename = vim.fn.substitute(basename, "\n$", "", "")
-	tabline.tab_rename(basename)
-	tabline.toggle_show_all_buffers()
+	M.cwdTab()
 end
 
 return M
