@@ -75,6 +75,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-telescope/telescope-dap.nvim'
+
+Plug 'dhruvmanila/telescope-bookmarks.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
 " }}}
 
@@ -656,14 +658,6 @@ let g:black_linelength=100
 " Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
-" }}}
-
-" Dap {{{
-nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <leader>dc :lua require('dap').continue()<CR>
-nnoremap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
-nnoremap <silent> <leader>dv :lua require"telescope".extensions.dap.variables{}<CR>
-nnoremap <silent> <leader>do :lua require("dapui").toggle()<CR>
 " }}}
 
 " LSP {{{
