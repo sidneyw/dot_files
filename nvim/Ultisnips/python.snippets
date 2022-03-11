@@ -24,20 +24,20 @@ snippet simg "Starlark image tag"
 },
 endsnippet
 
-snippet trl "Starlark template ref" 
+snippet trl "Starlark template ref"
 "templateRef": "${1:local}",$0
 endsnippet
 
-snippet cdaemon "Starlark collector daemonset"
+snippet promremotebench "Starlark promremotebench with collectors"
 annotationsPrefix = "collector-rc-$1.io"
 collectorAnnotationsPrefix = annotationsPrefix + "/"
 
-services = {
+SERVICES = {
     "chronocollector-daemonset": {
         "enabled": True,
         "runOnDedicatedNodes": True,
         "gatewayAddress": "rc-$1.chronosphere.io:443",
-        "kubernetesClusterName": parent_global_cfg["global"]["kubeCluster"],
+        "kubernetesClusterName": PARENT_GLOBAL_CFG["global"]["kubeCluster"],
         "kubernetesProcessorAnnotationsPrefix": collectorAnnotationsPrefix,
         # Ensure that collector daemonset pods will kick other pods off the
         # nodes.
@@ -48,5 +48,15 @@ services = {
         "image": {
             "tag": "$2",
         },
+    },
+    "promremotebench": {
+        "enabled": True,
+        "enableQuery": False,
+        "runOnDedicatedNodes": True,
+        "replicaCount": 25,
+        "annotationsPrefix": annotationsPrefix,
+        "numHosts": 5,
+        "newSeriesPercent": 0.0,
+        "kubernetesClusterName": PARENT_GLOBAL_CFG["global"]["kubeCluster"],
     },
 endsnippet

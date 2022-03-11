@@ -363,7 +363,6 @@ export PATH=$PATH:$GOROOT/bin
 export GO111MODULE=on
 
 # Rust Cargo
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # Yarn bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -384,3 +383,4 @@ test -f "$local_conf" && source "$local_conf"
 [[ -s "/Users/sidneyw/.gvm/scripts/gvm" ]] && source "/Users/sidneyw/.gvm/scripts/gvm"
 
 alias luamake=/Users/sidneyw/tools/sumneko/lua-language-server/3rd/luamake/luamake
+. "$HOME/.cargo/env"

@@ -2,6 +2,11 @@ local actions = require("telescope.actions")
 local telescope = require("telescope")
 local themes = require("telescope.themes")
 
+local symbols = {
+	telescope = "",
+	github = "",
+}
+
 require("telescope").setup({
     defaults = {
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -25,7 +30,8 @@ require("telescope").setup({
         -- theme = "ivy",
       },
       live_grep = {
-        path_display = "smart"
+        path_display = {"smart"},
+				prompt_prefix = symbols.telescope,
       },
       lsp_implementations = {
         theme = "ivy",
@@ -37,19 +43,38 @@ require("telescope").setup({
       }
     },
     extensions = {
-      -- fzy_native = {
-      --     override_generic_sorter = false,
-      --     override_file_sorter = true,
+      fzy_native = {
+          override_generic_sorter = false,
+          override_file_sorter = true,
+      },
+      -- fzf = {
+      --   fuzzy = true,
+      --   override_generic_sorter = true,
+      --   override_file_sorter = true,
+      --   case_mode = "smart_case",
       -- },
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = "smart_case",
+
+      bookmarks = {
+        -- Available: 'brave', 'google_chrome', 'safari', 'firefox'
+        selected_browser = 'brave',
+
+        -- Either provide a shell command to open the URL
+        url_open_command = 'open',
+
+        -- Or provide the plugin name which is already installed
+        -- Available: 'vim_external', 'open_browser'
+        url_open_plugin = nil,
+
+        -- Show the full path to the bookmark instead of just the bookmark name
+        full_path = true,
+
+        -- Provide a custom profile name for Firefox
+        firefox_profile_name = nil,
       },
     },
 })
 
+-- Extensions
 -- require("telescope").load_extension("git_worktree")
 telescope.load_extension("fzf")
 -- telescope.load_extension("fzy_native")
@@ -58,27 +83,28 @@ telescope.load_extension('gh')
 telescope.load_extension('ultisnips')
 telescope.load_extension('dap')
 telescope.load_extension("notify")
+telescope.load_extension("bookmarks")
 
+
+-- Mappings
+vim.cmd [[ nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR> ]]
+vim.cmd [[ nnoremap <leader>f  <cmd>lua require('sidneyw.telescope').project_files()<CR> ]]
+vim.cmd [[ nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR> ]]
+vim.cmd [[ nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR> ]]
+vim.cmd [[ nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR> ]]
+vim.cmd [[ nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR> ]]
+vim.cmd [[ nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR> ]]
+
+vim.cmd [[ cnoreabbr Tele Telescope ]]
+vim.cmd [[ cnoreabbr tele Telescope ]]
+
+-- Custom Functions
 local M = {}
 
 M.project_files = function(opts)
   opts = opts or {}
   local ok = pcall(require"telescope.builtin".git_files, opts)
   if not ok then require"telescope.builtin".find_files(opts) end
-end
-
-M.implementations = function(opts)
-  opts = opts or {}
-  local themed_opts = themes.get_ivy(opts)
-  -- telescope.extensions.coc.implementations(themed_opts)
-  require"telescope.builtin".lsp_implementations(themed_opts)
-end
-
-M.references = function(opts)
-  opts = opts or {}
-  local themed_opts = themes.get_ivy(opts)
-  -- telescope.extensions.coc.references(themed_opts)
-  require"telescope.builtin".lsp_references(themed_opts)
 end
 
 M.search_dotfiles = function()

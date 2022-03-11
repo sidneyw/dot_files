@@ -56,6 +56,8 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-path'
 
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
 " For ultisnips users.
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
@@ -71,7 +73,7 @@ Plug 'simrat39/symbols-outline.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-" Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-telescope/telescope-dap.nvim'
@@ -89,10 +91,6 @@ Plug 'liuchengxu/vista.vim'
 let g:vista_sidebar_width = 50
 let g:vista_fzf_preview = ['right:50%']
 
-" Junegunn {{{
-Plug 'junegunn/goyo.vim'
-"}}} 
-
 " Go Lang Bundle {{{
 " Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 let g:go_bin_path= $HOME . "/go/bin"
@@ -104,14 +102,12 @@ Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
 " }}}
 
-" Javascript Bundle {{{
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-" }}}
-
+" Treesitter {{{{
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
+" }}}}
 
 Plug 'towolf/vim-helm'
 
@@ -120,8 +116,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 " }}}
 
 " Python Bundle {{{
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-Plug 'psf/black', { 'tag': '19.10b0' }
+" Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " }}}
 
 " Other {{{
@@ -131,10 +126,9 @@ Plug 'numToStr/Comment.nvim'
 
 Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'Raimondi/delimitMate'
 Plug 'machakann/vim-highlightedyank'
-Plug 'Yggdroot/indentLine'
 Plug 'kristijanhusak/vim-carbon-now-sh'
+Plug 'windwp/nvim-autopairs'
 let g:carbon_now_sh_options = {'t': 'monokai'}
 let g:make = 'gmake'
 if exists('make')
@@ -165,9 +159,6 @@ Plug 'leoluz/nvim-dap-go'
 Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-
 
 " Include user's extra bundle
 if filereadable(expand("~/.config/nvim/local_bundles.vim"))
@@ -202,7 +193,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-set autoindent                  " Sets autoindent
+" set autoindent                  " Sets autoindent
 set colorcolumn=80      " Turn on the colored column at column 80
 set cursorline
 set nowrap              " Turn off line wraps
@@ -455,7 +446,7 @@ augroup python
   autocmd FileType python :setlocal list foldmethod=indent
   autocmd FileType python :setlocal commentstring=#\ %s
   autocmd FileType python :call PyTab()
-  autocmd BufWritePre *.py execute ':Black'
+  " autocmd BufWritePre *.py execute ':Black'
 augroup END
 
 augroup javascript
@@ -464,12 +455,6 @@ augroup javascript
   autocmd FileType javascript setlocal foldmethod=syntax
   " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
   " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.yml,*.html Prettier
-augroup END
-
-augroup bash
-  autocmd!
-  autocmd FileType sh :setlocal commentstring=#\ %s
-  autocmd FileType sh :nnoremap <buffer> <leader>t :!%<cr>
 augroup END
 
 augroup html
@@ -596,7 +581,7 @@ endfunction
 " Delayed to allow the tab to load before attempting to name it.
 " TablineTabRename cannot be called before the window comes up.
 augroup name-tab
-  autocmd VimEnter * call timer_start(200, { tid -> execute("lua require'sidneyw.lualine'.cwdTab()")})
+  autocmd VimEnter * call timer_start(200, { tid -> execute("lua require'sidneyw.lualine'.cwdTab(false, true)")})
 augroup end
 
 command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args>)
@@ -645,7 +630,6 @@ function! EditDot(file)
   execute "tabe " . fnameescape(l:path)
   execute "Glcd"
 endfunction
-
 " }}}
 
 " Plugins {{{
@@ -669,6 +653,9 @@ nnoremap go <cmd>Lspsaga preview_definition<CR>
 nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap ga <cmd>Lspsaga code_action<CR>
 nnoremap gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <localleader>R <cmd>lua vim.lsp.buf.rename()<CR>
+" for some reason the lsp saga rename window isn't able to accept backspaces
+" nnoremap <localleader>R <cmd>Lspsaga rename<CR>
 
 nnoremap K     <cmd>Lspsaga hover_doc<CR>
 nnoremap <C-s> <cmd>Lspsaga signature_help<CR>
@@ -685,28 +672,11 @@ nnoremap <silent> gp <cmd>Lspsaga diagnostic_jump_prev<CR>
 nnoremap <silent> <C-u> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 nnoremap <silent> <C-d> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
 
-augroup go-fmt
-	autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-	autocmd BufWritePre *.go lua require'sidneyw.lsp'.goimports(1000)
-augroup END
+" augroup go-fmt
+" 	autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+" 	autocmd BufWritePre *.go lua require'sidneyw.lsp'.goimports(1000)
+" augroup END
 
-" }}}
-
-" NVIM Tree {{{
-nnoremap <C-n> :NvimTreeFindFileToggle<CR>
-" }}}
-
-" Telescope {{{
-" Find files using Telescope command-line sugar.
-nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR>
-nnoremap <leader>f  <cmd>lua require('sidneyw.telescope').project_files()<CR>
-nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
-nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
-nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
-nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR>
-nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
-" nnoremap <leader>fv <cmd>lua require('sidneyw.telescope').search_dotfiles({ hidden = true })<CR>
-" nnoremap <leader>i  <cmd>lua require('sidneyw.telescope').implementations()<CR>
 " }}}
 
 " Fugitive {{{
@@ -740,27 +710,6 @@ cnoreabbr Gcommit Git commit
 cnoreabbr Gcb Git co -b
 cnoreabbr Gstash Git stash
 " " }}}
-
-" Goyo {{{
-function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-endfunction
-
-function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  set showmode
-  set showcmd
-  set scrolloff=5
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-" }}}
 
 " UltiSnips {{{
 " ======================
