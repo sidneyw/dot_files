@@ -1,5 +1,4 @@
 require("sidneyw.treesitter")
-require("sidneyw.telescope")
 require("sidneyw.nvim-tree")
 require("sidneyw.lualine")
 require("sidneyw.cmp")
@@ -21,3 +20,4 @@ require("symbols-outline").setup({
 })
 
 vim.notify = require("notify")
+require("sidneyw.telescope")

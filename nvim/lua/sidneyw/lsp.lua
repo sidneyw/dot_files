@@ -99,8 +99,8 @@ lspsaga.init_lsp_saga({
 -- to vim help via the lsp.
 require("nlua.lsp.nvim").setup(lspconfig, {
 	cmd = {
-		"/Users/sidneyw/tools/sumneko/lua-language-server/bin/lua-language-server",
-		"-E",
-		"/Users/sidneyw/tools/sumneko/lua-language-server/bin/main.lua",
-	},
+		"/Users/sidney/.dot_files/tools/lua-language-server/bin/lua-language-server",
+    "-E",
+		"/Users/sidney/.dot_files/tools/lua-language-server/bin/main.lua"
+  },
 })

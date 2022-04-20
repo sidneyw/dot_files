@@ -3,30 +3,6 @@ set -x
 
 # Quick install script for mac
 
-# Install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-
-# Brew install all packages
-brew upgrade
-
-brew install \
-	pyenv \
-	pyenv-virtualenv \
-	bat \
-	nvm \
-	go \
-	autojump \
-	bash-completion \
-	fzf \
-	git \
-	htop \
-	neovim \
-	ripgrep \
-	tmux
-
-$(brew --prefix)/opt/fzf/install
-
 # Creates symlinks for dotfiles
 DOT_FILES="$HOME/.dot_files"
 
@@ -54,22 +30,25 @@ else
 	ln -s $DOT_FILES/shell/local_bin ~/local_bin
 fi
 
+$(brew --prefix)/opt/fzf/install
+
+luarocks install luacheck
+
 # Install Node 10
 nvm install 10
 npm i -g prettier dockerfile-language-server-nodejs bash-language-server
-brew install yarn
 
 # Install Python
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_VERSION=3.8.5
+export PYENV_VERSION=3.10.2
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 fi
 
-pyenv install 3.8.5
-pyenv virtualenv 3.8.5 workspace
+pyenv install 3.10.2
+pyenv virtualenv 3.10.2 workspace
 pyenv activate workspace
 
 # Set up go mono repo
@@ -80,7 +59,7 @@ mkdir -p "$HOME/go/src"
 
 # Install Vim Plugins
 pip install pynvim
-nvim +PlugInstall +GoInstallBinaries +qa
+nvim +PlugInstall +qa
 
 # Increase Key Repeat
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)

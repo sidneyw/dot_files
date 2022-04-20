@@ -31,7 +31,8 @@
 	rim = rebase -i origin/master
 	st = status
 [core]
-	editor = /usr/local/bin/nvim
+	editor = /opt/homebrew/bin/nvim
+
 	excludesfile = ~/.gitignore
 [url "git@github.com:"]
 	insteadOf = https://github.com/

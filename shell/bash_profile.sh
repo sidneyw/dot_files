@@ -135,10 +135,10 @@ test -f "$gruvbox_colors" && source $gruvbox_colors
 
 # Global Variables {{{
 # ====================================
-export DOT_FILES='$HOME/.dot_files/'
-export VIMRC='$HOME/.dot_files/nvim/init.vim'
-export VIMRC_LUA='/Users/sidneyw/.dot_files/nvim/lua/sidneyw/init.lua'
-export tmux='$HOME/.dot_files/tmux/tmux.conf'
+export DOT_FILES="$HOME/.dot_files/"
+export VIMRC="$DOT_FILES/nvim/init.vim"
+export VIMRC_LUA="$DOT_FILES/nvim/lua/sidneyw/init.lua"
+export tmux="$DOT_FILES/tmux/tmux.conf"
 
 export EDITOR='nvim'
 
@@ -240,9 +240,10 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 # NVM
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+ export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -369,12 +370,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # }}}
 
 export PATH="$HOME/tools/sumneko/lua-language-server/bin:$PATH"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.bash.inc' ]; then . '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/sidneyw/go/src/github.com/chronosphereio/google-cloud-sdk/completion.bash.inc'; fi
+export PATH="/opt/homebrew/bin:$PATH"
 
 # Local Config
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
@@ -384,3 +380,11 @@ test -f "$local_conf" && source "$local_conf"
 
 alias luamake=/Users/sidneyw/tools/sumneko/lua-language-server/3rd/luamake/luamake
 . "$HOME/.cargo/env"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/sidney/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/sidney/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/sidney/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/sidney/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+PATH="/usr/local/bin:$PATH"
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh

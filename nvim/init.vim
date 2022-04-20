@@ -55,6 +55,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
@@ -455,6 +456,11 @@ augroup javascript
   autocmd FileType javascript setlocal foldmethod=syntax
   " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
   " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.yml,*.html Prettier
+augroup END
+
+augroup proto
+  autocmd!
+  autocmd FileType proto :call LongTab()
 augroup END
 
 augroup html
