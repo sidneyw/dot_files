@@ -44,8 +44,8 @@ end
 -- TODO(sidneyw): Change this table to name, opts and move the configuration
 -- above into the table
 local lang_servers = {
-	["bashls"] = nil,
-	["yamlls"] = nil,
+	["bashls"] = {},
+	["yamlls"] = {},
 	-- "eslint",
 	["gopls"] = {
 		cmd = { "gopls" },
@@ -61,9 +61,9 @@ local lang_servers = {
 		},
 	},
 	-- "graphql",
-	["tailwindcss"] = nil,
-	-- "tsserver",
-	["vimls"] = nil,
+	-- ["tailwindcss"] = {},
+	["tsserver"] = {},
+	["vimls"] = {},
 	-- ["sumneko_lua"] = {
 	--   settings = {
 	--     Lua = {
@@ -100,7 +100,7 @@ lspsaga.init_lsp_saga({
 require("nlua.lsp.nvim").setup(lspconfig, {
 	cmd = {
 		"/Users/sidney/.dot_files/tools/lua-language-server/bin/lua-language-server",
-    "-E",
-		"/Users/sidney/.dot_files/tools/lua-language-server/bin/main.lua"
-  },
+		"-E",
+		"/Users/sidney/.dot_files/tools/lua-language-server/bin/main.lua",
+	},
 })
