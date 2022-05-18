@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/bash_profile.pre.bash"
 #!/bin/bash
 
 # vim: set foldmethod=marker :
@@ -176,6 +178,7 @@ alias genv='source genv'
 alias kc='kubectl'
 # alias kcp='kubectl get pods'
 alias kca='kubectl apply -f'
+alias kcc='kubectl create -f'
 alias kcd='kubectl delete -f'
 alias kcl="kubectl logs -f"
 alias hi='helm-init'
@@ -388,3 +391,6 @@ if [ -f '/Users/sidney/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Use
 if [ -f '/Users/sidney/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/sidney/Downloads/google-cloud-sdk/completion.bash.inc'; fi
 PATH="/usr/local/bin:$PATH"
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/bash_profile.post.bash"
