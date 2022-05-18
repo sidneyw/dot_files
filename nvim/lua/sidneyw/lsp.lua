@@ -45,8 +45,9 @@ end
 -- above into the table
 local lang_servers = {
 	["bashls"] = {},
-	["yamlls"] = {},
+	-- ["yamlls"] = {},
 	-- "eslint",
+	["pylsp"] = {},
 	["gopls"] = {
 		cmd = { "gopls" },
 		settings = {
