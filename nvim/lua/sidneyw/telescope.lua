@@ -5,18 +5,18 @@ local telescope = require("telescope")
 local symbols = {
 	telescope = "",
 	github = "",
+	git = "",
+	open_folder = "",
+	file = "",
 }
 
 require("telescope").setup({
 	defaults = {
-		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-
 		-- layout_strategy = "flex",
 
 		mappings = {
 			i = {
+				["<C-u>"] = false,
 				["<C-n>"] = false,
 				["<C-p>"] = false,
 				["<C-j>"] = actions.move_selection_next,
@@ -25,13 +25,16 @@ require("telescope").setup({
 		},
 	},
 	pickers = {
+		git_files = {
+			prompt_prefix = symbols.git .. " ",
+		},
 		current_buffer_fuzzy_find = {
 			sorting_strategy = "ascending",
 			-- theme = "ivy",
 		},
 		live_grep = {
 			path_display = { "smart" },
-			prompt_prefix = symbols.telescope,
+			prompt_prefix = symbols.telescope .. " ",
 		},
 		lsp_implementations = {
 			theme = "ivy",
@@ -86,13 +89,13 @@ telescope.load_extension("notify")
 telescope.load_extension("bookmarks")
 
 -- Mappings
-vim.cmd([[ nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR> ]])
-vim.cmd([[ nnoremap <leader>f  <cmd>lua require('sidneyw.telescope').project_files()<CR> ]])
-vim.cmd([[ nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR> ]])
-vim.cmd([[ nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR> ]])
-vim.cmd([[ nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR> ]])
-vim.cmd([[ nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR> ]])
-vim.cmd([[ nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR> ]])
+-- vim.cmd([[ nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR> ]])
+-- vim.cmd([[ nnoremap <leader>f  lua require('telescope.builtin').git_files()<CR> ]])
+-- vim.cmd([[ nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR> ]])
+-- vim.cmd([[ nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR> ]])
+-- vim.cmd([[ nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR> ]])
+-- vim.cmd([[ nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR> ]])
+-- vim.cmd([[ nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR> ]])
 
 vim.cmd([[ cnoreabbr Tele Telescope ]])
 vim.cmd([[ cnoreabbr tele Telescope ]])

@@ -40,13 +40,15 @@ function M.cwdTab(location, show_buffers)
 end
 
 function M.tabcd(directory)
-	if vim.fn.isdirectory(directory) ~= 1 then
-		print(directory .. " is not a directory")
-		notify(directory .. " is not a directory", "error")
-		return
-	end
+	-- if vim.fn.isdirectory(directory) ~= 1 then
+	-- 	print(directory .. " is not a directory")
+	-- 	notify(directory .. " is not a directory", "error")
+	-- 	return
+	-- end
 
-	tabline.tab_new(directory .. "/.")
+	local p = directory .. "/README.md"
+	print(p)
+	tabline.tab_new(p)
 
 	local ok = pcall(vim.cmd, "Glcd")
 	if not ok then
@@ -61,7 +63,7 @@ function M.chronoTabcd(subdir)
 	M.tabcd(location)
 end
 
-vim.cmd([[ cnoreabbr monorepo lua require'sidneyw.lualine'.chronoTabcd("monorepo") ]])
-vim.cmd([[ cnoreabbr envconfig lua require'sidneyw.lualine'.chronoTabcd("envconfig") ]])
+-- vim.cmd([[ cnoreabbr monorepo lua require'sidneyw.lualine'.chronoTabcd("monorepo") ]])
+-- vim.cmd([[ cnoreabbr envconfig lua require'sidneyw.lualine'.chronoTabcd("envconfig") ]])
 
 return M

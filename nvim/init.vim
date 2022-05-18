@@ -171,7 +171,6 @@ call plug#end()
 " Required:
 filetype plugin indent on
 " }}}
-
 " General {{{
 " ====================
 let mapleader='-'
@@ -307,7 +306,6 @@ vnoremap : ;
 
 " Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
-
 " Switching windows
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -626,9 +624,15 @@ function! EditVimrc()
   exe "TablineTabNew " . l:initLua
   " call TabCd(l:dotfilesDir)
   " exe "edit " . l:initLua
-  exe "Glcd"
+  exe "lcd"
   exe "vs " . l:initVim
   exe "TablineTabRename DotFiles"
+endfunction
+
+function! TCD(path)
+  exe "TablineTabNew " . a:path
+  exe "Glcd"
+  exe "TablineTabRename " . fnamemodify(a:path, ":p:h:t")
 endfunction
 
 function! EditDot(file)
@@ -640,6 +644,16 @@ endfunction
 
 " Plugins {{{
 " ===================
+
+" Telescope {{{
+ nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR>
+ nnoremap <leader>f  <cmd>lua require('telescope.builtin').git_files()<CR>
+ nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
+ nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
+ nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
+ nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR>
+ nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
+" }}}
 
 " Black {{{
 let g:black_linelength=100
