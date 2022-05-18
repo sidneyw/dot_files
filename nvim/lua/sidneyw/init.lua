@@ -12,6 +12,8 @@ require("Comment").setup()
 
 require("nvim-autopairs").setup({})
 
+require("mini.trailspace").setup()
+
 require("symbols-outline").setup({
 	highlight_hovered_item = false,
 	width = 40,

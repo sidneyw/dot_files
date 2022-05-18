@@ -126,7 +126,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'numToStr/Comment.nvim'
 
 Plug 'vim-scripts/CSApprox'
-Plug 'bronson/vim-trailing-whitespace'
+Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'machakann/vim-highlightedyank'
 Plug 'kristijanhusak/vim-carbon-now-sh'
 Plug 'windwp/nvim-autopairs'
