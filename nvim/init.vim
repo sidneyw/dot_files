@@ -645,16 +645,6 @@ endfunction
 " Plugins {{{
 " ===================
 
-" Telescope {{{
- nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR>
- nnoremap <leader>f  <cmd>lua require('telescope.builtin').git_files()<CR>
- nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR>
- nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
- nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR>
- nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR>
- nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR>
-" }}}
-
 " Black {{{
 let g:black_linelength=100
 " }}}

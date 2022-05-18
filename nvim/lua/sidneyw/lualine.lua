@@ -19,9 +19,6 @@ lualine.setup({
 	},
 })
 
-vim.cmd([[ nnoremap ]b :TablineBufferNext<CR> ]])
-vim.cmd([[ nnoremap [b :TablineBufferPrevious<CR> ]])
-
 local M = {}
 
 function M.cwdTab(location, show_buffers)
@@ -63,7 +60,7 @@ function M.chronoTabcd(subdir)
 	M.tabcd(location)
 end
 
--- vim.cmd([[ cnoreabbr monorepo lua require'sidneyw.lualine'.chronoTabcd("monorepo") ]])
--- vim.cmd([[ cnoreabbr envconfig lua require'sidneyw.lualine'.chronoTabcd("envconfig") ]])
+nnoremap("]b", tabline.buffer_next)
+nnoremap("[b", tabline.buffer_previous)
 
 return M

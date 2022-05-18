@@ -1,5 +1,6 @@
 local actions = require("telescope.actions")
 local telescope = require("telescope")
+local builtin = require("telescope.builtin")
 -- local themes = require("telescope.themes")
 
 local symbols = {
@@ -118,5 +119,13 @@ M.search_dotfiles = function()
 		hidden = true,
 	})
 end
+
+nnoremap("<leader>f", M.project_files)
+nnoremap("<C-p>", M.project_files)
+nnoremap("<leader>a", builtin.live_grep)
+nnoremap("<leader>q", builtin.current_buffer_fuzzy_find)
+nnoremap("<leader>b", builtin.buffers)
+nnoremap("<leader>hl", builtin.help_tags)
+nnoremap("<leader>m", builtin.oldfiles)
 
 return M
