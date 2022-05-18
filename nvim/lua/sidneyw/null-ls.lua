@@ -17,13 +17,14 @@ null_ls.setup({
 			vim.cmd([[
 					augroup LspFormatting
 							autocmd! * <buffer>
-							autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+							autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1500)
 					augroup END
 					]])
 		end
 	end,
 	sources = {
-		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+		formatting.prettier,
+		-- formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.eslint,
 		formatting.stylelint,
 		diagnostics.tsc,
