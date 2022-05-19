@@ -343,7 +343,7 @@ nnoremap <leader>lc :lclose<cr>
 nnoremap <leader>lo :lopen<cr>
 
 " Change CWD for the window to the dir of the current file
-nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
+" nnoremap <leader>cd :lcd %:p:h<cr>:pwd<cr>
 
 " Eval till = char
 nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>

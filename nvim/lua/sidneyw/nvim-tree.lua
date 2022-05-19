@@ -4,10 +4,14 @@ require("nvim-tree").setup({
 	disable_netrw = false,
 	hijack_netrw = true,
 	open_on_setup = false,
+	open_on_tab = false,
+	hijack_directories = {
+		enable = true,
+		auto_open = false,
+	},
 	ignore_ft_on_setup = {},
-	open_on_tab = true,
 	hijack_cursor = false,
-	update_cwd = true,
+	update_cwd = false,
 	diagnostics = {
 		enable = true,
 		icons = {
@@ -25,15 +29,11 @@ require("nvim-tree").setup({
 	view = {
 		width = 40,
 	},
-	trash = {
-		cmd = "trash",
-		require_confirm = true,
-	},
 })
 
 vim.g.nvim_tree_add_trailing = 1
 vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_disable_window_picker = 1
+-- vim.g.nvim_tree_disable_window_picker = 1
 
 vim.cmd([[ nnoremap <C-n> :NvimTreeFindFileToggle<CR> ]])
 -- vim.cmd([[ nnoremap <C-n> :NvimTreeFindFile<CR> ]])

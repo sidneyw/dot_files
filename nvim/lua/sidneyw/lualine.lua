@@ -1,6 +1,7 @@
 local lualine = require("lualine")
 local tabline = require("tabline")
 local notify = require("notify")
+local telescopeCustom = require("sidneyw.telescope")
 
 local chronoDir = vim.fn.expand("~/go/src/github.com/chronosphereio/")
 
@@ -33,18 +34,17 @@ function M.cwdTab(location, show_buffers)
 
 	basename = vim.fn.substitute(basename, "\n$", "", "")
 	tabline.tab_rename(basename)
-	-- tabline.toggle_show_all_buffers()
 end
 
 function M.tabcd(directory)
-	-- if vim.fn.isdirectory(directory) ~= 1 then
-	-- 	print(directory .. " is not a directory")
-	-- 	notify(directory .. " is not a directory", "error")
-	-- 	return
-	-- end
+	if vim.fn.isdirectory(directory) ~= 1 then
+		print(directory .. " is not a directory")
+		notify(directory .. " is not a directory", "error")
+		return
+	end
 
-	local p = directory .. "/README.md"
-	print(p)
+	-- local p = directory .. "/README.md"
+	local p = directory .. "/."
 	tabline.tab_new(p)
 
 	local ok = pcall(vim.cmd, "Glcd")
@@ -53,14 +53,28 @@ function M.tabcd(directory)
 	end
 
 	M.cwdTab(directory, false)
+	telescopeCustom.project_files()
 end
 
 function M.chronoTabcd(subdir)
 	local location = chronoDir .. subdir
 	M.tabcd(location)
 end
+--
 
 nnoremap("]b", tabline.buffer_next)
 nnoremap("[b", tabline.buffer_previous)
+
+local jumpPrefix = "<leader>j"
+
+nnoremap(jumpPrefix .. "m", function()
+	M.chronoTabcd("monorepo")
+end)
+nnoremap(jumpPrefix .. "e", function()
+	M.chronoTabcd("envconfig")
+end)
+nnoremap(jumpPrefix .. "c", function()
+	M.chronoTabcd("collector")
+end)
 
 return M

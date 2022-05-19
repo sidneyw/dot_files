@@ -89,15 +89,6 @@ telescope.load_extension("dap")
 telescope.load_extension("notify")
 telescope.load_extension("bookmarks")
 
--- Mappings
--- vim.cmd([[ nnoremap <C-p>      <cmd>lua require('sidneyw.telescope').project_files()<CR> ]])
--- vim.cmd([[ nnoremap <leader>f  lua require('telescope.builtin').git_files()<CR> ]])
--- vim.cmd([[ nnoremap <leader>a  <cmd>lua require('telescope.builtin').live_grep()<CR> ]])
--- vim.cmd([[ nnoremap <leader>q  <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR> ]])
--- vim.cmd([[ nnoremap <leader>b  <cmd>lua require('telescope.builtin').buffers()<CR> ]])
--- vim.cmd([[ nnoremap <leader>hl <cmd>lua require('telescope.builtin').help_tags()<CR> ]])
--- vim.cmd([[ nnoremap <leader>m  <cmd>lua require('telescope.builtin').oldfiles()<CR> ]])
-
 vim.cmd([[ cnoreabbr Tele Telescope ]])
 vim.cmd([[ cnoreabbr tele Telescope ]])
 
