@@ -3,6 +3,7 @@ local tabline = require("tabline")
 local notify = require("notify")
 local telescopeCustom = require("sidneyw.telescope")
 
+local dotFilesDir = vim.fn.expand("~/.dot_files/")
 local chronoDir = vim.fn.expand("~/go/src/github.com/chronosphereio/")
 
 tabline.setup({
@@ -75,6 +76,14 @@ nnoremap(jumpPrefix .. "e", function()
 end)
 nnoremap(jumpPrefix .. "c", function()
 	M.chronoTabcd("collector")
+end)
+
+nnoremap(jumpPrefix .. "d", function()
+	M.tabcd(dotFilesDir)
+end)
+
+nnoremap("<leader>ev", function()
+	M.tabcd(dotFilesDir)
 end)
 
 return M

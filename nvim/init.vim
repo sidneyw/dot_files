@@ -356,9 +356,6 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 " Edit Bash Profile
 nnoremap <leader>eb :call EditDot("shell/bash_profile.sh")<cr>
 
-" Edit vimrc
-nnoremap <leader>ev :call EditVimrc()<cr>
-
 " Source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
