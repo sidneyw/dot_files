@@ -33,6 +33,7 @@ require("nvim-tree").setup({
 
 vim.g.nvim_tree_add_trailing = 1
 vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_respect_buf_cwd = 1
 -- vim.g.nvim_tree_disable_window_picker = 1
 
 vim.cmd([[ nnoremap <C-n> :NvimTreeFindFileToggle<CR> ]])

@@ -563,12 +563,6 @@ function! PyTab()
   exe "retab"
 endfunction
 
-" Delayed to allow the tab to load before attempting to name it.
-" TablineTabRename cannot be called before the window comes up.
-augroup name-tab
-  autocmd VimEnter * call timer_start(200, { tid -> execute("lua require'sidneyw.lualine'.cwdTab(false, true)")})
-augroup end
-
 command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args>)
 
 " remap tabcd to Tabcd

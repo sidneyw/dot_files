@@ -5,6 +5,7 @@ end
 require("sidneyw.treesitter")
 require("sidneyw.nvim-tree")
 require("sidneyw.lualine")
+require("sidneyw.tab")
 require("sidneyw.cmp")
 require("sidneyw.lsp")
 require("sidneyw.dap")
