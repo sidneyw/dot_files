@@ -568,20 +568,21 @@ command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args
 " remap tabcd to Tabcd
 cnoreabbr tabcd Tabcd
 
-function! ScratchFn(fileExt)
+function! ScratchFn()
   let curdate=system('date +%s')[:-2]
-  let buffName="scratch-" . curdate . "." . a:fileExt
-  execute "new " . l:buffName
+  let buffName="scratch-" . curdate
+  execute "vsplit " . l:buffName
 
   setlocal buftype=nofile
   setlocal bufhidden=hide
   setlocal noswapfile
+	Telescope filetypes
 endfunction
 
 " remap scratch to Scratch
 cnoreabbr scratch Scratch
 
-command! -nargs=1 Scratch call ScratchFn(<f-args>)
+command!Scratch call ScratchFn()
 
 if !exists('*s:setupWrapping')
   function s:setupWrapping()
