@@ -23,7 +23,8 @@ lualine.setup({
 
 local M = {}
 
-function M.cwdTab(location, show_buffers)
+function M.cwdTab(location, show_buffers, skipRename)
+	skipRename = skipRename or false
 	if show_buffers then
 		tabline.toggle_show_all_buffers()
 	end
@@ -33,11 +34,13 @@ function M.cwdTab(location, show_buffers)
 
 	local basename = vim.fn.fnamemodify(location, ":p:h:t")
 
-	basename = vim.fn.substitute(basename, "\n$", "", "")
-	tabline.tab_rename(basename)
+	if not skipRename then
+		basename = vim.fn.substitute(basename, "\n$", "", "")
+		tabline.tab_rename(basename)
+	end
 end
 
-function M.tabcd(directory)
+function M.tabcd(directory, skipRename)
 	if vim.fn.isdirectory(directory) ~= 1 then
 		print(directory .. " is not a directory")
 		notify(directory .. " is not a directory", "error")
@@ -53,7 +56,7 @@ function M.tabcd(directory)
 		vim.cmd("lcd %:p:h")
 	end
 
-	M.cwdTab(directory, false)
+	M.cwdTab(directory, false, skipRename)
 	telescopeCustom.project_files()
 end
 
@@ -66,24 +69,25 @@ end
 nnoremap("]b", tabline.buffer_next)
 nnoremap("[b", tabline.buffer_previous)
 
-local jumpPrefix = "<leader>j"
+local function jumpPrefix(key)
+	return "<leader>e" .. key
+end
 
-nnoremap(jumpPrefix .. "m", function()
+nnoremap(jumpPrefix("m"), function()
 	M.chronoTabcd("monorepo")
 end)
-nnoremap(jumpPrefix .. "e", function()
+
+nnoremap(jumpPrefix("e"), function()
 	M.chronoTabcd("envconfig")
 end)
-nnoremap(jumpPrefix .. "c", function()
+
+nnoremap(jumpPrefix("c"), function()
 	M.chronoTabcd("collector")
 end)
 
-nnoremap(jumpPrefix .. "d", function()
-	M.tabcd(dotFilesDir)
-end)
-
-nnoremap("<leader>ev", function()
-	M.tabcd(dotFilesDir)
+nnoremap(jumpPrefix("v"), function()
+	M.tabcd(dotFilesDir, true)
+	tabline.tab_rename("DotFiles")
 end)
 
 return M
