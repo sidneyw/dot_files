@@ -563,11 +563,6 @@ function! PyTab()
   exe "retab"
 endfunction
 
-command! -nargs=1 -complete=dir Tabcd lua require'sidneyw.lualine'.tabcd(<f-args>)
-
-" remap tabcd to Tabcd
-cnoreabbr tabcd Tabcd
-
 function! ScratchFn()
   let curdate=system('date +%s')[:-2]
   let buffName="scratch-" . curdate

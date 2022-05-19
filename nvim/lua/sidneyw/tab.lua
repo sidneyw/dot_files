@@ -45,7 +45,7 @@ function M.New(directory, skipRename)
 	telescopeCustom.project_files()
 end
 
-function M.newTabChrono(subdir)
+function M.NewChrono(subdir)
 	local location = chronoDir .. subdir
 	M.New(location)
 end
@@ -58,15 +58,15 @@ local function jumpPrefix(key)
 end
 
 nnoremap(jumpPrefix("m"), function()
-	M.newTabChrono("monorepo")
+	M.NewChrono("monorepo")
 end)
 
 nnoremap(jumpPrefix("e"), function()
-	M.newTabChrono("envconfig")
+	M.NewChrono("envconfig")
 end)
 
 nnoremap(jumpPrefix("c"), function()
-	M.newTabChrono("collector")
+	M.NewChrono("collector")
 end)
 
 nnoremap(jumpPrefix("v"), function()
@@ -84,5 +84,18 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 	desc = "Rename the tab with the current directory basename",
 })
+
+vim.api.nvim_create_user_command("TabCD", function(args)
+	M.New(args.fargs[1], false)
+end, {
+	nargs = 1,
+	complete = "dir",
+	desc = "TabCD",
+})
+
+vim.cmd([[
+	cnoreabbr tabcd TabCD
+	cnoreabbr tcd TabCD
+]])
 
 return M
