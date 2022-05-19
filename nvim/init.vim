@@ -32,12 +32,13 @@ Plug 'kyazdani42/nvim-tree.lua'
 " }}}
 
 " Tpope {{{
-" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-markdown'
 " }}}
 
 " Shougo {{{
@@ -73,11 +74,14 @@ Plug 'simrat39/symbols-outline.nvim'
 " Telescope {{{
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-telescope/telescope-dap.nvim'
+
+Plug 'sudormrfbin/cheatsheet.nvim'
 
 Plug 'dhruvmanila/telescope-bookmarks.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
@@ -88,10 +92,6 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'kdheepak/tabline.nvim'
 " }}}
 
-Plug 'liuchengxu/vista.vim'
-let g:vista_sidebar_width = 50
-let g:vista_fzf_preview = ['right:50%']
-
 " Go Lang Bundle {{{
 " Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 let g:go_bin_path= $HOME . "/go/bin"
@@ -99,7 +99,6 @@ let g:go_bin_path= $HOME . "/go/bin"
 
 " HTML Bundle {{{
 Plug 'gorodinskiy/vim-coloresque'
-Plug 'tpope/vim-markdown'
 Plug 'mattn/emmet-vim'
 " }}}
 
@@ -112,16 +111,7 @@ Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
 Plug 'towolf/vim-helm'
 
-" Typescript Bundle {{{
-Plug 'HerringtonDarkholme/yats.vim'
-" }}}
-
-" Python Bundle {{{
-" Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-" }}}
-
 " Other {{{
-Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'numToStr/Comment.nvim'
 
@@ -130,11 +120,13 @@ Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'machakann/vim-highlightedyank'
 Plug 'kristijanhusak/vim-carbon-now-sh'
 Plug 'windwp/nvim-autopairs'
+
 let g:carbon_now_sh_options = {'t': 'monokai'}
 let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
 endif
+
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
 if v:version >= 703
@@ -205,8 +197,6 @@ set foldlevelstart=15   " most folds should be open on start
 
 set lazyredraw          " Don't redraw the screen during a macro
 set mat=1               " How many seconds to blink on a matched paren
-set backspace=indent,eol,start " Backspace for insert mode
-set ruler
 
 set inccommand=split " Interactive substitute
 
@@ -218,7 +208,6 @@ set shell=/bin/sh
 set listchars=tab:▸\ ,eol:¬
 
 set noshowmode   " Gets rid of the original showing of modes in vim
-set laststatus=2 " Shows the status bar even if there is only one file
 
 " Encoding
 set encoding=utf-8
@@ -233,8 +222,6 @@ set fileformats=unix,dos,mac
 set hidden
 
 " Searching
-set hlsearch
-set incsearch
 set ignorecase
 set smartcase
 
@@ -529,9 +516,6 @@ iabbrev xdate <c-r>=strftime("%H:%M:%S")<cr><cr><c-r>a
 iabbrev xbash #!/bin/bash
 iabbrev xpython #!/usr/bin/python
 
-" Open Help in it's own tab
-cnoreabbr th tab h
-
 " Turn sleep on and off (OSX)
 cnoreabbr caf !caffeinate -d&
 cnoreabbr kcaf !killall caffeinate
@@ -548,7 +532,7 @@ cnoreabbr jte s/"\(\w*\)": "\(.*\)"/export \1="\2"/
 "JSON to graphql
 cnoreabbr jtg s/:.*[ {}]\@<!//
 
-cnoreabbr mg make gen
+cnoreabbr mg Make! gen
 
 cnoreabbr cheat tabe ~/.dot_files/cheatsheets/
 " }}}
@@ -612,31 +596,6 @@ if !exists('*s:setupWrapping')
     set textwidth=79
   endfunction
 endif
-
-function! EditVimrc()
-  let dotfilesDir = fnameescape($HOME . '/.dot_files/nvim/')
-  let initVim = l:dotfilesDir . fnameescape("init.vim")
-  let initLua = l:dotfilesDir . fnameescape('/lua/sidneyw/init.lua')
-
-  exe "TablineTabNew " . l:initLua
-  " call TabCd(l:dotfilesDir)
-  " exe "edit " . l:initLua
-  exe "lcd"
-  exe "vs " . l:initVim
-  exe "TablineTabRename DotFiles"
-endfunction
-
-function! TCD(path)
-  exe "TablineTabNew " . a:path
-  exe "Glcd"
-  exe "TablineTabRename " . fnamemodify(a:path, ":p:h:t")
-endfunction
-
-function! EditDot(file)
-  let path = $HOME . '/.dot_files/' . a:file
-  execute "tabe " . fnameescape(l:path)
-  execute "Glcd"
-endfunction
 " }}}
 
 " Plugins {{{

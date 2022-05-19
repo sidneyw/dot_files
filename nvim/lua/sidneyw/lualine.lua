@@ -64,7 +64,6 @@ function M.chronoTabcd(subdir)
 	local location = chronoDir .. subdir
 	M.tabcd(location)
 end
---
 
 nnoremap("]b", tabline.buffer_next)
 nnoremap("[b", tabline.buffer_previous)
@@ -89,5 +88,16 @@ nnoremap(jumpPrefix("v"), function()
 	M.tabcd(dotFilesDir, true)
 	tabline.tab_rename("DotFiles")
 end)
+
+-- Name the tab when vim starts up
+vim.api.nvim_create_autocmd("VimEnter", {
+	pattern = "*",
+	callback = function()
+		vim.fn.timer_start(200, function()
+			M.cwdTab(false, true)
+		end)
+	end,
+	desc = "Rename the tab with the current directory basename",
+})
 
 return M
