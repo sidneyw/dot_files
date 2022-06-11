@@ -22,7 +22,7 @@ ln -s $DOT_FILES/vim $HOME/.vim
 ln -s $DOT_FILES/git/gitconfig $HOME/.gitconfig
 ln -s $DOT_FILES/git/gitignore $HOME/.gitignore
 
-ln -s $DOT_FILES/phoenix/phoenix.js $HOME/.phoenix.js
+ln -s $DOT_FILES/phoenix/out/phoenix.js $HOME/.phoenix.js
 
 if [[ -d $HOME/bin ]]
 then
