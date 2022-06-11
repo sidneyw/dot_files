@@ -50,8 +50,8 @@ function M.NewChrono(subdir)
 	M.New(location)
 end
 
-nnoremap("]b", tabline.buffer_next)
-nnoremap("[b", tabline.buffer_previous)
+nmap({ "]b", tabline.buffer_next })
+nmap({ "[b", tabline.buffer_previous })
 
 local function jumpPrefix(key)
 	return "<leader>e" .. key

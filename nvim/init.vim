@@ -266,6 +266,10 @@ set titlestring=%F
 
 " Tpope fugitive vim expects netrw which is disabled by nvim-tree
 let g:loaded_netrwPlugin = 1
+
+" Use lua only file type detection
+let g:do_filetype_lua = 1
+let g:did_load_filetypes = 0
 " }}}
 
 lua require("sidneyw")
@@ -339,15 +343,6 @@ nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 " nnoremap <leader>q !!sh<cr>
 
 nnoremap <leader>ue :UltiSnipsEdit<cr>
-
-" Edit Bash Profile
-nnoremap <leader>eb :call EditDot("shell/bash_profile.sh")<cr>
-
-" Source vimrc
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" Edit tmux config
-nnoremap <leader>et :call EditDot("tmux/tmux.conf")<cr>
 
 " Launch Terminal
 nnoremap <silent> <leader>sh :terminal<CR>
