@@ -1,13 +1,3 @@
-function logWindow(window) {
-  console.log("------");
-  console.log("title", window.title());
-  console.log("isMain", window.isMain());
-  console.log("isNormal", window.isNormal());
-  console.log("isFullScreen", window.isFullScreen());
-  console.log("isVisible", window.isVisible());
-  console.log("------");
-}
-
 function logAllApps() {
   App.all().forEach(function (app) {
     console.log(
@@ -18,6 +8,4 @@ function logAllApps() {
         })
     );
   });
-
-  console.log("focused", App.focused().name());
 }

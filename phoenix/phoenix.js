@@ -1,5 +1,5 @@
 // Using this release:
-// https://github.com/kasper/phoenix/releases/tag/2.6.3
+// https://github.com/kasper/phoenix/releases/tag/3.0.0
 
 /* view logs:
   log stream --process Phoenix
@@ -7,36 +7,28 @@
 
 require("./utils.js");
 
-console.log("CONFIG LOADED");
-
-App.allWithTitle = function (title) {
-  return App.all().filter(function (app) {
-    if (app.name() === title) {
-      return true;
-    }
-  });
-};
-
 App.focusOrStart = function (title) {
-  var apps = App.allWithTitle(title);
-  if (_.isEmpty(apps)) {
-    App.launch(title);
+  var app = App.get(title);
+
+  if (!app) {
+    app = App.launch(title);
     return;
   }
 
-  apps.map(function (x) {
-    return x.focus();
-  });
+  app.focus();
 };
 
 var alt = ["alt"];
 // var altShift = ["alt", "shift"];
 
-Key.on("z", alt, () => App.focusOrStart("zoom.us"));
-Key.on("s", alt, () => App.focusOrStart("Spotify"));
-Key.on("q", alt, () => App.focusOrStart("iTerm2"));
-Key.on("1", alt, () => App.focusOrStart("Slack"));
 Key.on("b", alt, () => App.focusOrStart("Brave Browser"));
+Key.on("q", alt, () => App.focusOrStart("iTerm2"));
+Key.on("r", alt, () => App.focusOrStart("Roam Research"));
+Key.on("1", alt, () => App.focusOrStart("Slack"));
+Key.on("p", alt, () => App.focusOrStart("Spark"));
+Key.on("s", alt, () => App.focusOrStart("Spotify"));
+Key.on("t", alt, () => App.focusOrStart("TickTick"));
+Key.on("z", alt, () => App.focusOrStart("zoom.us"));
 
 // For debugging
 Key.on("2", alt, logAllApps);
