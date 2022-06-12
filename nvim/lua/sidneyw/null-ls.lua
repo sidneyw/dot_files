@@ -43,6 +43,6 @@ null_ls.setup({
 		diagnostics.mypy.with({ conditions = notStarlark }),
 		diagnostics.flake8.with({ conditions = notStarlark }),
 
-		formatting.rustfmt,
+		-- formatting.rustfmt,
 	},
 })

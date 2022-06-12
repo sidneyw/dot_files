@@ -63,6 +63,7 @@ local lang_servers = {
 	},
 	-- "graphql",
 	-- ["tailwindcss"] = {},
+	["rust_analyzer"] = {},
 	["tsserver"] = {},
 	["vimls"] = {},
 	-- ["sumneko_lua"] = {

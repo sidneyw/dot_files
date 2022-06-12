@@ -25,6 +25,8 @@ require("symbols-outline").setup({
 	winblend = 50,
 })
 
+require("rust-tools").setup({})
+
 nnoremap("<leader>lb", "<cmd>Make lint-branch<CR>")
 
 vim.notify = require("notify")

@@ -153,6 +153,10 @@ Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
 
+" Rust {{{
+Plug 'simrat39/rust-tools.nvim'
+" }}}
+
 " Include user's extra bundle
 if filereadable(expand("~/.config/nvim/local_bundles.vim"))
   source ~/.config/nvim/local_bundles.vim
