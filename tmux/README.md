@@ -10,8 +10,9 @@ Self-contained, pretty and versatile `.tmux.conf` configuration file.
 
 Requirements:
 
-- tmux **`>= 2.1`** running inside Linux, Mac, OpenBSD, Cygwin or WSL (Bash on
-  Ubuntu on Windows)
+- tmux **`>= 2.3`** (soon `>= 2.4`) running inside Linux, Mac, OpenBSD, Cygwin
+  or WSL
+- awk, perl and sed
 - outside of tmux, `$TERM` must be set to `xterm-256color`
 
 To install, run the following from your terminal: (you may want to backup your
@@ -24,14 +25,24 @@ $ ln -s -f .tmux/.tmux.conf
 $ cp .tmux/.tmux.conf.local .
 ```
 
+💡 You can clone the repository anywhere you want, provided you create the
+proper `~/.tmux.conf` symlink and you copy the `.tmux.conf.local` sample file in
+your home directory:
+
+```
+$ git clone https://github.com/gpakosz/.tmux.git /path/to/oh-my-tmux
+$ ln -s -f /path/to/oh-my-tmux/.tmux.conf ~/.tmux.conf
+$ cp /path/to/oh-my-tmux/.tmux.conf.local ~/.tmux.conf.local
+```
+
 Then proceed to [customize] your `~/.tmux.conf.local` copy.
 
-[customize]: #enabling-the-powerline-look
+[customize]: #configuration
 
 If you're a Vim user, setting the `$EDITOR` environment variable to `vim` will
 enable and further customize the vi-style key bindings (see tmux manual).
 
-If you're new to tmux, I recommmend you read [tmux 2: Productive Mouse-Free
+If you're new to tmux, I recommend you read [tmux 2: Productive Mouse-Free
 Development][bhtmux2] by [@bphogan].
 
 [bhtmux2]: https://pragprog.com/book/bhtmux2/tmux-2
@@ -90,17 +101,18 @@ Development][bhtmux2] by [@bphogan].
 - `C-a` acts as secondary prefix, while keeping default `C-b` prefix
 - visual theme inspired by [Powerline][]
 - [maximize any pane to a new window with `<prefix> +`][maximize-pane]
-- SSH aware username and hostname status line information
+- SSH/Mosh aware username and hostname status line information
 - mouse mode toggle with `<prefix> m`
 - automatic usage of [`reattach-to-user-namespace`][reattach-to-user-namespace]
   if available
 - laptop battery status line information
 - uptime status line information
-- optional highlight of focused pane (tmux `>= 2.1`)
+- optional highlight of focused pane
 - configurable new windows and panes behavior (optionally retain current path)
-- SSH aware split pane (reconnects to remote server, experimental)
+- SSH/Mosh aware split pane (reconnects to remote server)
 - copy to OS clipboard (needs [`reattach-to-user-namespace`][reattach-to-user-namespace]
   on macOS, `xsel` or `xclip` on Linux)
+- support for 4-digit hexadecimal Unicode characters
 - [Facebook PathPicker][] integration if available
 - [Urlview][] integration if available
 
@@ -109,70 +121,6 @@ Development][bhtmux2] by [@bphogan].
 [reattach-to-user-namespace]: https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 [facebook pathpicker]: https://facebook.github.io/PathPicker/
 [urlview]: https://packages.debian.org/stable/misc/urlview
-
-tmux may be controlled from an attached client by using a key combination of a
-prefix key, followed by a command key. This configuration uses `C-a` as a
-secondary prefix while keeping `C-b` as the default prefix. In the following
-list of key bindings:
-
-- `<prefix>` means you have to either hit <kbd>Ctrl</kbd> + <kbd>a</kbd> or <kbd>Ctrl</kbd> + <kbd>b</kbd>
-- `<prefix> c` means you have to hit <kbd>Ctrl</kbd> + <kbd>a</kbd> or <kbd>Ctrl</kbd> + <kbd>b</kbd> followed by <kbd>c</kbd>
-- `<prefix> C-c` means you have to hit <kbd>Ctrl</kbd> + <kbd>a</kbd> or <kbd>Ctrl</kbd> + <kbd>b</kbd> followed by <kbd>Ctrl</kbd> + <kbd>c</kbd>
-
-This configuration uses the following bindings:
-
-- `<prefix> C-c` creates a new session
-- `<prefix> e` opens `~/.tmux.conf.local` with the editor defined by the
-  `$EDITOR` environment variable (defaults to `vim` when empty)
-- `<prefix> r` reloads the configuration
-- `<prefix> C-f` lets you switch to another session by name
-- `<prefix> C-h` and `<prefix> C-l` let you navigate windows (default
-  `<prefix> n` and `<prefix> p` are unbound)
-- `<prefix> Tab` brings you to the last active window
-- `<prefix> h`, `<prefix> j`, `<prefix> k` and `<prefix> l` let you navigate
-  panes ala Vim
-- `<prefix> H`, `<prefix> J`, `<prefix> K`, `<prefix> L` let you resize panes
-- `<prefix> <` and `<prefix> >` let you swap panes
-- `<prefix> +` maximizes the current pane to a new window
-- `<prefix> m` toggles mouse mode on or off
-- `<prefix> U` launches Urlview (if available)
-- `<prefix> F` launches Facebook PathPicker (if available)
-- `<prefix> Enter` enters copy-mode
-- `<prefix> b` lists the paste-buffers
-- `<prefix> p` pastes from the top paste-buffer
-- `<prefix> P` lets you choose the paste-buffer to paste from
-- `C-l` clears both the screen and the history
-
-Additionally, `vi-choice`, `vi-edit` and `vi-copy` named tables are adjusted
-to closely match [my own Vim configuration][]
-
-[my own vim configuration]: https://github.com/gpakosz/.vim.git
-
-Bindings for the `vi-choice` mode-table:
-
-- `h` collapses the current tree node
-- `l` expands the current tree node
-- `H` collapses all the tree nodes
-- `L` expands all the tree nodes
-- `K` jumps to the start of list (tmux `2.0+`)
-- `L` jumps to the end of list (tmux `2.0+`)
-- `Escape` cancels the current operation
-
-Bindings for the `vi-edit` mode-table:
-
-- `H` jumps to the start of line
-- `L` jumps to the end of line
-- `q` cancels the current operation
-- `Escape` cancels the current operation
-
-Bindings for the `vi-copy` mode-table:
-
-- `v` begins selection / visual mode
-- `C-v` toggles between blockwise visual mode and visual mode
-- `H` jumps to the start of line
-- `L` jumps to the end of line
-- `y` copies the selection to the top paste-buffer
-- `Escape` cancels the current operation
 
 The "maximize any pane to a new window with `<prefix> +`" feature is different
 from builtin `resize-pane -Z` as it allows you to further split a maximized
@@ -188,6 +136,62 @@ panes and automatically switches to copy-mode to select text.
 
 ![Mouse mode](https://cloud.githubusercontent.com/assets/553208/9890797/8dffe542-5c02-11e5-9c06-a25b452e6fcc.gif)
 
+## Bindings
+
+tmux may be controlled from an attached client by using a key combination of a
+prefix key, followed by a command key. This configuration uses `C-a` as a
+secondary prefix while keeping `C-b` as the default prefix. In the following
+list of key bindings:
+
+- `<prefix>` means you have to either hit <kbd>Ctrl</kbd> + <kbd>a</kbd> or <kbd>Ctrl</kbd> + <kbd>b</kbd>
+- `<prefix> c` means you have to hit <kbd>Ctrl</kbd> + <kbd>a</kbd> or <kbd>Ctrl</kbd> + <kbd>b</kbd> followed by <kbd>c</kbd>
+- `<prefix> C-c` means you have to hit <kbd>Ctrl</kbd> + <kbd>a</kbd> or <kbd>Ctrl</kbd> + <kbd>b</kbd> followed by <kbd>Ctrl</kbd> + <kbd>c</kbd>
+
+This configuration uses the following bindings:
+
+- `<prefix> e` opens `~/.tmux.conf.local` with the editor defined by the
+  `$EDITOR` environment variable (defaults to `vim` when empty)
+- `<prefix> r` reloads the configuration
+- `C-l` clears both the screen and the tmux history
+
+- `<prefix> C-c` creates a new session
+- `<prefix> C-f` lets you switch to another session by name
+
+- `<prefix> C-h` and `<prefix> C-l` let you navigate windows (default
+  `<prefix> n` and `<prefix> p` are unbound)
+- `<prefix> Tab` brings you to the last active window
+
+- `<prefix> -` splits the current pane vertically
+- `<prefix> _` splits the current pane horizontally
+- `<prefix> h`, `<prefix> j`, `<prefix> k` and `<prefix> l` let you navigate
+  panes ala Vim
+- `<prefix> H`, `<prefix> J`, `<prefix> K`, `<prefix> L` let you resize panes
+- `<prefix> <` and `<prefix> >` let you swap panes
+- `<prefix> +` maximizes the current pane to a new window
+
+- `<prefix> m` toggles mouse mode on or off
+
+- `<prefix> U` launches Urlview (if available)
+- `<prefix> F` launches Facebook PathPicker (if available)
+
+- `<prefix> Enter` enters copy-mode
+- `<prefix> b` lists the paste-buffers
+- `<prefix> p` pastes from the top paste-buffer
+- `<prefix> P` lets you choose the paste-buffer to paste from
+
+Additionally, `copy-mode-vi` matches [my own Vim configuration][]
+
+[my own vim configuration]: https://github.com/gpakosz/.vim.git
+
+Bindings for `copy-mode-vi`:
+
+- `v` begins selection / visual mode
+- `C-v` toggles between blockwise visual mode and visual mode
+- `H` jumps to the start of line
+- `L` jumps to the end of line
+- `y` copies the selection to the top paste-buffer
+- `Escape` cancels the current operation
+
 ## Configuration
 
 While this configuration tries to bring sane default settings, you may want to
@@ -195,10 +199,10 @@ customize it further to your needs. Instead of altering the `~/.tmux.conf` file
 and diverging from upstream, the proper way is to edit the `~/.tmux.conf.local`
 file.
 
-Please refer to the default `~/.tmux.conf.local` file to know more about
-variables you can adjust to alter different behaviors. Pressing `<prefix> e`
-will open `~/.tmux.conf.local` with the editor defined by the `$EDITOR`
-environment variable (defaults to `vim` when empty).
+Please refer to the sample `.tmux.conf.local` file to know more about variables
+you can adjust to alter different behaviors. Pressing `<prefix> e` will open
+`~/.tmux.conf.local` with the editor defined by the `$EDITOR` environment
+variable (defaults to `vim` when empty).
 
 ### Enabling the Powerline look
 
@@ -208,32 +212,30 @@ look is based on the use of special symbols: <img width="80" alt="Powerline Symb
 To make use of these symbols, there are several options:
 
 - use a font that already bundles those: this is e.g. the case of the
-  [2.030R-ro/1.050R-it version][source code pro] of the Source Code Pro] font
+  [2.030R-ro/1.050R-it version][source code pro] of the Source Code Pro font
 - use a [pre-patched font][powerline patched fonts]
 - use your preferred font along with the [Powerline font][powerline font] (that
   only contains the Powerline symbols): [this highly depends on your operating
-  system and your terminal emulator][terminal support]
-- [patch your preferred font][powerline font patcher] by adding the missing
-  Powerline symbols: this is the most difficult way and is no more documented in
-  the [Powerline manual]
+  system and your terminal emulator][terminal support], for instance here's a
+  screenshot of iTerm2 configured to use `PowerlineSymbols.otf`
+  ![iTerm2 + Powerline font](https://user-images.githubusercontent.com/553208/62243890-8232f500-b3de-11e9-9b8c-51a5d38bdaa8.png)
 
 [source code pro]: https://github.com/adobe-fonts/source-code-pro/releases/tag/2.030R-ro/1.050R-it
 [powerline patched fonts]: https://github.com/powerline/fonts
 [powerline font]: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-[powerline font patcher]: https://github.com/powerline/fontpatcher
 [terminal support]: http://powerline.readthedocs.io/en/master/usage.html#usage-terminal-emulators
 [powerline manual]: http://powerline.readthedocs.org/en/latest/installation.html#fonts-installation
 
 Please see the [Powerline manual] for further details.
 
-Then edit the `~/.tmux.conf.local` file (`<prefix> e`) and adjust the following
-variables:
+Then edit your `~/.tmux.conf.local` copy (with `<prefix> e`) and adjust the
+following variables:
 
 ```
-tmux_conf_theme_left_separator_main=''
-tmux_conf_theme_left_separator_sub=''
-tmux_conf_theme_right_separator_main=''
-tmux_conf_theme_right_separator_sub=''
+tmux_conf_theme_left_separator_main='\uE0B0'
+tmux_conf_theme_left_separator_sub='\uE0B1'
+tmux_conf_theme_right_separator_main='\uE0B2'
+tmux_conf_theme_right_separator_sub='\uE0B3'
 ```
 
 ### Configuring the status line
@@ -241,7 +243,7 @@ tmux_conf_theme_right_separator_sub=''
 Contrary to the first iterations of this configuration, by now you have total
 control on the content and order of `status-left` and `status-right`.
 
-Edit the `~/.tmux.conf.local` file (`<prefix> e`) and adjust the
+Edit your `~/.tmux.conf.local` copy (`<prefix> e`) and adjust the
 `tmux_conf_theme_status_left` and `tmux_conf_theme_status_right` variables to
 your own preferences.
 
@@ -252,22 +254,77 @@ This configuration supports the following builtin variables:
 - `#{battery_status}`: is battery charging or discharging?
 - `#{battery_vbar}`: vertical battery charge bar
 - `#{circled_session_name}`: circled session number, up to 20
-- `#{hostname}`: SSH aware hostname information
-- `#{hostname_ssh}`: SSH aware hostname information, blank when no SSH
-  connection detected
+- `#{hostname}`: SSH/Mosh aware hostname information
+- `#{hostname_ssh}`: SSH/Mosh aware hostname information, blank when not
+  connected to a remote server through SSH/Mosh
 - `#{loadavg}`: load average
 - `#{pairing}`: is session attached to more than one client?
 - `#{prefix}`: is prefix being depressed?
 - `#{root}`: is current user root?
-- `#{uptime_d}`: uptime days
+- `#{synchronized}`: are the panes synchronized?
+- `#{uptime_y}`: uptime years
+- `#{uptime_d}`: uptime days, modulo 365 when `#{uptime_y}` is used
 - `#{uptime_h}`: uptime hours
 - `#{uptime_m}`: uptime minutes
 - `#{uptime_s}`: uptime seconds
-- `#{username}`: SSH aware username information
-- `#{username_ssh}`: SSH aware username information, blank when no SSH
-  connection detected
+- `#{username}`: SSH/Mosh aware username information
+- `#{username_ssh}`: SSH aware username information, blank when not connected
+  to a remote server through SSH/Mosh
 
-### Accessing the macOS clipboard from within tmux sessions
+Beside custom variables mentioned above, the `tmux_conf_theme_status_left` and
+`tmux_conf_theme_status_right` variables support usual tmux syntax, e.g. using
+`#()` to call an external command that inserts weather information provided by
+[wttr.in]:
+
+```
+tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} #(curl -m 1 wttr.in?format=3 2>/dev/null; sleep 900) , %R , %d %b | #{username}#{root} | #{hostname} '
+```
+
+The `sleep 900` call makes sure the network request is issued at most every 15
+minutes whatever the value of `status-interval`.
+
+![Weather information from wttr.in](https://user-images.githubusercontent.com/553208/52175490-07797c00-27a5-11e9-9fb6-42eec4fe4188.png)
+
+[wttr.in]: https://github.com/chubin/wttr.in#one-line-output
+
+💡 You can also define your own custom variables. See the sample
+`.tmux.conf.local` file for instructions.
+
+Finally, remember `tmux_conf_theme_status_left` and
+`tmux_conf_theme_status_right` end up being given to tmux as `status-left` and
+`status-right` which means they're passed through `strftime()`. As such, the `%`
+character has a special meaning and needs to be escaped by doubling it, e.g.
+
+```
+tmux_conf_theme_status_right='#(echo foo %% bar)'
+```
+
+See `man 3 strftime`.
+
+### Using TPM plugins
+
+This configuration now comes with built-in [TPM] support:
+
+- use the `set -g @plugin ...` syntax to enable a plugin
+- whenever a plugin introduces a variable to be used in `status-left` or
+  `status-right`, you can use it in `tmux_conf_theme_status_left` and
+  `tmux_conf_theme_status_right` variables, see instructions above 👆
+- ⚠️ do not add `set -g @plugin 'tmux-plugins/tpm'`
+- ⚠️ do not add `run '~/.tmux/plugins/tpm/tpm'` to `~/.tmux.conf` or your
+- `~/.tmux.conf.local` copy ← people who are used to alter
+  `.tmux.conf` to add TPM support will have to adapt their configuration
+
+⚠️ The TPM bindings differ slightly from upstream:
+
+- installing plugins: `<prefix> + I`
+- uninstalling plugins: `<prefix> + Alt + u`
+- updating plugins: `<prefix> + u`
+
+See `~/.tmux.conf.local` for instructions.
+
+[tpm]: https://github.com/tmux-plugins/tpm
+
+### Accessing the macOS clipboard from within tmux sessions (tmux `< 2.6`)
 
 [Chris Johnsen created the `reattach-to-user-namespace`
 utility][reattach-to-user-namespace] that makes `pbcopy` and `pbpaste` work
