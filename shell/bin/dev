@@ -15,5 +15,7 @@ else
 fi
 
 tmux new-session -s $session_name -d
-tmux send-keys -t $session_name "tmux source-file $conf_path" C-m "clear" C-m
+# The session isn't ready to accept keys right away. Waiting 1 second fixes the issue.
+sleep 1
+tmux send-keys -t "${session_name}:1" "tmux source-file $conf_path" C-m "clear" C-m
 tmux attach -t $session_name
