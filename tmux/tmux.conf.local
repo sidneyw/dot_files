@@ -440,6 +440,13 @@ tmux_conf_uninstall_plugins_on_reload=true
 #set -g @plugin 'tmux-plugins/tmux-continuum'
 #set -g @continuum-restore 'on'
 
+# -- my tpm plugins ------------------------------------------------------------
+# prefix + Tab launches FZF to select over terminal text
+set -g @plugin 'laktak/extrakto'     # https://github.com/laktak/extrakto
+set -g @extrakto_copy_key "y"        # use tab to copy to clipboard
+set -g @extrakto_insert_key "enter"  # use enter to insert selection
+
+# List of TPM plugins: https://github.com/tmux-plugins/list
 
 # -- custom variables ----------------------------------------------------------
 
