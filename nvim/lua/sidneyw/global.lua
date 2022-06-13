@@ -16,6 +16,7 @@ end
 
 R = function(name)
 	RELOAD(name)
+	print("Reloaded module:", name)
 	return require(name)
 end
 
@@ -30,11 +31,3 @@ end
 function nmap(tbl)
 	vim.keymap.set("n", tbl[1], tbl[2], tbl[3])
 end
-
--- Reload init.lua
-nmap({
-	"<leader>sv",
-	function()
-		R("sidneyw.init")
-	end,
-})

@@ -29,4 +29,12 @@ require("rust-tools").setup({})
 
 nnoremap("<leader>lb", "<cmd>Make lint-branch<CR>")
 
+-- Reload init.lua
+nmap({
+	"<leader>sv",
+	function()
+		R("sidneyw.init")
+	end,
+})
+
 vim.notify = require("notify")
