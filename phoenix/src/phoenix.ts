@@ -5,27 +5,23 @@
   log stream --process Phoenix
 */
 
-import { logAllApps } from "./utils";
-import log from "./logger";
+import { focusOrStart, logAllApps } from "./utils";
 
-function focusOrStart(title: string) {
-  var app = App.get(title);
-
-  if (!app) {
-    app = App.launch(title);
-    // TODO(sidneyw): Add check and display error for non-existent app after
-    // launching
-    log("launching", app?.name());
-    return;
-  }
-
-  log("focusing", app.name());
-  app.focus();
-}
+import {
+  center,
+  leftHalf,
+  rightHalf,
+  nextScreen,
+  prevScreen,
+} from "./movement";
 
 const alt: Phoenix.ModifierKey[] = ["alt"];
-// var altShift = ["alt", "shift"];
+const double: Phoenix.ModifierKey[] = ["cmd", "alt"];
+const triple: Phoenix.ModifierKey[] = ["cmd", "alt", "ctrl"];
 
+// ------------
+// Launch Apps
+// ------------
 Key.on("b", alt, () => focusOrStart("Brave Browser"));
 Key.on("q", alt, () => focusOrStart("iTerm2"));
 Key.on("r", alt, () => focusOrStart("Roam Research"));
@@ -37,3 +33,12 @@ Key.on("z", alt, () => focusOrStart("zoom.us"));
 
 // For debugging
 Key.on("2", alt, logAllApps);
+
+// ------------
+// Move Windows
+// ------------
+Key.on("left", double, leftHalf);
+Key.on("right", double, rightHalf);
+Key.on("left", triple, prevScreen);
+Key.on("right", triple, nextScreen);
+Key.on("c", double, center);
