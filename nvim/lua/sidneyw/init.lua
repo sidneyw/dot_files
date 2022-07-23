@@ -26,6 +26,15 @@ require("symbols-outline").setup({
 })
 
 require("rust-tools").setup({})
+require("trouble").setup({})
+vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
+
+vim.api.nvim_set_keymap(
+	"n",
+	"ge",
+	[[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
+	{ noremap = true, silent = true }
+)
 
 nnoremap("<leader>lb", "<cmd>Make lint-branch<CR>")
 
@@ -33,7 +42,7 @@ nnoremap("<leader>lb", "<cmd>Make lint-branch<CR>")
 nmap({
 	"<leader>sv",
 	function()
-		R("sidneyw.init")
+		R("sidneyw.telescope")
 	end,
 })
 

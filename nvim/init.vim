@@ -59,6 +59,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'folke/trouble.nvim'
+
+Plug 'edolphin-ydf/goimpl.nvim'
 
 " For ultisnips users.
 Plug 'SirVer/ultisnips'
