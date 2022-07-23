@@ -1,6 +1,8 @@
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 require("nvim-tree").setup({
+	sync_root_with_cwd = true,
+	-- respect_buf_cwd = false, -- default setting is false
 	disable_netrw = false,
 	hijack_netrw = true,
 	open_on_setup = false,
@@ -29,6 +31,7 @@ require("nvim-tree").setup({
 	view = {
 		width = 40,
 	},
+	renderer = { symlink_destination = false },
 })
 
 vim.g.nvim_tree_add_trailing = 1
