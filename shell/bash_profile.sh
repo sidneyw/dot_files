@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/bash_profile.pre.bash"
+[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && . "$HOME/.fig/shell/bash_profile.pre.bash"
 #!/bin/bash
 
 # vim: set foldmethod=marker :
@@ -163,7 +163,8 @@ alias tls='tmux ls'
 alias tks='tmux kill-session -t'
 alias tkill='tmux kill-server'
 alias ta='tmux attach'
-export TERM=xterm-256color
+# export TERM=xterm-256color
+export TERM=screen-256color
 
 # Bash
 alias bp="source $HOME/.bash_profile"
@@ -392,5 +393,12 @@ if [ -f '/Users/sidney/Downloads/google-cloud-sdk/completion.bash.inc' ]; then .
 PATH="/usr/local/bin:$PATH"
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
+function pr() {
+  github_url=`git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/'`;
+  branch_name=`git symbolic-ref HEAD | cut -d"/" -f 3,4`;
+  pr_url=$github_url"/pull/new/"$branch_name
+  open $pr_url;
+}
+
 # Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/bash_profile.post.bash"
+[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && . "$HOME/.fig/shell/bash_profile.post.bash"
