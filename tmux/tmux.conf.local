@@ -354,7 +354,7 @@ tmux_conf_battery_status_discharging="🔋"  # U+1F50B
 tmux_conf_theme_synchronized='🔒'     # U+1F512
 
 # -- settings overrides  -------------------------------------------------------
-set -sg repeat-time 200 # decrease repeat timeout
+set -sg repeat-time 0 # disable repeat timeout
 
 # increase history size
 set -g history-limit 10000
@@ -392,12 +392,14 @@ bind | split-window -h
 unbind '"'
 unbind %
 
+# Fullsize the next pane.
 bind e select-pane -t :.+\;\
     resize-pane -Z
 
-bind m select-pane -t :.+\;\
+# Control-C in the last pane and then switch back to the current pane.
+bind m select-pane -l\;\
     send-keys C-c "!!" C-m\;\
-    select-pane -t :.+\;
+    select-pane -l;
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -443,8 +445,9 @@ tmux_conf_uninstall_plugins_on_reload=true
 # -- my tpm plugins ------------------------------------------------------------
 # prefix + Tab launches FZF to select over terminal text
 set -g @plugin 'laktak/extrakto'     # https://github.com/laktak/extrakto
-set -g @extrakto_copy_key "y"        # use tab to copy to clipboard
+set -g @extrakto_copy_key "tab"        # use tab to copy to clipboard
 set -g @extrakto_insert_key "enter"  # use enter to insert selection
+set -g @extrakto_popup_size	"60%"
 
 # List of TPM plugins: https://github.com/tmux-plugins/list
 
