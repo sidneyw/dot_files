@@ -79,6 +79,9 @@ defaults write com.apple.systemuiserver menuExtras -array \
 	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
 	"/System/Library/CoreServices/Menu Extras/Clock.menu"
 
+# Shorten the window resize animation time
+defaults write -g NSWindowResizeTime -float 0.003
+
 killall SystemUIServer
 
 # Manual Installs
