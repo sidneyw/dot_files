@@ -68,10 +68,10 @@ cmp.setup({
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		["<C-e>"] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
 		["<CR>"] = cmp.mapping({
-			i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+			i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert }),
 			c = function(fallback)
 				if cmp.visible() then
-					cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+					cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert })
 				else
 					fallback()
 				end

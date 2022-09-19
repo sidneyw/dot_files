@@ -64,8 +64,12 @@ Plug 'folke/trouble.nvim'
 Plug 'edolphin-ydf/goimpl.nvim'
 
 " For ultisnips users.
-Plug 'SirVer/ultisnips'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+" Plug 'SirVer/ultisnips'
+" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+" For luasnip users
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 
 " set completeopt=menu,menuone,noselect
 
@@ -87,7 +91,8 @@ Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'sudormrfbin/cheatsheet.nvim'
 
 Plug 'dhruvmanila/telescope-bookmarks.nvim'
-Plug 'fhill2/telescope-ultisnips.nvim'
+Plug 'benfowler/telescope-luasnip.nvim'
+" Plug 'fhill2/telescope-ultisnips.nvim'
 " }}}
 
 " Lualine {{{
@@ -138,7 +143,7 @@ endif
 
 if v:version >= 704
   " Snippets
-  Plug 'SirVer/ultisnips'
+  " Plug 'SirVer/ultisnips'
 endif
 
 Plug 'honza/vim-snippets'
@@ -349,7 +354,7 @@ nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
 " Run the current line as a command and read in the output
 " nnoremap <leader>q !!sh<cr>
 
-nnoremap <leader>ue :UltiSnipsEdit<cr>
+" nnoremap <leader>ue :UltiSnipsEdit<cr>
 
 " Launch Terminal
 nnoremap <silent> <leader>sh :terminal<CR>
@@ -464,10 +469,10 @@ augroup vim
   " autocmd FileType vim :setlocal foldlevelstart=0
 augroup END
 
-augroup snippets
-	autocmd!
-	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
-augroup END
+" augroup snippets
+" 	autocmd!
+" 	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
+" augroup END
 
 augroup telescope
 	autocmd!
@@ -676,7 +681,14 @@ cnoreabbr Gstash Git stash
 " let g:UltiSnipsJumpForwardTrigger="<C-l>"
 " let g:UltiSnipsJumpBackwardTrigger="<C-j>"
 " let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
+" let g:UltiSnipsSnippetsDir="/Users/sidneywijngaarde/.config/nvim/UltiSnips/"
+
+imap <silent><expr> <C-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : ''
+" -1 for jumping backwards.
+inoremap <silent> <C-j> <cmd>lua require'luasnip'.jump(-1)<Cr>
+
+snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(1)<Cr>
+snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(-1)<Cr>
 " }}}
 
 " Vim Highlighted Yank {{{

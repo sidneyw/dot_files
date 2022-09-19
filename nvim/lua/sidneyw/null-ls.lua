@@ -6,8 +6,10 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 
 local function notStarlark(utils)
-	return false
-	-- return not utils.root_has_file("config_allowlist.yml")
+	-- return false
+	P(utils)
+	print("notStarlark", utils.root_matches("*envconfig*"))
+	return not utils.root_matches("envconfig")
 end
 
 null_ls.setup({
@@ -17,7 +19,7 @@ null_ls.setup({
 			vim.cmd([[
 					augroup LspFormatting
 							autocmd! * <buffer>
-							autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1500)
+							autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
 					augroup END
 					]])
 		end
@@ -39,9 +41,9 @@ null_ls.setup({
 
 		formatting.protolint,
 
-		formatting.black.with({ extra_args = { "--fast", "--config=~/.config/black" } }),
-		diagnostics.mypy.with({ conditions = notStarlark }),
-		diagnostics.flake8.with({ conditions = notStarlark }),
+		-- formatting.black.with({ condition = notStarlark, extra_args = { "--fast", "--config=~/.config/black" } }),
+		-- diagnostics.mypy.with({ condition = notStarlark }),
+		-- diagnostics.flake8.with({ condition = notStarlark }),
 
 		-- formatting.rustfmt,
 	},

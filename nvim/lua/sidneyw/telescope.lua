@@ -45,6 +45,10 @@ require("telescope").setup({
 			theme = "ivy",
 			initial_mode = "normal",
 		},
+		luasnip = {
+			theme = "dropdown",
+			initial_mode = "normal",
+		},
 	},
 	extensions = {
 		fzy_native = {
@@ -84,10 +88,12 @@ require("telescope").setup({
 telescope.load_extension("fzy_native")
 telescope.load_extension("gh")
 -- telescope.load_extension('coc')
-telescope.load_extension("ultisnips")
+-- telescope.load_extension("ultisnips")
+telescope.load_extension("luasnip")
 telescope.load_extension("dap")
 telescope.load_extension("notify")
 telescope.load_extension("bookmarks")
+telescope.load_extension("goimpl")
 
 vim.cmd([[ cnoreabbr Tele Telescope ]])
 vim.cmd([[ cnoreabbr tele Telescope ]])
@@ -111,12 +117,28 @@ M.search_dotfiles = function()
 	})
 end
 
-nnoremap("<leader>f", M.project_files)
+-- nnoremap("<leader>f", M.project_files)
+nnoremap("<leader>f", builtin.find_files)
 nnoremap("<C-p>", M.project_files)
 nnoremap("<leader>a", builtin.live_grep)
 nnoremap("<leader>q", builtin.current_buffer_fuzzy_find)
 nnoremap("<leader>b", builtin.buffers)
 nnoremap("<leader>hl", builtin.help_tags)
 nnoremap("<leader>m", builtin.oldfiles)
+
+local utils = {
+	{ name = "Commits", fn = builtin.git_commits, desc = "Show commits" },
+	{ name = "Bcommits", fn = builtin.git_bcommits, desc = "Show buffer commits" },
+	{ name = "Branches", fn = builtin.git_branches, desc = "Show branches" },
+	{ name = "Marks", fn = builtin.marks, desc = "Show marks" },
+	{ name = "Keymaps", fn = builtin.keymaps, desc = "Show keymaps" },
+}
+
+for _, command in pairs(utils) do
+	vim.api.nvim_create_user_command(command.name, command.fn, {
+		nargs = 0,
+		desc = command.desc,
+	})
+end
 
 return M

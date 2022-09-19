@@ -41,17 +41,16 @@ end
 -- table.insert(runtime_path, "lua/?.lua")
 -- table.insert(runtime_path, "lua/?/init.lua")
 
--- TODO(sidneyw): Change this table to name, opts and move the configuration
--- above into the table
 local lang_servers = {
 	["bashls"] = {},
 	-- ["yamlls"] = {},
 	-- "eslint",
-	["pylsp"] = {},
+	-- ["pylsp"] = {},
 	["gopls"] = {
 		cmd = { "gopls" },
 		settings = {
 			gopls = {
+				-- buildFlags = { "-tags=cluster_integration" },
 				experimentalPostfixCompletions = true,
 				analyses = {
 					unusedparams = true,
