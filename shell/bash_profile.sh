@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && . "$HOME/.fig/shell/bash_profile.pre.bash"
+[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
 #!/bin/bash
 
 # vim: set foldmethod=marker :
@@ -168,8 +168,6 @@ export TERM=screen-256color
 
 # Bash
 alias bp="source $HOME/.bash_profile"
-alias ls='ls -GFh'
-alias ll='ls -la'
 
 # cd to top level git dir
 alias gcd='cd $(git rev-parse --show-toplevel)'
@@ -187,7 +185,13 @@ alias watch='watch '
 
 # Other
 alias cat="bat"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+alias ls="exa -GFh"
+alias ll='exa -lahF'
+alias lt='exa --tree --level=2'
 alias t="tree"
+
 alias pi3='ssh pi@raspberrypi.local'
 
 # Secure Helm
@@ -401,4 +405,5 @@ function pr() {
 }
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && . "$HOME/.fig/shell/bash_profile.post.bash"
+[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
+export PATH="/opt/homebrew/opt/go@1.18/bin:$PATH"
