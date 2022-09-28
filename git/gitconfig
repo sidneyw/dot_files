@@ -30,6 +30,7 @@
 	pr = "!f() { git fetch origin refs/pull/$1/head:refs/remotes/origin/pr/$1 && git checkout FETCH_HEAD && git remote prune origin; }; f"
 	rim = rebase -i origin/master
 	st = status
+	sha = rev-parse --short=8 HEAD
 [core]
 	editor = /opt/homebrew/bin/nvim
 

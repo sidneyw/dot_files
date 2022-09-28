@@ -57,26 +57,33 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+" Plug 'hrsh7th/cmp-copilot'
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'folke/todo-comments.nvim'
 
 Plug 'edolphin-ydf/goimpl.nvim'
-
-" For ultisnips users.
-" Plug 'SirVer/ultisnips'
-" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " For luasnip users
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
-" set completeopt=menu,menuone,noselect
+" Copilot
+" Plug 'github/copilot.vim'
 
-" Plug 'glepnir/lspsaga.nvim'
 Plug 'tami5/lspsaga.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 " }}}
+
+"DAP {{{
+Plug 'mfussenegger/nvim-dap'
+Plug 'Pocco81/DAPInstall.nvim'
+Plug 'leoluz/nvim-dap-go'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'mfussenegger/nvim-dap-python'
+Plug 'rcarriga/nvim-dap-ui'
+"}}}
 
 " Telescope {{{
 Plug 'nvim-lua/popup.nvim'
@@ -141,11 +148,6 @@ if v:version >= 703
  Plug 'Shougo/vimshell.vim'
 endif
 
-if v:version >= 704
-  " Snippets
-  " Plug 'SirVer/ultisnips'
-endif
-
 Plug 'honza/vim-snippets'
 " }}}
 
@@ -155,10 +157,6 @@ let g:gruvbox_contrast_dark = 'hard'
 Plug 'morhetz/gruvbox'
 " }}}
 
-Plug 'mfussenegger/nvim-dap'
-Plug 'leoluz/nvim-dap-go'
-Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
 
 " Rust {{{
@@ -350,9 +348,6 @@ nnoremap <leader>lo :lopen<cr>
 
 " Eval till = char
 nnoremap <leader>= vt="zyf=a <C-r>=<C-r>z<cr><esc>
-
-" Run the current line as a command and read in the output
-" nnoremap <leader>q !!sh<cr>
 
 " nnoremap <leader>ue :UltiSnipsEdit<cr>
 
@@ -640,6 +635,11 @@ nnoremap <silent> <C-d> <cmd>lua require('lspsaga.action').smart_scroll_with_sag
 " 	autocmd BufWritePre *.go lua require'sidneyw.lsp'.goimports(1000)
 " augroup END
 
+" }}}
+
+" Copilot {{{
+" imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+" let g:copilot_no_tab_map = v:true
 " }}}
 
 " Fugitive {{{

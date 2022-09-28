@@ -96,6 +96,7 @@ end, {
 vim.cmd([[
 	cnoreabbr tabcd TabCD
 	cnoreabbr tcd TabCD
+	cnoreabbr trn TablineTabRename
 ]])
 
 return M

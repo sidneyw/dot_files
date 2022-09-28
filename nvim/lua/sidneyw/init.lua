@@ -6,15 +6,15 @@ require("sidneyw.lualine")
 require("sidneyw.tab")
 require("sidneyw.luasnip-cmp")
 require("sidneyw.lsp")
-require("sidneyw.dap")
 require("sidneyw.null-ls")
 require("sidneyw.gitsigns")
-
+require("sidneyw.dap").setup()
 require("Comment").setup()
-
 require("nvim-autopairs").setup({})
-
 require("mini.trailspace").setup()
+require("rust-tools").setup({})
+require("trouble").setup({})
+require("todo-comments").setup()
 
 require("symbols-outline").setup({
 	highlight_hovered_item = false,
@@ -25,8 +25,6 @@ require("symbols-outline").setup({
 	winblend = 50,
 })
 
-require("rust-tools").setup({})
-require("trouble").setup({})
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
 
 vim.api.nvim_set_keymap(

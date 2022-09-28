@@ -205,15 +205,6 @@ alias dps="docker ps"
 alias dcomp='docker-compose'
 alias dmongo='docker run -d -p 27017:27017 mongo'
 
-# function kcp() {
-# 	if [[ -n $1 ]]; then
-# 		kubectl get pods | rg $1
-# 		return
-# 	fi
-
-# 	kubectl get pods
-# }
-
 function dexec() {
 	docker exec -it $1 /bin/bash
 }
@@ -380,10 +371,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/tools/sumneko/lua-language-server/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 
-# Local Config
-local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
-test -f "$local_conf" && source "$local_conf"
-
 [[ -s "/Users/sidneyw/.gvm/scripts/gvm" ]] && source "/Users/sidneyw/.gvm/scripts/gvm"
 
 alias luamake=/Users/sidneyw/tools/sumneko/lua-language-server/3rd/luamake/luamake
@@ -404,6 +391,11 @@ function pr() {
   open $pr_url;
 }
 
+export PATH="/opt/homebrew/opt/go@1.18/bin:$PATH"
+
+# Local Config
+local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
+test -f "$local_conf" && source "$local_conf"
+
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
-export PATH="/opt/homebrew/opt/go@1.18/bin:$PATH"
