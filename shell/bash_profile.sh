@@ -143,6 +143,8 @@ export VIMRC_LUA="$DOT_FILES/nvim/lua/sidneyw/init.lua"
 export tmux="$DOT_FILES/tmux/tmux.conf"
 
 export EDITOR='nvim'
+export HISTSIZE=20000
+export HISTFILESIZE=20000
 
 # Gcloud SDK uses this variable to pick a python version
 # export CLOUDSDK_PYTHON=python2.7
