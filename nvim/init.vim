@@ -202,6 +202,7 @@ set nowrap              " Turn off line wraps
 set showcmd             " Show commands in the bottom right corner
 set spelllang=en_us
 set textwidth=80
+set linebreak
 
 set foldlevelstart=15   " most folds should be open on start
 
