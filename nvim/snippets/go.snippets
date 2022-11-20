@@ -4,6 +4,11 @@ snippet ew "errors.Wrap"
 snippet ewf "errors.Wrapf"
 	errors.Wrapf(${1:err}, "${2:message %v}", ${3:args...})
 
+snippet errn "return err"
+	if err != nil {
+		return ${1:nil,} errors.${2:Propagate}(err)
+	}
+
 snippet ff "fmt.Printf(...)"
 	fmt.Printf("$1 = %+v\n", ${1:${VISUAL}})
 
@@ -25,6 +30,11 @@ snippet interface "interface I { ... }"
 		${2:/* TODO: add methods */}
 	}
 
+snippet struct "struct { ... }"
+	type ${1:Struct} struct {
+		${2:/* TODO: add methods */}
+	}
+
 snippet meth "func (self Type) Method(...) [error] { ... }"
 	func (${1:receiver} ${2:type}) ${3:name}(${4:params}) ${5} {
 		${0:${VISUAL}}
@@ -32,3 +42,27 @@ snippet meth "func (self Type) Method(...) [error] { ... }"
 
 snippet todo "Todo comment"
 	// TODO(sidneyw): $1
+
+snippet tlibs "go test library import paths"
+	"github.com/stretchr/testify/require"
+
+snippet tabletest "Table test boilerplate"
+	func Test$1(t *testing.T) {
+		type args struct {
+			name string
+			$2
+		}
+
+
+		tests := []args{}
+
+		for _, test := range tests {
+			t.Run(test.name, func(t *testing.T) {
+				t.Parallel()
+				$3
+			})
+		}
+	}
+
+snippet imerr "Import errors package"
+	"github.com/chronosphereio/monorepo/src/pkg/errors"
