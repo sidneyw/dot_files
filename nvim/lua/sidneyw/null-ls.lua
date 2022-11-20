@@ -15,11 +15,11 @@ end
 null_ls.setup({
 	debug = false,
 	on_attach = function(client)
-		if client.resolved_capabilities.document_formatting then
+		if client.server_capabilities.documentFormattingProvider then
 			vim.cmd([[
 					augroup LspFormatting
 							autocmd! * <buffer>
-							autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
+							autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms=2000 })
 					augroup END
 					]])
 		end
@@ -39,7 +39,7 @@ null_ls.setup({
 		formatting.goimports,
 		diagnostics.golangci_lint,
 
-		formatting.protolint,
+		-- formatting.protolint,
 
 		-- formatting.black.with({ condition = notStarlark, extra_args = { "--fast", "--config=~/.config/black" } }),
 		-- diagnostics.mypy.with({ condition = notStarlark }),
@@ -48,3 +48,28 @@ null_ls.setup({
 		-- formatting.rustfmt,
 	},
 })
+-- client.server_capabilities
+-- {
+--   codeActionProvider = {
+--     resolveProvider = false
+--   },
+--   completionProvider = {
+--     allCommitCharacters = {},
+--     completionItem = {
+--       labelDetailsSupport = true
+--     },
+--     resolveProvider = false,
+--     triggerCharacters = { ".", ":", "-" }
+--   },
+--   documentFormattingProvider = true,
+--   documentRangeFormattingProvider = true,
+--   executeCommandProvider = true,
+--   hoverProvider = true,
+--   textDocumentSync = {
+--     change = 1,
+--     openClose = true,
+--     save = {
+--       includeText = true
+--     }
+--   }
+-- }
