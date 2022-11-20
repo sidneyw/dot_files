@@ -4,8 +4,7 @@ local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspsaga = require("lspsaga")
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+local capabilities = cmp_nvim_lsp.default_capabilities()
 
 local function withDefaults(opts)
 	opts = opts or {}
@@ -13,8 +12,8 @@ local function withDefaults(opts)
 	opts.capabilities = capabilities
 	opts.on_attach = function(client)
 		-- null ls provides formatting now
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
+		client.server_capabilities.document_formatting = false
+		client.server_capabilities.document_range_formatting = false
 	end
 	return opts
 end
@@ -50,7 +49,7 @@ local lang_servers = {
 		cmd = { "gopls" },
 		settings = {
 			gopls = {
-				-- buildFlags = { "-tags=cluster_integration" },
+				buildFlags = { "-tags=cluster_integration" },
 				experimentalPostfixCompletions = true,
 				analyses = {
 					unusedparams = true,
