@@ -45,20 +45,20 @@ local lang_servers = {
 	-- ["yamlls"] = {},
 	-- "eslint",
 	-- ["pylsp"] = {},
-	["gopls"] = {
-		cmd = { "gopls" },
-		settings = {
-			gopls = {
-				buildFlags = { "-tags=cluster_integration" },
-				experimentalPostfixCompletions = true,
-				analyses = {
-					unusedparams = true,
-					shadow = true,
-				},
-				staticcheck = true,
-			},
-		},
-	},
+	-- ["gopls"] = {
+	-- 	cmd = { "gopls" },
+	-- 	settings = {
+	-- 		gopls = {
+	-- 			buildFlags = { "-tags=cluster_integration" },
+	-- 			experimentalPostfixCompletions = true,
+	-- 			analyses = {
+	-- 				unusedparams = true,
+	-- 				shadow = true,
+	-- 			},
+	-- 			staticcheck = true,
+	-- 		},
+	-- 	},
+	-- },
 	-- "graphql",
 	-- ["tailwindcss"] = {},
 	["rust_analyzer"] = {},

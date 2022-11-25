@@ -12,16 +12,33 @@ local function notStarlark(utils)
 	return not utils.root_matches("envconfig")
 end
 
+local lsp_formatting = function(bufnr)
+	vim.lsp.buf.format({
+		filter = function(client)
+			return client.name == "null-ls"
+		end,
+		bufnr = bufnr,
+	})
+end
+
 null_ls.setup({
 	debug = false,
 	on_attach = function(client)
-		if client.server_capabilities.documentFormattingProvider then
-			vim.cmd([[
-					augroup LspFormatting
-							autocmd! * <buffer>
-							autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms=2000 })
-					augroup END
-					]])
+		if client.name == "gopls" then
+			print("GOPLS detected")
+			client.resolved_capabilities.document_formatting = false -- 0.7 and earlier
+			client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
+			return
+		end
+		if client.supports_method("textDocument/formatting") then
+			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = augroup,
+				buffer = bufnr,
+				callback = function()
+					lsp_formatting(bufnr)
+				end,
+			})
 		end
 	end,
 	sources = {
@@ -34,8 +51,9 @@ null_ls.setup({
 		formatting.stylua,
 		diagnostics.luacheck,
 
-		formatting.gofmt,
 		-- formatting.gofumpt,
+
+		formatting.gofmt,
 		formatting.goimports,
 		diagnostics.golangci_lint,
 
@@ -48,28 +66,3 @@ null_ls.setup({
 		-- formatting.rustfmt,
 	},
 })
--- client.server_capabilities
--- {
---   codeActionProvider = {
---     resolveProvider = false
---   },
---   completionProvider = {
---     allCommitCharacters = {},
---     completionItem = {
---       labelDetailsSupport = true
---     },
---     resolveProvider = false,
---     triggerCharacters = { ".", ":", "-" }
---   },
---   documentFormattingProvider = true,
---   documentRangeFormattingProvider = true,
---   executeCommandProvider = true,
---   hoverProvider = true,
---   textDocumentSync = {
---     change = 1,
---     openClose = true,
---     save = {
---       includeText = true
---     }
---   }
--- }

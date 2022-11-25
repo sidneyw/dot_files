@@ -1,7 +1,6 @@
 local actions = require("telescope.actions")
 local telescope = require("telescope")
 local builtin = require("telescope.builtin")
--- local themes = require("telescope.themes")
 
 local symbols = {
 	telescope = "",
@@ -13,8 +12,6 @@ local symbols = {
 
 require("telescope").setup({
 	defaults = {
-		-- layout_strategy = "flex",
-
 		mappings = {
 			i = {
 				["<C-u>"] = false,
@@ -55,12 +52,6 @@ require("telescope").setup({
 			override_generic_sorter = false,
 			override_file_sorter = true,
 		},
-		-- fzf = {
-		--   fuzzy = true,
-		--   override_generic_sorter = true,
-		--   override_file_sorter = true,
-		--   case_mode = "smart_case",
-		-- },
 
 		bookmarks = {
 			-- Available: 'brave', 'google_chrome', 'safari', 'firefox'
@@ -83,12 +74,8 @@ require("telescope").setup({
 })
 
 -- Extensions
--- require("telescope").load_extension("git_worktree")
--- telescope.load_extension("fzf")
 telescope.load_extension("fzy_native")
 telescope.load_extension("gh")
--- telescope.load_extension('coc')
--- telescope.load_extension("ultisnips")
 telescope.load_extension("luasnip")
 telescope.load_extension("dap")
 telescope.load_extension("notify")
@@ -117,7 +104,6 @@ M.search_dotfiles = function()
 	})
 end
 
--- nnoremap("<leader>f", M.project_files)
 nnoremap("<leader>f", builtin.find_files)
 nnoremap("<C-p>", M.project_files)
 nnoremap("<leader>a", builtin.live_grep)
@@ -125,6 +111,13 @@ nnoremap("<leader>q", builtin.current_buffer_fuzzy_find)
 nnoremap("<leader>b", builtin.buffers)
 nnoremap("<leader>hl", builtin.help_tags)
 nnoremap("<leader>m", builtin.oldfiles)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"ge",
+	[[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
+	{ noremap = true, silent = true }
+)
 
 local utils = {
 	{ name = "Commits", fn = builtin.git_commits, desc = "Show commits" },
