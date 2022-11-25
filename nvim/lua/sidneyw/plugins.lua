@@ -9,6 +9,9 @@ local is_mac = has("macunix")
 return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
+	use("nvim-lua/popup.nvim")
+	use("nvim-lua/plenary.nvim")
+
 	use("rcarriga/nvim-notify")
 
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
@@ -51,6 +54,7 @@ return require("packer").startup(function(use)
 	use("simrat39/symbols-outline.nvim")
 	use("simrat39/rust-tools.nvim")
 
+	use("folke/trouble.nvim")
 	use({
 		"folke/lsp-trouble.nvim",
 		cmd = "Trouble",
@@ -64,6 +68,15 @@ return require("packer").startup(function(use)
 	})
 	-- }}}
 
+	-- DAP {{{
+	use("mfussenegger/nvim-dap")
+	use("Pocco81/DAPInstall.nvim")
+	use("leoluz/nvim-dap-go")
+	use("theHamsta/nvim-dap-virtual-text")
+	use("mfussenegger/nvim-dap-python")
+	use("rcarriga/nvim-dap-ui")
+	-- }}}
+
 	-- autocomplete {{{
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-buffer")
@@ -72,6 +85,8 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/cmp-nvim-lsp-document-symbol")
+	use("L3MON4D3/LuaSnip")
+	use("saadparwaiz1/cmp_luasnip")
 	-- }}}
 
 	-- Telescope {{{
@@ -110,4 +125,6 @@ return require("packer").startup(function(use)
 	]])
 
 	use("morhetz/gruvbox")
+
+	use("numToStr/Comment.nvim")
 end)

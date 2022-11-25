@@ -4,7 +4,7 @@ if require("sidneyw.first-load")() then
 	return
 end
 
--- require("sidneyw.plugins")
+require("sidneyw.plugins")
 
 require("sidneyw.telescope")
 require("sidneyw.treesitter")
