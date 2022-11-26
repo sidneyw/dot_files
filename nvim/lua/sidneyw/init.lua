@@ -4,20 +4,22 @@ if require("sidneyw.first-load")() then
 	return
 end
 
-require("config.opts")
 require("sidneyw.plugins")
 
-require("sidneyw.telescope")
-require("sidneyw.treesitter")
-require("sidneyw.nvim-tree")
-require("sidneyw.lualine")
-require("sidneyw.tab")
-require("sidneyw.luasnip-cmp")
 require("sidneyw.lsp")
-require("sidneyw.null-ls")
-require("sidneyw.gitsigns")
-require("sidneyw.dap").setup()
-require("sidneyw.symbolsoutline")
+require("sidneyw.tab")
+
+require("sidneyw.plugins.dap").setup()
+require("sidneyw.plugins.fugitive")
+require("sidneyw.plugins.gitsigns")
+require("sidneyw.plugins.lualine")
+require("sidneyw.plugins.luasnip-cmp")
+require("sidneyw.plugins.null-ls")
+require("sidneyw.plugins.nvim-tree")
+require("sidneyw.plugins.symbolsoutline")
+require("sidneyw.plugins.telescope")
+require("sidneyw.plugins.treesitter")
+
 require("sidneyw.chronosphere")
 
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
@@ -38,3 +40,15 @@ nmap({
 })
 
 vim.notify = require("notify")
+
+vim.cmd([[colorscheme gruvbox]])
+-- colorscheme monokai-phoenix
+-- colorscheme badwolf
+-- colorscheme onedark
+-- colorscheme dracula_blood
+-- colorscheme nightfox
+-- colorscheme srcerydrk
+-- colorscheme papercolor
+-- colorscheme brogrammer
+-- colorscheme turtles
+-- colorscheme molokai_dark

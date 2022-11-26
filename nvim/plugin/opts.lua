@@ -15,6 +15,8 @@ opt.expandtab = true
 opt.ignorecase = true -- Ignore case when searching...
 opt.smartcase = true -- ... unless there is a capital letter in the query
 
+opt.shortmess = "filnxtToOFc"
+
 opt.colorcolumn = "+1"
 opt.signcolumn = "yes"
 opt.cursorline = true

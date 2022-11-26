@@ -1,5 +1,5 @@
-local actions = require("telescope.actions")
 local telescope = require("telescope")
+local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 
 local symbols = {
