@@ -106,3 +106,12 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline", keyword_length = 2 },
 	}),
 })
+
+vim.cmd([[
+	imap <silent><expr> <C-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : ''
+	" -1 for jumping backwards.
+	inoremap <silent> <C-j> <cmd>lua require'luasnip'.jump(-1)<Cr>
+
+	snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(1)<Cr>
+	snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(-1)<Cr>
+]])

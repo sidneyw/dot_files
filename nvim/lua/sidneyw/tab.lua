@@ -1,7 +1,7 @@
 local tabline = require("tabline")
 local notify = require("notify")
 
-local telescopeCustom = require("sidneyw.telescope")
+local telescopeCustom = require("sidneyw.plugins.telescope")
 
 local dotFilesDir = vim.fn.expand("~/.dot_files/")
 local chronoDir = vim.fn.expand("~/go/src/github.com/chronosphereio/")

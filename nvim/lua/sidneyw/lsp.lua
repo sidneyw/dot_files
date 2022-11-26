@@ -104,3 +104,30 @@ require("nlua.lsp.nvim").setup(lspconfig, {
 		"/Users/sidney/.dot_files/tools/lua-language-server/bin/main.lua",
 	},
 })
+
+vim.cmd([[
+	let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+	nnoremap go <cmd>Lspsaga preview_definition<CR>
+	nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>
+	nnoremap ga <cmd>Lspsaga code_action<CR>
+	nnoremap gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+	nnoremap <localleader>R <cmd>lua vim.lsp.buf.rename()<CR>
+	" for some reason the lsp saga rename window isn't able to accept backspaces
+	" nnoremap <localleader>R <cmd>Lspsaga rename<CR>
+
+	nnoremap K     <cmd>Lspsaga hover_doc<CR>
+	nnoremap <C-s> <cmd>Lspsaga signature_help<CR>
+
+	nnoremap <silent> gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
+	nnoremap <silent> gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
+
+	nnoremap <localleader>dd :vsp<cr>:lua vim.lsp.buf.definition()<cr>
+	nnoremap <localleader>dt :tab<cr>:lua vim.lsp.buf.definition()<cr>
+
+	nnoremap <silent> gn <cmd>Lspsaga diagnostic_jump_next<CR>
+	nnoremap <silent> gp <cmd>Lspsaga diagnostic_jump_prev<CR>
+
+	nnoremap <silent> <C-u> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+	nnoremap <silent> <C-d> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+]])

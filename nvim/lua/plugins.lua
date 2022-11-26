@@ -65,12 +65,6 @@ return require("packer").startup(function(use)
 	})
 
 	use({
-		"folke/trouble.nvim",
-		config = function()
-			require("trouble").setup({})
-		end,
-	})
-	use({
 		"folke/lsp-trouble.nvim",
 		cmd = "Trouble",
 		config = function()
@@ -79,6 +73,13 @@ return require("packer").startup(function(use)
 				auto_preview = false,
 				auto_fold = true,
 			})
+		end,
+	})
+
+	use({
+		"folke/trouble.nvim",
+		config = function()
+			nnoremap("<leader>xx", "<cmd>TroubleToggle<cr>")
 		end,
 	})
 	-- }}}

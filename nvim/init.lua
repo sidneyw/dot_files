@@ -1,10 +1,11 @@
-require("sidneyw.global") -- experimental
+require("global") -- experimental
 
-if require("sidneyw.first-load")() then
+if require("first-load")() then
 	return
 end
 
-require("sidneyw.plugins")
+require("plugins")
+require("autocommands")
 
 require("sidneyw.lsp")
 require("sidneyw.tab")
@@ -21,8 +22,6 @@ require("sidneyw.plugins.telescope")
 require("sidneyw.plugins.treesitter")
 
 require("sidneyw.chronosphere")
-
-vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
 
 vim.api.nvim_set_keymap(
 	"n",
