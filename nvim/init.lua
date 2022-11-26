@@ -4,6 +4,9 @@ if require("first-load")() then
 	return
 end
 
+vim.g.mapleader = "-"
+vim.g.maplocalleader = "\\"
+
 require("plugins")
 require("autocommands")
 
