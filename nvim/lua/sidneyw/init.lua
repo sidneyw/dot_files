@@ -18,12 +18,6 @@ require("sidneyw.null-ls")
 require("sidneyw.gitsigns")
 require("sidneyw.dap").setup()
 require("sidneyw.symbolsoutline")
-require("Comment").setup()
-require("nvim-autopairs").setup({})
-require("rust-tools").setup({})
-require("trouble").setup({})
-require("todo-comments").setup()
-
 require("sidneyw.chronosphere")
 
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })

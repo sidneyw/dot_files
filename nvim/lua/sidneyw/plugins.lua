@@ -37,7 +37,12 @@ return require("packer").startup(function(use)
 	use("tpope/vim-markdown")
 	-- }}}
 
-	use("folke/todo-comments.nvim")
+	use({
+		"folke/todo-comments.nvim",
+		config = function()
+			require("todo-comments").setup()
+		end,
+	})
 
 	-- LSP {{{
 	use("neovim/nvim-lspconfig")
@@ -52,9 +57,19 @@ return require("packer").startup(function(use)
 
 	use("tami5/lspsaga.nvim")
 	use("simrat39/symbols-outline.nvim")
-	use("simrat39/rust-tools.nvim")
+	use({
+		"simrat39/rust-tools.nvim",
+		config = function()
+			require("rust-tools").setup({})
+		end,
+	})
 
-	use("folke/trouble.nvim")
+	use({
+		"folke/trouble.nvim",
+		config = function()
+			require("trouble").setup({})
+		end,
+	})
 	use({
 		"folke/lsp-trouble.nvim",
 		cmd = "Trouble",
@@ -115,8 +130,19 @@ return require("packer").startup(function(use)
 	use("nvim-lualine/lualine.nvim")
 	use("kdheepak/tabline.nvim")
 
-	use("machakann/vim-highlightedyank")
-	use("windwp/nvim-autopairs")
+	use({
+		"machakann/vim-highlightedyank",
+		config = function()
+			vim.g.highlightedyank_highlight_duration = 200
+		end,
+	})
+
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
 	use("honza/vim-snippets")
 
 	vim.cmd([[
@@ -126,5 +152,10 @@ return require("packer").startup(function(use)
 
 	use("morhetz/gruvbox")
 
-	use("numToStr/Comment.nvim")
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	})
 end)

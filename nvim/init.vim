@@ -21,7 +21,6 @@ augroup END
 
 augroup text
   autocmd!
-  autocmd FileType text,unix :setlocal wrap spell foldmethod=indent
   autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 augroup END
 
@@ -50,7 +49,6 @@ let g:markdown_syntax_conceal = 0
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-  autocmd FileType markdown, :setlocal wrap spell foldmethod=indent
   " autocmd FileType markdown, :colorscheme badwolf
 augroup END
 
@@ -61,7 +59,6 @@ augroup END
 
 augroup python
   autocmd!
-  autocmd FileType python :setlocal list foldmethod=indent
   autocmd FileType python :setlocal commentstring=#\ %s
   autocmd FileType python :call PyTab()
   " autocmd BufWritePre *.py execute ':Black'
@@ -70,37 +67,12 @@ augroup END
 augroup javascript
   autocmd!
   autocmd FileType javascript :call ShortTab()
-  autocmd FileType javascript setlocal foldmethod=syntax
-  " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
-  " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.yml,*.html Prettier
 augroup END
 
 augroup proto
   autocmd!
   autocmd FileType proto :call LongTab()
 augroup END
-
-augroup html
-  autocmd!
-  autocmd FileType html :setlocal nowrap
-  autocmd Filetype html setlocal ts=2 sw=2 expandtab
-augroup END
-
-augroup C
-  autocmd!
-  autocmd FileType c :setlocal list foldmethod=syntax
-augroup END
-
-augroup vim
-  autocmd!
-  autocmd FileType vim :setlocal foldmethod=marker
-  " autocmd FileType vim :setlocal foldlevelstart=0
-augroup END
-
-" augroup snippets
-" 	autocmd!
-" 	autocmd BufWritePost *.snippets :CmpUltisnipsReloadSnippets
-" augroup END
 
 augroup telescope
 	autocmd!
@@ -211,10 +183,6 @@ endif
 " Plugins {{{
 " ===================
 
-" Black {{{
-let g:black_linelength=100
-" }}}
-
 " Bufferline {{{
 " ======================
 let g:bufferline_echo = 0
@@ -247,18 +215,6 @@ nnoremap <silent> gp <cmd>Lspsaga diagnostic_jump_prev<CR>
 
 nnoremap <silent> <C-u> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 nnoremap <silent> <C-d> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-
-" augroup go-fmt
-" 	autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-" 	autocmd BufWritePre *.go lua require'sidneyw.lsp'.goimports(1000)
-" augroup END
-
-" }}}
-
-" Copilot {{{
-" imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-" let g:copilot_no_tab_map = v:true
-" }}}
 
 " Fugitive {{{
 " ======================
@@ -307,23 +263,4 @@ inoremap <silent> <C-j> <cmd>lua require'luasnip'.jump(-1)<Cr>
 
 snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(1)<Cr>
 snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(-1)<Cr>
-" }}}
-
-" Vim Highlighted Yank {{{
-" ===================
-let g:highlightedyank_highlight_duration = 200
-" }}}
-
-" Vim Python {{{
-" ===================
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
-
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
-let g:python_highlight_all = 1
 " }}}
