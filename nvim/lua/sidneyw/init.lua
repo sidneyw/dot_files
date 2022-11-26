@@ -4,6 +4,7 @@ if require("sidneyw.first-load")() then
 	return
 end
 
+require("config.opts")
 require("sidneyw.plugins")
 
 require("sidneyw.telescope")

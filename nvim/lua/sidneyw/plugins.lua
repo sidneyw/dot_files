@@ -122,7 +122,7 @@ return require("packer").startup(function(use)
 	vim.cmd([[
 		set background=dark
 		let g:gruvbox_contrast_dark = 'hard'
-	]])
+		]])
 
 	use("morhetz/gruvbox")
 
