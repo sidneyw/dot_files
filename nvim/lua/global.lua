@@ -24,6 +24,10 @@ function nnoremap(lhs, fn)
 	vim.keymap.set("n", lhs, fn, { noremap = true })
 end
 
+function vnoremap(lhs, fn)
+	vim.keymap.set("v", lhs, fn, { noremap = true })
+end
+
 function imap(tbl)
 	vim.keymap.set("i", tbl[1], tbl[2], tbl[3])
 end
