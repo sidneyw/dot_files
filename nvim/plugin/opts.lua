@@ -1,8 +1,5 @@
 local opt = vim.opt
 
-vim.g.mapleader = "-"
-vim.g.maplocalleader = "\\"
-
 opt.relativenumber = true
 opt.number = true
 opt.updatetime = 500

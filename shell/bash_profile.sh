@@ -138,8 +138,7 @@ test -f "$gruvbox_colors" && source $gruvbox_colors
 # Global Variables {{{
 # ====================================
 export DOT_FILES="$HOME/.dot_files/"
-export VIMRC="$DOT_FILES/nvim/init.vim"
-export VIMRC_LUA="$DOT_FILES/nvim/lua/sidneyw/init.lua"
+export VIMRC="$DOT_FILES/nvim/init.lua"
 export tmux="$DOT_FILES/tmux/tmux.conf"
 
 export EDITOR='nvim'
@@ -157,7 +156,7 @@ export HISTFILESIZE=20000
 alias v='nvim'
 alias vim='nvim'
 alias ebash='nvim ~/.bash_profile'
-alias evim="cd $DOT_FILES; nvim $VIMRC $VIMRC_LUA -O; cd -"
+alias evim="cd $DOT_FILES; nvim $VIMRC; cd -"
 
 # Tmux
 alias tmux='tmux -2'
@@ -373,13 +372,10 @@ export PATH=$PATH:$GOBIN
 export PATH=$PATH:$GOROOT/bin
 export GO111MODULE=on
 
-# Rust Cargo
-
 # Yarn bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # }}}
 
-export PATH="$HOME/tools/sumneko/lua-language-server/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 
 [[ -s "/Users/sidneyw/.gvm/scripts/gvm" ]] && source "/Users/sidneyw/.gvm/scripts/gvm"

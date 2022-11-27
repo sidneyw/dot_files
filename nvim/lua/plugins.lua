@@ -50,6 +50,7 @@ return require("packer").startup(function(use)
 		use("williamboman/nvim-lsp-installer")
 	end
 
+	use("jose-elias-alvarez/nvim-lsp-ts-utils")
 	use("nvim-lua/lsp_extensions.nvim")
 	use("onsails/lspkind-nvim")
 	use("tjdevries/nlua.nvim")

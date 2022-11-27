@@ -125,6 +125,7 @@ local utils = {
 	{ name = "Branches", fn = builtin.git_branches, desc = "Show branches" },
 	{ name = "Marks", fn = builtin.marks, desc = "Show marks" },
 	{ name = "Keymaps", fn = builtin.keymaps, desc = "Show keymaps" },
+	{ name = "Colors", fn = builtin.colorscheme, desc = "Show colorschemes" },
 }
 
 for _, command in pairs(utils) do

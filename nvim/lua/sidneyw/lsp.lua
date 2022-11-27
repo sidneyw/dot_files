@@ -1,52 +1,221 @@
-vim.lsp.set_log_level("debug")
-
-local lspconfig = require("lspconfig")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local lspsaga = require("lspsaga")
-
-local capabilities = cmp_nvim_lsp.default_capabilities()
-
-local function withDefaults(opts)
-	opts = opts or {}
-
-	opts.capabilities = capabilities
-	opts.on_attach = function(client)
-		-- null ls provides formatting now
-		client.server_capabilities.document_formatting = false
-		client.server_capabilities.document_range_formatting = false
-	end
-	return opts
+local lspconfig = vim.F.npcall(require, "lspconfig")
+if not lspconfig then
+	return
 end
 
-local function get_lua_runtime()
-	local result = {}
-	for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-		local lua_path = path .. "/lua/"
-		if vim.fn.isdirectory(lua_path) then
-			result[lua_path] = true
+local saga_action = require("lspsaga.action")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local lspsaga = require("lspsaga")
+local ts_util = require("nvim-lsp-ts-utils")
+local null_ls = require("null-ls")
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+
+local is_mac = vim.fn.has("macunix") == 1
+
+local autocmd = function(args)
+	local event = args[1]
+	local group = args[2]
+	local callback = args[3]
+
+	vim.api.nvim_create_autocmd(event, {
+		group = group,
+		buffer = args[4],
+		callback = function()
+			callback()
+		end,
+		once = args.once,
+	})
+end
+local autocmd_clear = vim.api.nvim_clear_autocmds
+
+local custom_init = function(client)
+	client.config.flags = client.config.flags or {}
+	client.config.flags.allow_incremental_sync = true
+end
+
+local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
+local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
+
+local autocmd_format = function(async, filter)
+	vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		buffer = 0,
+		callback = function()
+			vim.lsp.buf.format({ async = async, filter = filter })
+		end,
+	})
+end
+
+local filetype_attach = setmetatable({
+	go = function()
+		autocmd_format(false)
+	end,
+
+	scss = function()
+		autocmd_format(false)
+	end,
+
+	css = function()
+		autocmd_format(false)
+	end,
+
+	rust = function()
+		-- telescope_mapper("<space>wf", "lsp_workspace_symbols", {
+		--   ignore_filename = true,
+		--   query = "#",
+		-- }, true)
+
+		autocmd_format(false)
+	end,
+
+	typescript = function()
+		autocmd_format(false, function(client)
+			return client.name ~= "tsserver"
+		end)
+	end,
+}, {
+	__index = function()
+		return function() end
+	end,
+})
+
+local buf_nnoremap = function(opts)
+	if opts[3] == nil then
+		opts[3] = {}
+	end
+	opts[3].buffer = 0
+
+	nmap(opts)
+end
+
+local buf_inoremap = function(opts)
+	if opts[3] == nil then
+		opts[3] = {}
+	end
+	opts[3].buffer = 0
+
+	imap(opts)
+end
+
+local custom_attach = function(client, bufnr)
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+
+	buf_inoremap({ "<c-s>", "<cmd>Lspsaga signature_help<CR>" })
+
+	buf_inoremap({ "go", "<cmd>Lspsaga preview_definition<CR>" })
+
+	buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
+	buf_nnoremap({ "ga", vim.lsp.buf.code_action })
+
+	buf_nnoremap({ "gd", vim.lsp.buf.definition })
+	buf_nnoremap({ "gD", vim.lsp.buf.declaration })
+	buf_nnoremap({ "gt", vim.lsp.buf.type_definition })
+
+	buf_nnoremap({ "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>" })
+
+	buf_nnoremap({ "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>" })
+	buf_nnoremap({ "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>" })
+
+	buf_nnoremap({ "gi", require("telescope.builtin").lsp_implementations })
+	buf_nnoremap({ "gr", require("telescope.builtin").lsp_references })
+
+	buf_nnoremap({
+		"<C-u>",
+		function()
+			saga_action.smart_scroll_with_saga(-1)
+		end,
+	})
+
+	buf_nnoremap({
+		"<C-d>",
+		function()
+			saga_action.smart_scroll_with_saga(1)
+		end,
+	})
+
+	if filetype ~= "lua" then
+		buf_nnoremap({ "K", "<cmd>Lspsaga hover_doc<CR>" })
+	end
+
+	vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+
+	-- Set autocommands conditional on server_capabilities
+	if client.server_capabilities.documentHighlightProvider then
+		autocmd_clear({ group = augroup_highlight, buffer = bufnr })
+		autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr })
+		autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr })
+	end
+
+	if false and client.server_capabilities.codeLensProvider then
+		if filetype ~= "elm" then
+			autocmd_clear({ group = augroup_codelens, buffer = bufnr })
+			autocmd({ "BufEnter", augroup_codelens, vim.lsp.codelens.refresh, bufnr, once = true })
+			autocmd({ { "BufWritePost", "CursorHold" }, augroup_codelens, vim.lsp.codelens.refresh, bufnr })
 		end
 	end
 
-	-- This loads the `lua` files from nvim into the runtime.
-	result[vim.fn.expand("$VIMRUNTIME/lua")] = true
-
-	-- TODO: Figure out how to get these to work...
-	--  Maybe we need to ship these instead of putting them in `src`?...
-	result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
-
-	return result
+	-- Attach any filetype specific options to the client
+	filetype_attach[filetype](client)
 end
--- local runtime_path = vim.split(package.path, ";")
--- table.insert(runtime_path, "lua/?.lua")
--- table.insert(runtime_path, "lua/?/init.lua")
 
-local lang_servers = {
-	["bashls"] = {},
-	-- ["yamlls"] = {},
-	-- "eslint",
-	-- ["pylsp"] = {},
-	["gopls"] = {
-		cmd = { "gopls" },
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+
+local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
+local has_rt, rt = pcall(require, "rust-tools")
+if has_rt then
+	local extension_path = vim.fn.expand("~/.vscode/extensions/sadge-vscode/extension/")
+	local codelldb_path = extension_path .. "adapter/codelldb"
+	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+	rt.setup({
+		server = {
+			cmd = rust_analyzer_cmd,
+			capabilities = updated_capabilities,
+			on_attach = custom_attach,
+		},
+		dap = {
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+		},
+		tools = {
+			inlay_hints = {
+				auto = false,
+			},
+		},
+	})
+else
+	rust_analyzer = {
+		cmd = rust_analyzer_cmd,
+	}
+end
+
+local servers = {
+	-- Also uses `shellcheck` and `explainshell`
+	bashls = true,
+
+	eslint = true,
+	-- graphql = true,
+	html = true,
+	pyright = true,
+	vimls = true,
+	yamlls = true,
+
+	clangd = {
+		cmd = {
+			"clangd",
+			"--background-index",
+			"--suggest-missing-includes",
+			"--clang-tidy",
+			"--header-insertion=iwyu",
+		},
+		init_options = {
+			clangdFileStatus = true,
+		},
+	},
+
+	gopls = {
 		settings = {
 			gopls = {
 				buildFlags = { "-tags=cluster_integration" },
@@ -57,77 +226,150 @@ local lang_servers = {
 				},
 				staticcheck = true,
 			},
+			codelenses = { test = true },
+		},
+		flags = {
+			debounce_text_changes = 200,
 		},
 	},
-	-- "graphql",
-	-- ["tailwindcss"] = {},
-	["rust_analyzer"] = {},
-	["tsserver"] = {},
-	["vimls"] = {},
-	-- ["sumneko_lua"] = {
-	--   settings = {
-	--     Lua = {
-	--       runtime = {
-	--         -- Tell the language server which version of Lua you"re using (most likely LuaJIT in the case of Neovim)
-	--         version = "LuaJIT",
-	--         -- Setup your lua path
-	--         -- path = runtime_path,
-	--       },
-	--       diagnostics = {
-	--         -- Get the language server to recognize the `vim` global
-	--         globals = {"vim", "love"},
-	--       },
-	--       workspace = {
-	--         library = get_lua_runtime(),
-	--         maxPreload = 10000,
-	--         preloadFileSize = 10000,
-	--       },
-	--     }
-	--   },
-	-- }
+
+	omnisharp = {
+		cmd = { vim.fn.expand("~/build/omnisharp/run"), "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+	},
+
+	rust_analyzer = rust_analyzer,
+
+	cssls = true,
+
+	tsserver = {
+		init_options = ts_util.init_options,
+		cmd = { "typescript-language-server", "--stdio" },
+		filetypes = {
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+			"typescript",
+			"typescriptreact",
+			"typescript.tsx",
+		},
+
+		on_attach = function(client)
+			custom_attach(client)
+
+			ts_util.setup({ auto_inlay_hints = false })
+			ts_util.setup_client(client)
+		end,
+	},
 }
 
-for lsp, config in pairs(lang_servers) do
-	lspconfig[lsp].setup(withDefaults(config))
+local setup_server = function(server, config)
+	if not config then
+		return
+	end
+
+	if type(config) ~= "table" then
+		config = {}
+	end
+
+	config = vim.tbl_deep_extend("force", {
+		on_init = custom_init,
+		on_attach = custom_attach,
+		capabilities = updated_capabilities,
+		flags = {
+			debounce_text_changes = nil,
+		},
+	}, config)
+
+	lspconfig[server].setup(config)
+end
+
+local sumneko_cmd, sumneko_env = nil, nil
+require("nvim-lsp-installer").setup({
+	automatic_installation = false,
+	ensure_installed = { "sumneko_lua", "gopls", "bashls" },
+})
+
+sumneko_cmd = {
+	vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
+}
+
+local process = require("nvim-lsp-installer.core.process")
+local path = require("nvim-lsp-installer.core.path")
+
+sumneko_env = {
+	cmd_env = {
+		PATH = process.extend_path({
+			path.concat({ vim.fn.stdpath("data"), "lsp_servers", "sumneko_lua", "extension", "server", "bin" }),
+		}),
+	},
+}
+
+setup_server("sumneko_lua", {
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = {
+					-- vim
+					"vim",
+
+					-- Busted
+					"describe",
+					"it",
+					"before_each",
+					"after_each",
+					"teardown",
+					"pending",
+					"clear",
+
+					-- Colorbuddy
+					"Color",
+					"c",
+					"Group",
+					"g",
+					"s",
+
+					-- Custom
+					"RELOAD",
+				},
+			},
+
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+		},
+	},
+})
+
+for server, config in pairs(servers) do
+	setup_server(server, config)
+end
+
+local use_null = true
+if use_null then
+	null_ls.setup({
+		sources = {
+			formatting.stylelint,
+			diagnostics.tsc,
+
+			null_ls.builtins.formatting.prettierd,
+			formatting.gofmt,
+			formatting.goimports,
+			diagnostics.golangci_lint,
+		},
+	})
 end
 
 lspsaga.init_lsp_saga({
 	border_style = "round",
 })
 
--- Sets up completion for vim lua runtime variables/methods and allows jumping
--- to vim help via the lsp.
-require("nlua.lsp.nvim").setup(lspconfig, {
-	cmd = {
-		"/Users/sidney/.dot_files/tools/lua-language-server/bin/lua-language-server",
-		"-E",
-		"/Users/sidney/.dot_files/tools/lua-language-server/bin/main.lua",
-	},
-})
-
 vim.cmd([[
 	let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-
-	nnoremap go <cmd>Lspsaga preview_definition<CR>
-	nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>
-	nnoremap ga <cmd>Lspsaga code_action<CR>
-	nnoremap gt <cmd>lua vim.lsp.buf.type_definition()<CR>
-	nnoremap <localleader>R <cmd>lua vim.lsp.buf.rename()<CR>
-	" for some reason the lsp saga rename window isn't able to accept backspaces
-	" nnoremap <localleader>R <cmd>Lspsaga rename<CR>
-
-	nnoremap K     <cmd>Lspsaga hover_doc<CR>
-	nnoremap <C-s> <cmd>Lspsaga signature_help<CR>
-
-	nnoremap <silent> gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
-	nnoremap <silent> gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
-
-	nnoremap <localleader>dd :vsp<cr>:lua vim.lsp.buf.definition()<cr>
-	nnoremap <localleader>dt :tab<cr>:lua vim.lsp.buf.definition()<cr>
-
-	nnoremap <silent> gn <cmd>Lspsaga diagnostic_jump_next<CR>
-	nnoremap <silent> gp <cmd>Lspsaga diagnostic_jump_prev<CR>
-
-	nnoremap <silent> <C-u> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
-	nnoremap <silent> <C-d> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
 ]])
+
+return {
+	on_init = custom_init,
+	on_attach = custom_attach,
+	capabilities = updated_capabilities,
+}
