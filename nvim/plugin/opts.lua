@@ -12,7 +12,8 @@ opt.expandtab = true
 opt.ignorecase = true -- Ignore case when searching...
 opt.smartcase = true -- ... unless there is a capital letter in the query
 
-opt.shortmess = "filnxtToOFc"
+opt.foldlevelstart = 15 -- most folds should be open on start
+opt.shortmess:append "c"
 
 opt.termguicolors = true
 opt.colorcolumn = "+1"
