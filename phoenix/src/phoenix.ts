@@ -2,25 +2,25 @@
 // https://github.com/kasper/phoenix/releases/tag/3.0.0
 
 /* view logs:
-  log stream --process Phoenix
+	log stream --process Phoenix
 */
 
 import { focusOrStart, logAllApps } from "./utils";
 
 import {
-  center,
   centerTwoThirds,
-  leftHalf,
-  rightHalf,
-  nextScreen,
-  prevScreen,
-  fullScreen,
+  // center,
+  // leftHalf,
+  // rightHalf,
+  // nextScreen,
+  // prevScreen,
+  // fullScreen,
 } from "./movement";
 
 const alt: Phoenix.ModifierKey[] = ["alt"];
 const double: Phoenix.ModifierKey[] = ["cmd", "alt"];
 const doubleShift: Phoenix.ModifierKey[] = double.concat(["shift"]);
-const triple: Phoenix.ModifierKey[] = ["cmd", "alt", "ctrl"];
+// const triple: Phoenix.ModifierKey[] = ["cmd", "alt", "ctrl"];
 
 // ------------
 // Launch Apps
@@ -37,13 +37,13 @@ Key.on("z", alt, () => focusOrStart("zoom.us"));
 // ------------
 // Move Windows
 // ------------
-Key.on("left", double, leftHalf);
-Key.on("right", double, rightHalf);
-Key.on("left", triple, prevScreen);
-Key.on("right", triple, nextScreen);
-Key.on("c", double, center);
+// Key.on("left", double, leftHalf);
+// Key.on("right", double, rightHalf);
+// Key.on("left", triple, prevScreen);
+// Key.on("right", triple, nextScreen);
+// Key.on("c", double, center);
 Key.on("c", doubleShift, centerTwoThirds);
-Key.on("f", double, fullScreen);
+// Key.on("f", double, fullScreen);
 
 // For debugging
 Key.on("2", alt, logAllApps);
