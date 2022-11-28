@@ -50,9 +50,9 @@ local autocmd_format = function(async, filter)
 end
 
 local filetype_attach = setmetatable({
-	go = function()
-		autocmd_format(false)
-	end,
+	-- go = function()
+	-- 	autocmd_format(false)
+	-- end,
 
 	scss = function()
 		autocmd_format(false)
@@ -105,7 +105,7 @@ local custom_attach = function(client, bufnr)
 
 	buf_inoremap({ "<c-s>", "<cmd>Lspsaga signature_help<CR>" })
 
-	buf_inoremap({ "go", "<cmd>Lspsaga preview_definition<CR>" })
+	buf_nnoremap({ "go", "<cmd>Lspsaga preview_definition<CR>" })
 
 	buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
 	buf_nnoremap({ "ga", vim.lsp.buf.code_action })
@@ -163,34 +163,6 @@ end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 
-local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
-local has_rt, rt = pcall(require, "rust-tools")
-if has_rt then
-	local extension_path = vim.fn.expand("~/.vscode/extensions/sadge-vscode/extension/")
-	local codelldb_path = extension_path .. "adapter/codelldb"
-	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-
-	rt.setup({
-		server = {
-			cmd = rust_analyzer_cmd,
-			capabilities = updated_capabilities,
-			on_attach = custom_attach,
-		},
-		dap = {
-			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-		},
-		tools = {
-			inlay_hints = {
-				auto = false,
-			},
-		},
-	})
-else
-	rust_analyzer = {
-		cmd = rust_analyzer_cmd,
-	}
-end
-
 local servers = {
 	-- Also uses `shellcheck` and `explainshell`
 	bashls = true,
@@ -198,7 +170,7 @@ local servers = {
 	eslint = true,
 	-- graphql = true,
 	html = true,
-	pyright = true,
+	-- pyright = true,
 	vimls = true,
 	yamlls = true,
 
@@ -212,24 +184,6 @@ local servers = {
 		},
 		init_options = {
 			clangdFileStatus = true,
-		},
-	},
-
-	gopls = {
-		settings = {
-			gopls = {
-				buildFlags = { "-tags=cluster_integration" },
-				experimentalPostfixCompletions = true,
-				analyses = {
-					unusedparams = true,
-					shadow = true,
-				},
-				staticcheck = true,
-			},
-			codelenses = { test = true },
-		},
-		flags = {
-			debounce_text_changes = 200,
 		},
 	},
 
@@ -261,6 +215,92 @@ local servers = {
 		end,
 	},
 }
+
+local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
+local has_rt, rt = pcall(require, "rust-tools")
+if has_rt then
+	local extension_path = vim.fn.expand("~/.vscode/extensions/sadge-vscode/extension/")
+	local codelldb_path = extension_path .. "adapter/codelldb"
+	local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+	rt.setup({
+		server = {
+			cmd = rust_analyzer_cmd,
+			capabilities = updated_capabilities,
+			on_attach = custom_attach,
+		},
+		dap = {
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+		},
+		tools = {
+			inlay_hints = {
+				auto = false,
+			},
+		},
+	})
+else
+	rust_analyzer = {
+		cmd = rust_analyzer_cmd,
+	}
+end
+
+local has_go, go = pcall(require, "go")
+if has_go then
+  go.setup({
+    -- gopls_cmd = {install_root_dir .. '/go/gopls'},
+    goimport = "gopls", -- if set to 'gopls' will use golsp format
+    gofmt = "gopls", -- if set to gopls will use golsp format
+    max_line_len = 120,
+    tag_transform = false,
+    test_dir = "",
+    comment_placeholder = " ",
+    icons = {breakpoint = '🛑', currentpos = '📍'},  -- setup to `false` to disable icons setup
+    lsp_cfg = {
+      -- on_init = custom_init,
+      capabilities = updated_capabilities,
+      on_attach = custom_attach,
+    },
+    lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+    lsp_on_attach = true, -- use on_attach from go.nvim
+    dap_debug = true,
+    textobjects = false,
+    luasnip = true,
+  })
+
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    callback = function()
+      require("go.format").goimport()
+    end,
+    group = format_sync_grp,
+  })
+
+  nnoremap("<localleader>ga", "<cmd>GoAltV!<CR>")
+  nnoremap("<localleader>gd", "<cmd>GoDebug -n<CR>") -- launch debugger for the nearest test function
+  nnoremap("<localleader>gf", "<cmd>GoFillStruct<CR>")
+  nnoremap("<localleader>gy", "<cmd>GoAddTag yaml<CR>")
+  -- Force the dap keymaps to unbind
+  -- lua require("go.dap").stop(true)
+else
+  -- fallback to the regular lsp implementation
+  servers.gopls = {
+		settings = {
+			gopls = {
+				buildFlags = { "-tags=cluster_integration" },
+				experimentalPostfixCompletions = true,
+				analyses = {
+					unusedparams = true,
+					shadow = true,
+				},
+				staticcheck = true,
+			},
+			codelenses = { test = true },
+		},
+		flags = {
+			debounce_text_changes = 200,
+		},
+	}
+end
 
 local setup_server = function(server, config)
 	if not config then
@@ -336,6 +376,7 @@ setup_server("sumneko_lua", {
 			workspace = {
 				-- Make the server aware of Neovim runtime files
 				library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
 			},
 		},
 	},
@@ -353,8 +394,8 @@ if use_null then
 			diagnostics.tsc,
 
 			null_ls.builtins.formatting.prettierd,
-			formatting.gofmt,
-			formatting.goimports,
+			-- formatting.gofmt,
+			-- formatting.goimports,
 			diagnostics.golangci_lint,
 		},
 	})

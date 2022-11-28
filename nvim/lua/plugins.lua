@@ -6,6 +6,8 @@ end
 
 local is_mac = has("macunix")
 
+-- NB: plugins are installed at ~/.local/share/nvim/site/pack/packer/start/
+
 return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
@@ -85,12 +87,17 @@ return require("packer").startup(function(use)
 	})
 	-- }}}
 
+  -- Go {{{
+  use 'ray-x/go.nvim'
+  use 'ray-x/guihua.lua' -- recommanded if need floating window support
+  -- }}}
+
 	-- DAP {{{
 	use("mfussenegger/nvim-dap")
-	use("Pocco81/DAPInstall.nvim")
-	use("leoluz/nvim-dap-go")
+	-- use("Pocco81/DAPInstall.nvim")
+	-- use("leoluz/nvim-dap-go")
 	use("theHamsta/nvim-dap-virtual-text")
-	use("mfussenegger/nvim-dap-python")
+	-- use("mfussenegger/nvim-dap-python")
 	use("rcarriga/nvim-dap-ui")
 	-- }}}
 

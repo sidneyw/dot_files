@@ -53,23 +53,23 @@ local function configure_exts()
 	end
 end
 
-local function configure_debuggers()
-	require("dap-python").setup("python", {})
-	require("dap-go").setup()
-end
+-- local function configure_debuggers()
+-- 	require("dap-python").setup("python", {})
+-- 	require("dap-go").setup()
+-- end
 
 function M.setup()
 	configure() -- Configuration
 	configure_exts() -- Extensions
-	configure_debuggers() -- Debugger
+	-- configure_debuggers() -- Debugger
 end
 
-configure_debuggers()
+-- configure_debuggers()
 
 vim.cmd([[
 	nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
 	nnoremap <silent> <leader>dc :lua require('dap').continue()<CR>
-	nnoremap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
+	" nnoremap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
 	nnoremap <silent> <leader>dv :lua require'telescope'.extensions.dap.variables{}<CR>
 	nnoremap <silent> <leader>do :lua require('dapui').toggle()<CR>
 ]])
