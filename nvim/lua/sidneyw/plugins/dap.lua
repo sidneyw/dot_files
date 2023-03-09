@@ -1,56 +1,55 @@
--- require("dap")
--- require("dap-go").setup()
+local dap = require("dap")
 -- require("nvim-dap-virtual-text").setup()
--- require("dapui").setup()
+local dapui = require("dapui")
 
 local M = {}
 
 local function configure()
-	-- local dap_install = require("dap-install")
-	-- dap_install.setup({
-	-- 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-	-- })
+  -- local dap_install = require("dap-install")
+  -- dap_install.setup({
+  -- 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+  -- })
 
-	local dap_breakpoint = {
-		error = {
-			text = "🛑",
-			texthl = "LspDiagnosticsSignError",
-			linehl = "",
-			numhl = "",
-		},
-		rejected = {
-			text = "",
-			texthl = "LspDiagnosticsSignHint",
-			linehl = "",
-			numhl = "",
-		},
-		stopped = {
-			text = "📍",
-			texthl = "LspDiagnosticsSignInformation",
-			linehl = "DiagnosticUnderlineInfo",
-			numhl = "LspDiagnosticsSignInformation",
-		},
-	}
+  local dap_breakpoint = {
+    error = {
+      text = "🛑",
+      texthl = "LspDiagnosticsSignError",
+      linehl = "",
+      numhl = "",
+    },
+    rejected = {
+      text = "",
+      texthl = "LspDiagnosticsSignHint",
+      linehl = "",
+      numhl = "",
+    },
+    stopped = {
+      text = "📍",
+      texthl = "LspDiagnosticsSignInformation",
+      linehl = "DiagnosticUnderlineInfo",
+      numhl = "LspDiagnosticsSignInformation",
+    },
+  }
 
-	vim.fn.sign_define("DapBreakpoint", dap_breakpoint.error)
-	vim.fn.sign_define("DapStopped", dap_breakpoint.stopped)
-	vim.fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
+  vim.fn.sign_define("DapBreakpoint", dap_breakpoint.error)
+  vim.fn.sign_define("DapStopped", dap_breakpoint.stopped)
+  vim.fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
 end
 
 local function configure_exts()
-	require("nvim-dap-virtual-text").setup({ commented = true })
+  require("nvim-dap-virtual-text").setup({ commented = true })
 
-	local dap, dapui = require("dap"), require("dapui")
-	dapui.setup({}) -- use default
-	dap.listeners.after.event_initialized["dapui_config"] = function()
-		dapui.open()
-	end
-	dap.listeners.before.event_terminated["dapui_config"] = function()
-		dapui.close()
-	end
-	dap.listeners.before.event_exited["dapui_config"] = function()
-		dapui.close()
-	end
+  local dap, dapui = require("dap"), require("dapui")
+  dapui.setup({}) -- use default
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
 end
 
 -- local function configure_debuggers()
@@ -59,9 +58,9 @@ end
 -- end
 
 function M.setup()
-	configure() -- Configuration
-	configure_exts() -- Extensions
-	-- configure_debuggers() -- Debugger
+  configure() -- Configuration
+  configure_exts() -- Extensions
+  -- configure_debuggers() -- Debugger
 end
 
 -- configure_debuggers()
@@ -69,9 +68,11 @@ end
 vim.cmd([[
 	nnoremap <silent> <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
 	nnoremap <silent> <leader>dc :lua require('dap').continue()<CR>
-	" nnoremap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
 	nnoremap <silent> <leader>dv :lua require'telescope'.extensions.dap.variables{}<CR>
-	nnoremap <silent> <leader>do :lua require('dapui').toggle()<CR>
+	" nnoremap <silent> <leader>do :lua require('dapui').toggle()<CR>
 ]])
+
+nnoremap("<leader>do", dapui.toggle, { silent = true })
+nnoremap("<leader>dw", dap.clear_breakpoints)
 
 return M

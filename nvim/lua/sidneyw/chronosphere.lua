@@ -2,3 +2,4 @@
 nnoremap("<leader>lb", "<cmd>Make lint-branch<CR>")
 
 vim.cmd([[ cnoreabbr mg Make! gen ]])
+vim.cmd([[ cnoreabbr mcl Make! droidcli ]])

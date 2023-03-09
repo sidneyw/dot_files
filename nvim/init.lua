@@ -42,7 +42,6 @@ nmap({
 })
 
 vim.notify = require("notify")
-
 vim.cmd([[colorscheme gruvbox]])
 -- colorscheme monokai-phoenix
 -- colorscheme badwolf

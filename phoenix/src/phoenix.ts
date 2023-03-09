@@ -25,6 +25,7 @@ const doubleShift: Phoenix.ModifierKey[] = double.concat(["shift"]);
 // ------------
 // Launch Apps
 // ------------
+Key.on("a", alt, () => focusOrStart("Arc"));
 Key.on("b", alt, () => focusOrStart("Brave Browser"));
 Key.on("q", alt, () => focusOrStart("iTerm2"));
 Key.on("r", alt, () => focusOrStart("Roam Research"));

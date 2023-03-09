@@ -69,6 +69,10 @@ nnoremap(jumpPrefix("c"), function()
 	M.NewChrono("collector")
 end)
 
+nnoremap(jumpPrefix("i"), function()
+	M.NewChrono("infrastructure")
+end)
+
 nnoremap(jumpPrefix("v"), function()
 	M.New(dotFilesDir, true)
 	tabline.tab_rename("DotFiles")

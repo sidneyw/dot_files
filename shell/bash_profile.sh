@@ -282,17 +282,23 @@ gf() {
   cut -c4- | sed 's/.* -> //'
 }
 
-co() {
-	git checkout $(gb)
-}
-
 gb() {
   is_in_git_repo || return
-  git branch -a --color=always | grep -v '/HEAD\s' | sort |
-  fzf-down --ansi --multi --tac --preview-window right:70% \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -200' |
-  sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##'
+  # git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  # fzf-down --ansi --multi --tac --preview-window right:70% \
+  #   --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -200' |
+  # sed 's/^..//' | cut -d' ' -f1 |
+  # sed 's#^remotes/##'
+
+  # Shows checked out branches in reverse chronological order
+  git branch --sort=-committerdate\
+    --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative) %(color:magenta)%(color:reset)'\
+    --color=always | column -ts'|' | head -n 20 |\
+    fzf --ansi | sed 's/^*//g' | awk '{print $1}'
+}
+
+co() {
+	git checkout $(gb)
 }
 
 gt() {
@@ -302,7 +308,7 @@ gt() {
     --preview 'git show --color=always {} | head -200'
 }
 
-gh() {
+gc() {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
@@ -334,7 +340,7 @@ if [[ $- =~ i ]]; then
 	bind '"\C-g\C-p": "$(gd)\e\C-e\er"'
   bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
   bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
-  bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+  bind '"\C-g\C-h": "$(gc)\e\C-e\er"'
 fi
 
 # WIP
@@ -398,7 +404,7 @@ function pr() {
   open $pr_url;
 }
 
-export PATH="/opt/homebrew/opt/go@1.18/bin:$PATH"
+export PATH="/opt/homebrew/opt/go@1.19/bin:$PATH"
 
 # Local Config
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
