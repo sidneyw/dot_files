@@ -10,7 +10,6 @@ require("nvim-tree").setup({
 		enable = true,
 		auto_open = false,
 	},
-	ignore_ft_on_setup = {},
 	diagnostics = {
 		enable = true,
 		icons = {

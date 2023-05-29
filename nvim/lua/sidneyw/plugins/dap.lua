@@ -54,7 +54,7 @@ end
 
 -- local function configure_debuggers()
 -- 	require("dap-python").setup("python", {})
--- 	require("dap-go").setup()
+--  require("dap-go").setup()
 -- end
 
 function M.setup()

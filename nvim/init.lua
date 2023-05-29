@@ -23,6 +23,7 @@ require("sidneyw.plugins.nvim-tree")
 require("sidneyw.plugins.symbolsoutline")
 require("sidneyw.plugins.telescope")
 require("sidneyw.plugins.treesitter")
+-- require("sidneyw.plugins.diffview")
 
 require("sidneyw.chronosphere")
 

@@ -63,7 +63,13 @@ require("telescope").setup({
       override_generic_sorter = false,
       override_file_sorter = true,
     },
-
+    media_files = {
+      -- filetypes whitelist
+      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+      filetypes = {"png", "webp", "jpg", "jpeg"},
+      -- find command (defaults to `fd`)
+      find_cmd = "rg"
+    },
     bookmarks = {
       -- Available: 'brave', 'google_chrome', 'safari', 'firefox'
       selected_browser = "brave",
@@ -81,6 +87,13 @@ require("telescope").setup({
       -- Provide a custom profile name for Firefox
       firefox_profile_name = nil,
     },
+    undo = {
+      side_by_side = true,
+      layout_strategy = "vertical",
+      layout_config = {
+        preview_height = 0.8,
+      },
+    },
   },
 })
 
@@ -92,6 +105,10 @@ telescope.load_extension("dap")
 telescope.load_extension("notify")
 telescope.load_extension("bookmarks")
 telescope.load_extension("goimpl")
+telescope.load_extension('media_files')
+telescope.load_extension("env")
+telescope.load_extension('ports')
+telescope.load_extension("undo")
 
 vim.cmd([[ cnoreabbr Tele Telescope ]])
 vim.cmd([[ cnoreabbr tele Telescope ]])

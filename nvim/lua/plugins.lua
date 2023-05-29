@@ -70,8 +70,6 @@ return require("packer").startup(function(use)
   use("tjdevries/nlua.nvim")
   use("jose-elias-alvarez/null-ls.nvim")
 
-  use("ray-x/lsp_signature.nvim")
-
   -- This is a more stable fork of the original plugin commented out below
   use("tami5/lspsaga.nvim")
   -- use({
@@ -103,10 +101,17 @@ return require("packer").startup(function(use)
       nnoremap("<leader>xx", "<cmd>TroubleToggle<cr>")
     end,
   })
+
+  use("ray-x/lsp_signature.nvim")
   -- }}}
 
   -- Go {{{
-  use("ray-x/go.nvim")
+  use({
+    "ray-x/go.nvim",
+    -- TODO: Remove this once go toggle inlay hints issue is fixed
+    -- https://github.com/ray-x/go.nvim/issues/342
+    commit = "ed7e79b9192a13ce189c80c182e897ad1c8c7e29",
+  })
   use("ray-x/guihua.lua") -- recommanded if need floating window support
   -- }}}
 
@@ -144,6 +149,11 @@ return require("packer").startup(function(use)
   use("nvim-telescope/telescope-dap.nvim")
   use("dhruvmanila/telescope-bookmarks.nvim")
   use("benfowler/telescope-luasnip.nvim")
+
+  use('nvim-telescope/telescope-media-files.nvim')
+  use { "LinArcX/telescope-env.nvim" }
+  use { "LinArcX/telescope-ports.nvim" }
+  use {"debugloop/telescope-undo.nvim"}
   -- }}}
 
   use("edolphin-ydf/goimpl.nvim")
@@ -198,4 +208,39 @@ return require("packer").startup(function(use)
       require("Comment").setup()
     end,
   })
+
+  -- Experimental {{{
+  use({
+    'glepnir/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        theme = 'hyper',
+        config = {
+          week_header = {
+           enable = true,
+          },
+          shortcut = {
+            { desc = ' Update', group = '@property', action = 'PackerSync', key = 'u' },
+            {
+              icon = ' ',
+              icon_hl = '@variable',
+              desc = 'Files',
+              group = 'Label',
+              action = 'Telescope find_files',
+              key = 'f',
+            },
+          },
+        },
+      }
+    end,
+    requires = {'nvim-tree/nvim-web-devicons'}
+  })
+
+  use {
+    'sindrets/diffview.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+  }
+
+  -- }}}
 end)

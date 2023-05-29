@@ -124,8 +124,8 @@ local custom_attach = function(client, bufnr)
 
   buf_nnoremap({ "go", "<cmd>Lspsaga peek_definition<CR>" })
 
-  -- buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
-  buf_nnoremap({ "<localleader>R", "<cmd>Lspsaga rename<CR>" })
+  buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
+  -- buf_nnoremap({ "<localleader>R", "<cmd>Lspsaga rename<CR>" })
   buf_nnoremap({ "ga", vim.lsp.buf.code_action })
 
   buf_nnoremap({ "gd", vim.lsp.buf.definition })
@@ -283,6 +283,9 @@ if has_go then
     dap_debug = true,
     textobjects = false,
     luasnip = false, -- there are some collisions with my own snippets
+    lsp_inlay_hints = {
+      enabled = false,
+    },
     build_tags = "integration,cluster_integration",
   })
 
