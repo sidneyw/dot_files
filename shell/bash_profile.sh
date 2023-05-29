@@ -154,9 +154,14 @@ export HISTFILESIZE=20000
 # <C-x> <C-e> to open vim and edit a command there
 # Vim
 alias v='nvim'
+alias vup='nvim +PackerSync'
 alias vim='nvim'
 alias ebash='nvim ~/.bash_profile'
 alias evim="cd $DOT_FILES; nvim $VIMRC; cd -"
+
+# Git
+alias g='git'
+alias pr='gh pr create --web'
 
 # Tmux
 alias tmux='tmux -2'
@@ -301,7 +306,7 @@ co() {
 	git checkout $(gb)
 }
 
-gt() {
+git_tags() {
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \
@@ -339,11 +344,21 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
 	bind '"\C-g\C-p": "$(gd)\e\C-e\er"'
   bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
-  bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+  bind '"\C-g\C-t": "$(git_tags)\e\C-e\er"'
   bind '"\C-g\C-h": "$(gc)\e\C-e\er"'
 fi
 
 # WIP
+#
+# Delete squash merged branches
+# Stolen from Alec
+function gdsmb {
+	git remote prune origin --dry-run |
+    sed 's/.*origin\///g' |
+    grep "\\b$(whoami)\\b" |
+    xargs -L1 -J % git branch -D %
+}
+
 fyn() {
   jq -r '.scripts | keys[] as $k | "\($k) \(.[$k])"' package.json | fzf-down
 }
@@ -412,3 +427,32 @@ test -f "$local_conf" && source "$local_conf"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
+###-begin-gt-completions-###
+#
+# yargs command completion script
+#
+# Installation: /opt/homebrew/bin/gt completion >> ~/.bashrc
+#    or /opt/homebrew/bin/gt completion >> ~/.bash_profile on OSX.
+#
+_gt_yargs_completions()
+{
+    local cur_word args type_list
+
+    cur_word="${COMP_WORDS[COMP_CWORD]}"
+    args=("${COMP_WORDS[@]}")
+
+    # ask yargs to generate completions.
+    type_list=$(/opt/homebrew/bin/gt --get-yargs-completions "${args[@]}")
+
+    COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
+
+    # if no match was found, fall back to filename completion
+    if [ ${#COMPREPLY[@]} -eq 0 ]; then
+      COMPREPLY=()
+    fi
+
+    return 0
+}
+complete -o bashdefault -o default -F _gt_yargs_completions gt
+###-end-gt-completions-###
+
