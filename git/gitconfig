@@ -37,6 +37,7 @@
 	editor = /opt/homebrew/bin/nvim
 
 	excludesfile = ~/.gitignore
+	hooksPath = /Users/sidney/.config/git/hooks
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 	insteadOf = https://github.com/
