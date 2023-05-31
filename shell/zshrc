@@ -1,3 +1,4 @@
+# vim:fdm=marker
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -7,16 +8,12 @@ fi
 
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -126,3 +123,193 @@ export EDITOR='nvim'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# Global Variables  {{{
+# ====================================
+export DOT_FILES="$HOME/.dot_files/"
+export VIMRC="$DOT_FILES/nvim/init.lua"
+export tmux="$DOT_FILES/tmux/tmux.conf"
+
+export HISTSIZE=20000
+export HISTFILESIZE=20000
+# }}}
+
+# Aliases {{{ 
+# ====================================
+alias v='nvim'
+alias vup='nvim +PackerSync'
+alias vim='nvim'
+alias ezsh='nvim ~/.zshrc'
+alias evim="cd $DOT_FILES; nvim $VIMRC; cd -"
+
+# Tmux
+alias tmux='tmux -2'
+alias tls='tmux ls'
+alias tks='tmux kill-session -t'
+alias tkill='tmux kill-server'
+alias ta='tmux attach'
+
+alias zp="source $HOME/.zshrc"
+
+# cd to top level git dir
+alias gcd='cd $(git rev-parse --show-toplevel)'
+alias genv='source genv'
+
+# Kubernetes
+alias kc='kubectl'
+# alias kcp='kubectl get pods'
+alias kca='kubectl apply -f'
+alias kcc='kubectl create -f'
+alias kcd='kubectl delete -f'
+alias kcl="kubectl logs -f"
+alias hi='helm-init'
+alias watch='watch '
+
+alias cat="bat"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+alias ls="exa -GFh"
+alias ll='exa -lahF'
+alias lt='exa --tree --level=2'
+alias t="tree"
+
+# Docker
+alias dps="docker ps"
+alias dcomp='docker-compose'
+# }}}}
+
+# Plugins {{{
+# ====================================
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_COMMAND='rg --files'
+
+# FZF search files to open in vim
+function vf() {
+  nvim "$@" $(fzf -m --preview "bat --style=numbers --color=always {} | head -500")
+}
+
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS='--preview "bat --style=numbers --color=always {} | head -500"'
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --height 40% --reverse --query="$1" --exit-0) &&
+  tmux switch-client -t "$session"
+}
+
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+git_files() {
+  is_in_git_repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+
+git_branch() {
+  is_in_git_repo || return
+
+  # Shows checked out branches in reverse chronological order
+  git branch --sort=-committerdate\
+    --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative) %(color:magenta)%(color:reset)'\
+    --color=always | column -ts'|' | head -n 20 |\
+    fzf --ansi | sed 's/^*//g' | awk '{print $1}'
+}
+
+co() {
+	git checkout $(git_branch)
+}
+
+git_tags() {
+  is_in_git_repo || return
+  git tag --sort -version:refname |
+  fzf-down --multi --preview-window right:70% \
+    --preview 'git show --color=always {} | head -200'
+}
+
+git_commits() {
+  is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
+  grep -o "[a-f0-9]\{7,\}"
+}
+
+git_remotes() {
+  is_in_git_repo || return
+  git remote -v | awk '{print $1 "\t" $2}' | uniq |
+  fzf-down --tac \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+  cut -d$'\t' -f1
+}
+
+# show files with diffs from master
+git_diff_master() {
+	is_in_git_repo || return
+	git diff master --name-only |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff master --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+
+# Experimental {{{
+# ====================================
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+
+git_commits_widget() {
+  local selected_commit=$(git_commits)
+  LBUFFER+="$selected_commit"
+
+  zle redisplay
+}
+
+zle -N git_commits_widget
+
+bindkey '^G^H' git_commits_widget
+# }}}
+
+# fzf-history-widget-accept() {
+#   fzf-history-widget
+#   zle accept-line
+# }
+# zle     -N     fzf-history-widget-accept
+# bindkey '^X^R' fzf-history-widget-accept
+# }}}
+
+# Path {{{
+# ====================================
+PATH="$PATH:$HOME/bin"
+PATH="$PATH:$HOME/local_bin"
+PATH="$PATH:/usr/local/bin"
+PATH="$PATH:$HOME/.local/bin"
+PATH=/usr/local/opt/ruby/bin:$PATH
+
+# Go installs packages here
+export GOPATH="$HOME/go"
+export GOBIN=$HOME/go/bin
+export PATH=$PATH:$GOBIN
+export PATH=$PATH:$GOROOT/bin
+export GO111MODULE=on
+
+export PATH="/opt/homebrew/opt/go@1.19/bin:$PATH"
+
+# Local Config
+local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
+test -f "$local_conf" && source "$local_conf"
+
+# }}}
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
