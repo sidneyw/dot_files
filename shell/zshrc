@@ -188,7 +188,10 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 # FZF search files to open in vim
 function vf() {
-  nvim "$@" $(fzf -m --preview "bat --style=numbers --color=always {} | head -500")
+  local selected_files=$(fzf -m --preview "bat --style=numbers --color=always {} | head -500")
+  if [[ -n "$selected_files" ]]; then
+    nvim $selected_files "$@"
+  fi
 }
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -202,16 +205,22 @@ fs() {
   tmux switch-client -t "$session"
 }
 
-is_in_git_repo() {
+function is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
-git_files() {
+function git_files() {
   is_in_git_repo || return
   git -c color.status=always status --short |
   fzf-down -m --ansi --nth 2..,.. \
     --preview '(git diff --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
   cut -c4- | sed 's/.* -> //'
+}
+
+git_files_widget() {
+  local selected_files=$(git_files)
+  LBUFFER+="${selected_files}"
+  zle redisplay
 }
 
 git_branch() {
@@ -224,24 +233,47 @@ git_branch() {
     fzf --ansi | sed 's/^*//g' | awk '{print $1}'
 }
 
-co() {
-	git checkout $(git_branch)
+git_branch_widget() {
+  local selected_branch=$(git_branch)
+  LBUFFER+="${selected_branch}"
+  zle redisplay
 }
 
-git_tags() {
+co() {
+  local selected_branch=$(git_branch)
+  if [[ -n "$selected_branch" ]]; then
+    git checkout "$selected_branch"
+  fi
+}
+
+function git_tags() {
   is_in_git_repo || return
   git tag --sort -version:refname |
   fzf-down --multi --preview-window right:70% \
     --preview 'git show --color=always {} | head -200'
 }
 
-git_commits() {
+git_tags_widget() {
+  local selected_tag=$(git_tags)
+  LBUFFER+="$selected_tag"
+
+  zle redisplay
+}
+
+function git_commits() {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
     --header 'Press CTRL-S to toggle sort' \
     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
   grep -o "[a-f0-9]\{7,\}"
+}
+
+git_commits_widget() {
+  local selected_commit=$(git_commits)
+  LBUFFER+="$selected_commit"
+
+  zle redisplay
 }
 
 git_remotes() {
@@ -261,31 +293,22 @@ git_diff_master() {
   cut -c4- | sed 's/.* -> //'
 }
 
+zle -N git_commits_widget
+zle -N git_tags_widget
+zle -N git_files_widget
+zle -N git_branch_widget  
+
+bindkey '^G^H' git_commits_widget
+bindkey '^G^T' git_tags_widget
+bindkey '^G^F' git_files_widget
+bindkey '^G^B' git_branch_widget
+
 # Experimental {{{
 # ====================================
 fzf-down() {
   fzf --height 50% "$@" --border
 }
-
-
-git_commits_widget() {
-  local selected_commit=$(git_commits)
-  LBUFFER+="$selected_commit"
-
-  zle redisplay
-}
-
-zle -N git_commits_widget
-
-bindkey '^G^H' git_commits_widget
 # }}}
-
-# fzf-history-widget-accept() {
-#   fzf-history-widget
-#   zle accept-line
-# }
-# zle     -N     fzf-history-widget-accept
-# bindkey '^X^R' fzf-history-widget-accept
 # }}}
 
 # Path {{{
