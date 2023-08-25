@@ -425,8 +425,6 @@ export PATH="/opt/homebrew/opt/go@1.19/bin:$PATH"
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
 test -f "$local_conf" && source "$local_conf"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
 ###-begin-gt-completions-###
 #
 # yargs command completion script
@@ -456,3 +454,5 @@ _gt_yargs_completions()
 complete -o bashdefault -o default -F _gt_yargs_completions gt
 ###-end-gt-completions-###
 
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"

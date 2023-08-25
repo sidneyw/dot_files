@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p /private/tmp/tmux-502
+
 if [ $# -eq 0 ]
 then
 	session_name="dev"

@@ -16,7 +16,12 @@ return require("packer").startup(function(use)
 
   use("rcarriga/nvim-notify")
 
-  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", commit = "23dfae4db84f71e2ddb56c024845b322035182ee" })
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    -- commit = "23dfae4db84f71e2ddb56c024845b322035182ee"
+  })
+
   -- use({
   -- 	-- Additional text objects via treesitter
   -- 	"nvim-treesitter/nvim-treesitter-textobjects",
@@ -44,13 +49,6 @@ return require("packer").startup(function(use)
   -- use("tpope/vim-sleuth") -- Detect tabstop and shiftwidth automatically
   use("tpope/vim-markdown")
   -- }}}
-
-  use({
-    "folke/todo-comments.nvim",
-    config = function()
-      require("todo-comments").setup()
-    end,
-  })
 
   -- LSP {{{
   use({
@@ -83,26 +81,7 @@ return require("packer").startup(function(use)
   -- })
 
   use("simrat39/symbols-outline.nvim")
-  use("simrat39/rust-tools.nvim")
-
-  use({
-    "folke/lsp-trouble.nvim",
-    cmd = "Trouble",
-    config = function()
-      -- Can use P to toggle auto movement
-      require("trouble").setup({
-        auto_preview = false,
-        auto_fold = true,
-      })
-    end,
-  })
-
-  use({
-    "folke/trouble.nvim",
-    config = function()
-      nnoremap("<leader>xx", "<cmd>TroubleToggle<cr>")
-    end,
-  })
+  -- use("simrat39/rust-tools.nvim")
 
   use("ray-x/lsp_signature.nvim")
   -- }}}
@@ -112,22 +91,40 @@ return require("packer").startup(function(use)
     "ray-x/go.nvim",
     -- TODO: Remove this once go toggle inlay hints issue is fixed
     -- https://github.com/ray-x/go.nvim/issues/342
-    commit = "ed7e79b9192a13ce189c80c182e897ad1c8c7e29",
+    -- commit = "ed7e79b9192a13ce189c80c182e897ad1c8c7e29",
   })
   use("ray-x/guihua.lua") -- recommanded if need floating window support
   -- }}}
 
   -- DAP {{{
   use("mfussenegger/nvim-dap")
+  use("theHamsta/nvim-dap-virtual-text")
+  use("rcarriga/nvim-dap-ui")
   -- use("Pocco81/DAPInstall.nvim")
   -- use("leoluz/nvim-dap-go")
-  use("theHamsta/nvim-dap-virtual-text")
   -- use("mfussenegger/nvim-dap-python")
-  use("rcarriga/nvim-dap-ui")
   -- }}}
 
   -- autocomplete {{{
-  use("github/copilot.vim")
+  use {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  }
+
+  use({
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  })
 
   use("hrsh7th/nvim-cmp")
   use("hrsh7th/cmp-buffer")
@@ -166,8 +163,6 @@ return require("packer").startup(function(use)
     requires = { "nvim-lua/plenary.nvim" },
   })
 
-  use("sudormrfbin/cheatsheet.nvim")
-
   use("nvim-lualine/lualine.nvim")
   use("kdheepak/tabline.nvim")
 
@@ -184,6 +179,7 @@ return require("packer").startup(function(use)
       require("nvim-autopairs").setup({})
     end,
   })
+
   use({
     "lukas-reineke/indent-blankline.nvim",
     config = function()
@@ -243,6 +239,5 @@ return require("packer").startup(function(use)
     "sindrets/diffview.nvim",
     requires = "nvim-lua/plenary.nvim",
   })
-
   -- }}}
 end)

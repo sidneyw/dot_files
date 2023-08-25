@@ -287,7 +287,7 @@ if has_go then
     textobjects = false,
     luasnip = false, -- there are some collisions with my own snippets
     lsp_inlay_hints = {
-      enabled = false,
+      enable = false,
     },
     build_tags = "integration,cluster_integration",
   })
@@ -440,7 +440,7 @@ if use_null then
       -- null_ls.builtins.formatting.prettierd,
       -- formatting.gofmt,
       -- formatting.goimports,
-      diagnostics.golangci_lint,
+      -- diagnostics.golangci_lint,
     },
   })
 end

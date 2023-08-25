@@ -85,11 +85,6 @@ _G.packer_plugins = {
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["cheatsheet.nvim"] = {
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/cheatsheet.nvim",
-    url = "https://github.com/sudormrfbin/cheatsheet.nvim"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -125,13 +120,28 @@ _G.packer_plugins = {
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["copilot.vim"] = {
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/copilot.vim",
-    url = "https://github.com/github/copilot.vim"
+  ["copilot-cmp"] = {
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16copilot_cmp\frequire\0" },
+    load_after = {
+      ["copilot.lua"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/sidney/.local/share/nvim/site/pack/packer/opt/copilot-cmp",
+    url = "https://github.com/zbirenbaum/copilot-cmp"
+  },
+  ["copilot.lua"] = {
+    after = { "copilot-cmp" },
+    commands = { "Copilot" },
+    config = { "\27LJ\2\nu\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\npanel\1\0\1\fenabled\1\15suggestion\1\0\0\1\0\1\fenabled\1\nsetup\fcopilot\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/sidney/.local/share/nvim/site/pack/packer/opt/copilot.lua",
+    url = "https://github.com/zbirenbaum/copilot.lua"
   },
   ["dashboard-nvim"] = {
-    config = { "\27LJ\2\n¯\2\0\0\6\0\v\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0034\4\3\0005\5\a\0>\5\1\0045\5\b\0>\5\2\4=\4\t\3=\3\n\2B\0\2\1K\0\1\0\vconfig\rshortcut\1\0\6\ngroup\nLabel\bkey\6f\ficon_hl\14@variable\ticon\tîˆ• \tdesc\nFiles\vaction\25Telescope find_files\1\0\4\tdesc\15ïž² Update\bkey\6u\ngroup\14@property\vaction\15PackerSync\16week_header\1\0\0\1\0\1\venable\2\1\0\1\ntheme\nhyper\nsetup\14dashboard\frequire\0" },
+    config = { "\27LJ\2\n¯\2\0\0\6\0\v\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0034\4\3\0005\5\a\0>\5\1\0045\5\b\0>\5\2\4=\4\t\3=\3\n\2B\0\2\1K\0\1\0\vconfig\rshortcut\1\0\6\tdesc\nFiles\vaction\25Telescope find_files\ngroup\nLabel\ticon\tîˆ• \ficon_hl\14@variable\bkey\6f\1\0\4\tdesc\15ïž² Update\vaction\15PackerSync\ngroup\14@property\bkey\6u\16week_header\1\0\0\1\0\1\venable\2\1\0\1\ntheme\nhyper\nsetup\14dashboard\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -178,15 +188,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
-  },
-  ["lsp-trouble.nvim"] = {
-    commands = { "Trouble" },
-    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0" },
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/opt/lsp-trouble.nvim",
-    url = "https://github.com/folke/lsp-trouble.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
@@ -314,11 +315,6 @@ _G.packer_plugins = {
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
-  ["rust-tools.nvim"] = {
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
-    url = "https://github.com/simrat39/rust-tools.nvim"
-  },
   ["symbols-outline.nvim"] = {
     loaded = true,
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
@@ -387,18 +383,6 @@ _G.packer_plugins = {
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["todo-comments.nvim"] = {
-    config = { "\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18todo-comments\frequire\0" },
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/todo-comments.nvim",
-    url = "https://github.com/folke/todo-comments.nvim"
-  },
-  ["trouble.nvim"] = {
-    config = { "\27LJ\2\nF\0\0\4\0\3\0\0056\0\0\0'\2\1\0'\3\2\0B\0\3\1K\0\1\0\27<cmd>TroubleToggle<cr>\15<leader>xx\rnnoremap\0" },
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/trouble.nvim",
-    url = "https://github.com/folke/trouble.nvim"
-  },
   ["vim-dispatch"] = {
     loaded = true,
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/vim-dispatch",
@@ -453,30 +437,22 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\2\nn\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\tchar\bâ”Š#show_trailing_blankline_indent\1\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
-time([[Config for indent-blankline.nvim]], false)
--- Config for: todo-comments.nvim
-time([[Config for todo-comments.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
-time([[Config for todo-comments.nvim]], false)
--- Config for: vim-highlightedyank
-time([[Config for vim-highlightedyank]], true)
-try_loadstring("\27LJ\2\nD\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1È\0=\1\2\0K\0\1\0'highlightedyank_highlight_duration\6g\bvim\0", "config", "vim-highlightedyank")
-time([[Config for vim-highlightedyank]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\nF\0\0\4\0\3\0\0056\0\0\0'\2\1\0'\3\2\0B\0\3\1K\0\1\0\27<cmd>TroubleToggle<cr>\15<leader>xx\rnnoremap\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
 -- Config for: Comment.nvim
 time([[Config for Comment.nvim]], true)
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\2\nn\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\tchar\bâ”Š#show_trailing_blankline_indent\1\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
+-- Config for: vim-highlightedyank
+time([[Config for vim-highlightedyank]], true)
+try_loadstring("\27LJ\2\nD\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1È\0=\1\2\0K\0\1\0'highlightedyank_highlight_duration\6g\bvim\0", "config", "vim-highlightedyank")
+time([[Config for vim-highlightedyank]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
 -- Conditional loads
 time([[Conditional loading of telescope-fzf-native.nvim]], true)
   require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
@@ -484,12 +460,12 @@ time([[Conditional loading of telescope-fzf-native.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.api.nvim_create_user_command, 'Trouble', function(cmdargs)
-          require('packer.load')({'lsp-trouble.nvim'}, { cmd = 'Trouble', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+pcall(vim.api.nvim_create_user_command, 'Copilot', function(cmdargs)
+          require('packer.load')({'copilot.lua'}, { cmd = 'Copilot', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'lsp-trouble.nvim'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('Trouble ', 'cmdline')
+          require('packer.load')({'copilot.lua'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('Copilot ', 'cmdline')
       end})
 time([[Defining lazy-load commands]], false)
 
@@ -497,6 +473,7 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'copilot.lua'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au VimEnter * ++once lua require("packer.load")({'dashboard-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
