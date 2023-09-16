@@ -23,13 +23,6 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
-    ["<Tab>"] = vim.schedule_wrap(function(fallback)
-      if cmp.visible() and has_words_before() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-      else
-        fallback()
-      end
-    end),
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Replace },
     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Replace },
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -39,8 +32,6 @@ cmp.setup({
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
 	}),
 	sources = cmp.config.sources({
-    -- Copilot Source
-    { name = "copilot", group_index = 2 },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip", option = { use_show_condition = false } },
 		{ name = "path" },
@@ -65,11 +56,9 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      -- require("copilot_cmp.comparators").prioritize,
-
       -- Below is the default comparitor list and order for nvim-cmp
       cmp.config.compare.offset,
-      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+      -- cmp.config.compare.scopes, -- this is commented in nvim-cmp too
       cmp.config.compare.exact,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
