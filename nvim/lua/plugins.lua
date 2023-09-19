@@ -1,3 +1,5 @@
+-- vim:foldmethod=marker
+
 vim.cmd([[packadd packer.nvim]])
 
 local has = function(x)
@@ -16,6 +18,7 @@ return require("packer").startup(function(use)
 
   use("rcarriga/nvim-notify")
 
+  -- Treesitter {{{
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
@@ -30,7 +33,9 @@ return require("packer").startup(function(use)
 
   use("nvim-treesitter/playground")
   use("nvim-treesitter/nvim-treesitter-refactor")
+
   use("towolf/vim-helm")
+  -- }}}
 
   use({
     "nvim-tree/nvim-tree.lua",
@@ -59,8 +64,6 @@ return require("packer").startup(function(use)
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
 
-      -- Useful status updates for LSP
-      "j-hui/fidget.nvim",
     },
   })
 
@@ -84,16 +87,39 @@ return require("packer").startup(function(use)
   -- use("simrat39/rust-tools.nvim")
 
   use("ray-x/lsp_signature.nvim")
+
+  -- LSP progress bar
+  use {
+    'j-hui/fidget.nvim',
+    tag = 'legacy',
+    config = function()
+      require("fidget").setup({
+        text = {
+          spinner = "arc",
+        }
+      })
+    end,
+  }
+
+  use {
+    'rmagatti/goto-preview',
+    config = function()
+      require('goto-preview').setup {}
+      vim.cmd [[
+        nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+        nnoremap gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
+        nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
+        nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
+        nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+      ]]
+    end
+  }
   -- }}}
 
   -- Go {{{
-  use({
-    "ray-x/go.nvim",
-    -- TODO: Remove this once go toggle inlay hints issue is fixed
-    -- https://github.com/ray-x/go.nvim/issues/342
-    -- commit = "ed7e79b9192a13ce189c80c182e897ad1c8c7e29",
-  })
+  use("ray-x/go.nvim")
   use("ray-x/guihua.lua") -- recommanded if need floating window support
+  use("edolphin-ydf/goimpl.nvim")
   -- }}}
 
   -- DAP {{{
@@ -119,6 +145,9 @@ return require("packer").startup(function(use)
   use("hrsh7th/cmp-nvim-lsp-document-symbol")
   use("L3MON4D3/LuaSnip")
   use("saadparwaiz1/cmp_luasnip")
+  use("rafamadriz/friendly-snippets")
+
+  use("honza/vim-snippets")
   -- }}}
 
   -- Telescope {{{
@@ -139,7 +168,6 @@ return require("packer").startup(function(use)
   use({ "debugloop/telescope-undo.nvim" })
   -- }}}
 
-  use("edolphin-ydf/goimpl.nvim")
 
   -- Use dependency and run lua function after load
   use({
@@ -147,6 +175,7 @@ return require("packer").startup(function(use)
     requires = { "nvim-lua/plenary.nvim" },
   })
 
+  -- General {{{
   use("nvim-lualine/lualine.nvim")
   use("kdheepak/tabline.nvim")
 
@@ -160,7 +189,9 @@ return require("packer").startup(function(use)
   use({
     "windwp/nvim-autopairs",
     config = function()
-      require("nvim-autopairs").setup({})
+      require("nvim-autopairs").setup({
+        disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
+      })
     end,
   })
 
@@ -173,9 +204,6 @@ return require("packer").startup(function(use)
       })
     end,
   })
-  -- Add indentation guides even on blank lines
-
-  use("honza/vim-snippets")
 
   vim.cmd([[
 		set background=dark
@@ -190,6 +218,10 @@ return require("packer").startup(function(use)
       require("Comment").setup()
     end,
   })
+  -- }}}
+  -- Add indentation guides even on blank lines
+
+
 
   -- Experimental {{{
   use({
@@ -203,7 +235,13 @@ return require("packer").startup(function(use)
             enable = true,
           },
           shortcut = {
-            { desc = " Update", group = "@property", action = "PackerSync", key = "u" },
+            {
+              icon = " ",
+              desc = "Update",
+              group = "@property",
+              action = "PackerSync",
+              key = "u"
+            },
             {
               icon = " ",
               icon_hl = "@variable",
@@ -223,5 +261,16 @@ return require("packer").startup(function(use)
     "sindrets/diffview.nvim",
     requires = "nvim-lua/plenary.nvim",
   })
+
+  -- better input and select box UI
+  use({
+    'stevearc/dressing.nvim',
+    config = function()
+      require('dressing').setup({
+        -- Options go here
+      })
+    end
+  })
+
   -- }}}
 end)

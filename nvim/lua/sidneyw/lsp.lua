@@ -177,7 +177,10 @@ local custom_attach = function(client, bufnr)
 
   -- Attach any filetype specific options to the client
   filetype_attach[filetype](client)
-  require("lsp_signature").on_attach({}, bufnr)
+  require("lsp_signature").on_attach({
+    hint_prefix = " ",
+    toggle_key = "<C-k>",
+  }, bufnr)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -209,7 +212,28 @@ local servers = {
   -- },
 
   -- TODO enable this when it's more stable
-  -- lua_ls = true,
+  lua_ls = {
+    cmd = { "lua-language-server" },
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = {
+            -- vim
+            "vim",
+
+            -- Custom
+            "RELOAD",
+          },
+        },
+
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = vim.api.nvim_get_runtime_file("", true),
+          checkThirdParty = false,
+        },
+      },
+    },
+  },
 
   omnisharp = {
     cmd = { vim.fn.expand("~/build/omnisharp/run"), "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
@@ -270,7 +294,7 @@ if has_go then
   go.setup({
     -- gopls_cmd = {install_root_dir .. '/go/gopls'},
     goimport = "gopls", -- if set to 'gopls' will use golsp format
-    gofmt = "gopls",  -- if set to gopls will use golsp format
+    gofmt = "gopls",    -- if set to gopls will use golsp format
     max_line_len = 120,
     tag_transform = "camelcase",
     test_dir = "",
@@ -281,7 +305,7 @@ if has_go then
       capabilities = updated_capabilities,
       on_attach = custom_attach,
     },
-    lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+    lsp_gofumpt = true,   -- true: set default gofmt in gopls format to gofumpt
     lsp_on_attach = true, -- use on_attach from go.nvim
     dap_debug = true,
     textobjects = false,
@@ -371,6 +395,7 @@ require("mason-lspconfig").setup({
     "bashls",
     "yamlls",
   },
+  automatic_install = true,
 })
 
 -- sumneko_cmd = {
