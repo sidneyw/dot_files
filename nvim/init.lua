@@ -1,7 +1,7 @@
 require("global") -- experimental
 
 if require("first-load")() then
-	return
+  return
 end
 
 vim.g.mapleader = "-"
@@ -28,18 +28,26 @@ require("sidneyw.plugins.treesitter")
 require("sidneyw.chronosphere")
 
 vim.api.nvim_set_keymap(
-	"n",
-	"ge",
-	[[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
-	{ noremap = true, silent = true }
+  "n",
+  "ge",
+  [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
+  { noremap = true, silent = true }
 )
 
 -- Reload init.lua
 nmap({
-	"<leader>sv",
-	function()
-		R("sidneyw.luasnip-cmp")
-	end,
+  "<leader>sv",
+  function()
+    R("sidneyw.lsp")
+  end,
+})
+
+nmap({
+  "<leader>gp",
+  function()
+    -- execute the external command gh pr view --web and if it fails execute gh pr create --web
+    vim.cmd([[silent !gh pr view --web || gh pr create --web]])
+  end
 })
 
 vim.notify = require("notify")
