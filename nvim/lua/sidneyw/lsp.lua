@@ -1,11 +1,11 @@
+require("neodev").setup()
+
 local lspconfig = vim.F.npcall(require, "lspconfig")
 if not lspconfig then
   return
 end
 
 -- local saga_action = require("lspsaga.action")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local lspsaga = require("lspsaga")
 local ts_util = require("nvim-lsp-ts-utils")
 local null_ls = require("null-ls")
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
@@ -70,15 +70,6 @@ local filetype_attach = setmetatable({
     autocmd_format(false)
   end,
 
-  -- rust = function()
-  --  -- telescope_mapper("<space>wf", "lsp_workspace_symbols", {
-  --  --   ignore_filename = true,
-  --  --   query = "#",
-  --  -- }, true)
-  --
-  --  autocmd_format(false)
-  -- end,
-  --
   typescript = function()
     autocmd_format(false, function(client)
       return client.name ~= "tsserver"
@@ -115,8 +106,6 @@ local custom_attach = function(client, bufnr)
     return
   end
 
-  -- uncomment to get current buffer filetype
-  -- P(vim.filetype.match({ buf = bufnr }))
 
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
@@ -125,7 +114,6 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "go", "<cmd>Lspsaga peek_definition<CR>" })
 
   buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
-  -- buf_nnoremap({ "<localleader>R", "<cmd>Lspsaga rename<CR>" })
   buf_nnoremap({ "ga", vim.lsp.buf.code_action })
 
   buf_nnoremap({ "gd", vim.lsp.buf.definition })
@@ -139,20 +127,6 @@ local custom_attach = function(client, bufnr)
 
   buf_nnoremap({ "gi", require("telescope.builtin").lsp_implementations })
   buf_nnoremap({ "gr", require("telescope.builtin").lsp_references })
-
-  -- buf_nnoremap({
-  --   "<C-u>",
-  --   function()
-  --     saga_action.smart_scroll_with_saga(-1)
-  --   end,
-  -- })
-
-  -- buf_nnoremap({
-  --   "<C-d>",
-  --   function()
-  --     saga_action.smart_scroll_with_saga(1)
-  --   end,
-  -- })
 
   if filetype ~= "lua" then
     buf_nnoremap({ "K", "<cmd>Lspsaga hover_doc<CR>" })
@@ -177,10 +151,10 @@ local custom_attach = function(client, bufnr)
 
   -- Attach any filetype specific options to the client
   filetype_attach[filetype](client)
-  require("lsp_signature").on_attach({
-    hint_prefix = " ",
-    toggle_key = "<C-k>",
-  }, bufnr)
+  -- require("lsp_signature").on_attach({
+  --   hint_prefix = " ",
+  --   toggle_key = "<C-s>",
+  -- }, bufnr)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -196,43 +170,15 @@ local servers = {
   vimls = true,
   -- yamlls = true,
 
-  -- TODO: for some reason this is matching protobuf files
-  --
-  -- clangd = {
-  --  cmd = {
-  --    "clangd",
-  --    "--background-index",
-  --    "--suggest-missing-includes",
-  --    "--clang-tidy",
-  --    "--header-insertion=iwyu",
-  --  },
-  --  init_options = {
-  --    clangdFileStatus = true,
-  --  },
-  -- },
-
-  -- TODO enable this when it's more stable
   lua_ls = {
     cmd = { "lua-language-server" },
     settings = {
       Lua = {
-        diagnostics = {
-          globals = {
-            -- vim
-            "vim",
-
-            -- Custom
-            "RELOAD",
-          },
-        },
-
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file("", true),
-          checkThirdParty = false,
-        },
-      },
-    },
+        completion = {
+          callSnippet = "Replace"
+        }
+      }
+    }
   },
 
   omnisharp = {
@@ -308,7 +254,7 @@ if has_go then
     lsp_gofumpt = true,   -- true: set default gofmt in gopls format to gofumpt
     lsp_on_attach = true, -- use on_attach from go.nvim
     dap_debug = true,
-    textobjects = false,
+    textobjects = true,
     luasnip = false, -- there are some collisions with my own snippets
     lsp_inlay_hints = {
       enable = false,
@@ -329,9 +275,8 @@ if has_go then
   nnoremap("<localleader>gs", "<cmd>GoDebug -s<CR>") -- stop the debug session and unmap keys
   nnoremap("<localleader>gf", "<cmd>GoFillStruct<CR>")
   nnoremap("<localleader>gt", "<cmd>GoTestFunc<CR>")
+  nnoremap("<localleader>gp", "<cmd>GoTestPkg<CR>")
   nnoremap("<localleader>gy", "<cmd>GoAddTag yaml --transform camelcase<CR>")
-  -- Force the dap keymaps to unbind
-  -- lua require("go.dap").stop(true)
 else
   -- fallback to the regular lsp implementation
   servers.gopls = {
@@ -374,12 +319,6 @@ local setup_server = function(server, config)
   lspconfig[server].setup(config)
 end
 
-local sumneko_cmd, sumneko_env = nil, nil
--- require("nvim-lsp-installer").setup({
---   automatic_installation = false,
---   ensure_installed = { "sumneko_lua", "gopls", "bashls", "yamlls" },
--- })
---
 require("mason").setup()
 
 -- Enable the following language servers
@@ -398,77 +337,24 @@ require("mason-lspconfig").setup({
   automatic_install = true,
 })
 
--- sumneko_cmd = {
---   vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
--- }
-
--- sumneko_env = {
---   cmd_env = {
---     PATH = process.extend_path({
---       path.concat({ vim.fn.stdpath("data"), "lsp_servers", "sumneko_lua", "extension", "server", "bin" }),
---     }),
---   },
--- }
-
--- setup_server("sumneko_lua", {
---   settings = {
---     Lua = {
---       diagnostics = {
---         globals = {
---           -- vim
---           "vim",
---
---           -- Busted
---           "describe",
---           "it",
---           "before_each",
---           "after_each",
---           "teardown",
---           "pending",
---           "clear",
---
---           -- Colorbuddy
---           "Color",
---           "c",
---           "Group",
---           "g",
---           "s",
---
---           -- Custom
---           "RELOAD",
---         },
---       },
---
---       workspace = {
---         -- Make the server aware of Neovim runtime files
---         library = vim.api.nvim_get_runtime_file("", true),
---         checkThirdParty = false,
---       },
---     },
---   },
--- })
-
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
 
-local use_null = true
-if use_null then
-  null_ls.setup({
-    sources = {
-      formatting.stylelint,
-      diagnostics.tsc,
+null_ls.setup({
+  sources = {
+    formatting.stylelint,
+    diagnostics.tsc,
 
-      formatting.stylua,
-      diagnostics.luacheck,
+    -- formatting.stylua,
+    -- diagnostics.luacheck,
 
-      -- null_ls.builtins.formatting.prettierd,
-      -- formatting.gofmt,
-      -- formatting.goimports,
-      -- diagnostics.golangci_lint,
-    },
-  })
-end
+    -- null_ls.builtins.formatting.prettierd,
+    -- formatting.gofmt,
+    -- formatting.goimports,
+    -- diagnostics.golangci_lint,
+  },
+})
 
 vim.cmd([[
   let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']

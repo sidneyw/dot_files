@@ -22,14 +22,68 @@ return require("packer").startup(function(use)
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    -- commit = "23dfae4db84f71e2ddb56c024845b322035182ee"
   })
 
-  -- use({
-  -- 	-- Additional text objects via treesitter
-  -- 	"nvim-treesitter/nvim-treesitter-textobjects",
-  -- 	after = "nvim-treesitter",
-  -- })
+  use({
+    -- Additional text objects via treesitter
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = "@class.inner",
+              ["ab"] = "@block.outer",
+              ["ib"] = "@block.inner",
+              ["al"] = "@loop.outer",
+              ["il"] = "@loop.inner",
+              ["ai"] = "@conditional.outer",
+              ["ii"] = "@conditional.inner",
+              ["as"] = "@statement.outer",
+              ["is"] = "@statement.inner",
+              ["ad"] = "@comment.outer",
+              ["id"] = "@comment.inner",
+            },
+          },
+          swap = {
+            enable = true,
+            swap_next = {
+              ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["<leader>A"] = "@parameter.inner",
+            },
+          },
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]m"] = "@function.outer",
+              ["]]"] = "@class.outer",
+            },
+            goto_next_end = {
+              ["]M"] = "@function.outer",
+              ["]["] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[m"] = "@function.outer",
+              ["[["] = "@class.outer",
+            },
+            goto_previous_end = {
+              ["[M"] = "@function.outer",
+              ["[]"] = "@class.outer",
+            },
+          },
+        },
+      })
+    end
+  })
 
   use("nvim-treesitter/playground")
   use("nvim-treesitter/nvim-treesitter-refactor")
@@ -68,9 +122,9 @@ return require("packer").startup(function(use)
   })
 
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
-  use("nvim-lua/lsp_extensions.nvim")
   use("onsails/lspkind-nvim")
-  use("tjdevries/nlua.nvim")
+  -- use("nvim-lua/lsp_extensions.nvim")
+  -- use("tjdevries/nlua.nvim")
   use("jose-elias-alvarez/null-ls.nvim")
 
   -- This is a more stable fork of the original plugin commented out below
@@ -168,6 +222,36 @@ return require("packer").startup(function(use)
   use({ "debugloop/telescope-undo.nvim" })
   -- }}}
 
+  -- Colorscheme {{{
+  use({
+    "tiagovla/tokyodark.nvim",
+    config = function()
+      require("tokyodark").setup({
+        style = "night",
+      })
+      -- vim.cmd([[colorscheme tokyodark]])
+    end
+  })
+
+  use({
+    "luisiacc/gruvbox-baby",
+    config = function()
+      -- make the background darker
+      vim.g.gruvbox_baby_background_color = "dark"
+      vim.cmd([[colorscheme gruvbox-baby]])
+    end
+  })
+
+  -- Original gruvbox
+  -- use({
+  --   "morhetz/gruvbox",
+  --   config = function()
+  --     vim.g.gruvbox_contrast_dark = "hard"
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end,
+  -- })
+  -- }}}
+
 
   -- Use dependency and run lua function after load
   use({
@@ -198,19 +282,15 @@ return require("packer").startup(function(use)
   use({
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      require("indent_blankline").setup({
-        char = "┊",
-        show_trailing_blankline_indent = false,
+      -- remove the current indent level hightlight
+      require("ibl").setup({
+        indent = {
+          char = "┊",
+          conceal = true,
+        }
       })
     end,
   })
-
-  vim.cmd([[
-		set background=dark
-		let g:gruvbox_contrast_dark = 'hard'
-		]])
-
-  use("morhetz/gruvbox")
 
   use({
     "numToStr/Comment.nvim",
@@ -218,6 +298,7 @@ return require("packer").startup(function(use)
       require("Comment").setup()
     end,
   })
+
   -- Lua
   use {
     "folke/which-key.nvim",
@@ -284,6 +365,16 @@ return require("packer").startup(function(use)
         -- Options go here
       })
     end
+  })
+
+  use("folke/neodev.nvim")
+
+  -- packer.nvim
+  use({
+    "robitx/gp.nvim",
+    config = function()
+      require("gp").setup()
+    end,
   })
 
   -- }}}
