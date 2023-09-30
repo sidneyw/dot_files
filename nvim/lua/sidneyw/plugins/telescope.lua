@@ -66,7 +66,7 @@ require("telescope").setup({
     media_files = {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = {"png", "webp", "jpg", "jpeg"},
+      filetypes = { "png", "webp", "jpg", "jpeg" },
       -- find command (defaults to `fd`)
       find_cmd = "rg"
     },
@@ -132,14 +132,17 @@ M.search_dotfiles = function()
   })
 end
 
-nnoremap("<leader>f", builtin.find_files)
-nnoremap("<C-p>", M.project_files)
-nnoremap("<leader>a", builtin.live_grep)
-nnoremap("<leader>q", builtin.current_buffer_fuzzy_find)
-nnoremap("<leader>s", builtin.lsp_document_symbols)
-nnoremap("<leader>b", builtin.buffers)
-nnoremap("<leader>hl", builtin.help_tags)
-nnoremap("<leader>m", builtin.oldfiles)
+require("which-key").register({
+  ["<leader>f"] = { M.project_files, "Project files" },
+  ["<C-p>"] = { builtin.find_files, "Find files" },
+  ["<leader>a"] = { builtin.live_grep, "Live grep" },
+  ["<leader>q"] = { builtin.current_buffer_fuzzy_find, "Fuzzy find" },
+  ["<leader>s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
+  ["<leader>b"] = { builtin.buffers, "Buffers" },
+  ["<leader>hl"] = { builtin.help_tags, "Help tags" },
+  ["<leader>m"] = { builtin.oldfiles, "Old files" },
+  ["<leader>tr"] = { builtin.resume, "Resume" },
+})
 -- nnoremap("<leader>s", builtin.lsp_workspace_symbols)
 
 vim.api.nvim_set_keymap(
@@ -150,12 +153,12 @@ vim.api.nvim_set_keymap(
 )
 
 local utils = {
-  { name = "Commits", fn = builtin.git_commits, desc = "Show commits" },
+  { name = "Commits",  fn = builtin.git_commits,  desc = "Show commits" },
   { name = "Bcommits", fn = builtin.git_bcommits, desc = "Show buffer commits" },
   { name = "Branches", fn = builtin.git_branches, desc = "Show branches" },
-  { name = "Marks", fn = builtin.marks, desc = "Show marks" },
-  { name = "Keymaps", fn = builtin.keymaps, desc = "Show keymaps" },
-  { name = "Colors", fn = builtin.colorscheme, desc = "Show colorschemes" },
+  { name = "Marks",    fn = builtin.marks,        desc = "Show marks" },
+  { name = "Keymaps",  fn = builtin.keymaps,      desc = "Show keymaps" },
+  { name = "Colors",   fn = builtin.colorscheme,  desc = "Show colorschemes" },
 }
 
 for _, command in pairs(utils) do

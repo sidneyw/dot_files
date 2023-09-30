@@ -121,7 +121,3 @@ cmp.setup.cmdline(":", {
     { name = "cmdline", keyword_length = 2 },
   }),
 })
-
--- Copilot settings
-vim.api.nvim_set_keymap("i", "<C-[>", 'copilot#Previous()', { silent = true, expr = true })
-vim.api.nvim_set_keymap("i", "<C-]>", 'copilot#Next()', { silent = true, expr = true })
