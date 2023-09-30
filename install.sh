@@ -16,6 +16,10 @@ ln -s $DOT_FILES/tmux/tmux.conf.local $HOME/.tmux.conf.local
 ln -s $DOT_FILES/nvim $HOME/.config/nvim
 ln -s $DOT_FILES/shell/bash_profile.sh $HOME/.bash_profile
 
+ln -s $DOT_FILES/shell/zprofile $HOME/.zprofile
+ln -s $DOT_FILES/shell/zshrc $HOME/.zshrc
+ln -s $DOT_FILES/shell/zshenv $HOME/.zshenv
+
 ln -s $DOT_FILES/vim/vimrc $HOME/.vimrc
 ln -s $DOT_FILES/vim $HOME/.vim
 
