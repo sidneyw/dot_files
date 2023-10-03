@@ -51,15 +51,6 @@ return require("packer").startup(function(use)
               ["id"] = "@comment.inner",
             },
           },
-          swap = {
-            enable = true,
-            swap_next = {
-              ["<leader>a"] = "@parameter.inner",
-            },
-            swap_previous = {
-              ["<leader>A"] = "@parameter.inner",
-            },
-          },
           move = {
             enable = true,
             set_jumps = true,
@@ -157,15 +148,19 @@ return require("packer").startup(function(use)
 
   use {
     'rmagatti/goto-preview',
+    after = "which-key.nvim",
     config = function()
       require('goto-preview').setup {}
-      vim.cmd [[
-        nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
-        nnoremap gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
-        nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
-        nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
-        nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
-      ]]
+      require("which-key").register({
+        ["p"] = {
+          name = "Goto",
+          d = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "Preview Definition" },
+          t = { "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", "Preview Type Definition" },
+          i = { "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", "Preview Implementation" },
+          r = { "<cmd>lua require('goto-preview').goto_preview_references()<CR>", "Preview References" },
+          P = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close All Preview" },
+        },
+      }, { prefix = "<localleader>" })
     end
   }
   -- }}}
