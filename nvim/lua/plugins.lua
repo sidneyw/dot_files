@@ -151,16 +151,17 @@ return require("packer").startup(function(use)
     after = "which-key.nvim",
     config = function()
       require('goto-preview').setup {}
-      require("which-key").register({
-        ["p"] = {
-          name = "Goto",
+      local wk = require("which-key")
+      wk.register({
+        ["go"] = {
+          name = "Goto Preview",
           d = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "Preview Definition" },
           t = { "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", "Preview Type Definition" },
           i = { "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", "Preview Implementation" },
           r = { "<cmd>lua require('goto-preview').goto_preview_references()<CR>", "Preview References" },
-          P = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close All Preview" },
         },
-      }, { prefix = "<localleader>" })
+        ["<localleader>q"] = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close All Preview" },
+      })
     end
   }
   -- }}}
@@ -279,9 +280,13 @@ return require("packer").startup(function(use)
     config = function()
       -- remove the current indent level hightlight
       require("ibl").setup({
+        scope = {
+          enabled = false, -- removes current scope highlight
+          show_start = false,
+          show_end = false,
+        },
         indent = {
           char = "┊",
-          conceal = true,
         }
       })
     end,

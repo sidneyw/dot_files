@@ -111,8 +111,6 @@ local custom_attach = function(client, bufnr)
 
   buf_inoremap({ "<c-s>", "<cmd>Lspsaga signature_help<CR>" })
 
-  buf_nnoremap({ "go", "<cmd>Lspsaga peek_definition<CR>" })
-
   buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
   buf_nnoremap({ "ga", vim.lsp.buf.code_action })
 
