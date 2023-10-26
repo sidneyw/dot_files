@@ -2,21 +2,26 @@
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+
 [user]
 	name = Sidney Wijngaarde
 	email = sidney@chronosphere.io
+
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
+
 [push]
 	default = current
 	autoSetupRemote = true
+
 [alias]
 	br = branch
 	ca = commit --amend
@@ -33,12 +38,43 @@
 	rim = rebase -i origin/master
 	st = status
 	sha = rev-parse --short=8 HEAD
+
 [core]
+  pager = delta
 	editor = /opt/homebrew/bin/nvim
 
 	excludesfile = ~/.gitignore
 	hooksPath = /Users/sidney/.config/git/hooks
+
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 	insteadOf = https://github.com/
 	insteadOf = https://github.com/
+
+# Configuration for Delta
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    syntax-theme = gruvbox-dark
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    side-by-side = true
+    line-numbers = true
+    keep-plus-minus-markers = false
+    features = decorations
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = cyan box ul
+    hunk-header-file-style = yellow bold
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
