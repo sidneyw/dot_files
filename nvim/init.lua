@@ -50,14 +50,11 @@ nmap({
   end
 })
 
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]]
+
 vim.notify = require("notify")
--- colorscheme monokai-phoenix
--- colorscheme badwolf
--- colorscheme onedark
--- colorscheme dracula_blood
--- colorscheme nightfox
--- colorscheme srcerydrk
--- colorscheme papercolor
--- colorscheme brogrammer
--- colorscheme turtles
--- colorscheme molokai_dark

@@ -126,7 +126,7 @@ _G.packer_plugins = {
     url = "https://github.com/github/copilot.vim"
   },
   ["dashboard-nvim"] = {
-    config = { "\27LJ\2\nµ\2\0\0\6\0\v\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0034\4\3\0005\5\a\0>\5\1\0045\5\b\0>\5\2\4=\4\t\3=\3\n\2B\0\2\1K\0\1\0\vconfig\rshortcut\1\0\6\ngroup\nLabel\vaction\25Telescope find_files\bkey\6f\tdesc\nFiles\ticon\tîˆ• \ficon_hl\14@variable\1\0\5\ngroup\14@property\vaction\15PackerSync\bkey\6u\tdesc\vUpdate\ticon\tî©¤ \16week_header\1\0\0\1\0\1\venable\2\1\0\1\ntheme\nhyper\nsetup\14dashboard\frequire\0" },
+    config = { "\27LJ\2\nµ\2\0\0\6\0\v\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0034\4\3\0005\5\a\0>\5\1\0045\5\b\0>\5\2\4=\4\t\3=\3\n\2B\0\2\1K\0\1\0\vconfig\rshortcut\1\0\6\vaction\25Telescope find_files\ngroup\nLabel\ficon_hl\14@variable\bkey\6f\ticon\tîˆ• \tdesc\nFiles\1\0\5\vaction\15PackerSync\ngroup\14@property\bkey\6u\ticon\tî©¤ \tdesc\vUpdate\16week_header\1\0\0\1\0\1\venable\2\1\0\1\ntheme\nhyper\nsetup\14dashboard\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -171,7 +171,7 @@ _G.packer_plugins = {
     url = "https://github.com/edolphin-ydf/goimpl.nvim"
   },
   ["goto-preview"] = {
-    config = { "\27LJ\2\n€\5\0\0\6\0\18\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\0016\0\0\0'\2\3\0B\0\2\0029\1\4\0005\3\14\0005\4\5\0005\5\6\0=\5\a\0045\5\b\0=\5\t\0045\5\n\0=\5\v\0045\5\f\0=\5\r\4=\4\15\0035\4\16\0=\4\17\3B\1\2\1K\0\1\0\19<localleader>q\1\3\0\0009<cmd>lua require('goto-preview').close_all_win()<CR>\22Close All Preview\ago\1\0\0\6r\1\3\0\0C<cmd>lua require('goto-preview').goto_preview_references()<CR>\23Preview References\6i\1\3\0\0G<cmd>lua require('goto-preview').goto_preview_implementation()<CR>\27Preview Implementation\6t\1\3\0\0H<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>\28Preview Type Definition\6d\1\3\0\0C<cmd>lua require('goto-preview').goto_preview_definition()<CR>\23Preview Definition\1\0\1\tname\17Goto Preview\rregister\14which-key\nsetup\17goto-preview\frequire\0" },
+    config = { "\27LJ\2\n”\4\0\0\b\0\22\0$6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\0016\0\0\0'\2\3\0B\0\2\0026\1\0\0'\3\1\0B\1\2\0029\2\4\0005\4\18\0005\5\5\0005\6\a\0009\a\6\1>\a\1\6=\6\b\0055\6\n\0009\a\t\1>\a\1\6=\6\v\0055\6\r\0009\a\f\1>\a\1\6=\6\14\0055\6\16\0009\a\15\1>\a\1\6=\6\17\5=\5\19\0045\5\20\0=\5\21\4B\2\2\1K\0\1\0\19<localleader>q\1\3\0\0009<cmd>lua require('goto-preview').close_all_win()<CR>\22Close All Preview\ago\1\0\0\6r\1\3\0\0\0\23Preview References\28goto_preview_references\6i\1\3\0\0\0\27Preview Implementation goto_preview_implementation\6t\1\3\0\0\0\28Preview Type Definition!goto_preview_type_definition\6d\1\3\0\0\0\23Preview Definition\28goto_preview_definition\1\0\1\tname\17Goto Preview\rregister\14which-key\nsetup\17goto-preview\frequire\0" },
     load_after = {},
     loaded = true,
     needs_bufread = false,
@@ -196,7 +196,7 @@ _G.packer_plugins = {
     url = "https://github.com/ray-x/guihua.lua"
   },
   ["indent-blankline.nvim"] = {
-    config = { "\27LJ\2\nƒ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\vindent\1\0\1\tchar\bâ”Š\nscope\1\0\0\1\0\3\fenabled\1\rshow_end\1\15show_start\1\nsetup\bibl\frequire\0" },
+    config = { "\27LJ\2\nƒ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\vindent\1\0\1\tchar\bâ”Š\nscope\1\0\0\1\0\3\rshow_end\1\15show_start\1\fenabled\1\nsetup\bibl\frequire\0" },
     loaded = true,
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
@@ -298,7 +298,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-treesitter/nvim-treesitter-refactor"
   },
   ["nvim-treesitter-textobjects"] = {
-    config = { "\27LJ\2\n¶\5\0\0\6\0\20\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\18\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\0035\4\b\0005\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\4=\4\17\3=\3\19\2B\0\2\1K\0\1\0\16textobjects\1\0\0\tmove\22goto_previous_end\1\0\2\a[]\17@class.outer\a[M\20@function.outer\24goto_previous_start\1\0\2\a[m\20@function.outer\a[[\17@class.outer\18goto_next_end\1\0\2\a][\17@class.outer\a]M\20@function.outer\20goto_next_start\1\0\2\a]m\20@function.outer\a]]\17@class.outer\1\0\2\14set_jumps\2\venable\2\vselect\1\0\0\fkeymaps\1\0\14\aab\17@block.outer\aif\20@function.inner\aic\17@class.inner\ais\21@statement.inner\aac\17@class.outer\aas\21@statement.outer\aii\23@conditional.inner\aaf\20@function.outer\aai\23@conditional.outer\aid\19@comment.inner\ail\16@loop.inner\aal\16@loop.outer\aib\17@block.inner\aad\19@comment.outer\1\0\2\14lookahead\2\venable\2\nsetup\28nvim-treesitter.configs\frequire\0" },
+    config = { "\27LJ\2\n¶\5\0\0\6\0\20\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\18\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\0035\4\b\0005\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\4=\4\17\3=\3\19\2B\0\2\1K\0\1\0\16textobjects\1\0\0\tmove\22goto_previous_end\1\0\2\a[]\17@class.outer\a[M\20@function.outer\24goto_previous_start\1\0\2\a[m\20@function.outer\a[[\17@class.outer\18goto_next_end\1\0\2\a][\17@class.outer\a]M\20@function.outer\20goto_next_start\1\0\2\a]m\20@function.outer\a]]\17@class.outer\1\0\2\venable\2\14set_jumps\2\vselect\1\0\0\fkeymaps\1\0\14\aai\23@conditional.outer\aif\20@function.inner\ail\16@loop.inner\aas\21@statement.outer\aal\16@loop.outer\aid\19@comment.inner\aib\17@block.inner\aab\17@block.outer\aad\19@comment.outer\aic\17@class.inner\ais\21@statement.inner\aac\17@class.outer\aii\23@conditional.inner\aaf\20@function.outer\1\0\2\venable\2\14lookahead\2\nsetup\28nvim-treesitter.configs\frequire\0" },
     load_after = {},
     loaded = true,
     needs_bufread = false,
@@ -350,11 +350,6 @@ _G.packer_plugins = {
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",
     url = "https://github.com/nvim-telescope/telescope-dap.nvim"
   },
-  ["telescope-env.nvim"] = {
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/telescope-env.nvim",
-    url = "https://github.com/LinArcX/telescope-env.nvim"
-  },
   ["telescope-fzf-native.nvim"] = {
     cond = { true },
     loaded = false,
@@ -382,11 +377,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/telescope-media-files.nvim",
     url = "https://github.com/nvim-telescope/telescope-media-files.nvim"
-  },
-  ["telescope-ports.nvim"] = {
-    loaded = true,
-    path = "/Users/sidney/.local/share/nvim/site/pack/packer/start/telescope-ports.nvim",
-    url = "https://github.com/LinArcX/telescope-ports.nvim"
   },
   ["telescope-undo.nvim"] = {
     loaded = true,
@@ -466,6 +456,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: gp.nvim
+time([[Config for gp.nvim]], true)
+try_loadstring("\27LJ\2\n0\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\agp\frequire\0", "config", "gp.nvim")
+time([[Config for gp.nvim]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
+time([[Config for Comment.nvim]], false)
+-- Config for: gruvbox-baby
+time([[Config for gruvbox-baby]], true)
+try_loadstring("\27LJ\2\nq\0\0\3\0\6\0\t6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\4\0'\2\5\0B\0\2\1K\0\1\0\29colorscheme gruvbox-baby\bcmd\tdark\"gruvbox_baby_background_color\6g\bvim\0", "config", "gruvbox-baby")
+time([[Config for gruvbox-baby]], false)
 -- Config for: vim-highlightedyank
 time([[Config for vim-highlightedyank]], true)
 try_loadstring("\27LJ\2\nD\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1È\0=\1\2\0K\0\1\0'highlightedyank_highlight_duration\6g\bvim\0", "config", "vim-highlightedyank")
@@ -478,50 +480,38 @@ time([[Config for dressing.nvim]], false)
 time([[Config for tokyodark.nvim]], true)
 try_loadstring("\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\nstyle\nnight\nsetup\14tokyodark\frequire\0", "config", "tokyodark.nvim")
 time([[Config for tokyodark.nvim]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\2\nƒ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\vindent\1\0\1\tchar\bâ”Š\nscope\1\0\0\1\0\3\fenabled\1\rshow_end\1\15show_start\1\nsetup\bibl\frequire\0", "config", "indent-blankline.nvim")
-time([[Config for indent-blankline.nvim]], false)
--- Config for: fidget.nvim
-time([[Config for fidget.nvim]], true)
-try_loadstring("\27LJ\2\nW\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\ttext\1\0\0\1\0\1\fspinner\barc\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
-time([[Config for fidget.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\nŽ\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21disable_filetype\1\0\0\1\5\0\0\20TelescopePrompt\vguihua\16guihua_rust\15clap_input\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
--- Config for: gp.nvim
-time([[Config for gp.nvim]], true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\agp\frequire\0", "config", "gp.nvim")
-time([[Config for gp.nvim]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
-time([[Config for Comment.nvim]], false)
 -- Config for: which-key.nvim
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\nt\0\0\3\0\a\0\0156\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0)\1,\1=\1\3\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\15timeoutlen\ftimeout\6o\bvim\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
--- Config for: gruvbox-baby
-time([[Config for gruvbox-baby]], true)
-try_loadstring("\27LJ\2\nq\0\0\3\0\6\0\t6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\4\0'\2\5\0B\0\2\1K\0\1\0\29colorscheme gruvbox-baby\bcmd\tdark\"gruvbox_baby_background_color\6g\bvim\0", "config", "gruvbox-baby")
-time([[Config for gruvbox-baby]], false)
+-- Config for: fidget.nvim
+time([[Config for fidget.nvim]], true)
+try_loadstring("\27LJ\2\nW\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\ttext\1\0\0\1\0\1\fspinner\barc\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
+time([[Config for fidget.nvim]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\2\nƒ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\vindent\1\0\1\tchar\bâ”Š\nscope\1\0\0\1\0\3\rshow_end\1\15show_start\1\fenabled\1\nsetup\bibl\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
 -- Conditional loads
 time([[Conditional loading of telescope-fzf-native.nvim]], true)
   require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
 time([[Conditional loading of telescope-fzf-native.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
+vim.cmd [[ packadd goto-preview ]]
+
+-- Config for: goto-preview
+try_loadstring("\27LJ\2\n”\4\0\0\b\0\22\0$6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\0016\0\0\0'\2\3\0B\0\2\0026\1\0\0'\3\1\0B\1\2\0029\2\4\0005\4\18\0005\5\5\0005\6\a\0009\a\6\1>\a\1\6=\6\b\0055\6\n\0009\a\t\1>\a\1\6=\6\v\0055\6\r\0009\a\f\1>\a\1\6=\6\14\0055\6\16\0009\a\15\1>\a\1\6=\6\17\5=\5\19\0045\5\20\0=\5\21\4B\2\2\1K\0\1\0\19<localleader>q\1\3\0\0009<cmd>lua require('goto-preview').close_all_win()<CR>\22Close All Preview\ago\1\0\0\6r\1\3\0\0\0\23Preview References\28goto_preview_references\6i\1\3\0\0\0\27Preview Implementation goto_preview_implementation\6t\1\3\0\0\0\28Preview Type Definition!goto_preview_type_definition\6d\1\3\0\0\0\23Preview Definition\28goto_preview_definition\1\0\1\tname\17Goto Preview\rregister\14which-key\nsetup\17goto-preview\frequire\0", "config", "goto-preview")
+
 vim.cmd [[ packadd nvim-treesitter ]]
 vim.cmd [[ packadd nvim-treesitter-textobjects ]]
 
 -- Config for: nvim-treesitter-textobjects
-try_loadstring("\27LJ\2\n¶\5\0\0\6\0\20\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\18\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\0035\4\b\0005\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\4=\4\17\3=\3\19\2B\0\2\1K\0\1\0\16textobjects\1\0\0\tmove\22goto_previous_end\1\0\2\a[]\17@class.outer\a[M\20@function.outer\24goto_previous_start\1\0\2\a[m\20@function.outer\a[[\17@class.outer\18goto_next_end\1\0\2\a][\17@class.outer\a]M\20@function.outer\20goto_next_start\1\0\2\a]m\20@function.outer\a]]\17@class.outer\1\0\2\14set_jumps\2\venable\2\vselect\1\0\0\fkeymaps\1\0\14\aab\17@block.outer\aif\20@function.inner\aic\17@class.inner\ais\21@statement.inner\aac\17@class.outer\aas\21@statement.outer\aii\23@conditional.inner\aaf\20@function.outer\aai\23@conditional.outer\aid\19@comment.inner\ail\16@loop.inner\aal\16@loop.outer\aib\17@block.inner\aad\19@comment.outer\1\0\2\14lookahead\2\venable\2\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter-textobjects")
-
-vim.cmd [[ packadd goto-preview ]]
-
--- Config for: goto-preview
-try_loadstring("\27LJ\2\n€\5\0\0\6\0\18\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\0016\0\0\0'\2\3\0B\0\2\0029\1\4\0005\3\14\0005\4\5\0005\5\6\0=\5\a\0045\5\b\0=\5\t\0045\5\n\0=\5\v\0045\5\f\0=\5\r\4=\4\15\0035\4\16\0=\4\17\3B\1\2\1K\0\1\0\19<localleader>q\1\3\0\0009<cmd>lua require('goto-preview').close_all_win()<CR>\22Close All Preview\ago\1\0\0\6r\1\3\0\0C<cmd>lua require('goto-preview').goto_preview_references()<CR>\23Preview References\6i\1\3\0\0G<cmd>lua require('goto-preview').goto_preview_implementation()<CR>\27Preview Implementation\6t\1\3\0\0H<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>\28Preview Type Definition\6d\1\3\0\0C<cmd>lua require('goto-preview').goto_preview_definition()<CR>\23Preview Definition\1\0\1\tname\17Goto Preview\rregister\14which-key\nsetup\17goto-preview\frequire\0", "config", "goto-preview")
+try_loadstring("\27LJ\2\n¶\5\0\0\6\0\20\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\18\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\0035\4\b\0005\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\4=\4\17\3=\3\19\2B\0\2\1K\0\1\0\16textobjects\1\0\0\tmove\22goto_previous_end\1\0\2\a[]\17@class.outer\a[M\20@function.outer\24goto_previous_start\1\0\2\a[m\20@function.outer\a[[\17@class.outer\18goto_next_end\1\0\2\a][\17@class.outer\a]M\20@function.outer\20goto_next_start\1\0\2\a]m\20@function.outer\a]]\17@class.outer\1\0\2\venable\2\14set_jumps\2\vselect\1\0\0\fkeymaps\1\0\14\aai\23@conditional.outer\aif\20@function.inner\ail\16@loop.inner\aas\21@statement.outer\aal\16@loop.outer\aid\19@comment.inner\aib\17@block.inner\aab\17@block.outer\aad\19@comment.outer\aic\17@class.inner\ais\21@statement.inner\aac\17@class.outer\aii\23@conditional.inner\aaf\20@function.outer\1\0\2\venable\2\14lookahead\2\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter-textobjects")
 
 time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]
