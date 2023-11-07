@@ -152,13 +152,14 @@ return require("packer").startup(function(use)
     config = function()
       require('goto-preview').setup {}
       local wk = require("which-key")
+      local gt = require("goto-preview")
       wk.register({
         ["go"] = {
           name = "Goto Preview",
-          d = { "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", "Preview Definition" },
-          t = { "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", "Preview Type Definition" },
-          i = { "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", "Preview Implementation" },
-          r = { "<cmd>lua require('goto-preview').goto_preview_references()<CR>", "Preview References" },
+          d = { gt.goto_preview_definition, "Preview Definition" },
+          t = { gt.goto_preview_type_definition, "Preview Type Definition" },
+          i = { gt.goto_preview_implementation, "Preview Implementation" },
+          r = { gt.goto_preview_references, "Preview References" },
         },
         ["<localleader>q"] = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close All Preview" },
       })
@@ -213,8 +214,6 @@ return require("packer").startup(function(use)
   use("benfowler/telescope-luasnip.nvim")
 
   use("nvim-telescope/telescope-media-files.nvim")
-  use({ "LinArcX/telescope-env.nvim" })
-  use({ "LinArcX/telescope-ports.nvim" })
   use({ "debugloop/telescope-undo.nvim" })
   -- }}}
 
@@ -237,17 +236,6 @@ return require("packer").startup(function(use)
       vim.cmd([[colorscheme gruvbox-baby]])
     end
   })
-
-  -- Original gruvbox
-  -- use({
-  --   "morhetz/gruvbox",
-  --   config = function()
-  --     vim.g.gruvbox_contrast_dark = "hard"
-  --     vim.cmd([[colorscheme gruvbox]])
-  --   end,
-  -- })
-  -- }}}
-
 
   -- Use dependency and run lua function after load
   use({
@@ -305,12 +293,7 @@ return require("packer").startup(function(use)
     config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-
-      }
+      require("which-key").setup {}
     end
   }
   -- }}}
