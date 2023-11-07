@@ -106,8 +106,6 @@ telescope.load_extension("notify")
 telescope.load_extension("bookmarks")
 telescope.load_extension("goimpl")
 telescope.load_extension('media_files')
-telescope.load_extension("env")
-telescope.load_extension('ports')
 telescope.load_extension("undo")
 
 vim.cmd([[ cnoreabbr Tele Telescope ]])
