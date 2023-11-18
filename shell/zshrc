@@ -180,6 +180,7 @@ alias dps="docker ps"
 alias dcomp='docker-compose'
 
 # Go
+alias gotv="go test -v"
 alias gotvr="go test -v -run"
 # }}}}
 
@@ -372,3 +373,7 @@ _gt_yargs_completions()
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
 
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
