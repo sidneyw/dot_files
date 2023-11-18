@@ -164,7 +164,7 @@ local servers = {
   eslint = true,
   -- graphql = true,
   html = true,
-  -- pyright = true,
+  pyright = true,
   vimls = true,
   -- yamlls = true,
 
