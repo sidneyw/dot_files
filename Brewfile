@@ -62,6 +62,7 @@ brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 brew "withgraphite/tap/graphite"
 brew "yoheimuta/protolint/protolint"
 cask "1password-cli"
+cask "alacritty"
 cask "alt-tab"
 cask "fig"
 cask "karabiner-elements"

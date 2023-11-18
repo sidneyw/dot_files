@@ -2,6 +2,11 @@
 set -x
 
 # Quick install script for mac
+# Clone the git repository if it doesn't exist locally
+if [ ! -d "$HOME/.dot_files" ]; then
+  git clone git@github.com:sidneyw/dot_files.git "$HOME/.dot_files"
+  cd "$HOME/.dot_files"
+fi
 
 DOT_FILES="$HOME/.dot_files"
 
@@ -14,7 +19,6 @@ $(brew --prefix)/opt/fzf/install
 
 # Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 
 # Install Node
 nvm install --lts
