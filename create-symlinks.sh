@@ -74,6 +74,7 @@ for item in *; do
                     echo "Creating symlink: $HOME/.$file_name -> $DOT_FILES/$item/$file_name"
                     ln -s "$DOT_FILES/$item/$file_name" "$HOME/.$file_name"
                 else
+                    echo "DRY RUN: Would have removed existing symlink (if present): $HOME/.$file_name"
                     echo "DRY RUN: Would have created symlink: $HOME/.$file_name -> $DOT_FILES/$item/$file_name"
                 fi
             fi
