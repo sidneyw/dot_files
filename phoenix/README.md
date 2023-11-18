@@ -14,4 +14,4 @@ Run `yarn start` for a continuous builds.
 
 Run `yarn build` to build the production version of the phoenix config.
 
-Run `yarn log` to stream logs from Phoenix
+Run `yarn logs` to stream logs from Phoenix
