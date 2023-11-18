@@ -4,7 +4,7 @@ nvim/autoload*
 nvim/plugged*
 nvim/nvim
 
-phoenix/node_modules*
+*node_modules*
 
 shell/local_bin*
 vim*
@@ -12,4 +12,3 @@ vim*
 .mypy_cache/
 go.mod
 go.sum
-

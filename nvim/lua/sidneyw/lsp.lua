@@ -133,11 +133,11 @@ local custom_attach = function(client, bufnr)
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   -- Set autocommands conditional on server_capabilities
-  if client.server_capabilities.documentHighlightProvider then
-    autocmd_clear({ group = augroup_highlight, buffer = bufnr })
-    autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, bufnr })
-    autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr })
-  end
+  -- if client.server_capabilities.documentHighlightProvider then
+  --   autocmd_clear({ group = augroup_highlight, buffer = bufnr })
+  --   autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, bufnr })
+  --   autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr })
+  -- end
 
   if client.server_capabilities.codeLensProvider then
     if filetype ~= "elm" then

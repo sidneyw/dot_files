@@ -3,48 +3,27 @@ set -x
 
 # Quick install script for mac
 
-# Creates symlinks for dotfiles
 DOT_FILES="$HOME/.dot_files"
 
-echo "Dot files folder: $DOT_FILES"
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-cd $DOT_FILES
-
-ln -s $DOT_FILES/tmux/tmux.conf $HOME/.tmux.conf
-ln -s $DOT_FILES/tmux/tmux.conf.local $HOME/.tmux.conf.local
-
-ln -s $DOT_FILES/nvim $HOME/.config/nvim
-ln -s $DOT_FILES/shell/bash_profile.sh $HOME/.bash_profile
-
-ln -s $DOT_FILES/shell/zprofile $HOME/.zprofile
-ln -s $DOT_FILES/shell/zshrc $HOME/.zshrc
-ln -s $DOT_FILES/shell/zshenv $HOME/.zshenv
-
-ln -s $DOT_FILES/vim/vimrc $HOME/.vimrc
-ln -s $DOT_FILES/vim $HOME/.vim
-
-ln -s $DOT_FILES/git/gitconfig $HOME/.gitconfig
-ln -s $DOT_FILES/git/gitignore $HOME/.gitignore
-
-ln -s $DOT_FILES/phoenix/out/phoenix.js $HOME/.phoenix.js
-
-if [[ -d $HOME/bin ]]
-then
-	echo User level bin already exists
-else
-	ln -s $DOT_FILES/shell/bin ~/bin
-	ln -s $DOT_FILES/shell/local_bin ~/local_bin
-fi
-
+# Install Brew Packages from Brewfile
+brew bundle --file="$DOT_FILES/Brewfile"
 $(brew --prefix)/opt/fzf/install
 
-luarocks install luacheck
+# Install Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Install Node 10
-nvm install 10
-npm i -g prettier dockerfile-language-server-nodejs bash-language-server
 
-# Install Python
+# Install Node
+nvm install --lts
+nvm use --lts
+
+# Install Python via pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_VERSION=3.10.2
@@ -53,8 +32,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
 	eval "$(pyenv virtualenv-init -)"
 fi
 
-pyenv install 3.10.2
-pyenv virtualenv 3.10.2 workspace
+pyenv install 3
+pyenv virtualenv 3 workspace
 pyenv activate workspace
 
 # Set up go mono repo
@@ -65,7 +44,6 @@ mkdir -p "$HOME/go/src"
 
 # Install Vim Plugins
 pip install pynvim
-nvim +PlugInstall +qa
 
 # Increase Key Repeat
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
@@ -89,9 +67,7 @@ defaults write -g NSWindowResizeTime -float 0.003
 killall SystemUIServer
 
 # Manual Installs
-
 open -na "Google Chrome" --args --new-window \
 	https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/SourceCodePro \
-	https://iterm2colorschemes.com/ \
 	https://www.alfredapp.com/ \
 	https://www.spectacleapp.com/
