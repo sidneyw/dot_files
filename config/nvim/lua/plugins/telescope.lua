@@ -12,14 +12,14 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     keys = {
-      -- disbale unwanted keymaps
+      -- disable unwanted keymaps
       { "<leader>gs", false },
       { "<leader>gc", false },
     },
     opts = {
       defaults = {
+        -- sorting_strategy = "ascending",
         layout_strategy = "flex",
-        sorting_strategy = "ascending",
         winblend = 0,
         mappings = {
           i = {
