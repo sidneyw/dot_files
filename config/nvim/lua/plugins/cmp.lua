@@ -1,10 +1,4 @@
 -- Set up nvim-cmp.
-local cmp = require("cmp")
-local luasnip = require("luasnip")
-
-require("luasnip.loaders.from_snipmate").load()
-require("luasnip.loaders.from_vscode").load()
-
 local has_words_before = function()
   unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -13,14 +7,23 @@ end
 
 return {
   {
+    "L3MON4D3/LuaSnip",
+    keys = function()
+      return {}
+    end,
+  },
+  {
     "hrsh7th/nvim-cmp",
     opts = function(_, opts)
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
       opts.window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       }
 
-      opts.mapping = cmp.mapping.preset.insert({
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<C-k>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
@@ -61,6 +64,13 @@ return {
           { name = "buffer" },
         },
       })
+    end,
+  },
+  {
+    "rafamadriz/friendly-snippets",
+    config = function()
+      require("luasnip.loaders.from_snipmate").lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load()
     end,
   },
 }

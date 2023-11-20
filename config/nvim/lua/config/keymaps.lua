@@ -31,6 +31,8 @@ vim.cmd([[
 
   nnoremap <leader>lb :Make! lint-branch<cr>
   nnoremap <leader>cl :!cpsha<cr>
+
+  nnoremap <C-^> :b# <CR>
 ]])
 
 vim.cmd([[

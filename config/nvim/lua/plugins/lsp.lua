@@ -103,11 +103,10 @@ return {
   },
   {
     "simrat39/symbols-outline.nvim",
-    keys = {
-      ["<C-\\>"] = "<cmd>SymbolsOutline<CR>",
-    },
-    init = function()
-      vim.keymap.set("n", "<C-\\>", "<cmd>SymbolsOutline<CR>", { noremap = true, silent = true })
+    keys = function()
+      return {
+        { "<C-\\>", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" },
+      }
     end,
     config = true,
     cmd = { "SymbolsOutline" },

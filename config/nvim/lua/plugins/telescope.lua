@@ -12,20 +12,20 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     keys = {
-      -- add a keymap to browse plugin files
-      -- stylua: ignore
-      -- change some options
+      -- disbale unwanted keymaps
+      { "<leader>gs", false },
+      { "<leader>gc", false },
     },
-    defaults = {
-      opts = {
+    opts = {
+      defaults = {
         layout_strategy = "flex",
         sorting_strategy = "ascending",
         winblend = 0,
         mappings = {
           i = {
             ["<C-u>"] = false,
-            ["<C-n>"] = false,
-            ["<C-p>"] = false,
+            ["<C-n>"] = actions.move_selection_next,
+            ["<C-p>"] = actions.move_selection_previous,
             ["<C-j>"] = actions.move_selection_next,
             ["<C-k>"] = actions.move_selection_previous,
           },
@@ -99,7 +99,7 @@ return {
         },
       },
     },
-    config = function(_, opt)
+    config = function(_, opts)
       local custom_telescope = require("../utils/telescope-functions")
 
       local builtin = require("telescope.builtin")
@@ -135,7 +135,7 @@ return {
         ["<leader>tr"] = { builtin.resume, "Resume" },
       })
 
-      require("telescope").setup(opt)
+      require("telescope").setup(opts)
     end,
   },
   {
