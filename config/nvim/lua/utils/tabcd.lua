@@ -96,6 +96,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*",
   callback = function()
     vim.fn.timer_start(200, function()
+      -- print out the current buffer name and filetype
+      if vim.bo.filetype == "dashboard" then
+        return
+      end
       M.Rename(false)
     end)
   end,
@@ -110,10 +114,18 @@ end, {
   desc = "TabCD",
 })
 
+vim.api.nvim_create_user_command("TabDirName", function()
+  M.Rename(false)
+end, {
+  nargs = 0,
+  desc = "Rename the current tab with the directory basename",
+})
+
 vim.cmd([[
 	cnoreabbr tabcd TabCD
 	cnoreabbr tcd TabCD
 	cnoreabbr trn TablineTabRename
+  cnoreabbr tdn TabDirName
 ]])
 
 return M
