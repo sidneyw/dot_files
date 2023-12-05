@@ -55,16 +55,6 @@ return {
         ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
       })
     end,
-    config = function(_, opts)
-      require("cmp").setup(opts)
-      -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
-    end,
   },
   {
     "rafamadriz/friendly-snippets",
