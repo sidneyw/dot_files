@@ -2,7 +2,6 @@ return {
   {
     "tpope/vim-fugitive",
     lazy = false,
-    -- cmd = { "Git", "Gdiffsplit", "Gvdiffsplit", "Gwrite", "TabCD" },
     keys = {
       { "<leader>ga", "<cmd>Gwrite<CR>", desc = "Git add %" },
       { "<leader>gb", "<cmd>Git blame<CR>", desc = "Git blame" },
@@ -13,8 +12,19 @@ return {
       { "<leader>gs", "<cmd>Git<CR>", desc = "Git status" },
       { "<leader>gu", "<cmd>Git push -u<CR>", desc = "Git push" },
 
+      {
+        "<leader>gp",
+        function()
+          vim.cmd([[ !gh pr view --web || gh pr create --web ]])
+        end,
+        desc = "Open or create a PR",
+      },
+
       { "<leader>gn", "<cmd>.GBrowse<CR>", desc = "Open current line on github" },
       { "<leader>go", "<cmd>.GBrowse!<CR>", desc = "Copy the github link to the clipboard" },
+
+      { "<leader>gn", "<cmd> '<,'>GBrowse<CR>", mode = { "v" }, desc = "Open selected lines on github" },
+      { "<leader>go", "<cmd> '<,'>GBrowse!<CR>", mode = { "v" }, desc = "Copy the github link to the clipboard" },
     },
     init = function()
       vim.cmd([[
