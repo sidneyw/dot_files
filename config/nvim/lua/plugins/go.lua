@@ -28,5 +28,15 @@ return {
     },
     build_tags = "integration,cluster_integration",
   },
-  config = true,
+  config = function(opts)
+    local go = require("go")
+    go.setup(opts)
+
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "*.go",
+      callback = function()
+        require("go.format").goimport()
+      end,
+    })
+  end,
 }
