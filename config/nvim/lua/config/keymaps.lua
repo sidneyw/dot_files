@@ -13,6 +13,8 @@ vim.api.nvim_set_keymap("v", ":", ";", { noremap = true })
 wk.register({
   ["<S-Tab>"] = { ":tabprevious<CR>", "Previous Tab" },
   ["<Tab>"] = { ":tabnext<CR>", "Next Tab" },
+  ["<leader>cs"] = { ":!cpsha<CR>", "Copy 12-char SHA" },
+  ["<leader>lb"] = { ":Make! lint-branch<CR>", "Lint Branch" },
 })
 
 vim.cmd([[
@@ -29,10 +31,8 @@ vim.cmd([[
 
   vnoremap <leader>s :sort<cr>
 
-  nnoremap <leader>lb :Make! lint-branch<cr>
-  nnoremap <leader>cl :!cpsha<cr>
-
   nnoremap <C-^> :b# <CR>
+  nnoremap <C-n>i <C-i>
 ]])
 
 vim.cmd([[

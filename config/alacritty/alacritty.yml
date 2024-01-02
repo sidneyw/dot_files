@@ -44,8 +44,10 @@ hints:
        mods: Command|Shift
 
 key_bindings:
-  # Necessary for C-^ to work in neovim
+  # Necessary for C-^ to work in neoviim
   - { key: Key6,     mods: Control, chars: "\x1e" }
+  # Necessary for C-I to work in neovim
+  - { key: I,        mods: Control, chars:  "\x0e\x69" }
 
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
