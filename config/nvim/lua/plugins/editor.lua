@@ -10,6 +10,8 @@ return {
             require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
           end,
           desc = "Toggle Neotree (CWD)",
+          -- make it not wait at all
+          nowait = true,
         },
       }
     end,
