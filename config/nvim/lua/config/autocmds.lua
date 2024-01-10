@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPost" }, {
   group = starlark_augroup,
   pattern = "*.star",
   callback = function()
-    vim.opt_local.filetype = "python"
+    vim.opt_local.syntax = "python"
   end,
 })
 
