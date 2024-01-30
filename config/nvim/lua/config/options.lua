@@ -53,6 +53,6 @@ opt.scrolloff = 3 -- always 3 lines above/below the cursor
 vim.cmd([[
   let g:make = 'gmake'
   if exists('make')
-          let g:make = 'make'
+    let g:make = 'make'
   endi
 ]])
