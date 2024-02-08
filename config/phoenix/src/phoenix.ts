@@ -27,11 +27,13 @@ const doubleShift: Phoenix.ModifierKey[] = double.concat(["shift"]);
 // ------------
 Key.on("a", alt, () => focusOrStart("Arc"));
 Key.on("q", alt, () => focusOrStart("Alacritty"));
-Key.on("c", alt, () => focusOrStart("Notion Calendar"));
 Key.on("b", alt, () => focusOrStart("Brave Browser"));
+// Took the place of  roam and therefore has r trigger
+Key.on("r", alt, () => focusOrStart("Logseq"));
 Key.on("n", alt, () => focusOrStart("Notion"));
+Key.on("c", alt, () => focusOrStart("Notion Calendar"));
 Key.on("m", alt, () => focusOrStart("Messages"));
-Key.on("r", alt, () => focusOrStart("Roam Research"));
+// Key.on("r", alt, () => focusOrStart("Roam Research"));
 Key.on("1", alt, () => focusOrStart("Slack"));
 Key.on("p", alt, () => focusOrStart("Spark"));
 Key.on("s", alt, () => focusOrStart("Spotify"));
