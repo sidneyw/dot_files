@@ -48,6 +48,7 @@ opt.joinspaces = false
 opt.clipboard = "unnamedplus"
 
 opt.scrolloff = 3 -- always 3 lines above/below the cursor
+opt.conceallevel = 0
 
 -- vim.g.make = "make"
 vim.cmd([[

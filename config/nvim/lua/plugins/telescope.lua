@@ -103,6 +103,7 @@ return {
       local custom_telescope = require("../utils/telescope-functions")
 
       local builtin = require("telescope.builtin")
+      local extensions = require("telescope").extensions
 
       vim.cmd([[ cnoreabbr Tele Telescope ]])
       vim.cmd([[ cnoreabbr tele Telescope ]])
@@ -125,14 +126,21 @@ return {
 
       require("which-key").register({
         ["<C-p>"] = { builtin.find_files, "Find files" },
-        ["<leader>f"] = { custom_telescope.project_files, "Project files" },
-        ["<leader>a"] = { builtin.live_grep, "Live grep" },
-        ["<leader>q"] = { builtin.current_buffer_fuzzy_find, "Fuzzy find" },
-        -- ["<leader>s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
-        ["<leader>b"] = { builtin.buffers, "Buffers" },
-        ["<leader>hl"] = { builtin.help_tags, "Help tags" },
-        ["<leader>m"] = { builtin.oldfiles, "Old files" },
-        ["<leader>tr"] = { builtin.resume, "Resume" },
+        ["<leader>"] = {
+          ["f"] = { custom_telescope.project_files, "Project files" },
+          ["a"] = { builtin.live_grep, "Live grep" },
+          ["q"] = { builtin.current_buffer_fuzzy_find, "Fuzzy find" },
+          -- ["s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
+          ["b"] = { builtin.buffers, "Buffers" },
+          ["m"] = { builtin.oldfiles, "Old files" },
+          -- -t prefix for less used telescope commands
+          ["t"] = {
+            ["h"] = { builtin.help_tags, "Help tags" },
+            ["r"] = { builtin.resume, "Resume" },
+            ["k"] = { builtin.keymaps, "Keymaps" },
+            ["l"] = { extensions.luasnip.luasnip, "Snippets" },
+          },
+        },
       })
 
       require("telescope").setup(opts)

@@ -40,6 +40,7 @@ return {
     "sindrets/diffview.nvim",
     keys = {
       { "<leader>gdd", "<cmd>DiffviewOpen master<CR>", desc = "Open diff view against master" },
+      { "<leader>gdh", "<cmd>DiffviewOpen<CR>", desc = "Open diff view against HEAD" },
       { "<leader>gdc", "<cmd>DiffviewClose<CR>", desc = "Close diff view" },
     },
   },

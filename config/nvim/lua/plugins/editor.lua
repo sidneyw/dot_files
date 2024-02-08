@@ -7,11 +7,26 @@ return {
         {
           "<C-n>",
           function()
-            require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+            require("neo-tree.command").execute({ dir = vim.loop.cwd(), toggle = true })
           end,
           desc = "Toggle Neotree (CWD)",
           -- make it not wait at all
           nowait = true,
+        },
+        {
+          "<leader>gt",
+          function()
+            require("neo-tree.command").execute({ source = "git_status", toggle = true })
+          end,
+          desc = "Toggle Neotree (Git Status)",
+          nowait = true,
+        },
+        {
+          "<leader>eb",
+          function()
+            require("neo-tree.command").execute({ source = "buffers", toggle = true })
+          end,
+          desc = "Toggle Neotree (Buffers)",
         },
       }
     end,
@@ -48,5 +63,14 @@ return {
   {
     "numToStr/Comment.nvim",
     config = true,
+  },
+  {
+    "s1n7ax/nvim-window-picker",
+    name = "window-picker",
+    event = "VeryLazy",
+    version = "2.*",
+    config = function()
+      require("window-picker").setup()
+    end,
   },
 }

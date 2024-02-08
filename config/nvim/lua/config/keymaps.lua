@@ -10,6 +10,14 @@ vim.api.nvim_set_keymap("n", ":", ";", { noremap = true })
 vim.api.nvim_set_keymap("v", ";", ":", { noremap = true })
 vim.api.nvim_set_keymap("v", ":", ";", { noremap = true })
 
+-- Remove line movement mappings from lazyvim
+vim.keymap.del("n", "<A-j>")
+vim.keymap.del("n", "<A-k>")
+vim.keymap.del("i", "<A-j>")
+vim.keymap.del("i", "<A-k>")
+vim.keymap.del("v", "<A-j>")
+vim.keymap.del("v", "<A-k>")
+
 wk.register({
   ["<S-Tab>"] = { ":tabprevious<CR>", "Previous Tab" },
   ["<Tab>"] = { ":tabnext<CR>", "Next Tab" },

@@ -5,6 +5,7 @@ return {
     keys = {
       { "<localleader>ga", "<cmd>GoAltV<CR>" },
       { "<localleader>gd", "<cmd>GoDebug -n<CR>" },
+      { "<localleader>gs", "<cmd>GoDebug -s<CR>" },
       { "<localleader>gf", "<cmd>GoFillStruct<CR>" },
       { "<localleader>gt", "<cmd>GoTestFunc<CR>" },
       { "<localleader>gp", "<cmd>GoTestPkg<CR>" },
@@ -27,7 +28,7 @@ return {
       lsp_on_attach = nil, -- use on_attach from go.nvim
       dap_debug = true,
       textobjects = true,
-      luasnip = false, -- there are some collisions with my own snippets
+      luasnip = true, -- there are some collisions with my own snippets
       lsp_inlay_hints = {
         enable = false,
       },

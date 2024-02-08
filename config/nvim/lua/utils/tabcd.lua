@@ -89,6 +89,14 @@ wk.register({
       "Dotfiles",
     },
   },
+  ["t"] = {
+    ["e"] = {
+      function()
+        tabline.tab_new("%")
+      end,
+      "open new tab with current file",
+    },
+  },
 }, { prefix = "<leader>" }) -- the prefix is common to all mappings
 
 -- Name the tab when vim starts up
