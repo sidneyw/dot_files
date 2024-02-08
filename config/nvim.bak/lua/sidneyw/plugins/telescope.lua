@@ -135,7 +135,7 @@ require("which-key").register({
 	["<C-p>"] = { builtin.find_files, "Find files" },
 	["<leader>a"] = { builtin.live_grep, "Live grep" },
 	["<leader>q"] = { builtin.current_buffer_fuzzy_find, "Fuzzy find" },
-	["<leader>s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
+	-- ["<leader>s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
 	["<leader>b"] = { builtin.buffers, "Buffers" },
 	["<leader>hl"] = { builtin.help_tags, "Help tags" },
 	["<leader>m"] = { builtin.oldfiles, "Old files" },
