@@ -43,13 +43,13 @@ Key.on("z", alt, () => focusOrStart("zoom.us"));
 // ------------
 // Move Windows
 // ------------
+Key.on("c", doubleShift, centerTwoThirds);
 // Key.on("left", double, leftHalf);
 // Key.on("right", double, rightHalf);
 // Key.on("left", triple, prevScreen);
 // Key.on("right", triple, nextScreen);
 // Key.on("c", double, center);
-Key.on("c", doubleShift, centerTwoThirds);
 // Key.on("f", double, fullScreen);
 
-// For debugging
+// Print out the name of all running apps
 Key.on("2", alt, logAllApps);
