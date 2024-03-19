@@ -36,6 +36,19 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       opts.ensure_installed = "all"
+      opts.textobjects = vim.tbl_extend("force", opts.textobjects, {
+        select = {
+          enable = true,
+          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+          },
+        },
+      })
     end,
   },
   { "nvim-treesitter/playground" },
@@ -53,17 +66,17 @@ return {
       vim.g.highlightedyank_highlight_duration = 200
     end,
   },
-  {
-    "windwp/nvim-autopairs",
-    opts = {
-      disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
-    },
-    config = true,
-  },
-  {
-    "numToStr/Comment.nvim",
-    config = true,
-  },
+  -- {
+  --   "windwp/nvim-autopairs",
+  --   opts = {
+  --     disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
+  --   },
+  --   config = true,
+  -- },
+  -- {
+  --   "numToStr/Comment.nvim",
+  --   config = true,
+  -- },
   {
     "s1n7ax/nvim-window-picker",
     name = "window-picker",

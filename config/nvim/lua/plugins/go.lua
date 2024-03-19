@@ -32,7 +32,7 @@ return {
       lsp_inlay_hints = {
         enable = false,
       },
-      build_tags = "integration,cluster_integration",
+      build_tags = "cluster_integration",
     },
     -- config = true,
     config = function(opts)
