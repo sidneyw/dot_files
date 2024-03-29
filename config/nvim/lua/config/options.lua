@@ -49,6 +49,7 @@ opt.clipboard = "unnamedplus"
 
 opt.scrolloff = 3 -- always 3 lines above/below the cursor
 opt.conceallevel = 0
+opt.swapfile = false -- turn off swap files
 
 -- vim.g.make = "make"
 vim.cmd([[

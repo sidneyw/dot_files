@@ -23,6 +23,7 @@ wk.register({
   ["<Tab>"] = { ":tabnext<CR>", "Next Tab" },
   ["<leader>cs"] = { ":!cpsha<CR>", "Copy 12-char SHA" },
   ["<leader>lb"] = { ":Make! lint-branch<CR>", "Lint Branch" },
+  ["<leader>v"] = { ":<C-u>vsplit<CR>", "Split vertically" },
 })
 
 vim.cmd([[
