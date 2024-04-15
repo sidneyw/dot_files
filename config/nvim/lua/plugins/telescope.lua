@@ -73,23 +73,6 @@ return {
           -- find command (defaults to `fd`)
           find_cmd = "rg",
         },
-        bookmarks = {
-          -- Available: 'brave', 'google_chrome', 'safari', 'firefox'
-          selected_browser = "brave",
-
-          -- Either provide a shell command to open the URL
-          url_open_command = "open",
-
-          -- Or provide the plugin name which is already installed
-          -- Available: 'vim_external', 'open_browser'
-          url_open_plugin = nil,
-
-          -- Show the full path to the bookmark instead of just the bookmark name
-          full_path = true,
-
-          -- Provide a custom profile name for Firefox
-          firefox_profile_name = nil,
-        },
         undo = {
           side_by_side = true,
           layout_strategy = "vertical",
@@ -160,12 +143,6 @@ return {
     "nvim-telescope/telescope-github.nvim",
     config = function()
       require("telescope").load_extension("gh")
-    end,
-  },
-  {
-    "dhruvmanila/telescope-bookmarks.nvim",
-    config = function()
-      require("telescope").load_extension("bookmarks")
     end,
   },
   {

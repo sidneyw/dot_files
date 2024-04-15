@@ -127,6 +127,14 @@ export EDITOR='nvim'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Options {{{
+# ====================================
+setopt nohistverify
+setopt histignorealldups
+setopt inc_append_history
+setopt share_history
+# }}}
+
 # Global Variables  {{{
 # ====================================
 export DOT_FILES="$HOME/.dot_files/"
@@ -396,3 +404,13 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+eval "$(zoxide init --cmd j zsh)"
+
+# pnpm
+export PNPM_HOME="/Users/sidney/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+
+# Setup rbenv
+eval "$(rbenv init - zsh)"

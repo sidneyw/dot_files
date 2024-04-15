@@ -31,7 +31,7 @@ opt.wrap = true
 opt.inccommand = "split"
 opt.belloff = "all" -- Just turn the dang bell off
 
-opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
+-- opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
 opt.linebreak = true
 opt.formatoptions = opt.formatoptions
   - "a" -- Auto formatting is BAD.
