@@ -66,17 +66,6 @@ return {
       vim.g.highlightedyank_highlight_duration = 200
     end,
   },
-  -- {
-  --   "windwp/nvim-autopairs",
-  --   opts = {
-  --     disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
-  --   },
-  --   config = true,
-  -- },
-  -- {
-  --   "numToStr/Comment.nvim",
-  --   config = true,
-  -- },
   {
     "s1n7ax/nvim-window-picker",
     name = "window-picker",
