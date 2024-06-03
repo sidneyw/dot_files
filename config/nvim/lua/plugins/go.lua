@@ -37,7 +37,7 @@ return {
     -- config = true,
     config = function(opts)
       local go = require("go")
-      -- go.setup(opts)
+      go.setup(opts)
 
       local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
       vim.api.nvim_create_autocmd("BufWritePost", {
