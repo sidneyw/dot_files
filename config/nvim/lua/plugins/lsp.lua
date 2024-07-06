@@ -45,7 +45,6 @@ local function starts_with(str, start)
 end
 
 return {
-  { "tami5/lspsaga.nvim" },
   {
     "rmagatti/goto-preview",
     config = function()
@@ -92,15 +91,15 @@ return {
 
           buf_nnoremap({ "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>" })
 
-          buf_nnoremap({ "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>" })
-          buf_nnoremap({ "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>" })
+          buf_nnoremap({ "gn", vim.diagnostic.goto_next })
+          buf_nnoremap({ "gp", vim.diagnostic.goto_prev })
 
           buf_nnoremap({ "gi", require("telescope.builtin").lsp_implementations })
           buf_nnoremap({ "gr", require("telescope.builtin").lsp_references })
-          buf_inoremap({ "<c-s>", "<cmd>Lspsaga signature_help<CR>" })
+          buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help })
 
           if filetype ~= "lua" then
-            buf_nnoremap({ "K", "<cmd>Lspsaga hover_doc<CR>" })
+            buf_nnoremap({ "K", vim.lsp.buf.hover })
           end
         end)
       end,

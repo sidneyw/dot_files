@@ -16,13 +16,14 @@ return {
     },
     opts = {
       -- gopls_cmd = {install_root_dir .. '/go/gopls'},
-      goimport = "gopls", -- if set to 'gopls' will use golsp format
-      gofmt = "gopls", -- if set to gopls will use golsp format
+      fillstruct = "gopls", -- set to fillstruct if gopls fails to fill struct
       max_line_len = 120,
       tag_transform = "camelcase",
       test_dir = "",
-      comment_placeholder = " ",
+      comment_placeholder = "", -- comment_placeholder your cool placeholder e.g. 󰟓       
       icons = { breakpoint = "🛑", currentpos = "📍" }, -- setup to `false` to disable icons setup
+      lsp_keymaps = false, -- set to false to disable gopls/lsp keymap
+      lsp_codelens = false, -- set to false to disable codelens, true by default, you can use a function
       lsp_document_formatting = false,
       -- lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
       lsp_on_attach = nil, -- use on_attach from go.nvim

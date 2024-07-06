@@ -1,15 +1,22 @@
 return {
   {
-    "luisiacc/gruvbox-baby",
-    config = function()
-      -- make the background darker
-      vim.g.gruvbox_baby_background_color = "dark"
-    end,
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = true,
+    opts = {
+      italic = {
+        strings = false,
+        emphasis = false,
+        comments = false,
+        operators = false,
+        folds = false,
+      },
+    },
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox-baby",
+      colorscheme = "retrobox",
     },
   },
 }
