@@ -54,50 +54,51 @@ function M.show_tab_buffers()
   vim.cmd([[redrawtabline]])
 end
 
-wk.register({
-  ["e"] = {
-    name = "+e", -- name is shown in WhichKey
-    ["m"] = {
-      function()
-        M.NewChrono("monorepo")
-      end,
-      "Monorepo",
-    },
-    ["e"] = {
-      function()
-        M.NewChrono("envconfig")
-      end,
-      "Environment Config",
-    },
-    ["c"] = {
-      function()
-        M.NewChrono("collector")
-      end,
-      "Collector",
-    },
-    ["i"] = {
-      function()
-        M.NewChrono("infrastructure")
-      end,
-      "Infrastructure",
-    },
-    ["v"] = {
-      function()
-        M.New(dotFilesDir, true)
-        tabline.tab_rename("DotFiles")
-      end,
-      "Dotfiles",
-    },
+wk.add({
+  {
+    "<leader>em",
+    function()
+      M.NewChrono("monorepo")
+    end,
+    desc = "Monorepo",
   },
-  ["t"] = {
-    ["e"] = {
-      function()
-        tabline.tab_new("%")
-      end,
-      "open new tab with current file",
-    },
+  {
+    "<leader>ee",
+    function()
+      M.NewChrono("envconfig")
+    end,
+    desc = "Environment Config",
   },
-}, { prefix = "<leader>" }) -- the prefix is common to all mappings
+  {
+    "<leader>ec",
+    function()
+      M.NewChrono("collector")
+    end,
+    desc = "Collector",
+  },
+  {
+    "<leader>ei",
+    function()
+      M.NewChrono("infrastructure")
+    end,
+    desc = "Infrastructure",
+  },
+  {
+    "<leader>ev",
+    function()
+      M.New(dotFilesDir, true)
+      tabline.tab_rename("DotFiles")
+    end,
+    desc = "Dotfiles",
+  },
+  {
+    "<leader>te",
+    function()
+      tabline.tab_new("%")
+    end,
+    desc = "Open new tab with current file",
+  },
+})
 
 -- Name the tab when vim starts up
 vim.api.nvim_create_autocmd("VimEnter", {

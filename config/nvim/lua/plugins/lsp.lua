@@ -51,15 +51,13 @@ return {
       require("goto-preview").setup({})
       local wk = require("which-key")
       local gt = require("goto-preview")
-      wk.register({
-        ["go"] = {
-          name = "Goto Preview",
-          d = { gt.goto_preview_definition, "Preview Definition" },
-          t = { gt.goto_preview_type_definition, "Preview Type Definition" },
-          i = { gt.goto_preview_implementation, "Preview Implementation" },
-          r = { gt.goto_preview_references, "Preview References" },
-        },
-        ["<localleader>q"] = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "Close All Preview" },
+      wk.add({
+        { "go", group = "Goto Preview" },
+        { "god", gt.goto_preview_definition, desc = "Preview Definition" },
+        { "got", gt.goto_preview_type_definition, desc = "Preview Type Definition" },
+        { "goi", gt.goto_preview_implementation, desc = "Preview Implementation" },
+        { "gor", gt.goto_preview_references, desc = "Preview References" },
+        { "<localleader>q", "<cmd>lua require('goto-preview').close_all_win()<CR>", desc = "Close All Preview" },
       })
     end,
   },

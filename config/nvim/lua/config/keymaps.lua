@@ -18,12 +18,12 @@ vim.keymap.del("i", "<A-k>")
 vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
 
-wk.register({
-  ["<S-Tab>"] = { ":tabprevious<CR>", "Previous Tab" },
-  ["<Tab>"] = { ":tabnext<CR>", "Next Tab" },
-  ["<leader>cs"] = { ":!cpsha<CR>", "Copy 12-char SHA" },
-  ["<leader>lb"] = { ":Make! lint-branch<CR>", "Lint Branch" },
-  ["<leader>v"] = { ":<C-u>vsplit<CR>", "Split vertically" },
+wk.add({
+  { "<S-Tab>", ":tabprevious<CR>", desc = "Previous Tab" },
+  { "<Tab>", ":tabnext<CR>", desc = "Next Tab" },
+  { "<leader>cs", ":!cpsha<CR>", desc = "Copy 12-char SHA" },
+  { "<leader>lb", ":Make! lint-branch<CR>", desc = "Lint Branch" },
+  { "<leader>v", ":<C-u>vsplit<CR>", desc = "Split vertically" },
 })
 
 vim.cmd([[

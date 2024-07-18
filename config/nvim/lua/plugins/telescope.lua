@@ -107,23 +107,20 @@ return {
         })
       end
 
-      require("which-key").register({
-        ["<C-p>"] = { builtin.find_files, "Find files" },
-        ["<leader>"] = {
-          ["f"] = { custom_telescope.project_files, "Project files" },
-          ["a"] = { builtin.live_grep, "Live grep" },
-          ["q"] = { builtin.current_buffer_fuzzy_find, "Fuzzy find" },
-          -- ["s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
-          ["b"] = { builtin.buffers, "Buffers" },
-          ["m"] = { builtin.oldfiles, "Old files" },
-          -- -t prefix for less used telescope commands
-          ["t"] = {
-            ["h"] = { builtin.help_tags, "Help tags" },
-            ["r"] = { builtin.resume, "Resume" },
-            ["k"] = { builtin.keymaps, "Keymaps" },
-            ["l"] = { extensions.luasnip.luasnip, "Snippets" },
-          },
-        },
+      require("which-key").add({
+        { "<C-p>", builtin.find_files, desc = "Find files" },
+        { "<leader>f", custom_telescope.project_files, desc = "Project files" },
+        { "<leader>a", builtin.live_grep, desc = "Live grep" },
+        { "<leader>q", builtin.current_buffer_fuzzy_find, desc = "Fuzzy find" },
+        -- ["<leader>s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
+        { "<leader>b", builtin.buffers, desc = "Buffers" },
+        { "<leader>m", builtin.oldfiles, desc = "Old files" },
+
+        -- -t prefix for less used telescope commands
+        { "<leader>th", builtin.help_tags, desc = "Help tags" },
+        { "<leader>tr", builtin.resume, desc = "Resume" },
+        { "<leader>tk", builtin.keymaps, desc = "Keymaps" },
+        { "<leader>tl", extensions.luasnip.luasnip, desc = "Snippets" },
       })
 
       require("telescope").setup(opts)
