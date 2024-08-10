@@ -4,6 +4,7 @@ local wk = require("which-key")
 local telescopeCustom = require("utils.telescope-functions")
 
 local dotFilesDir = vim.fn.expand("~/.dot_files/")
+local logseqDir = vim.fn.expand("~/logseq/")
 local chronoDir = vim.fn.expand("~/go/src/github.com/chronosphereio/")
 
 local M = {}
@@ -90,6 +91,14 @@ wk.add({
       tabline.tab_rename("DotFiles")
     end,
     desc = "Dotfiles",
+  },
+  {
+    "<leader>el",
+    function()
+      M.New(logseqDir, true)
+      tabline.tab_rename("Logseq")
+    end,
+    desc = "Logseq",
   },
   {
     "<leader>te",
