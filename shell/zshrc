@@ -179,9 +179,9 @@ alias watch='watch '
 alias cat="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-alias ls="exa -GFh"
-alias ll='exa -lahF'
-alias lt='exa --tree --level=2'
+alias ls="eza -GhF"
+alias ll='eza -lahF'
+alias lt='eza --tree --level=2'
 alias t="tree"
 
 alias sb="supabase"

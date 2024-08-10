@@ -23,54 +23,52 @@ LCYAN='\[\033[01;36m\]'
 WHITE='\[\033[01;37m\]'
 
 isGitRepo() {
-  git rev-parse HEAD > /dev/null 2>&1
+  git rev-parse HEAD >/dev/null 2>&1
 }
 
 currentPyEnv() {
-	if command -v pyenv 1>/dev/null 2>&1; then
-		echo "$(pyenv version-name)"
-	fi
+  if command -v pyenv 1>/dev/null 2>&1; then
+    echo "$(pyenv version-name)"
+  fi
 }
 
-k8sPrompt(){
+k8sPrompt() {
   success=$?
 
   PS1="\n${BLUE}\u"
-	PS1="${PS1} ${YELLOW} ${GREEN}\w"
+  PS1="${PS1} ${YELLOW} ${GREEN}\w"
 
   isGitRepo
-  if [[ $? == 0 ]]
-  then
-    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+  if [[ $? == 0 ]]; then
+    branch=$(git branch 2>/dev/null | grep "\*" | cut -d " " -f2)
     PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
   fi
 
-	PS1="${PS1}${YELLOW} ﴱ${GREEN} $(kubens -c)"
+  PS1="${PS1}${YELLOW} ﴱ${GREEN} $(kubens -c)"
 
   PS1="${PS1}\n${YELLOW} \@"
   if [ $success -ne 0 ]; then
     PS1="${PS1} ${RED}${YELLOW}"
   fi
 
-# »
+  # »
   PS1="${PS1} ${YELLOW} \!"
-	if [[ ! -z "$(currentPyEnv)" ]]; then
-		PS1="${PS1} ${YELLOW} ${GREEN}$(currentPyEnv)"
-	fi
+  if [[ ! -z "$(currentPyEnv)" ]]; then
+    PS1="${PS1} ${YELLOW} ${GREEN}$(currentPyEnv)"
+  fi
 
-	PS1="${PS1} ${BLUE} ${GREEN}"
+  PS1="${PS1} ${BLUE} ${GREEN}"
 }
 
-fullPrompt(){
+fullPrompt() {
   success=$?
 
   PS1="\n${BLUE}\u"
-	PS1="${PS1} ${YELLOW} ${GREEN}\w"
+  PS1="${PS1} ${YELLOW} ${GREEN}\w"
 
   isGitRepo
-  if [[ $? == 0 ]]
-  then
-    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+  if [[ $? == 0 ]]; then
+    branch=$(git branch 2>/dev/null | grep "\*" | cut -d " " -f2)
     PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
   fi
 
@@ -79,24 +77,23 @@ fullPrompt(){
     PS1="${PS1} ${RED}${YELLOW}"
   fi
 
-# »
+  # »
   PS1="${PS1} ${YELLOW} \!"
-	if [[ ! -z "$(currentPyEnv)" ]]; then
-		PS1="${PS1} ${YELLOW} ${GREEN}$(currentPyEnv)"
-	fi
+  if [[ ! -z "$(currentPyEnv)" ]]; then
+    PS1="${PS1} ${YELLOW} ${GREEN}$(currentPyEnv)"
+  fi
 
-	PS1="${PS1} ${BLUE} ${GREEN}"
+  PS1="${PS1} ${BLUE} ${GREEN}"
 }
 
-minimalPrompt(){
+minimalPrompt() {
   success=$?
 
   PS1="\n${YELLOW} ${GREEN}\W"
 
   isGitRepo
-  if [[ $? == 0 ]]
-  then
-    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+  if [[ $? == 0 ]]; then
+    branch=$(git branch 2>/dev/null | grep "\*" | cut -d " " -f2)
     PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
   fi
 
@@ -107,15 +104,14 @@ minimalPrompt(){
   PS1="${PS1}${YELLOW}  \!${BLUE} » ${GREEN}"
 }
 
-onelinerPrompt(){
+onelinerPrompt() {
   success=$?
 
   PS1="\n${YELLOW} ${GREEN}\w"
 
   isGitRepo
-  if [[ $? == 0 ]]
-  then
-    branch=$(git branch 2> /dev/null | grep "\*" | cut -d " " -f2)
+  if [[ $? == 0 ]]; then
+    branch=$(git branch 2>/dev/null | grep "\*" | cut -d " " -f2)
     PS1="${PS1}${YELLOW}  ${BLUE}${branch}"
   fi
 
@@ -193,9 +189,9 @@ alias watch='watch '
 alias cat="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-alias ls="exa -GFh"
-alias ll='exa -lahF'
-alias lt='exa --tree --level=2'
+alias ls="eza -Gh"
+alias ll='eza -lah'
+alias lt='eza --tree --level=2'
 alias t="tree"
 
 alias pi3='ssh pi@raspberrypi.local'
@@ -212,11 +208,11 @@ alias dcomp='docker-compose'
 alias dmongo='docker run -d -p 27017:27017 mongo'
 
 function dexec() {
-	docker exec -it $1 /bin/bash
+  docker exec -it $1 /bin/bash
 }
 
 function kexec() {
-	kubectl exec --stdin --tty $1 -- /bin/sh
+  kubectl exec --stdin --tty $1 -- /bin/sh
 }
 
 # JS
@@ -245,10 +241,9 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 # NVM
- export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -270,21 +265,21 @@ fzf-down() {
 
 fs() {
   local session
-  session=$(tmux list-sessions -F "#{session_name}" | \
+  session=$(tmux list-sessions -F "#{session_name}" |
     fzf --height 40% --reverse --query="$1" --exit-0) &&
-  tmux switch-client -t "$session"
+    tmux switch-client -t "$session"
 }
 
 is_in_git_repo() {
-  git rev-parse HEAD > /dev/null 2>&1
+  git rev-parse HEAD >/dev/null 2>&1
 }
 
 gf() {
   is_in_git_repo || return
   git -c color.status=always status --short |
-  fzf-down -m --ansi --nth 2..,.. \
-    --preview '(git diff --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
-  cut -c4- | sed 's/.* -> //'
+    fzf-down -m --ansi --nth 2..,.. \
+      --preview '(git diff --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
+    cut -c4- | sed 's/.* -> //'
 }
 
 gb() {
@@ -296,53 +291,52 @@ gb() {
   # sed 's#^remotes/##'
 
   # Shows checked out branches in reverse chronological order
-  git branch --sort=-committerdate\
-    --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative) %(color:magenta)%(color:reset)'\
-    --color=always | column -ts'|' | head -n 20 |\
+  git branch --sort=-committerdate --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative) %(color:magenta)%(color:reset)' \
+    --color=always | column -ts'|' | head -n 20 |
     fzf --ansi | sed 's/^*//g' | awk '{print $1}'
 }
 
 co() {
-	git checkout $(gb)
+  git checkout $(gb)
 }
 
 git_tags() {
   is_in_git_repo || return
   git tag --sort -version:refname |
-  fzf-down --multi --preview-window right:70% \
-    --preview 'git show --color=always {} | head -200'
+    fzf-down --multi --preview-window right:70% \
+      --preview 'git show --color=always {} | head -200'
 }
 
 gc() {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-    --header 'Press CTRL-S to toggle sort' \
-    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
-  grep -o "[a-f0-9]\{7,\}"
+    fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+      --header 'Press CTRL-S to toggle sort' \
+      --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
+    grep -o "[a-f0-9]\{7,\}"
 }
 
 gr() {
   is_in_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
-  fzf-down --tac \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
-  cut -d$'\t' -f1
+    fzf-down --tac \
+      --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+    cut -d$'\t' -f1
 }
 
 # show files with diffs from master
 gd() {
-	is_in_git_repo || return
-	git diff master --name-only |
-  fzf-down -m --ansi --nth 2..,.. \
-    --preview '(git diff master --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
-  cut -c4- | sed 's/.* -> //'
+  is_in_git_repo || return
+  git diff master --name-only |
+    fzf-down -m --ansi --nth 2..,.. \
+      --preview '(git diff master --color=always -- {-1} | sed 1,4d; bat {-1}) | head -500' |
+    cut -c4- | sed 's/.* -> //'
 }
 
 if [[ $- =~ i ]]; then
   bind '"\er": redraw-current-line'
   bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
-	bind '"\C-g\C-p": "$(gd)\e\C-e\er"'
+  bind '"\C-g\C-p": "$(gd)\e\C-e\er"'
   bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
   bind '"\C-g\C-t": "$(git_tags)\e\C-e\er"'
   bind '"\C-g\C-h": "$(gc)\e\C-e\er"'
@@ -353,7 +347,7 @@ fi
 # Delete squash merged branches
 # Stolen from Alec
 function gdsmb {
-	git remote prune origin --dry-run |
+  git remote prune origin --dry-run |
     sed 's/.*origin\///g' |
     grep "\\b$(whoami)\\b" |
     xargs -L1 -J % git branch -D %
@@ -374,10 +368,10 @@ export PYENV_SHELL="bash"
 
 # Pyenv
 if command -v pyenv 1>/dev/null 2>&1; then
-	# To enable shims and autocompletion
+  # To enable shims and autocompletion
   eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+  eval "$(pyenv virtualenv-init -)"
+  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 fi
 
 PATH="$PATH:$HOME/bin"
@@ -413,10 +407,10 @@ PATH="/usr/local/bin:$PATH"
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 function pr() {
-  github_url=`git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/'`;
-  branch_name=`git symbolic-ref HEAD | cut -d"/" -f 3,4`;
+  github_url=$(git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/')
+  branch_name=$(git symbolic-ref HEAD | cut -d"/" -f 3,4)
   pr_url=$github_url"/pull/new/"$branch_name
-  open $pr_url;
+  open $pr_url
 }
 
 export PATH="/opt/homebrew/opt/go@1.19/bin:$PATH"
@@ -432,24 +426,23 @@ test -f "$local_conf" && source "$local_conf"
 # Installation: /opt/homebrew/bin/gt completion >> ~/.bashrc
 #    or /opt/homebrew/bin/gt completion >> ~/.bash_profile on OSX.
 #
-_gt_yargs_completions()
-{
-    local cur_word args type_list
+_gt_yargs_completions() {
+  local cur_word args type_list
 
-    cur_word="${COMP_WORDS[COMP_CWORD]}"
-    args=("${COMP_WORDS[@]}")
+  cur_word="${COMP_WORDS[COMP_CWORD]}"
+  args=("${COMP_WORDS[@]}")
 
-    # ask yargs to generate completions.
-    type_list=$(/opt/homebrew/bin/gt --get-yargs-completions "${args[@]}")
+  # ask yargs to generate completions.
+  type_list=$(/opt/homebrew/bin/gt --get-yargs-completions "${args[@]}")
 
-    COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
+  COMPREPLY=($(compgen -W "${type_list}" -- ${cur_word}))
 
-    # if no match was found, fall back to filename completion
-    if [ ${#COMPREPLY[@]} -eq 0 ]; then
-      COMPREPLY=()
-    fi
+  # if no match was found, fall back to filename completion
+  if [ ${#COMPREPLY[@]} -eq 0 ]; then
+    COMPREPLY=()
+  fi
 
-    return 0
+  return 0
 }
 complete -o bashdefault -o default -F _gt_yargs_completions gt
 ###-end-gt-completions-###
@@ -459,16 +452,15 @@ complete -o bashdefault -o default -F _gt_yargs_completions gt
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+  eval "$__conda_setup"
 else
-    if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/anaconda3/bin:$PATH"
-    fi
+  if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
+    . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+  fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
