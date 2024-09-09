@@ -195,6 +195,12 @@ alias gotv="go test -v"
 alias gotvr="go test -v -run"
 # }}}}
 
+# Bindings {{{
+# ====================================
+# Make ctrl+u delete to the beginning of the line (like bash)
+bindkey "^U" backward-kill-line
+# }}}
+
 # Plugins {{{
 # ====================================
 # FZF
