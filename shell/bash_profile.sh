@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
 #!/bin/bash
 
 # vim: set foldmethod=marker :
@@ -446,9 +444,6 @@ _gt_yargs_completions() {
 }
 complete -o bashdefault -o default -F _gt_yargs_completions gt
 ###-end-gt-completions-###
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

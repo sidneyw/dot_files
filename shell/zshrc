@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # vim:fdm=marker
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -327,9 +325,6 @@ bindkey '^G^B' git_branch_widget
 
 # Experimental {{{
 # ====================================
-function fzf-down() {
-  fzf --height 50% "$@" --border
-}
 # }}}
 # }}}
 
@@ -349,16 +344,12 @@ export PATH=$PATH:$GOBIN
 export PATH=$PATH:$GOROOT/bin
 export GO111MODULE=on
 
-export PATH="/opt/homebrew/opt/go@1.19/bin:$PATH"
-
 # Local Config
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
 [[ -f "$local_conf" ]] && source "$local_conf"
 
 # }}}
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
   export NVM_DIR="$HOME/.nvm"
@@ -396,27 +387,9 @@ if command -v pyenv 1>/dev/null 2>&1; then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 eval "$(zoxide init --cmd j zsh)"
 
 # pnpm
 export PNPM_HOME="/Users/sidney/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
-
-# Setup rbenv
-eval "$(rbenv init - zsh)"
