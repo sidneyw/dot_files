@@ -1,5 +1,6 @@
 install:
-	./create_symlinks.sh
+	./set-defaults.sh
+	./create-symlinks.sh
 	./install.sh
 
 sync-brew:

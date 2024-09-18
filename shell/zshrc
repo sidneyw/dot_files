@@ -146,7 +146,6 @@ export HISTFILESIZE=20000
 # Aliases {{{ 
 # ====================================
 alias v='nvim'
-alias vup='nvim +PackerSync'
 alias vim='nvim'
 alias ezsh='nvim ~/.zshrc'
 alias evim="cd $DOT_FILES; nvim $VIMRC; cd -"

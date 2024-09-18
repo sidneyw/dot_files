@@ -1,8 +1,7 @@
 #!/bin/bash
 set -x
 
-# Quick install script for mac
-# Clone the git repository if it doesn't exist locally
+# Quick install script for mac Clone the git repository if it doesn't exist locally
 if [ ! -d "$HOME/.dot_files" ]; then
   git clone git@github.com:sidneyw/dot_files.git "$HOME/.dot_files"
   cd "$HOME/.dot_files"
@@ -19,6 +18,8 @@ $(brew --prefix)/opt/fzf/install
 
 # Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Install powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # Install Node
 nvm install --lts
@@ -28,12 +29,11 @@ nvm use --lts
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
-
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_VERSION=3.10.2
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 pyenv install 3
@@ -49,29 +49,86 @@ mkdir -p "$HOME/go/src"
 # Install Vim Plugins
 pip install pynvim
 
-# Increase Key Repeat
-defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+function prompt_continue() {
+  while true; do
+    read -p "Are you ready to continue? (yes/no) " yn
+    yn=${yn,,} # Convert input to lowercase
+    case $yn in
+    yes | y | ye)
+      break
+      ;;
+    no | n)
+      echo "Exiting."
+      exit 1
+      ;;
+    *)
+      echo "Please answer (yes|y|no|n)"
+      ;;
+    esac
+  done
+}
 
-# Hide Dock
-defaults write com.apple.Dock autohide -bool TRUE
-killall Dock
-
-# Show Battery Percentage
-defaults write com.apple.menuextra.battery ShowPercent YES
-
-# Show Bluetooth and Clock
-defaults write com.apple.systemuiserver menuExtras -array \
-	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-	"/System/Library/CoreServices/Menu Extras/Clock.menu"
-
-# Shorten the window resize animation time
-defaults write -g NSWindowResizeTime -float 0.003
-
-killall SystemUIServer
+function open_urls_with_confirmation() {
+  for url in "$@"; do
+    open "$url"
+    while true; do
+      read -r -p "Open next URL? (yes/no): " reply
+      case "${reply,,}" in
+      y | yes)
+        break
+        ;;
+      n | no)
+        echo "Stopping URL opening sequence."
+        return
+        ;;
+      *)
+        echo "Please type 'yes' or 'no'."
+        ;;
+      esac
+    done
+  done
+}
 
 # Manual Installs
-open -na "Google Chrome" --args --new-window \
-	https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/SourceCodePro \
-	https://www.alfredapp.com/ \
-	https://www.spectacleapp.com/
+open \
+  https://arc.net/ \
+  https://brave.com/
+
+prompt_continue
+
+open \
+  https://1password.com/downloads/mac \
+  https://www.spotify.com/de-en/download/mac/ \
+  https://logseq.com/downloads \
+  https://www.notion.so/download \
+  https://www.notion.so/product/calendar/download
+
+# App Store Links (to be opened one after another)
+app_store_urls=(
+  "https://apps.apple.com/us/app/spark-classic-email-app/id1176895641?mt=12"
+  "https://apps.apple.com/us/app/ticktick-to-do-list-calendar/id966085870?mt=12"
+  "https://apps.apple.com/us/app/copilot-track-budget-money/id1447330651"
+)
+
+# Open App Store URLs with confirmation
+open_urls_with_confirmation "${app_store_urls[@]}"
+
+# Fonts
+open https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/SourceCodePro
+
+prompt_continue
+
+# Extensions
+open https://chromewebstore.google.com/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien \
+  https://chromewebstore.google.com/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb \
+  https://chromewebstore.google.com/detail/ghostery-tracker-ad-block/mlomiejdfkolichcflejclcbmpeaniij \
+  https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa \
+  https://chromewebstore.google.com/detail/modheader-modify-http-hea/idgpnmonknjnojddfkpgkljpfnnfcklj \
+  https://chromewebstore.google.com/detail/1password-%E2%80%93-password-mana/aeblfdkhhhdcdjpifhhbdiojplfjncoa \
+  https://chromewebstore.google.com/detail/readwise-highlighter/jjhefcfhmnkfeepcpnilbbkaadhngkbi
+
+prompt_continue
+
+# Optional Experimental Stuff
+open \
+  https://apps.apple.com/us/app/spark-mail-ai-email-inbox/id6445813049?mt=12
