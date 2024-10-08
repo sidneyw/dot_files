@@ -61,49 +61,52 @@ return {
       })
     end,
   },
+  -- LSP keymaps
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      -- change a keymap
+      keys[#keys + 1] = { "K", vim.lsp.buf.hover }
+
+      keys[#keys + 1] = { "gt", vim.lsp.buf.type_definition }
+      keys[#keys + 1] = { "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>" }
+      keys[#keys + 1] = { "<localleader>R", vim.lsp.buf.rename }
+
+      keys[#keys + 1] = { "gn", vim.diagnostic.goto_next }
+      keys[#keys + 1] = { "gp", vim.diagnostic.goto_prev }
+
+      keys[#keys + 1] = { "gi", require("telescope.builtin").lsp_implementations }
+      keys[#keys + 1] = { "gr", require("telescope.builtin").lsp_references }
+
+      -- buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help })
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      -- Disable eslint formatting as it's slow and timing out on big projects
+      setup = {
+        eslint = function() end,
+      },
+    },
+  },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        denols = {},
+        vtsls = {
+          settings = {
+            typescript = {
+              tsserver = {
+                maxTsServerMemory = 8192,
+              },
+            },
+          },
+        },
       },
     },
-    dependencies = {
-      "jose-elias-alvarez/typescript.nvim",
-      init = function()
-        require("lazyvim.util").lsp.on_attach(function(_, buffer)
-          -- stylua: ignore
-          local filename = vim.api.nvim_buf_get_name(0)
-
-          if starts_with(filename, "fugitive://") then
-            return
-          end
-
-          local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-          buf_nnoremap({ "<localleader>R", vim.lsp.buf.rename })
-          buf_nnoremap({ "ga", vim.lsp.buf.code_action })
-
-          buf_nnoremap({ "gd", vim.lsp.buf.definition })
-          buf_nnoremap({ "gD", vim.lsp.buf.declaration })
-          buf_nnoremap({ "gt", vim.lsp.buf.type_definition })
-
-          buf_nnoremap({ "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>" })
-
-          buf_nnoremap({ "gn", vim.diagnostic.goto_next })
-          buf_nnoremap({ "gp", vim.diagnostic.goto_prev })
-
-          buf_nnoremap({ "gi", require("telescope.builtin").lsp_implementations })
-          buf_nnoremap({ "gr", require("telescope.builtin").lsp_references })
-          buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help })
-
-          if filetype ~= "lua" then
-            buf_nnoremap({ "K", vim.lsp.buf.hover })
-          end
-        end)
-      end,
-    },
   },
-  -- add any tools you want to have installed below
   {
     "williamboman/mason.nvim",
     opts = {
@@ -112,7 +115,7 @@ return {
         "shellcheck",
         "shfmt",
         "flake8",
-        "deno",
+        "eslint-lsp",
       },
     },
   },
