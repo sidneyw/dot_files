@@ -205,6 +205,9 @@ bindkey "^U" backward-kill-line
 
 export FZF_DEFAULT_COMMAND='rg --files'
 
+function fzf-down() {
+  fzf --height 50% "$@" --border
+}
 # FZF search files to open in vim
 function vf() {
   local selected_files=$(fzf -m --preview "bat --style=numbers --color=always {} | head -500")
