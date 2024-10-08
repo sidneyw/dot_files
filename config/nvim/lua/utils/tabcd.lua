@@ -4,8 +4,7 @@ local wk = require("which-key")
 local telescopeCustom = require("utils.telescope-functions")
 
 local dotFilesDir = vim.fn.expand("~/.dot_files/")
-local logseqDir = vim.fn.expand("~/logseq/")
-local chronoDir = vim.fn.expand("~/go/src/github.com/chronosphereio/")
+local codeDir = vim.fn.expand("~/Code/")
 
 local M = {}
 
@@ -40,11 +39,13 @@ function M.New(directory, skipRename)
   end
 
   M.Rename(directory, skipRename)
+  -- There is some race between tabline and the telescope. Sleeping here fixes the issue 🤷
+  os.execute("sleep 0.1")
   telescopeCustom.project_files()
 end
 
-function M.NewChrono(subdir)
-  local location = chronoDir .. subdir
+function M.NewCode(subdir)
+  local location = codeDir .. subdir
   M.New(location)
 end
 
@@ -59,30 +60,16 @@ wk.add({
   {
     "<leader>em",
     function()
-      M.NewChrono("monorepo")
+      M.NewCode("clay-base")
     end,
-    desc = "Monorepo",
+    desc = "clay-base",
   },
   {
-    "<leader>ee",
+    "<leader>ep",
     function()
-      M.NewChrono("envconfig")
+      M.NewCode("public-actions")
     end,
-    desc = "Environment Config",
-  },
-  {
-    "<leader>ec",
-    function()
-      M.NewChrono("collector")
-    end,
-    desc = "Collector",
-  },
-  {
-    "<leader>ei",
-    function()
-      M.NewChrono("infrastructure")
-    end,
-    desc = "Infrastructure",
+    desc = "public actions",
   },
   {
     "<leader>ev",
@@ -91,14 +78,6 @@ wk.add({
       tabline.tab_rename("DotFiles")
     end,
     desc = "Dotfiles",
-  },
-  {
-    "<leader>el",
-    function()
-      M.New(logseqDir, true)
-      tabline.tab_rename("Logseq")
-    end,
-    desc = "Logseq",
   },
   {
     "<leader>te",
@@ -114,7 +93,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*",
   callback = function()
     vim.fn.timer_start(200, function()
-      -- print out the current buffer name and filetype
       if vim.bo.filetype == "dashboard" then
         return
       end
