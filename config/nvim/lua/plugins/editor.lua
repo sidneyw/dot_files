@@ -31,6 +31,13 @@ return {
       }
     end,
   },
+  {
+    "folke/persistence.nvim",
+    -- disable all default keymaps
+    keys = function()
+      return {}
+    end,
+  },
   -- tree-sitter ensure installed
   {
     "nvim-treesitter/nvim-treesitter",
@@ -50,6 +57,29 @@ return {
         },
       })
     end,
+  },
+  {
+    "MagicDuck/grug-far.nvim",
+    keys = {
+      {
+        "<leader>ea",
+        function()
+          require("grug-far").open({
+            prefills = { filesFilter = "**/api/**/*.ts\n!node_modules", flags = "--ignore-case" },
+          })
+        end,
+        desc = "Grug Far (API)",
+      },
+      {
+        "<leader>ef",
+        function()
+          require("grug-far").open({
+            prefills = { filesFilter = "**/frontend/**/*\n!node_modules", flags = "--ignore-case" },
+          })
+        end,
+        desc = "Grug Far (UI)",
+      },
+    },
   },
   { "nvim-treesitter/playground" },
   { "nvim-treesitter/nvim-treesitter-refactor" },
