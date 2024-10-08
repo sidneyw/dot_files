@@ -17,12 +17,11 @@ vim.keymap.del("i", "<A-j>")
 vim.keymap.del("i", "<A-k>")
 vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
+vim.keymap.del("n", "<leader>qq")
 
 wk.add({
   { "<S-Tab>", ":tabprevious<CR>", desc = "Previous Tab" },
   { "<Tab>", ":tabnext<CR>", desc = "Next Tab" },
-  { "<leader>cs", ":!cpsha<CR>", desc = "Copy 12-char SHA" },
-  { "<leader>lb", ":Make! lint-branch<CR>", desc = "Lint Branch" },
   { "<leader>v", ":<C-u>vsplit<CR>", desc = "Split vertically" },
 })
 
