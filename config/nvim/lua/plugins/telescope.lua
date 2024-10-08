@@ -12,6 +12,26 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     keys = {
+      {
+        "<leader> ",
+        require("../utils/telescope-functions").project_files,
+        desc = "Project files",
+      },
+      {
+        "<leader>q",
+        require("telescope.builtin").current_buffer_fuzzy_find,
+        desc = "Fuzzy find (Buffer)",
+      },
+      { "<leader>b", require("telescope.builtin").buffers, desc = "Buffers" },
+      { "<leader>tr", require("telescope.builtin").resume, desc = "Resume" },
+      {
+        "<leader>se",
+        function()
+          require("telescope").extensions.luasnip.luasnip()
+        end,
+        desc = "Snippets",
+      },
+      { "<C-p>", require("telescope.builtin").find_files, desc = "Find files" },
       -- disable unwanted keymaps
       { "<leader>gs", false },
       { "<leader>gc", false },
@@ -83,10 +103,7 @@ return {
       },
     },
     config = function(_, opts)
-      local custom_telescope = require("../utils/telescope-functions")
-
       local builtin = require("telescope.builtin")
-      local extensions = require("telescope").extensions
 
       vim.cmd([[ cnoreabbr Tele Telescope ]])
       vim.cmd([[ cnoreabbr tele Telescope ]])
@@ -106,22 +123,6 @@ return {
           desc = command.desc,
         })
       end
-
-      require("which-key").add({
-        { "<C-p>", builtin.find_files, desc = "Find files" },
-        { "<leader>f", custom_telescope.project_files, desc = "Project files" },
-        { "<leader>a", builtin.live_grep, desc = "Live grep" },
-        { "<leader>q", builtin.current_buffer_fuzzy_find, desc = "Fuzzy find" },
-        -- ["<leader>s"] = { builtin.lsp_document_symbols, "LSP document symbols" },
-        { "<leader>b", builtin.buffers, desc = "Buffers" },
-        { "<leader>m", builtin.oldfiles, desc = "Old files" },
-
-        -- -t prefix for less used telescope commands
-        { "<leader>th", builtin.help_tags, desc = "Help tags" },
-        { "<leader>tr", builtin.resume, desc = "Resume" },
-        { "<leader>tk", builtin.keymaps, desc = "Keymaps" },
-        { "<leader>tl", extensions.luasnip.luasnip, desc = "Snippets" },
-      })
 
       require("telescope").setup(opts)
     end,
