@@ -24,6 +24,7 @@ return {
       },
       { "<leader>b", require("telescope.builtin").buffers, desc = "Buffers" },
       { "<leader>tr", require("telescope.builtin").resume, desc = "Resume" },
+      { "<leader>z", require("telescope.builtin").live_grep },
       {
         "<leader>se",
         function()

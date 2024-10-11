@@ -40,7 +40,7 @@ function M.New(directory, skipRename)
 
   M.Rename(directory, skipRename)
   -- There is some race between tabline and the telescope. Sleeping here fixes the issue 🤷
-  os.execute("sleep 0.1")
+  os.execute("sleep 0.2")
   telescopeCustom.project_files()
 end
 
