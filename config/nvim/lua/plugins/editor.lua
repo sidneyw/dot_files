@@ -38,6 +38,64 @@ return {
     end,
   },
   {
+    "snacks.nvim",
+    opts = {
+      scroll = { enabled = false },
+      indent = { animate = { enabled = false } },
+      -- dashboard = {
+      --   sections = {
+      --     { section = "header" },
+      --     { section = "keys", gap = 1, padding = 1 },
+      --     function()
+      --       local in_git = Snacks.git.get_root() ~= nil
+      --       local cmds = {
+      --         {
+      --           icon = " ",
+      --           title = "Git Status",
+      --           cmd = "git --no-pager diff --stat -B -M -C",
+      --           gap = 10,
+      --           padding = 10,
+      --           height = 5,
+      --         },
+      --         {
+      --           title = "Notifications",
+      --           cmd = "gh notify -s -a -n5",
+      --           action = function()
+      --             vim.ui.open("https://github.com/notifications")
+      --           end,
+      --           key = "n",
+      --           icon = " ",
+      --           height = 5,
+      --           enabled = true,
+      --         },
+      --         {
+      --           icon = " ",
+      --           title = "Open PRs",
+      --           cmd = "gh pr list -L 3",
+      --           key = "p",
+      --           action = function()
+      --             vim.fn.jobstart("gh pr list --web", { detach = true })
+      --           end,
+      --           height = 7,
+      --         },
+      --       }
+      --       return vim.tbl_map(function(cmd)
+      --         return vim.tbl_extend("force", {
+      --           pane = 2,
+      --           section = "terminal",
+      --           enabled = in_git,
+      --           padding = 1,
+      --           ttl = 5 * 60,
+      --           indent = 3,
+      --         }, cmd)
+      --       end, cmds)
+      --     end,
+      --     { section = "startup" },
+      --   },
+      -- },
+    },
+  },
+  {
     "folke/persistence.nvim",
     -- disable all default keymaps
     keys = function()
