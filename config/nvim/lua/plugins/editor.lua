@@ -1,5 +1,11 @@
 return {
   {
+    "folke/which-key.nvim",
+    opts = {
+      preset = "modern",
+    },
+  },
+  {
     "nvim-neo-tree/neo-tree.nvim",
     -- Replace the default keymaps
     keys = function()
