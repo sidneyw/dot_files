@@ -1,10 +1,11 @@
 local tabline = require("tabline")
-local notify = require("notify")
+local notify = require("snacks").notify
 local wk = require("which-key")
 local telescopeCustom = require("utils.telescope-functions")
 
 local dotFilesDir = vim.fn.expand("~/.dot_files/")
 local codeDir = vim.fn.expand("~/Code/")
+local logseqDir = vim.fn.expand("~/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents")
 
 local M = {}
 
@@ -25,8 +26,7 @@ end
 
 function M.New(directory, skipRename)
   if vim.fn.isdirectory(directory) ~= 1 then
-    print(directory .. " is not a directory")
-    notify(directory .. " is not a directory", "error")
+    notify.error(directory .. " is not a directory")
     return
   end
 
@@ -39,8 +39,7 @@ function M.New(directory, skipRename)
   end
 
   M.Rename(directory, skipRename)
-  -- There is some race between tabline and the telescope. Sleeping here fixes the issue 🤷
-  os.execute("sleep 0.2")
+  os.execute("sleep 0.3")
   telescopeCustom.project_files()
 end
 
@@ -78,6 +77,13 @@ wk.add({
       tabline.tab_rename("DotFiles")
     end,
     desc = "Dotfiles",
+  },
+  {
+    "<leader>el",
+    function()
+      M.New(logseqDir, true)
+      tabline.tab_rename("Logseq")
+    end,
   },
   {
     "<leader>te",
