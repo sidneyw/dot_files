@@ -12,3 +12,5 @@ vim*
 .mypy_cache/
 go.mod
 go.sum
+
+shell/bin/orb*
