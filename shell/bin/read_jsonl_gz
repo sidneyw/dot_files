@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+import json
+import argparse
+import sys
+from smart_open import open
+
+
+def read_pretty_print_jsonl_gz(file_path, num_lines):
+    # Open the file using smart_open (handles S3 and local files)
+    with open(file_path, "rt", encoding="utf-8") as file:
+        # Iterate over the specified number of lines
+        for i, line in enumerate(file):
+            if i >= num_lines:
+                break
+            # Parse the JSON line and pretty print it
+            json_obj = json.loads(line)
+            print(json.dumps(json_obj, indent=2))
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Read and pretty-print JSONL records from a .jsonl.gz file."
+    )
+    parser.add_argument(
+        "file",
+        type=str,
+        help="Path or S3 URL to the .jsonl.gz file",
+    )
+    parser.add_argument(
+        "-n",
+        "--num-lines",
+        type=int,
+        default=1,
+        help="Number of lines to read and print from the file (default: 1)",
+    )
+
+    args = parser.parse_args()
+
+    # Validate file extension
+    if not args.file.endswith(".jsonl.gz"):
+        print("Error: File must be a .jsonl.gz file.")
+        sys.exit(1)
+
+    # Execute the read function
+    try:
+        read_pretty_print_jsonl_gz(args.file, args.num_lines)
+    except Exception as e:
+        print(f"Error reading the file: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
