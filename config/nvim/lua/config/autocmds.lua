@@ -68,13 +68,3 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = true -- if you want spaces instead of tabs
   end,
 })
-
--- telescope
-local telescope_augroup = vim.api.nvim_create_augroup("telescope", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  group = telescope_augroup,
-  pattern = "TelescopePrompt",
-  callback = function()
-    require("cmp").setup.buffer({ completion = { autocomplete = false } })
-  end,
-})
