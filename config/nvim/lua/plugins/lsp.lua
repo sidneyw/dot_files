@@ -114,19 +114,17 @@ return {
         "stylua",
         "shellcheck",
         "shfmt",
-        "flake8",
         "eslint-lsp",
       },
     },
   },
   {
-    "simrat39/symbols-outline.nvim",
+    "hedyhli/outline.nvim",
     keys = function()
       return {
-        { "<C-\\>", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" },
+        { "<C-\\>", "<cmd>OutlineOpen<CR>", desc = "Symbols Outline" },
       }
     end,
     config = true,
-    cmd = { "SymbolsOutline" },
   },
 }
