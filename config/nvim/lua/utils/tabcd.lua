@@ -99,7 +99,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*",
   callback = function()
     vim.fn.timer_start(200, function()
-      if vim.bo.filetype == "dashboard" then
+      if vim.bo.filetype == "snacks_dashboard" then
         return
       end
       M.Rename(false)
