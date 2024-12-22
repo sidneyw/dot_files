@@ -347,7 +347,7 @@ export PATH=$PATH:$GOROOT/bin
 export GO111MODULE=on
 
 # Local Config
-local_conf="$HOME/.dot_files/shell/local_bin/local_conf.sh"
+local_conf="$HOME/.dot_files/shell/local_bin/local_conf.zsh"
 [[ -f "$local_conf" ]] && source "$local_conf"
 
 # }}}
@@ -394,4 +394,5 @@ eval "$(zoxide init --cmd j zsh)"
 # pnpm
 export PNPM_HOME="/Users/sidney/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+export PYTHONPATH=/Users/sidneywijngaarde/Code/clay-base/entity-data-ingestion 
 # pnpm end
