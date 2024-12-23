@@ -23,7 +23,6 @@ wk.add({
   { "<S-Tab>", ":tabprevious<CR>", desc = "Previous Tab" },
   { "<Tab>", ":tabnext<CR>", desc = "Next Tab" },
   { "<leader>v", ":<C-u>vsplit<CR>", desc = "Split vertically" },
-  { "<leader>gs", "<cmd>Git<CR>", desc = "Git status" },
 })
 
 vim.cmd([[
@@ -42,5 +41,4 @@ vim.cmd([[
 
   nnoremap <C-^> :b# <CR>
   nnoremap <C-n>i <C-i>
-  nnoremap <leader>gs <cmd>Git<CR>
 ]])

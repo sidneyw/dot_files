@@ -5,6 +5,8 @@
 -- change the leader key to -
 vim.g.mapleader = "-"
 
+vim.g.lazyvim_picker = "telescope"
+
 local opt = vim.opt
 
 opt.relativenumber = true
