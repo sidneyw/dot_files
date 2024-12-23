@@ -39,6 +39,7 @@ def main():
         type=str,
         help="Path or S3 URL to the .jsonl.gz file",
     )
+
     parser.add_argument(
         "-n",
         "--num-lines",
