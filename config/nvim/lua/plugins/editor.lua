@@ -42,14 +42,6 @@ return {
     opts = {
       scroll = { enabled = false },
       indent = { animate = { enabled = false } },
-      dashboard = {
-        sections = {
-          { section = "header" },
-          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1, gap = 0.5 },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          { section = "startup" },
-        },
-      },
     },
   },
   {
@@ -59,7 +51,6 @@ return {
       return {}
     end,
   },
-  -- tree-sitter ensure installed
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
@@ -100,7 +91,21 @@ return {
     event = "VeryLazy",
     version = "2.*",
     config = function()
-      require("window-picker").setup()
+      -- require("window-picker").setup()
+      require("window-picker").setup({
+        hint = "floating-big-letter",
+        filter_rules = {
+          include_current_win = false,
+          autoselect_one = true,
+          -- filter using buffer options
+          bo = {
+            -- if the file type is one of following, the window will be ignored
+            filetype = { "neo-tree", "neo-tree-popup", "notify" },
+            -- if the buffer type is one of following, the window will be ignored
+            buftype = { "terminal", "quickfix" },
+          },
+        },
+      })
     end,
   },
 }

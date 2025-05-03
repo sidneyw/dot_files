@@ -1,4 +1,3 @@
-import = ["/Users/sidney/.config/alacritty/themes/themes/tomorrow_night.toml"]
 
 [font]
 size = 13
@@ -56,3 +55,6 @@ history = 2000
 [window]
 startup_mode = "Fullscreen"
 title = "Alacritty"
+
+[general]
+import = ["/Users/sidney/.config/alacritty/themes/themes/tomorrow_night.toml"]

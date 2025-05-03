@@ -161,7 +161,10 @@ alias zp="source $HOME/.zshrc"
 
 # cd to top level git dir
 alias gcd='cd $(git rev-parse --show-toplevel)'
-alias genv='source genv'
+
+# Python
+alias uvr='uv run'
+alias read_jsonl="uv run $(which read_jsonl_gz.py)"
 
 # Kubernetes
 alias kc='kubectl'
@@ -176,7 +179,7 @@ alias watch='watch '
 alias cat="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-alias ls="eza -GhF"
+alias ls="eza"
 alias ll='eza -lahF'
 alias lt='eza --tree --level=2'
 alias t="tree"
@@ -207,13 +210,6 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 function fzf-down() {
   fzf --height 50% "$@" --border
-}
-# FZF search files to open in vim
-function vf() {
-  local selected_files=$(fzf -m --preview "bat --style=numbers --color=always {} | head -500")
-  if [[ -n "$selected_files" ]]; then
-    nvim $selected_files "$@"
-  fi
 }
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -325,11 +321,6 @@ bindkey '^G^T' git_tags_widget
 bindkey '^G^F' git_files_widget
 bindkey '^G^B' git_branch_widget
 
-# Experimental {{{
-# ====================================
-# }}}
-# }}}
-
 # Path {{{
 # ====================================
 PATH="$PATH:$HOME/bin"
@@ -349,14 +340,13 @@ export GO111MODULE=on
 # Local Config
 local_conf="$HOME/.dot_files/shell/local_bin/local_conf.zsh"
 [[ -f "$local_conf" ]] && source "$local_conf"
-
 # }}}
 
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/sidney/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/sidney/Downloads/google-cloud-sdk/path.zsh.inc'; fi
@@ -383,12 +373,6 @@ _gt_yargs_completions()
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-fi
-
 eval "$(zoxide init --cmd j zsh)"
 
 # pnpm
@@ -396,3 +380,5 @@ export PNPM_HOME="/Users/sidney/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 export PYTHONPATH=/Users/sidneywijngaarde/Code/clay-base/entity-data-ingestion 
 # pnpm end
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit

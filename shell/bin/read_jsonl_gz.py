@@ -1,4 +1,9 @@
-#!/usr/bin/env python
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "smart-open[s3]",
+# ]
+# ///
 
 import json
 import argparse
@@ -7,7 +12,7 @@ from smart_open import open
 from itertools import islice
 
 
-def read_pretty_print_jsonl_gz(file_path, num_lines):
+def read_pretty_print_jsonl_gz(file_path, num_lines, indent):
     """Read and pretty print JSONL records efficiently."""
     # Try to use ujson for faster parsing if available
     try:
@@ -18,8 +23,8 @@ def read_pretty_print_jsonl_gz(file_path, num_lines):
     def process_line(line):
         """Process a single JSON line with error handling."""
         try:
-            json_obj = json_parser.loads(line.strip())
-            print(json_parser.dumps(json_obj, indent=2))
+            json_obj = json_parser.loads(line)
+            print(json_parser.dumps(json_obj, indent=indent))
             return True
         except json_parser.JSONDecodeError as e:
             print(f"Warning: Skipping invalid JSON line: {e}", file=sys.stderr)
@@ -48,16 +53,19 @@ def main():
         help="Number of lines to read and print from the file (default: 1)",
     )
 
-    args = parser.parse_args()
+    parser.add_argument(
+        "-i",
+        "--indent",
+        type=int,
+        default=0,
+        help="Number of spaces to indent the JSON output",
+    )
 
-    # Validate file extension
-    if not args.file.endswith(".jsonl.gz"):
-        print("Error: File must be a .jsonl.gz file.")
-        sys.exit(1)
+    args = parser.parse_args()
 
     # Execute the read function
     try:
-        read_pretty_print_jsonl_gz(args.file, args.num_lines)
+        read_pretty_print_jsonl_gz(args.file, args.num_lines, args.indent)
     except Exception as e:
         print(f"Error reading the file: {e}")
         sys.exit(1)
@@ -65,3 +73,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

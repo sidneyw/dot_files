@@ -64,6 +64,13 @@ wk.add({
     desc = "clay-base",
   },
   {
+    "<leader>ed",
+    function()
+      M.NewCode("clay-base/dagster-pipelines")
+    end,
+    desc = "clay-base",
+  },
+  {
     "<leader>ep",
     function()
       M.NewCode("public-actions")
