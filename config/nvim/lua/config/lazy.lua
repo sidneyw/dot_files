@@ -15,7 +15,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.test.core" },
 
     -- AI
-    -- { import = "lazyvim.plugins.extras.ai.copilot" },
+    { import = "lazyvim.plugins.extras.ai.copilot" },
     -- { import = "lazyvim.plugins.extras.ai.copilot-chat" },
 
     -- Editor
@@ -27,6 +27,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.editor.outline" },
 
     -- Language Support
+    -- { import = "lazyvim.plugins.extras.lang.lua" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
