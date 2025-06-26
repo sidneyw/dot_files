@@ -34,7 +34,9 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   group = yaml_augroup,
   pattern = { "*.yml", "*.yaml" },
   callback = function()
-    vim.opt_local.filetype = "helm"
+    vim.schedule(function()
+      vim.bo.filetype = "helm"
+    end)
   end,
 })
 vim.api.nvim_create_autocmd("FileType", {
@@ -66,5 +68,29 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.tabstop = 4
     vim.opt_local.shiftwidth = 4
     vim.opt_local.expandtab = true -- if you want spaces instead of tabs
+  end,
+})
+
+-- jinja
+local jinja_augroup = vim.api.nvim_create_augroup("jinja", { clear = true })
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  group = jinja_augroup,
+  pattern = { "*.jinja", "*.j2" },
+  callback = function()
+    vim.schedule(function()
+      vim.bo.filetype = "yaml"
+    end)
+  end,
+})
+
+-- env files
+local env_augroup = vim.api.nvim_create_augroup("env", { clear = true })
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  group = env_augroup,
+  pattern = { ".env*" },
+  callback = function()
+    vim.schedule(function()
+      vim.bo.filetype = "bash"
+    end)
   end,
 })
