@@ -36,7 +36,7 @@ return {
       build_tags = "cluster_integration",
     },
     -- config = true,
-    config = function(opts)
+    config = function(_, opts)
       local go = require("go")
       go.setup(opts)
 

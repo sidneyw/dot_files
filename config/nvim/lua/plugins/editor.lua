@@ -70,7 +70,6 @@ return {
       })
     end,
   },
-  { "nvim-treesitter/playground" },
   { "nvim-treesitter/nvim-treesitter-refactor" },
   { "towolf/vim-helm" },
   -- TPope Plugins

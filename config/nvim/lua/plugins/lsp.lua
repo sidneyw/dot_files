@@ -15,10 +15,10 @@ return {
       })
     end,
   },
-  -- LSP keymaps
+  -- LSP keymaps and configuration
   {
     "neovim/nvim-lspconfig",
-    opts = function()
+    opts = function(_, opts)
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       -- change a keymap
       keys[#keys + 1] = { "K", vim.lsp.buf.hover }
@@ -27,39 +27,31 @@ return {
       keys[#keys + 1] = { "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>" }
       keys[#keys + 1] = { "<localleader>R", vim.lsp.buf.rename }
 
-      keys[#keys + 1] = { "gn", vim.diagnostic.goto_next }
-      keys[#keys + 1] = { "gp", vim.diagnostic.goto_prev }
+      keys[#keys + 1] = { "gn", function() vim.diagnostic.jump({ count = 1, float = true }) end }
+      keys[#keys + 1] = { "gp", function() vim.diagnostic.jump({ count = -1, float = true }) end }
 
       keys[#keys + 1] = { "gi", require("telescope.builtin").lsp_implementations }
       keys[#keys + 1] = { "gr", require("telescope.builtin").lsp_references }
 
       -- buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help })
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      -- Disable eslint formatting as it's slow and timing out on big projects
-      setup = {
-        eslint = function() end,
-      },
-    },
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        vtsls = {
-          settings = {
-            typescript = {
-              tsserver = {
-                maxTsServerMemory = 8192,
-              },
+
+      -- Merge configurations into existing opts
+      opts.setup = opts.setup or {}
+      opts.setup.eslint = function() end -- Disable eslint formatting
+
+      opts.servers = opts.servers or {}
+      opts.servers.vtsls = {
+        settings = {
+          typescript = {
+            tsserver = {
+              maxTsServerMemory = 8192,
             },
           },
         },
-      },
-    },
+      }
+
+      return opts
+    end,
   },
   {
     "williamboman/mason.nvim",
