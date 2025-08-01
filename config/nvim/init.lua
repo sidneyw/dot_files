@@ -24,4 +24,3 @@ end
 require("config.lazy")
 
 require("utils.tabcd")
-require("utils.hurl_runner")
