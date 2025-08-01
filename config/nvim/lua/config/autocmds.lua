@@ -30,18 +30,18 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- yaml
 local yaml_augroup = vim.api.nvim_create_augroup("yaml", { clear = true })
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  group = yaml_augroup,
-  pattern = { "*.yml", "*.yaml" },
-  callback = function()
-    vim.schedule(function()
-      vim.bo.filetype = "helm"
-    end)
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+--   group = yaml_augroup,
+--   pattern = { "*.yml", "*.yaml" },
+--   callback = function()
+--     vim.schedule(function()
+--       vim.bo.filetype = "helm"
+--     end)
+--   end,
+-- })
 vim.api.nvim_create_autocmd("FileType", {
   group = yaml_augroup,
-  pattern = { "yaml", "helm" },
+  pattern = { "yaml", "yml", "helm" },
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2

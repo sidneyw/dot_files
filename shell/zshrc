@@ -375,10 +375,13 @@ compdef _gt_yargs_completions gt
 
 eval "$(zoxide init --cmd j zsh)"
 
-# pnpm
-export PNPM_HOME="/Users/sidney/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-export PYTHONPATH=/Users/sidneywijngaarde/Code/clay-base/entity-data-ingestion 
-# pnpm end
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+# pnpm
+export PNPM_HOME="/Users/sidney/.pnpm/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

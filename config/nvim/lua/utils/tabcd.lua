@@ -6,6 +6,7 @@ local telescopeCustom = require("utils.telescope-functions")
 local dotFilesDir = vim.fn.expand("~/.dot_files/")
 local codeDir = vim.fn.expand("~/Code/")
 local logseqDir = vim.fn.expand("~/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents")
+local claudeGlobal = vim.fn.expand("~/.claude/")
 
 local M = {}
 
@@ -82,6 +83,14 @@ wk.add({
     function()
       M.New(dotFilesDir, true)
       tabline.tab_rename("DotFiles")
+    end,
+    desc = "Dotfiles",
+  },
+  {
+    "<leader>ec",
+    function()
+      M.New(claudeGlobal, true)
+      tabline.tab_rename("Claude Global")
     end,
     desc = "Dotfiles",
   },
