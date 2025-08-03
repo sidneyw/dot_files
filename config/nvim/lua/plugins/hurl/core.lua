@@ -54,12 +54,7 @@ function M.run_hurl_file(options)
   local result = vim.fn.system(cmd)
   local exit_code = vim.v.shell_error
 
-  local header = "=== Hurl Results ===\n"
-  header = header .. "File: " .. current_file .. "\n"
-  header = header .. "Command: " .. cmd .. "\n"
-  header = header .. "Exit Code: " .. exit_code .. "\n"
-  header = header .. "========================\n\n"
-
+  local header = ui.format_execution_header(current_file, cmd, exit_code)
   local full_output = header .. result
 
   -- Add to history

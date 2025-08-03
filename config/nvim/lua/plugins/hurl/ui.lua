@@ -2,6 +2,73 @@ local config = require("plugins.hurl.config")
 
 local M = {}
 
+function M.format_execution_header(file_path, command, exit_code)
+  local filename = vim.fn.fnamemodify(file_path, ":t")
+  local status_icon = exit_code == 0 and "✅ Success" or "❌ Failed"
+  local status_color = exit_code == 0 and "DiagnosticOk" or "DiagnosticError"
+
+  local header = {}
+  table.insert(header, "🚀 HURL EXECUTION RESULTS")
+  table.insert(header, "")
+  table.insert(header, "📁 " .. filename)
+  table.insert(header, "⚡ " .. command)
+  table.insert(header, status_icon .. " (Exit: " .. exit_code .. ")")
+  table.insert(header, "")
+  table.insert(
+    header,
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  )
+  table.insert(header, "")
+
+  return table.concat(header, "\n")
+end
+
+function M.detect_content_type(content)
+  local lines = vim.split(content, "\n")
+
+  -- Look for HTTP response
+  local http_start = nil
+  for i, line in ipairs(lines) do
+    if line:match("^HTTP/") then
+      http_start = i
+      break
+    end
+  end
+
+  if http_start then
+    -- Find Content-Type header
+    for i = http_start, #lines do
+      local line = lines[i]
+      if line:match("^%s*$") then -- Empty line indicates end of headers
+        break
+      end
+      local content_type = line:match("^[Cc]ontent%-[Tt]ype:%s*([^;]+)")
+      if content_type then
+        content_type = content_type:lower():gsub("%s+", "")
+        if content_type:match("application/json") then
+          return "json"
+        elseif content_type:match("application/xml") or content_type:match("text/xml") then
+          return "xml"
+        elseif content_type:match("text/html") then
+          return "html"
+        elseif content_type:match("text/plain") then
+          return "text"
+        end
+      end
+    end
+  end
+
+  -- Fallback: analyze content structure
+  local body_content = table.concat(lines, "\n")
+  if body_content:match("^%s*{") or body_content:match("^%s*%[") then
+    return "json"
+  elseif body_content:match("^%s*<") then
+    return "xml"
+  end
+
+  return "http" -- Default for HTTP responses
+end
+
 function M.format_content(content, format_type)
   if format_type == "json" then
     return M.format_as_json(content)
@@ -50,7 +117,7 @@ function M.format_as_json(content)
         for i = 1, json_start - 1 do
           table.insert(result, formatted_lines[i])
         end
-        table.insert(result, "\n--- Pretty JSON ---")
+        table.insert(result, "")
         -- Remove trailing newline from jq output
         formatted_json = formatted_json:gsub("\n$", "")
         for line in formatted_json:gmatch("[^\n]+") do
@@ -68,7 +135,7 @@ function M.format_as_json(content)
       for i = 1, json_start - 1 do
         table.insert(result, formatted_lines[i])
       end
-      table.insert(result, "\n--- JSON Content (install jq for pretty formatting) ---")
+      table.insert(result, "")
       table.insert(result, json_text)
 
       return table.concat(result, "\n")
@@ -162,9 +229,28 @@ function M.refresh_results_buffer()
       vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(formatted_content, "\n"))
       vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
 
-      -- Update filetype
-      local filetype = config.options.output_format == "json" and "json" or "text"
+      -- Update filetype based on content detection
+      local detected_type = M.detect_content_type(formatted_content)
+      local filetype = "text"
+
+      if config.options.output_format == "json" and detected_type == "json" then
+        filetype = "json"
+      elseif config.options.output_format == "formatted" then
+        filetype = "text"
+      else
+        -- For raw format, use detected content type for better highlighting
+        filetype = detected_type or "text"
+      end
+
       vim.api.nvim_set_option_value("filetype", filetype, { buf = buf })
+
+      -- Enable treesitter if available
+      pcall(function()
+        local ok, ts = pcall(require, "nvim-treesitter.highlight")
+        if ok then
+          ts.attach(buf, filetype)
+        end
+      end)
     end
   end
 end
@@ -235,12 +321,28 @@ function M.split_and_show_results(content)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(formatted_content, "\n"))
   vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
 
-  -- Set appropriate filetype based on format
+  -- Set appropriate filetype based on content detection
+  local detected_type = M.detect_content_type(formatted_content)
   local filetype = "text"
-  if config.options.output_format == "json" then
+
+  if config.options.output_format == "json" and detected_type == "json" then
     filetype = "json"
+  elseif config.options.output_format == "formatted" then
+    filetype = "text"
+  else
+    -- For raw format, use detected content type for better highlighting
+    filetype = detected_type or "text"
   end
+
   vim.api.nvim_set_option_value("filetype", filetype, { buf = buf })
+
+  -- Enable treesitter if available
+  pcall(function()
+    local ok, ts = pcall(require, "nvim-treesitter.highlight")
+    if ok then
+      ts.attach(buf, filetype)
+    end
+  end)
 
   -- Return focus to original window
   vim.api.nvim_set_current_win(original_win)
@@ -268,4 +370,3 @@ function M.create_floating_window(buf)
 end
 
 return M
-
