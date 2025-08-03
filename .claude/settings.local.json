@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo $VIMRUNTIME)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(nvim:*)",
+      "Bash(tree:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:hurl.dev)",
+      "WebFetch(domain:lazy.folke.io)",
+      "mcp__ide__getDiagnostics"
+    ],
+    "deny": []
+  }
+}
+
