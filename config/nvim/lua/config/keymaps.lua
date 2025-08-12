@@ -23,6 +23,7 @@ wk.add({
   { "<S-Tab>", ":tabprevious<CR>", desc = "Previous Tab" },
   { "<Tab>", ":tabnext<CR>", desc = "Next Tab" },
   { "<leader>v", ":<C-u>vsplit<CR>", desc = "Split vertically" },
+  { "<leader>fc", function() require("utils.telescope-functions").open_git_file_from_clipboard() end, desc = "Open git file from clipboard" },
 })
 
 vim.cmd([[
