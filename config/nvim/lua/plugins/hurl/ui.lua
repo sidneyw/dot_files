@@ -70,9 +70,7 @@ function M.detect_content_type(content)
 end
 
 function M.format_content(content, format_type)
-  if format_type == "json" then
-    return M.format_as_json(content)
-  elseif format_type == "formatted" then
+  if format_type == "formatted" then
     return M.format_structured(content)
   else
     return content -- raw format
@@ -83,113 +81,166 @@ local function has_jq()
   return vim.fn.executable("jq") == 1
 end
 
-function M.format_as_json(content)
-  -- Try to extract JSON from the response body
+function M.format_structured(content)
   local lines = vim.split(content, "\n")
-  local json_start = nil
-  local formatted_lines = {}
+  local result = {}
 
+  -- Split content into header section and hurl response section
+  local separator_index = nil
   for i, line in ipairs(lines) do
-    table.insert(formatted_lines, line)
-
-    -- Look for JSON content (usually after empty line following headers)
-    if line:match("^%s*{") or line:match("^%s*%[") then
-      json_start = i
+    if
+      line:match(
+        "^━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      )
+    then
+      separator_index = i
       break
     end
   end
 
-  if json_start then
-    -- Extract potential JSON content
-    local json_lines = {}
-    for i = json_start, #lines do
-      table.insert(json_lines, lines[i])
-    end
-
-    local json_text = table.concat(json_lines, "\n")
-
-    -- Use jq for perfect JSON formatting if available
-    if has_jq() then
-      local formatted_json = vim.fn.system("jq .", json_text)
-      if vim.v.shell_error == 0 then
-        -- Rebuild the content with jq-formatted JSON
-        local result = {}
-        for i = 1, json_start - 1 do
-          table.insert(result, formatted_lines[i])
-        end
-        table.insert(result, "")
-        -- Remove trailing newline from jq output
-        formatted_json = formatted_json:gsub("\n$", "")
-        for line in formatted_json:gmatch("[^\n]+") do
-          table.insert(result, line)
-        end
-
-        return table.concat(result, "\n")
-      end
-    end
-
-    -- Fallback: check if it's valid JSON and show a message
-    local ok, decoded = pcall(vim.fn.json_decode, json_text)
-    if ok then
-      local result = {}
-      for i = 1, json_start - 1 do
-        table.insert(result, formatted_lines[i])
-      end
+  -- Process header section
+  for i = 1, separator_index or #lines do
+    local line = lines[i]
+    if line:match("🚀 HURL EXECUTION RESULTS") then
+      table.insert(result, "# 🚀 HURL EXECUTION RESULTS")
       table.insert(result, "")
-      table.insert(result, json_text)
-
-      return table.concat(result, "\n")
+    elseif line:match("^📁") or line:match("^⚡") or line:match("^✅") or line:match("^❌") then
+      table.insert(result, line)
+    elseif
+      line:match(
+        "^━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      )
+    then
+      table.insert(result, "---")
+      table.insert(result, "")
+      break
     end
   end
 
-  return content -- Return original if no JSON found or parsing failed
-end
+  -- Process hurl response section (everything after separator)
+  if separator_index then
+    local hurl_response_lines = {}
+    for i = separator_index + 1, #lines do
+      if lines[i] and lines[i] ~= "" then -- Skip empty lines right after separator
+        table.insert(hurl_response_lines, lines[i])
+      end
+    end
 
-function M.format_structured(content)
-  local lines = vim.split(content, "\n")
-  local result = {}
-  local in_headers = false
-  local in_body = false
-
-  for _, line in ipairs(lines) do
-    if line:match("^=== Hurl Results ===") then
-      table.insert(
-        result,
-        "╭─────────────────────────────────────────╮"
-      )
-      table.insert(result, "│           🌐 HURL RESULTS               │")
-      table.insert(
-        result,
-        "╰─────────────────────────────────────────╯"
-      )
-    elseif line:match("^File:") or line:match("^Command:") or line:match("^Exit Code:") then
-      table.insert(result, "📋 " .. line)
-    elseif line:match("^========================") then
-      table.insert(
-        result,
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      )
-    elseif line:match("^HTTP/") then
-      table.insert(result, "🔗 " .. line)
-      in_headers = true
-    elseif line:match("^%s*$") and in_headers then
-      table.insert(result, "")
-      in_headers = false
-      in_body = true
-    elseif in_headers and line:match(":") then
-      table.insert(result, "📝 " .. line)
-    elseif in_body then
-      table.insert(result, line)
-    else
-      table.insert(result, line)
+    if #hurl_response_lines > 0 then
+      M.parse_hurl_response(result, hurl_response_lines)
     end
   end
 
   return table.concat(result, "\n")
 end
 
+function M.parse_hurl_response(result, hurl_lines)
+  local in_http_headers = false
+  local body_lines = {}
+  local i = 1
+
+  -- Look for HTTP response line
+  while i <= #hurl_lines do
+    local line = hurl_lines[i]
+    if line:match("^HTTP/") then
+      table.insert(result, "## Response")
+      table.insert(result, "")
+      table.insert(result, "```http")
+      table.insert(result, line)
+      in_http_headers = true
+      i = i + 1
+      break
+    else
+      -- No HTTP response found, treat everything as body content
+      table.insert(body_lines, line)
+      i = i + 1
+    end
+  end
+
+  -- Process HTTP headers if we found them
+  if in_http_headers then
+    while i <= #hurl_lines do
+      local line = hurl_lines[i]
+      if line:match("^%s*$") then
+        -- Empty line marks end of headers
+        table.insert(result, "```")
+        table.insert(result, "")
+        i = i + 1
+        break
+      else
+        -- Add header line
+        table.insert(result, line)
+        i = i + 1
+      end
+    end
+
+    -- Collect remaining lines as body
+    while i <= #hurl_lines do
+      table.insert(body_lines, hurl_lines[i])
+      i = i + 1
+    end
+  end
+
+  -- Process body content
+  if #body_lines > 0 then
+    M.format_response_body(result, body_lines)
+  end
+end
+
+function M.format_response_body(result, body_lines)
+  local body_content = table.concat(body_lines, "\n")
+
+  table.insert(result, "## Response Body")
+  table.insert(result, "")
+
+  -- Check if body content looks like JSON
+  local trimmed_body = body_content:match("^%s*(.-)%s*$") or body_content
+  if trimmed_body:match("^[%s]*[{%[]") then
+    -- Looks like JSON, try to validate and format it
+    local ok, decoded = pcall(vim.fn.json_decode, trimmed_body)
+    if ok then
+      -- Valid JSON - format with jq if available
+      table.insert(result, "```json")
+      if has_jq() then
+        local formatted_json = vim.fn.system("jq .", trimmed_body)
+        if vim.v.shell_error == 0 then
+          formatted_json = formatted_json:gsub("\n$", "")
+          for json_line in formatted_json:gmatch("[^\n]+") do
+            table.insert(result, json_line)
+          end
+        else
+          -- jq failed, use original
+          for _, body_line in ipairs(body_lines) do
+            table.insert(result, body_line)
+          end
+        end
+      else
+        -- No jq available, use original
+        for _, body_line in ipairs(body_lines) do
+          table.insert(result, body_line)
+        end
+      end
+      table.insert(result, "```")
+    else
+      -- Invalid JSON but looks like it, try anyway with json highlighting
+      table.insert(result, "```json")
+      for _, body_line in ipairs(body_lines) do
+        table.insert(result, body_line)
+      end
+      table.insert(result, "```")
+    end
+  else
+    -- Not JSON-like, add as plain text
+    table.insert(result, "```")
+    for _, body_line in ipairs(body_lines) do
+      table.insert(result, body_line)
+    end
+    table.insert(result, "```")
+  end
+end
+
 function M.cycle_output_format()
-  local formats = { "raw", "json", "formatted" }
+  local formats = { "raw", "formatted" }
   local current = config.options.output_format
   local current_index = 1
 
@@ -233,10 +284,8 @@ function M.refresh_results_buffer()
       local detected_type = M.detect_content_type(formatted_content)
       local filetype = "text"
 
-      if config.options.output_format == "json" and detected_type == "json" then
-        filetype = "json"
-      elseif config.options.output_format == "formatted" then
-        filetype = "text"
+      if config.options.output_format == "formatted" then
+        filetype = "markdown"
       else
         -- For raw format, use detected content type for better highlighting
         filetype = detected_type or "text"
@@ -325,10 +374,8 @@ function M.split_and_show_results(content)
   local detected_type = M.detect_content_type(formatted_content)
   local filetype = "text"
 
-  if config.options.output_format == "json" and detected_type == "json" then
-    filetype = "json"
-  elseif config.options.output_format == "formatted" then
-    filetype = "text"
+  if config.options.output_format == "formatted" then
+    filetype = "markdown"
   else
     -- For raw format, use detected content type for better highlighting
     filetype = detected_type or "text"
