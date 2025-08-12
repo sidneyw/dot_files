@@ -11,9 +11,10 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:hurl.dev)",
       "WebFetch(domain:lazy.folke.io)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(lua:*)",
+      "Bash(printf:*)"
     ],
     "deny": []
   }
 }
-
