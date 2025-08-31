@@ -193,6 +193,8 @@ alias dcomp='docker-compose'
 # Go
 alias gotv="go test -v"
 alias gotvr="go test -v -run"
+
+alias js="just"
 # }}}}
 
 # Bindings {{{
