@@ -23,8 +23,8 @@ return {
       { "<leader>gn", "<cmd>.GBrowse<CR>", desc = "Open current line on github" },
       { "<leader>go", "<cmd>.GBrowse!<CR>", desc = "Copy the github link to the clipboard" },
 
-      { "<leader>gn", "<cmd>'<,'>GBrowse<CR>", mode = { "v" }, desc = "Open selected lines on github" },
-      { "<leader>go", "<cmd>'<,'>GBrowse!<CR>", mode = { "v" }, desc = "Copy the github link to the clipboard" },
+      { "<leader>gn", ":'<,'>GBrowse<CR>", mode = { "v" }, desc = "Open selected lines on github" },
+      { "<leader>go", ":'<,'>GBrowse!<CR>", mode = { "v" }, desc = "Copy the github link to the clipboard" },
     },
     init = function()
       vim.cmd([[
