@@ -18,43 +18,49 @@ return {
   -- LSP keymaps and configuration
   {
     "neovim/nvim-lspconfig",
-    opts = function(_, opts)
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      -- change a keymap
-      keys[#keys + 1] = { "K", vim.lsp.buf.hover }
-
-      keys[#keys + 1] = { "gt", vim.lsp.buf.type_definition }
-      keys[#keys + 1] = { "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>" }
-      keys[#keys + 1] = { "<localleader>R", vim.lsp.buf.rename }
-
-      keys[#keys + 1] = { "gn", function() vim.diagnostic.jump({ count = 1, float = true }) end }
-      keys[#keys + 1] = { "gp", function() vim.diagnostic.jump({ count = -1, float = true }) end }
-
-      keys[#keys + 1] = { "gi", require("telescope.builtin").lsp_implementations }
-      keys[#keys + 1] = { "gr", require("telescope.builtin").lsp_references }
-
-      -- buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help })
-
-      -- Merge configurations into existing opts
-      opts.setup = opts.setup or {}
-      opts.setup.eslint = function() end -- Disable eslint formatting
-
-      opts.servers = opts.servers or {}
-      opts.servers.vtsls = {
-        settings = {
-          typescript = {
-            tsserver = {
-              maxTsServerMemory = 8192,
+    opts = {
+      servers = {
+        ["*"] = {
+          keys = {
+            { "K", vim.lsp.buf.hover, desc = "Hover" },
+            { "gt", vim.lsp.buf.type_definition, desc = "Type Definition" },
+            { "<localleader>dd", ":vsp<cr>:lua vim.lsp.buf.definition()<cr>", desc = "Definition in Split" },
+            { "<localleader>R", vim.lsp.buf.rename, desc = "Rename" },
+            {
+              "gn",
+              function()
+                vim.diagnostic.jump({ count = 1, float = true })
+              end,
+              desc = "Next Diagnostic",
+            },
+            {
+              "gp",
+              function()
+                vim.diagnostic.jump({ count = -1, float = true })
+              end,
+              desc = "Previous Diagnostic",
+            },
+            { "gi", require("telescope.builtin").lsp_implementations, desc = "Implementations" },
+            { "gr", require("telescope.builtin").lsp_references, desc = "References" },
+          },
+        },
+        vtsls = {
+          settings = {
+            typescript = {
+              tsserver = {
+                maxTsServerMemory = 8192,
+              },
             },
           },
         },
-      }
-
-      return opts
-    end,
+      },
+      setup = {
+        eslint = function() end, -- Disable eslint formatting
+      },
+    },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "stylua",
