@@ -3,3 +3,4 @@ font-thicken = true
 font-thicken-strength = 250
 theme = "tokyonight"
 link-url = true
+keybind = shift+enter=text:\x1b\r
