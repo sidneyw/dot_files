@@ -16,7 +16,7 @@ require("lazy").setup({
 
     -- AI
     { import = "lazyvim.plugins.extras.ai.copilot" },
-    -- { import = "lazyvim.plugins.extras.ai.copilot-chat" },
+    { import = "lazyvim.plugins.extras.ai.sidekick" },
 
     -- Editor
     { import = "lazyvim.plugins.extras.coding.luasnip" },

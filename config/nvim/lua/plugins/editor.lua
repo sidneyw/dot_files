@@ -54,8 +54,36 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      opts.ensure_installed = "all"
-      opts.textobjects = vim.tbl_extend("force", opts.textobjects, {
+      opts.ensure_installed = {
+        "lua",
+        "query",
+        "markdown",
+        "markdown_inline",
+        "typescript",
+        "javascript",
+        "tsx",
+        "python",
+        "json",
+        "jsonc",
+        "yaml",
+        "bash",
+        "html",
+        "css",
+        "go",
+        "rust",
+        "sql",
+        "terraform",
+      }
+      opts.sync_install = false
+      opts.auto_install = true
+      -- Ensure highlighting is enabled and disable vim parser to prevent conflicts
+      opts.highlight = opts.highlight or {}
+      opts.highlight.enable = true
+      opts.highlight.disable = opts.highlight.disable or {}
+      table.insert(opts.highlight.disable, "vim")
+
+      -- Configure textobjects
+      opts.textobjects = vim.tbl_extend("force", opts.textobjects or {}, {
         select = {
           enable = true,
           lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
@@ -70,7 +98,6 @@ return {
       })
     end,
   },
-  { "nvim-treesitter/nvim-treesitter-refactor" },
   { "towolf/vim-helm" },
   -- TPope Plugins
   { "tpope/vim-dispatch" },
