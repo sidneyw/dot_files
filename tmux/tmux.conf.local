@@ -356,6 +356,12 @@ tmux_conf_theme_synchronized='🔒'     # U+1F512
 # -- settings overrides  -------------------------------------------------------
 set -sg repeat-time 0 # disable repeat timeout
 
+# Terminal capabilities for modern CLI apps (Claude Code, etc.)
+set -as terminal-overrides ",xterm-ghostty:RGB"    # Ghostty true color
+set -as terminal-overrides ",*-256color:Tc"        # True color for 256color terminals
+set -as terminal-overrides ",*:Smulx=\E[4::%p1%dm" # Styled underlines
+set -as terminal-overrides ",*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m" # Underline colors
+
 # increase history size
 set -g history-limit 10000
 
