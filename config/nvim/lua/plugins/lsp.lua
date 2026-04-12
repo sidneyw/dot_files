@@ -40,8 +40,8 @@ return {
               end,
               desc = "Previous Diagnostic",
             },
-            { "gi", require("telescope.builtin").lsp_implementations, desc = "Implementations" },
-            { "gr", require("telescope.builtin").lsp_references, desc = "References" },
+            { "gi", function() require("fzf-lua").lsp_implementations() end, desc = "Implementations" },
+            { "gr", function() require("fzf-lua").lsp_references() end, desc = "References" },
           },
         },
         vtsls = {

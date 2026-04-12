@@ -26,7 +26,7 @@ wk.add({
   {
     "<leader>fc",
     function()
-      require("utils.telescope-functions").open_git_file_from_clipboard()
+      require("utils.fzf-functions").open_git_file_from_clipboard()
     end,
     desc = "Open git file from clipboard",
   },

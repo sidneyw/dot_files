@@ -5,7 +5,7 @@
 -- change the leader key to -
 vim.g.mapleader = "-"
 
-vim.g.lazyvim_picker = "telescope"
+vim.g.lazyvim_picker = "fzf"
 
 local opt = vim.opt
 

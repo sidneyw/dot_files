@@ -1,7 +1,7 @@
 local tabline = require("tabline")
 local notify = require("snacks").notify
 local wk = require("which-key")
-local telescopeCustom = require("utils.telescope-functions")
+local fzfCustom = require("utils.fzf-functions")
 
 local dotFilesDir = vim.fn.expand("~/.dot_files/")
 local codeDir = vim.fn.expand("~/Code/")
@@ -41,7 +41,7 @@ function M.New(directory, skipRename)
 
   M.Rename(directory, skipRename)
   os.execute("sleep 0.3")
-  telescopeCustom.project_files()
+  fzfCustom.project_files()
 end
 
 function M.NewCode(subdir)

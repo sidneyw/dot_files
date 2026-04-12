@@ -14,4 +14,20 @@ return {
     build = "cargo install --path .",
     opts = {},
   },
+  {
+    "zbirenbaum/copilot.lua",
+    keys = {
+      {
+        "<C-j>",
+        function()
+          local Nes = require("sidekick.nes")
+          if Nes.have() and (Nes.jump() or Nes.apply()) then
+            return
+          end
+        end,
+        mode = { "n", "i" },
+        desc = "Accept Sidekick NES suggestion",
+      },
+    },
+  },
 }

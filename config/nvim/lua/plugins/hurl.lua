@@ -1,8 +1,8 @@
 return {
   "hurl.nvim",
   dir = vim.fn.stdpath("config") .. "/lua/plugins/hurl",
-  dependencies = { 
-    "nvim-telescope/telescope.nvim", 
+  dependencies = {
+    "ibhagwan/fzf-lua",
     "folke/which-key.nvim",
     "folke/snacks.nvim",
   },
